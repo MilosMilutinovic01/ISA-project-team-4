@@ -3,6 +3,7 @@ package com.e2.medicalequipment.service;
 import com.e2.medicalequipment.dto.CreateCustomerDTO;
 import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.model.User;
+import com.e2.medicalequipment.model.UserType;
 import com.e2.medicalequipment.repository.CustomerRepository;
 import com.e2.medicalequipment.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer Create(CreateCustomerDTO createCustomerDto) throws Exception {
         User user = new User();
-        user.setUsername(createCustomerDto.username);
+        user.setUsername(createCustomerDto.email);
         user.setPassword(createCustomerDto.password);
+        user.setUserType(UserType.CUSTOMER);
+        user.setId(null);
 
         Customer customer = new Customer(createCustomerDto);
         customer.setUser(user);

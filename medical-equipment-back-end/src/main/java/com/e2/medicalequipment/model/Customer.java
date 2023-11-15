@@ -11,9 +11,6 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username")
-    private String username;
-
     @Column(name = "password")
     private String password;
 
@@ -49,9 +46,8 @@ public class Customer {
 
     }
 
-    public Customer(Long id, String username, String password, String email, String address, String name, String lastname, String city, String country, String phoneNumber, String profession) {
+    public Customer(Long id, String password, String email, String address, String name, String lastname, String city, String country, String phoneNumber, String profession) {
         this.id = id;
-        this.username = username;
         this.password = password;
         this.email = email;
         this.address = address;
@@ -65,7 +61,6 @@ public class Customer {
 
     public Customer(CreateCustomerDTO createCustomerDTO) {
         this.id = null;
-        this.username = createCustomerDTO.username;
         this.password = createCustomerDTO.password;
         this.email = createCustomerDTO.email;
         this.address = createCustomerDTO.address;
@@ -83,14 +78,6 @@ public class Customer {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -177,7 +164,6 @@ public class Customer {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +

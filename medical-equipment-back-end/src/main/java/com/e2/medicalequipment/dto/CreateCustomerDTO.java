@@ -1,8 +1,6 @@
 package com.e2.medicalequipment.dto;
 
 public class CreateCustomerDTO {
-    public String username;
-
     public String password;
 
     public String email;
@@ -22,18 +20,5 @@ public class CreateCustomerDTO {
     public String profession;
 
     public CreateCustomerDTO() {
-    }
-
-    public CreateCustomerDTO(String username, String password, String email, String address, String name, String lastname, String city, String country, String phoneNumber, String profession) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.address = address;
-        this.name = name;
-        this.lastname = lastname;
-        this.city = city;
-        this.country = country;
-        this.phoneNumber = phoneNumber;
-        this.profession = profession;
     }
 }

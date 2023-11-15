@@ -15,14 +15,17 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    public User(Long id, String username, String password) {
+    @Column(name = "userType")
+    private UserType userType;
+
+    public User(Long id, String username, String password, UserType userType) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.userType = userType;
     }
 
     public User() {
-
     }
 
     public Long getId() {
@@ -49,12 +52,21 @@ public class User {
         this.password = password;
     }
 
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", userType=" + userType +
                 '}';
     }
 }

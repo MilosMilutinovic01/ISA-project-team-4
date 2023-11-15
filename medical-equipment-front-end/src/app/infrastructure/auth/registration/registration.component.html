@@ -1,102 +1,82 @@
-<div class="register-modal">
-  <div class="register">
-    <form class="register-form" [formGroup]="registrationForm">
-      <div class="center-inputs">
-        <mat-form-field class="register-input">
-          <mat-label>Name:</mat-label>
-          <input
-            matInput
-            type="text"
-            placeholder="Name"
-            formControlName="name"
-          />
-        </mat-form-field>
+<div class="register">
+  <form class="register-form" [formGroup]="registrationForm">
+    <div class="center-inputs">
+      <mat-form-field class="register-input">
+        <mat-label>Name:</mat-label>
+        <input matInput type="text" placeholder="Name" formControlName="name" />
+      </mat-form-field>
 
-        <mat-form-field class="register-input">
-          <mat-label>Lastname:</mat-label>
-          <input
-            matInput
-            type="text"
-            placeholder="Lastname"
-            formControlName="lastname"
-          />
-        </mat-form-field>
+      <mat-form-field class="register-input">
+        <mat-label>Lastname:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Lastname"
+          formControlName="lastname"
+        />
+      </mat-form-field>
 
-        <mat-form-field class="register-input">
-          <mat-label>Username:</mat-label>
-          <input
-            matInput
-            type="text"
-            placeholder="Username"
-            formControlName="username"
-          />
-        </mat-form-field>
+      <mat-form-field class="register-input">
+        <mat-label>Email:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Email"
+          formControlName="email"
+        />
+      </mat-form-field>
 
-        <mat-form-field class="register-input">
-          <mat-label>Email:</mat-label>
-          <input
-            matInput
-            type="text"
-            placeholder="Email"
-            formControlName="email"
-          />
-        </mat-form-field>
+      <mat-form-field class="register-input">
+        <mat-label>Address:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Address"
+          formControlName="address"
+        />
+      </mat-form-field>
 
-        <mat-form-field class="register-input">
-          <mat-label>Address:</mat-label>
-          <input
-            matInput
-            type="text"
-            placeholder="Address"
-            formControlName="address"
-          />
-        </mat-form-field>
+      <mat-form-field class="register-input">
+        <mat-label>City:</mat-label>
+        <input matInput type="text" placeholder="City" formControlName="city" />
+      </mat-form-field>
 
-        <mat-form-field class="register-input">
-          <mat-label>City:</mat-label>
-          <input
-            matInput
-            type="text"
-            placeholder="City"
-            formControlName="city"
-          />
-        </mat-form-field>
+      <mat-form-field class="register-input">
+        <mat-label>Country:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Country"
+          formControlName="country"
+        />
+      </mat-form-field>
 
-        <mat-form-field class="register-input">
-          <mat-label>Country:</mat-label>
-          <input
-            matInput
-            type="text"
-            placeholder="Country"
-            formControlName="country"
-          />
-        </mat-form-field>
+      <mat-form-field class="register-input">
+        <mat-label>Phone Number:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Phone Number"
+          formControlName="phoneNumber"
+        />
+      </mat-form-field>
 
-        <mat-form-field class="register-input">
-          <mat-label>Phone Number:</mat-label>
-          <input
-            matInput
-            type="text"
-            placeholder="Phone Number"
-            formControlName="phoneNumber"
-          />
-        </mat-form-field>
+      <mat-form-field class="register-input">
+        <mat-label>Profession:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Profession"
+          formControlName="profession"
+        />
+      </mat-form-field>
 
-        <mat-form-field class="register-input">
-          <mat-label>Profession:</mat-label>
-          <input
-            matInput
-            type="text"
-            placeholder="Profession"
-            formControlName="profession"
-          />
-        </mat-form-field>
-
+      <div class="password-field">
         <mat-form-field class="register-input">
           <mat-label>Password:</mat-label>
           <input
             matInput
-            [type]="isPasswordVisible ? 'text' : 'password'"
+            [type]="isPassword1Visible ? 'text' : 'password'"
             placeholder="Password"
             formControlName="password"
           />
@@ -104,11 +84,31 @@
 
         <fa-icon
           class="register-password-eye"
-          [icon]="isPasswordVisible ? faEyeSlash : faEye"
-          (click)="togglePasswordVisibility()"
+          [icon]="isPassword1Visible ? faEyeSlash : faEye"
+          (click)="togglePassword1Visibility()"
         ></fa-icon>
       </div>
+
+      <div class="password-field">
+        <mat-form-field class="register-input">
+          <mat-label>Password:</mat-label>
+          <input
+            matInput
+            [type]="isPassword2Visible ? 'text' : 'password'"
+            placeholder="Re-enter password"
+            formControlName="rePassword"
+          />
+        </mat-form-field>
+
+        <fa-icon
+          class="register-password-eye"
+          [icon]="isPassword2Visible ? faEyeSlash : faEye"
+          (click)="togglePassword2Visibility()"
+        ></fa-icon>
+      </div>
+    </div>
+    <div class="register-button">
       <button class="register-submit" (click)="register()">Register</button>
-    </form>
-  </div>
+    </div>
+  </form>
 </div>
