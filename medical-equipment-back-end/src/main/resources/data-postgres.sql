@@ -1,5 +1,5 @@
-/*drop table stakeholders.customers;
-drop table stakeholders.users;*/
+drop table stakeholders.customers;
+drop table stakeholders.users;
 
 create table stakeholders.customers (
                                         id bigserial not null,

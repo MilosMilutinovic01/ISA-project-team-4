@@ -19,7 +19,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer Create(CreateCustomerDTO createCustomerDto) throws Exception {
         User user = new User();
-        user.setUsername(createCustomerDto.email);
+        user.setEmail(createCustomerDto.email);
         user.setPassword(createCustomerDto.password);
         user.setUserType(UserType.CUSTOMER);
         user.setId(null);

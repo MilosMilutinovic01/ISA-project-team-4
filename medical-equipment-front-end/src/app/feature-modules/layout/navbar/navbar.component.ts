@@ -13,4 +13,8 @@ export class NavbarComponent {
   register(): void {
     this.router.navigate(['/register']);
   }
+
+  customerProfile(): void {
+    this.router.navigate(['/customerProfile']);
+  }
 }
