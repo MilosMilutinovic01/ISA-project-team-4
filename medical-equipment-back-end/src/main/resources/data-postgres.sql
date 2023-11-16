@@ -1,4 +1,4 @@
-drop table stakeholders.customers;
+/*drop table stakeholders.customers;
 drop table stakeholders.users;
 
 create table stakeholders.customers (
@@ -38,4 +38,4 @@ insert into stakeholders.users (id, username, password, user_type) values ('-1',
 insert into stakeholders.users (id, username, password, user_type) values ('-2', 'email1@gmail.com', 'sifra1', 1);
 insert into stakeholders.customers(address, city, country, email, lastname, name, password, phone_number, profession, user_id) VALUES ('adresa', 'grad', 'zemlja', 'email1@gmail.com', 'prezime', 'ime', 'sifra1', '0603908001', 'profesija', -2);
 insert into stakeholders.users (id, username, password, user_type) values ('-3', 'email2@gmail.com', 'sifra2', 1);
-insert into stakeholders.customers(address, city, country, email, lastname, name, password, phone_number, profession, user_id) VALUES ('adresa', 'grad', 'zemlja', 'email2@gmail.com', 'prezime', 'ime', 'sifra2', '0603908001', 'profesija', -3);
+insert into stakeholders.customers(address, city, country, email, lastname, name, password, phone_number, profession, user_id) VALUES ('adresa', 'grad', 'zemlja', 'email2@gmail.com', 'prezime', 'ime', 'sifra2', '0603908001', 'profesija', -3);*/

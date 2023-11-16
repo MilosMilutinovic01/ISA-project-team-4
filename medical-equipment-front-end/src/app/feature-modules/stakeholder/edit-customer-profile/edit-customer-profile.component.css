@@ -1,4 +1,4 @@
-.card {
+  .edit-profile-form {
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -6,33 +6,28 @@
     max-width: 400px;
     width: 100%;
     text-align: center;
-    margin:auto;
-    position: relative;
-}
+    margin: auto;
+  }
 
-.profile-info {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
+  .form-field {
+    margin-bottom: 3px;
+    margin-top: 10px;
+  }
 
-.label {
-    font-weight: bold;
-    color: #333;
-}
+  .password-eye {
+    font-size: 1.25rem;
+    color: #757575;
+    cursor: pointer;
+    transition: color 0.3s;
+    margin-left: 1rem;
+    width: auto;
+  }
 
-.value {
-    color: #666;
-}
+  .password-eye:hover {
+    color: #212121;
+  }
 
-.penalty-points {
-    color: red;
-    font-size: 15px;
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-}
-
-.bottom-right-button {
+  .bottom-right-button {
     position: fixed;
     bottom: 20px;
     right: 20px;
