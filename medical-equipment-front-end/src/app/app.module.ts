@@ -9,6 +9,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RoutingModule } from './infrastructure/routing/routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './infrastructure/material/material.module';
+import { StakeholderModule } from './feature-modules/stakeholder/stakeholder.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
@@ -21,6 +24,8 @@ import { MaterialModule } from './infrastructure/material/material.module';
     HttpClientModule,
     AuthModule,
     MaterialModule,
+    StakeholderModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent],

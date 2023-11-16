@@ -1,0 +1,73 @@
+<div>
+<form class="edit-profile-form" [formGroup]="editProfileForm">
+    <div class="form-field">
+      <mat-form-field appearance="outline">
+          <mat-label>Name:</mat-label>
+          <input matInput placeholder="Name">
+      </mat-form-field>
+    </div>
+
+    <div class="form-field">
+        <mat-form-field appearance="outline">
+            <mat-label>Address:</mat-label>
+            <input matInput placeholder="Address">
+        </mat-form-field>
+      </div>
+
+      <div class="form-field">
+        <mat-form-field appearance="outline">
+            <mat-label>City:</mat-label>
+            <input matInput placeholder="City">
+        </mat-form-field>
+      </div>
+
+      <div class="form-field">
+        <mat-form-field appearance="outline">
+            <mat-label>Country:</mat-label>
+            <input matInput placeholder="Country">
+        </mat-form-field>
+      </div>
+
+      <div class="form-field">
+        <mat-form-field appearance="outline">
+            <mat-label>Phone number:</mat-label>
+            <input matInput placeholder="Phone number">
+        </mat-form-field>
+      </div>
+
+      <div class="form-field">
+        <mat-form-field appearance="outline">
+            <mat-label>Profession:</mat-label>
+            <input matInput placeholder="Profession">
+        </mat-form-field>
+      </div>
+
+      <div class="form-field">
+        <mat-form-field appearance="outline">
+            <mat-label>Last name:</mat-label>
+            <input matInput placeholder="Last name">
+        </mat-form-field>
+      </div>
+  
+      <div class="form-field">
+        <mat-form-field appearance="outline">
+            <mat-label>Password:</mat-label>
+            <input
+              matInput 
+              placeholder="Password" 
+              [type]="isPasswordVisible ? 'password' : 'text'">
+            <button 
+              mat-icon-button 
+              matSuffix (click)="isPasswordVisible = !isPasswordVisible" 
+              [attr.aria-label]="'Hide password'" 
+              [attr.aria-pressed]="isPasswordVisible ">
+            <mat-icon>{{isPasswordVisible ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>  
+
+      <button class="bottom-right-button" mat-icon-button (click)="saveChanges()">
+        <mat-icon>save</mat-icon>
+    </button>
+  </form>
+</div>

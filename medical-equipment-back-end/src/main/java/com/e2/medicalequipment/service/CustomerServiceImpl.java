@@ -13,27 +13,19 @@ import org.springframework.stereotype.Service;
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     @Override
     public Customer Create(CreateCustomerDTO createCustomerDto) throws Exception {
-        User user = new User();
-        user.setEmail(createCustomerDto.email);
-        user.setPassword(createCustomerDto.password);
-        user.setUserType(UserType.CUSTOMER);
-        user.setId(null);
-
         Customer customer = new Customer(createCustomerDto);
-        customer.setUser(user);
+        customer.setUserType(UserType.CUSTOMER);
+        customer.setPenaltyPoints(0L);
 
-        if (customer.getId() != null && user.getId() != null) {
+        if (customer.getId() != null) {
             throw new Exception("ID must be null for a new entity.");
         }
 
         // Save the Test entity using JpaRepository
         Customer savedCustomer = customerRepository.save(customer);
-        User savedUser = userRepository.save(user);
 
         return savedCustomer;
     }
