@@ -5,11 +5,13 @@ import { RegistrationComponent } from '../auth/registration/registration.compone
 import { HomeComponent } from 'src/app/feature-modules/layout/home/home.component';
 import { CustomerProfileComponent } from 'src/app/feature-modules/stakeholder/customer-profile/customer-profile.component';
 import { EditCustomerProfileComponent } from 'src/app/feature-modules/stakeholder/edit-customer-profile/edit-customer-profile.component';
+import { CompanyRegistrationComponent } from 'src/app/feature-modules/stakeholder/company-registration/company-registration.component';
 
 const routes: Routes = [
   { path: 'register', component: RegistrationComponent },
   { path: 'customerProfile', component: CustomerProfileComponent},
   { path: 'editCustomerProfile', component: EditCustomerProfileComponent},
+  { path: 'companyRegistration', component: CompanyRegistrationComponent},
   { path: '', component: HomeComponent },
 ];
 
