@@ -21,7 +21,7 @@ public class CompanyAdministratorController {
         return "welcome";
     }
 
-    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CompanyAdministrator> createTest(@RequestBody CompanyAdministratorDTO companyAdministratorDto)  {
         CompanyAdministrator savedCompanyAdministrator = null;
         try {System.out.println("Thread id: " + Thread.currentThread().getId());
