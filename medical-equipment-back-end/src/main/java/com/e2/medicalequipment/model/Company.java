@@ -4,7 +4,7 @@ import com.e2.medicalequipment.dto.CreateCompanyDTO;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
 
@@ -19,6 +19,9 @@ public class Company {
     @Column(name = "name")
     private String name;
 
+    /*@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Address address;*/
     @Column(name = "address")
     private String address;
     @Column(name = "city")
@@ -27,10 +30,10 @@ public class Company {
     private String country;
 
     @Column(name = "startTime")
-    private LocalDateTime startTime;
+    private LocalTime startTime;
 
     @Column(name = "endTime")
-    private LocalDateTime endTime;
+    private LocalTime endTime;
 
     @Column(name = "description")
     private String description;
@@ -41,10 +44,11 @@ public class Company {
     //lista opreme
 
     //slobodni termini
+
     public Company() {
     }
 
-    public Company(Long id, String name, String address, String city, String country, LocalDateTime startTime, LocalDateTime endTime, String description, double averageRating) {
+    public Company(Long id, String name, String address, String city, String country, LocalTime startTime, LocalTime endTime, String description, double averageRating) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -102,19 +106,19 @@ public class Company {
         this.country = country;
     }
 
-    public LocalDateTime getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 

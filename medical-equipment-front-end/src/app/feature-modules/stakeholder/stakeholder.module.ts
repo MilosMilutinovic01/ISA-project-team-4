@@ -5,7 +5,6 @@ import { MaterialModule } from 'src/app/infrastructure/material/material.module'
 import { EditCustomerProfileComponent } from './edit-customer-profile/edit-customer-profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CompanyRegistrationComponent } from './company-registration/company-registration.component';
-
 @NgModule({
   declarations: [
     CustomerProfileComponent,
@@ -15,7 +14,7 @@ import { CompanyRegistrationComponent } from './company-registration/company-reg
   imports: [
     CommonModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
     CustomerProfileComponent,
