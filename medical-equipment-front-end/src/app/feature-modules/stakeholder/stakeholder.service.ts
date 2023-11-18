@@ -37,4 +37,17 @@ export class StakeholderService {
       environment.apiHost + 'companies/'
     );
   }
+
+  searchCompanies(name : string, 
+                  street : string, 
+                  city : string,
+                  country : string): Observable<Company[]> {
+    return this.http.get<Company[]>(
+      environment.apiHost + 'companies/search/'+
+      name + "/" +
+      street + "/" + 
+      city + "/" +
+      country
+    );
+  }
 }

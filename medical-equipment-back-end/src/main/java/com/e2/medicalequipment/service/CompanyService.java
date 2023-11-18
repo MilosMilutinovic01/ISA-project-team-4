@@ -9,4 +9,8 @@ import java.util.List;
 public interface CompanyService {
     Company Create(CreateCompanyDTO c) throws Exception;
     List<Company> GetAll() throws Exception;
+    List<Company> Search(String name,
+                         String street,
+                         String city,
+                         String country) throws Exception;
 }

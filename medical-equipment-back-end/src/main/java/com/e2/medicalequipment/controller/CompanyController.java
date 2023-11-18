@@ -46,4 +46,20 @@ public class CompanyController {
             return new ResponseEntity<List<Company>>(companies, HttpStatus.CONFLICT);
         }
     }
+
+    @GetMapping(value = "/search/{name}/{street}/{city}/{country}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<Company>> searchCompanies(@PathVariable String name,
+                                                         @PathVariable String street,
+                                                         @PathVariable String city,
+                                                         @PathVariable String country){
+        List<Company> searchedCompanies = null;
+        try {
+            searchedCompanies = companyService.Search(name, street, city, country);
+            return new ResponseEntity<List<Company>>(searchedCompanies, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Company>>(searchedCompanies, HttpStatus.CONFLICT);
+        }
+    }
 }

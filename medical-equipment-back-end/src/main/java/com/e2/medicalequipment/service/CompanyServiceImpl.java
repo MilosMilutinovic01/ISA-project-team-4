@@ -11,6 +11,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -41,5 +42,16 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<Company> GetAll() throws Exception {
         return this.companyRepository.findAll();
+    }
+
+    @Override
+    public List<Company> Search(String name, String street, String city, String country) throws Exception {
+        List<Company> companies = this.companyRepository.findAll();
+        List<Company> searchedCompanies = companies.stream()
+                .filter(c -> (c.getName().toLowerCase().contains(name) || name.equals("empty")) &&
+                        (c.getAddress().getStreet().toLowerCase().contains(street) || street.equals("empty")) &&
+                        (c.getAddress().getCity().toLowerCase().contains(city) || city.equals("empty")) &&
+                        (c.getAddress().getCountry().toLowerCase().contains(country) || country.equals("empty"))).collect(Collectors.toList());
+        return searchedCompanies;
     }
 }

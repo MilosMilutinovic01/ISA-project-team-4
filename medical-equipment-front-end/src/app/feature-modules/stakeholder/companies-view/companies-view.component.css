@@ -1,65 +1,90 @@
-  .card-container {
-    justify-content: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    flex-direction: column;
-  }
+.card-container {
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-direction: column;
+}
 
-  .company-card {
-    position: relative;
-    width: 85%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    margin: 20px auto;
-  }
-  .company-card:hover{
-    transform: scale(1.01);
-  }
+.card {
+  display: flex;
+  height: 7rem;
+  width: 85%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+}
 
-  .card-title {
-    font-size: 30px;
-    font-weight: bold;
-    display:flex;
-    justify-content: space-between;
-    padding-bottom: 20px;
-  }
+.card:hover {
+  transform: scale(1.01);
+}
 
-  .card-subtitle {
-    font-size: 17px;
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 20px;
-  }
+.card-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
-  .card-number{
-    font-weight: bold;
-    font-size: 17px;
-    margin-top: 7px;
-  }
-  
-  .search-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 20vh; 
-  }
+.card-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
 
-  .search-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
+.card-number {
+  font-weight: bold;
+  font-size: 17px;
+  margin-right: 15px;
+}
 
-  .form-field {
-    margin-bottom: 3px;
-    margin-top: 10px;
-    padding-right: 20px;
-    flex: 1; 
-    align-self: stretch;
-  }
+.card-title {
+  font-size: 30px;
+  font-weight: bold;
+  /* margin-bottom: 10px; */
+  display: inline;
+}
 
-  .search-button {
-    background-color: #3498db;
-    top: 5px;
-  }
+.card-subtitle {
+  font-size: 17px;
+  margin-top: 30px;
+  margin-left: 15px;
+  color: gray;
+  font-weight: 500;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 20vh;
+}
+
+.search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-field {
+  margin-bottom: 3px;
+  margin-top: 10px;
+  padding-right: 20px;
+  flex: 1;
+  align-self: stretch;
+}
+
+.search-button {
+  background-color: #3498db;
+  top: 5px;
+  margin-right: 10px;
+}
+
+.filter-button {
+  background-color: #3498db !important;
+  color: white !important;
+  padding-top: 5px;
+}
+
+h1 {
+  margin: 15px 0px 0px 15px;
+}
