@@ -54,7 +54,7 @@ export class EditCustomerProfileComponent implements OnInit{
   }
 
   getCustomerProfile(): void{
-    this.service.getCustomerProfile("12").subscribe({
+    this.service.getCustomerProfile("15").subscribe({
       next:(result : CustomerProfile) => {
           this.profile = result;
           console.log(result);

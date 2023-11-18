@@ -1,0 +1,48 @@
+  .card-container {
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-direction: column;
+  }
+
+  .company-card {
+    position: relative;
+    width: 85%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;
+  }
+  .company-card:hover{
+    transform: scale(1.01);
+  }
+
+  .title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+  }
+
+  .card-title {
+    font-size: 30px;
+    font-weight: bold;
+    display:flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+  }
+
+  .card-subtitle {
+    font-size: 17px;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+  }
+
+  .number-container {
+    margin-left: 610px;
+    margin-top: 5px;
+  }
+  
+  .card-number {
+    font-size: 20px;
+    font-weight: bold;
+  }

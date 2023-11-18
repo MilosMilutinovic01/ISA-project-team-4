@@ -22,4 +22,8 @@ export class NavbarComponent {
   companyRegistration(): void {
     this.router.navigate(['/companyRegistration']);
   }
+
+  companiesView(): void {
+    this.router.navigate(['/companiesView']);
+  }
 }

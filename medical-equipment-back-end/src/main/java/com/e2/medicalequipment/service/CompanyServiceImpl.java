@@ -18,7 +18,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Company Create(CreateCompanyDTO createCompanyDto) throws Exception {
         Company company = new Company(createCompanyDto);
-        company.setAverageRating(-1L);
+        company.setAverageRating(0L);
         LocalTime startTime = LocalTime.parse(createCompanyDto.startTime, formatter);
         company.setStartTime(startTime);
         LocalTime endTime = LocalTime.parse(createCompanyDto.endTime, formatter);
