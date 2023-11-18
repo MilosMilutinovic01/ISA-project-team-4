@@ -33,4 +33,8 @@ public class CompanyServiceImpl implements CompanyService {
 
         return savedCompany;
     }
+
+    public Company findOne(String id) {
+        return companyRepository.findById(Long.valueOf(id)).get();
+    }
 }
