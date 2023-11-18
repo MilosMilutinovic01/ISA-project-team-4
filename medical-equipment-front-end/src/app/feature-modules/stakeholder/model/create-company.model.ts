@@ -1,6 +1,7 @@
+import { CreateAddressModel } from "./create-address.model";
 export interface CreateCompanyModel {
     name: string;
-    address: string;
+    address: CreateAddressModel;
     city: string;
     country: string;
     startTime: string;

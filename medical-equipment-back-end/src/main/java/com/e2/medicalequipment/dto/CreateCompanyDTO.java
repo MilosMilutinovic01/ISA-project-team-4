@@ -1,15 +1,15 @@
 package com.e2.medicalequipment.dto;
 
+
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import com.e2.medicalequipment.dto.CreateAddressDTO;
 
 public class CreateCompanyDTO {
 
     public String name;
-    public String address;
-    public String city;
-    public String country;
+    public CreateAddressDTO address;
     public String startTime;
     public String endTime;
     public String description;
