@@ -42,7 +42,6 @@ public class CompanyAdministrator extends User{
                 companyAdministratorDTO.phoneNumber,
                 companyAdministratorDTO.password);
     }
-
     public Long getCompanyId() {
         return companyId;
     }

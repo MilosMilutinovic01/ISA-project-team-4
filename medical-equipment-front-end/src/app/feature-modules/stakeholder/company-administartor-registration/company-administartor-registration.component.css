@@ -1,4 +1,4 @@
-.register-company{
+.register-company-administrator {
     width: 50%;
     margin: 20px auto;
   }
@@ -44,11 +44,3 @@
   button {
     margin-top: 20px;
   }
-  
-  .time-container {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    width:100%;
-  }
-  

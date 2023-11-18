@@ -2,7 +2,6 @@ package com.e2.medicalequipment.dto;
 
 public class CompanyAdministratorDTO {
     public String password;
-
     public String email;
 
     public String address;

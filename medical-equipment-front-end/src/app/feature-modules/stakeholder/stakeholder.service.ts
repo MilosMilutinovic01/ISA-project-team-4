@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CreateCompanyAdministratorModel } from './model/create-company-administrator.model';
 import { CreateCompanyModel } from './model/create-company.model';
 import { CustomerProfile } from 'src/app/infrastructure/auth/model/customer-profile.model';
 import { environment } from 'src/env/environment';
@@ -29,5 +30,9 @@ export class StakeholderService {
 
   registerCompany(Company: CreateCompanyModel): Observable<CreateCompanyModel> {
     return this.http.post<CreateCompanyModel>(environment.apiHost + 'companies/register', Company);
+  }
+
+  registerCompanyAdministrator(CompanyAdministrator: CreateCompanyAdministratorModel): Observable<CreateCompanyModel> {
+    return this.http.post<CreateCompanyModel>(environment.apiHost + 'companyAdministrators/register', CompanyAdministrator);
   }
 }

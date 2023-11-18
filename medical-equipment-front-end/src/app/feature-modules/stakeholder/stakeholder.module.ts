@@ -5,11 +5,13 @@ import { MaterialModule } from 'src/app/infrastructure/material/material.module'
 import { EditCustomerProfileComponent } from './edit-customer-profile/edit-customer-profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CompanyRegistrationComponent } from './company-registration/company-registration.component';
+import { CompanyAdministartorRegistrationComponent } from './company-administartor-registration/company-administartor-registration.component';
 @NgModule({
   declarations: [
     CustomerProfileComponent,
     EditCustomerProfileComponent,
-    CompanyRegistrationComponent
+    CompanyRegistrationComponent,
+    CompanyAdministartorRegistrationComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { CompanyRegistrationComponent } from './company-registration/company-reg
   ],
   exports: [
     CustomerProfileComponent,
-    CompanyRegistrationComponent
+    CompanyRegistrationComponent,
+    CompanyAdministartorRegistrationComponent
   ]
 })
 export class StakeholderModule { }
