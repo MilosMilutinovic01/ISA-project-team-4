@@ -3,51 +3,53 @@
     <div class="form-field">
       <mat-form-field appearance="outline">
           <mat-label>Name:</mat-label>
-          <input matInput placeholder="Name">
+          <input matInput placeholder="Name" formControlName="name">
+      </mat-form-field>
+    </div>
+
+    <div class="form-field">
+      <mat-form-field appearance="outline">
+          <mat-label>Last name:</mat-label>
+          <input matInput placeholder="Last name" formControlName="lastname">
       </mat-form-field>
     </div>
 
     <div class="form-field">
         <mat-form-field appearance="outline">
             <mat-label>Address:</mat-label>
-            <input matInput placeholder="Address">
+            <input matInput placeholder="Address" formControlName="address">
         </mat-form-field>
       </div>
 
       <div class="form-field">
         <mat-form-field appearance="outline">
             <mat-label>City:</mat-label>
-            <input matInput placeholder="City">
+            <input matInput placeholder="City" formControlName="city">
         </mat-form-field>
       </div>
 
       <div class="form-field">
         <mat-form-field appearance="outline">
             <mat-label>Country:</mat-label>
-            <input matInput placeholder="Country">
+            <input matInput placeholder="Country" formControlName="country">
         </mat-form-field>
       </div>
 
       <div class="form-field">
         <mat-form-field appearance="outline">
             <mat-label>Phone number:</mat-label>
-            <input matInput placeholder="Phone number">
+            <input matInput placeholder="Phone number" formControlName="phoneNumber">
         </mat-form-field>
       </div>
 
       <div class="form-field">
         <mat-form-field appearance="outline">
             <mat-label>Profession:</mat-label>
-            <input matInput placeholder="Profession">
+            <input matInput placeholder="Profession" formControlName="profession">
         </mat-form-field>
       </div>
 
-      <div class="form-field">
-        <mat-form-field appearance="outline">
-            <mat-label>Last name:</mat-label>
-            <input matInput placeholder="Last name">
-        </mat-form-field>
-      </div>
+      
   
       <div class="form-field">
         <mat-form-field appearance="outline">
@@ -55,7 +57,8 @@
             <input
               matInput 
               placeholder="Password" 
-              [type]="isPasswordVisible ? 'password' : 'text'">
+              [type]="!isPasswordVisible ? 'password' : 'text'"
+              formControlName="password">
             <button 
               mat-icon-button 
               matSuffix (click)="isPasswordVisible = !isPasswordVisible" 
