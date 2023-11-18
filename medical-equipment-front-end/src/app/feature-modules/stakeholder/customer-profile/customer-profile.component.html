@@ -1,37 +1,38 @@
 <div class="card">
+    <div class="category">{{profile.category}}</div>
     <div class="profile-info">
       <div class="label">Name:</div>
-      <div class="value">John</div>
+      <div class="value">{{profile.name}}</div>
     </div>
     <div class="profile-info">
       <div class="label">Last Name:</div>
-      <div class="value">Doe</div>
+      <div class="value">{{profile.lastname}}</div>
     </div>
     <div class="profile-info">
       <div class="label">Email:</div>
-      <div class="value">john.doe@example.com</div>
+      <div class="value">{{profile.email}}</div>
     </div>
     <div class="profile-info">
       <div class="label">Address:</div>
-      <div class="value">123 Main Street</div>
+      <div class="value">{{profile.address}}</div>
     </div>
     <div class="profile-info">
       <div class="label">City:</div>
-      <div class="value">Anytown</div>
+      <div class="value">{{profile.city}}</div>
     </div>
     <div class="profile-info">
       <div class="label">Country:</div>
-      <div class="value">Country</div>
+      <div class="value">{{profile.country}}</div>
     </div>
     <div class="profile-info">
       <div class="label">Phone Number:</div>
-      <div class="value">+1 (555) 123-4567</div>
+      <div class="value">{{profile.phoneNumber}}</div>
     </div>
     <div class="profile-info">
       <div class="label">Profession:</div>
-      <div class="value">Software Developer</div>
+      <div class="value">{{profile.profession}}</div>
     </div><br>
-    <div class="penalty-points">Penalty Points: 5</div>
+    <div *ngIf="hasPenaltyPoints" class="penalty-points">Penalty Points: {{profile.penaltyPoints}}</div>
 </div>
 <button class="bottom-right-button" mat-icon-button (click)="editProfile()">
     <mat-icon>edit</mat-icon>
