@@ -4,19 +4,21 @@ import { CustomerProfileComponent } from './customer-profile/customer-profile.co
 import { MaterialModule } from 'src/app/infrastructure/material/material.module';
 import { EditCustomerProfileComponent } from './edit-customer-profile/edit-customer-profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { CompanyRegistrationComponent } from './company-registration/company-registration.component';
 @NgModule({
   declarations: [
     CustomerProfileComponent,
-    EditCustomerProfileComponent
+    EditCustomerProfileComponent,
+    CompanyRegistrationComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
-    CustomerProfileComponent
+    CustomerProfileComponent,
+    CompanyRegistrationComponent
   ]
 })
 export class StakeholderModule { }

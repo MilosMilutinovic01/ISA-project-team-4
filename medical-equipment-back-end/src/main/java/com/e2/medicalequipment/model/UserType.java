@@ -1,5 +1,5 @@
 package com.e2.medicalequipment.model;
 
 public enum UserType {
-    ADMINISTRATOR, CUSTOMER
+    SYSTEM_ADMINISTRATOR, COMPANY_ADMINISTRATOR, CUSTOMER
 }
