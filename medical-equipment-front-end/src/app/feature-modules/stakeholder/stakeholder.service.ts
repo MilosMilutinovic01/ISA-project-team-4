@@ -11,8 +11,17 @@ import { environment } from 'src/env/environment';
 export class StakeholderService {
   constructor(private http: HttpClient) { }
   
-  getCompany(companyId: string): Observable<Company>{
-    return this.http.get<Company>(environment.apiHost + "companies/companyProfile/" + companyId);
+  getCompanyProfile(companyId: string): Observable<Company>{
+    return this.http.get<Company>(
+      environment.apiHost + "companies/profile/" + companyId);
+  }
+
+  editCompanyProfile(companyProfile : Company): Observable<Company> {
+    console.log("U SERVISU: ")
+    console.log(companyProfile)
+    return this.http.put<Company>(
+      environment.apiHost + 'companies/profile/edit', companyProfile
+    );
   }
 
   getCustomerProfile(id : string): Observable<CustomerProfile> {

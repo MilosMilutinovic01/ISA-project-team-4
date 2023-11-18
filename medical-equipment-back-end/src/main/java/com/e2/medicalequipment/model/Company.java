@@ -2,9 +2,11 @@ package com.e2.medicalequipment.model;
 
 import com.e2.medicalequipment.dto.CreateCompanyDTO;
 
+import com.e2.medicalequipment.dto.UpdateCompanyDTO;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
 
@@ -27,10 +29,10 @@ public class Company {
     private String country;
 
     @Column(name = "startTime")
-    private LocalDateTime startTime;
+    private LocalTime startTime;
 
     @Column(name = "endTime")
-    private LocalDateTime endTime;
+    private LocalTime endTime;
 
     @Column(name = "description")
     private String description;
@@ -44,7 +46,7 @@ public class Company {
     public Company() {
     }
 
-    public Company(Long id, String name, String address, String city, String country, LocalDateTime startTime, LocalDateTime endTime, String description, double averageRating) {
+    public Company(Long id, String name, String address, String city, String country, LocalTime startTime, LocalTime endTime, String description, double averageRating) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -61,6 +63,18 @@ public class Company {
         this.city = createCompanyDTO.city;
         this.country = createCompanyDTO.country;
         this.description = createCompanyDTO.description;
+    }
+
+    public Company(UpdateCompanyDTO updateCompanyDTO) {
+        this.id = updateCompanyDTO.id;
+        this.name = updateCompanyDTO.name;
+        this.address = updateCompanyDTO.address;
+        this.city = updateCompanyDTO.city;
+        this.country = updateCompanyDTO.country;
+        this.startTime = LocalTime.parse(updateCompanyDTO.startTime);
+        this.endTime = LocalTime.parse(updateCompanyDTO.endTime);
+        this.description = updateCompanyDTO.description;
+        this.averageRating = updateCompanyDTO.averageRating;
     }
     public Long getId() {
         return id;
@@ -102,19 +116,19 @@ public class Company {
         this.country = country;
     }
 
-    public LocalDateTime getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 

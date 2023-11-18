@@ -1,0 +1,56 @@
+<div>
+    <form class="edit-profile-form" [formGroup]="editProfileForm">
+        <div class="form-field">
+          <mat-form-field appearance="outline">
+              <mat-label>Name:</mat-label>
+              <input matInput placeholder="Name" formControlName="name">
+          </mat-form-field>
+        </div>
+    
+        <div class="form-field">
+          <mat-form-field appearance="outline">
+              <mat-label>Address:</mat-label>
+              <input matInput placeholder="Address" formControlName="address">
+          </mat-form-field>
+        </div>
+        
+        <div class="form-field">
+          <mat-form-field appearance="outline">
+              <mat-label>Description:</mat-label>
+              <input matInput placeholder="Description" formControlName="description">
+          </mat-form-field>
+        </div>
+        
+        <div class="form-field">
+          <mat-form-field appearance="outline">
+              <mat-label>Average rating:</mat-label>
+              <input matInput placeholder="Average rating" formControlName="averageRating">
+          </mat-form-field>
+        </div>
+
+        <p>SLOBODNI TERMINI ZA PREUZIMANJE OPREME</p>
+        <p>      ...        </p>
+<!--
+        <div class="form-field">
+          <mat-form-field appearance="outline">
+              <mat-label>Start Time:</mat-label>
+              <input matInput placeholder="Start time" formControlName="startTime">
+          </mat-form-field>
+        </div>
+    
+        <div class="form-field">
+          <mat-form-field appearance="outline">
+              <mat-label>End time:</mat-label>
+              <input matInput placeholder="End time" formControlName="endTime">
+          </mat-form-field>
+        </div>  
+      -->
+        <p>SPISAK DRUGIH ADMINA KOMPANIJE</p>
+        <p>      ...        </p>
+
+
+        <button class="bottom-right-button" mat-icon-button (click)="saveChanges()">
+          <mat-icon>save</mat-icon>
+        </button>
+      </form>
+    </div>

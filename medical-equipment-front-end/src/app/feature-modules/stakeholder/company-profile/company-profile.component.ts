@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { Router } from '@angular/router';
 import { StakeholderService } from '../stakeholder.service';
 import { Company } from 'src/app/infrastructure/auth/model/company.model';
 
@@ -10,19 +10,19 @@ import { Company } from 'src/app/infrastructure/auth/model/company.model';
 })
 export class CompanyProfileComponent {
   company : Company = {
-    id : '0',
+    id : NaN,
     name : '',
     address : '',
-    city : '',
-    country : '', 
-    startTime : '',
-    endTime : '',
     description : '',
-    averageRating : '',
+    city: '',
+    country: '',
+    startTime: '',
+    endTime: '',
+    averageRating : NaN,
   }
   companyId : string = '';
 
-  constructor(private service: StakeholderService) { }
+  constructor(private service: StakeholderService, private router: Router) { }
 
   ngOnInit(): void {
     this.getCompany();
@@ -30,7 +30,7 @@ export class CompanyProfileComponent {
 
   getCompany(): void {
     this.companyId = '1';
-    this.service.getCompany(this.companyId).subscribe({
+    this.service.getCompanyProfile(this.companyId).subscribe({
       next: (result) =>{
         this.company = result;
         console.log(this.company);
@@ -42,6 +42,6 @@ export class CompanyProfileComponent {
   }
 
   editProfile(): void {
-    
+    this.router.navigate(['/editCompanyProfile']);
   }
 }
