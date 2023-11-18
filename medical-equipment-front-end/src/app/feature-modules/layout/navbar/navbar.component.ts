@@ -23,6 +23,12 @@ export class NavbarComponent {
     this.router.navigate(['/companyRegistration']);
   }
 
+  companyAdministratorRegistration(): void {
+    this.router.navigate(['/companyAdministratorRegistration']);
+  }
+  companyProfile(): void {
+    this.router.navigate(['/companyProfile']);
+  }
   navigateToMedicalEquipment(): void {
     this.router.navigate(['/']);
   }
