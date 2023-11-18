@@ -2,11 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CustomerProfile } from 'src/app/infrastructure/auth/model/customer-profile.model';
+import { CreateCompanyModel } from './model/create-company.model';
 import { environment } from 'src/env/environment';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class StakeholderService {
 
   constructor(private http: HttpClient) { }
@@ -23,5 +25,9 @@ export class StakeholderService {
       environment.apiHost + 'users/profile/edit',
       profile
     );
+  }
+
+  registerCompany(Company: CreateCompanyModel): Observable<CreateCompanyModel> {
+    return this.http.post<CreateCompanyModel>(environment.apiHost + 'companies/register', Company);
   }
 }

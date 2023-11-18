@@ -1,0 +1,81 @@
+<div>
+  <form [formGroup]="companyForm">
+    <p>Register new company</p>
+    <div class="company-form">
+      <mat-form-field class="form-field">
+        <mat-label>Name</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          formControlName="name"
+          cdkAutosizeMaxRows="5"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Address</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          formControlName="address"
+          cdkAutosizeMaxRows="5"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>City</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          formControlName="city"
+          cdkAutosizeMaxRows="5"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Country</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          formControlName="country"
+          cdkAutosizeMaxRows="5"
+        ></textarea>
+      </mat-form-field>
+      <div class="time-container">
+        <mat-form-field class="form-field">
+          <input
+            matInput
+            type="time"          
+            formControlName="startTime"
+          />
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <input
+            matInput
+            type="time"
+            formControlName="endTime"
+          />
+        </mat-form-field>
+      </div>
+      <mat-form-field class="form-field">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          formControlName="description"
+          cdkAutosizeMaxRows="5"
+        ></textarea>
+      </mat-form-field>
+      <button
+        color="primary"
+        type="submit"
+        (click)="registerCompany()"
+        mat-raised-button
+      >
+        Register
+      </button>
+    </div>
+  </form>
+</div>
