@@ -18,16 +18,9 @@ public class Company {
     private Long id;
     @Column(name = "name")
     private String name;
-
-    /*@OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private Address address;*/
-    @Column(name = "address")
-    private String address;
-    @Column(name = "city")
-    private String city;
-    @Column(name = "country")
-    private String country;
+    private Address address;
 
     @Column(name = "startTime")
     private LocalTime startTime;
@@ -48,12 +41,10 @@ public class Company {
     public Company() {
     }
 
-    public Company(Long id, String name, String address, String city, String country, LocalTime startTime, LocalTime endTime, String description, double averageRating) {
+    public Company(Long id, String name, Address address, LocalTime startTime, LocalTime endTime, String description, double averageRating) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.city = city;
-        this.country = country;
         this.startTime = startTime;
         this.endTime = endTime;
         this.description = description;
@@ -61,9 +52,6 @@ public class Company {
     }
     public Company(CreateCompanyDTO createCompanyDTO) {
         this.name = createCompanyDTO.name;
-        this.address = createCompanyDTO.address;
-        this.city = createCompanyDTO.city;
-        this.country = createCompanyDTO.country;
         this.description = createCompanyDTO.description;
     }
     public Long getId() {
@@ -82,30 +70,12 @@ public class Company {
         this.name = name;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
-
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     public LocalTime getStartTime() {
         return startTime;
     }
