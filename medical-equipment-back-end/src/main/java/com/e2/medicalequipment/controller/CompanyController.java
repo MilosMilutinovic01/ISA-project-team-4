@@ -46,7 +46,6 @@ public class CompanyController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(new UpdateCompanyDTO(company), HttpStatus.OK);
-       // return new ResponseEntity<>(company, HttpStatus.OK);
     }
 
     @PutMapping(value = "/profile/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

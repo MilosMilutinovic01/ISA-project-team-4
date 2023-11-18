@@ -9,7 +9,6 @@ import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
 
 @Entity
 @Table(schema = "stakeholders", name = "companies")
-@Inheritance(strategy=TABLE_PER_CLASS)
 public class Company {
     @Id
     @SequenceGenerator(name = "companySeq", sequenceName = "companySeq", initialValue = 1, allocationSize = 1)

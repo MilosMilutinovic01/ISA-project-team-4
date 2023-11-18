@@ -15,6 +15,7 @@ public class CompanyAdministratorDTO {
     public String country;
 
     public String phoneNumber;
+    public long companyId;
 
     public CompanyAdministratorDTO() {
     }

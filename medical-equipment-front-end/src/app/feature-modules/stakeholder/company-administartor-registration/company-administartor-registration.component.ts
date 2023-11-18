@@ -11,6 +11,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StakeholderService } from '../stakeholder.service';
 import { CompanyAdministrator } from '../model/company-administrator.model';
+import { Company } from '../model/company.model';
 import { Address } from '../model/address.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -22,7 +23,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class CompanyAdministartorRegistrationComponent {
   constructor(
     private service: StakeholderService,
-    @Inject(MAT_DIALOG_DATA) public data: CompanyAdministrator,
+    @Inject(MAT_DIALOG_DATA) public data: { compId: number },
     private dialogRef: MatDialogRef<CompanyAdministartorRegistrationComponent>
   ) {}
 
@@ -32,7 +33,6 @@ export class CompanyAdministartorRegistrationComponent {
     street: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     phoneNumber: new FormControl('', [
       Validators.required,
@@ -41,25 +41,28 @@ export class CompanyAdministartorRegistrationComponent {
   });
 
   registerCompanyAdministrator(): void {
-    // const address: CreateAddressModel = {
-    //   street: this.companyForm.value.street || '',
-    //   city: this.companyForm.value.city || '',
-    //   country: this.companyForm.value.country || '',
-    // };
-
     const companyAdministrator: CompanyAdministrator = {
       name: this.companyAdministratorForm.value.name || '',
       lastname: this.companyAdministratorForm.value.lastname || '',
       address: this.companyAdministratorForm.value.street || '',
       city: this.companyAdministratorForm.value.city || '',
       country: this.companyAdministratorForm.value.country || '',
-      password: this.companyAdministratorForm.value.password || '',
       email: this.companyAdministratorForm.value.email || '',
       phoneNumber: this.companyAdministratorForm.value.phoneNumber || '',
+      companyId: this.data.compId 
     };
+    console.log(companyAdministrator.companyId)
     if (this.companyAdministratorForm.valid) {
-      console.log(companyAdministrator )
-      window.location.reload();
+      this.service.registerCompanyAdministrator(companyAdministrator)
+        .subscribe(
+          (response) => {
+            console.log('Registration successful:', response);
+          },
+          (error) => {
+            console.error('Registration failed:', error);
+          }
+        );
+  
       this.dialogRef.close(companyAdministrator);
     }
   }

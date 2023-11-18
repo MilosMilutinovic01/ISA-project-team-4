@@ -12,6 +12,7 @@ import { MaterialModule } from './infrastructure/material/material.module';
 import { StakeholderModule } from './feature-modules/stakeholder/stakeholder.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+
 @NgModule({
   declarations: [AppComponent, LoginComponent],
   imports: [

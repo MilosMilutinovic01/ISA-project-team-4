@@ -30,7 +30,7 @@ export class CompanyProfileComponent {
   }
 
   getCompany(): void {
-    this.companyId = '29';
+    this.companyId = '31';
     this.service.getCompanyProfile(this.companyId).subscribe({
       next: (result) =>{
         this.company = result;
@@ -50,11 +50,7 @@ export class CompanyProfileComponent {
       const dialogRef = this.dialog.open(CompanyAdministartorRegistrationComponent, {
         width: '50%', 
         height: '100%',
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(result)
-      });
-      
+        data: {compId : this.company.id}
+      });    
   }
 }

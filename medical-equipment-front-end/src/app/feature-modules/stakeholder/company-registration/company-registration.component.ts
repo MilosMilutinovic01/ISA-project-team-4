@@ -43,6 +43,7 @@ export class CompanyRegistrationComponent {
       this.service.registerCompany(company).subscribe({
         next: () => {
           alert('Succesfully created!');
+          window.location.reload();
         },
       });
     } 
