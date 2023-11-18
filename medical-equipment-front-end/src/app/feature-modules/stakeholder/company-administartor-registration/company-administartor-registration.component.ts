@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StakeholderService } from '../stakeholder.service';
-import { CompanyAdministratorModel } from '../model/company-administrator.model';
-import { AddressModel } from '../model/address.model';
+import { CompanyAdministrator } from '../model/company-administrator.model';
+import { Address } from '../model/address.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -22,7 +22,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class CompanyAdministartorRegistrationComponent {
   constructor(
     private service: StakeholderService,
-    @Inject(MAT_DIALOG_DATA) public data: CompanyAdministratorModel,
+    @Inject(MAT_DIALOG_DATA) public data: CompanyAdministrator,
     private dialogRef: MatDialogRef<CompanyAdministartorRegistrationComponent>
   ) {}
 
@@ -47,7 +47,7 @@ export class CompanyAdministartorRegistrationComponent {
     //   country: this.companyForm.value.country || '',
     // };
 
-    const companyAdministrator: CompanyAdministratorModel = {
+    const companyAdministrator: CompanyAdministrator = {
       name: this.companyAdministratorForm.value.name || '',
       lastname: this.companyAdministratorForm.value.lastname || '',
       address: this.companyAdministratorForm.value.street || '',

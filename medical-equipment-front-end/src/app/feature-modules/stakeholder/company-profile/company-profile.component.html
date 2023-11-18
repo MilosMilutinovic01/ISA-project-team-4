@@ -1,40 +1,24 @@
 <div class="card">
-    <div class="profile-info">
-      <div class="label">Name:</div>
-      <div class="value">{{ company.name }}</div>
-    </div>
-    <div class="profile-info">
-      <div class="label">Address:</div>
-      <div class="value">{{ company.address }}</div>
-    </div>
-    <div class="profile-info">
-      <div class="label">City:</div>
-      <div class="value">{{ company.city }}</div>
-    </div>
-    <div class="profile-info">
-      <div class="label">Country:</div>
-      <div class="value">{{ company.country }}</div>
-    </div>
-    <div class="profile-info">
-      <div class="label">Start time:</div>
-      <div class="value">{{ company.startTime }}</div>
-    </div>
-    <div class="profile-info">
-      <div class="label">End time:</div>
-      <div class="value">{{ company.endTime }}</div>
-    </div>
-    <div class="profile-info">
-      <div class="label">Description:</div>
-      <div class="value">{{ company.description }}</div>
-    </div>
-    <div class="profile-info">
-      <div class="label">Average rating:</div>
-      <div class="value">{{ company.averageRating }}</div>
-    </div><br>
-    <button mat-icon-button (click)="addCompanyAdministrator()">
-      <mat-icon>add</mat-icon>
-    </button>
+  <div class="profile-info">
+    <div class="label">Name:</div>
+    <div class="value">{{ company.name }}</div>
+  </div>
+  <div class="profile-info">
+    <div class="label">Address:</div>
+    <div class="value">{{ company.address.street }},{{company.address.city}},{{company.address.country}}</div>
+  </div>
+
+  <div class="profile-info">
+    <div class="label">Average rating:</div>
+    <div class="value">{{ company.averageRating }}</div>
+  </div>
+  <br />
+  <p>lista opreme koju kompanija ima na stanju</p>
+  <br />
+  <button mat-icon-button (click)="addCompanyAdministrator()">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>
 <button class="bottom-right-button" mat-icon-button (click)="editProfile()">
-    <mat-icon>edit</mat-icon>
+  <mat-icon>edit</mat-icon>
 </button>

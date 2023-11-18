@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { Router } from '@angular/router';
 import { StakeholderService } from '../stakeholder.service';
-import { Company } from 'src/app/infrastructure/auth/model/company.model';
+import { Company } from '../model/company.model';
+import { Address } from '../model/address.model';
 import { MatDialog } from '@angular/material/dialog';
 import { CompanyAdministartorRegistrationComponent } from '../company-administartor-registration/company-administartor-registration.component';
 
@@ -12,27 +13,25 @@ import { CompanyAdministartorRegistrationComponent } from '../company-administar
 })
 export class CompanyProfileComponent {
   company : Company = {
-    id : '28',
+    id : NaN,
     name : '',
-    address : '',
-    city : '',
-    country : '', 
-    startTime : '',
-    endTime : '',
+    address: { id: NaN, street:'', city:'',country:''},
     description : '',
-    averageRating : '',
+    startTime: '',
+    endTime: '',
+    averageRating : NaN,
   }
   companyId : string = '';
 
-  constructor(private service: StakeholderService,private dialog: MatDialog) { }
+  constructor(private service: StakeholderService,private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
     this.getCompany();
   }
 
   getCompany(): void {
-    this.companyId = '28';
-    this.service.getCompany(this.companyId).subscribe({
+    this.companyId = '29';
+    this.service.getCompanyProfile(this.companyId).subscribe({
       next: (result) =>{
         this.company = result;
         console.log(this.company);
@@ -44,7 +43,7 @@ export class CompanyProfileComponent {
   }
 
   editProfile(): void {
-    
+    this.router.navigate(['/editCompanyProfile']);
   }
 
   addCompanyAdministrator(): void {

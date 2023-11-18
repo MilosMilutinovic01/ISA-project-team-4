@@ -7,13 +7,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CompanyRegistrationComponent } from './company-registration/company-registration.component';
 import { CompanyAdministartorRegistrationComponent } from './company-administartor-registration/company-administartor-registration.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
+import { EditCompanyProfileComponent } from './edit-company-profile/edit-company-profile.component';
 
 @NgModule({
   declarations: [
     CustomerProfileComponent,
     EditCustomerProfileComponent,
     CompanyRegistrationComponent,
-    CompanyAdministartorRegistrationComponent
+    CompanyAdministartorRegistrationComponent,
+    CompanyProfileComponent,
+    EditCompanyProfileComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +28,8 @@ import { MatDialogModule } from '@angular/material/dialog';
   exports: [
     CustomerProfileComponent,
     CompanyRegistrationComponent,
-    CompanyAdministartorRegistrationComponent
+    CompanyAdministartorRegistrationComponent,
+    CompanyProfileComponent
   ]
 })
 export class StakeholderModule { }

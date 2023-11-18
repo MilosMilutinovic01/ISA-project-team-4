@@ -11,11 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './infrastructure/material/material.module';
 import { StakeholderModule } from './feature-modules/stakeholder/stakeholder.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CompanyProfileComponent } from './feature-modules/stakeholder/company-profile/company-profile.component';
-
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, CompanyProfileComponent],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     LayoutModule,

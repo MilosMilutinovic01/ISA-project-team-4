@@ -1,5 +1,5 @@
 export interface Company {
-    id : string;
+    id : number;
     name : string;
     address : string;
     city : string;
@@ -7,6 +7,6 @@ export interface Company {
     startTime : string;
     endTime : string;
     description : string;
-    averageRating : string;
+    averageRating : number;
   }
   

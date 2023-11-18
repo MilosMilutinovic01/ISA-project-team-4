@@ -1,4 +1,5 @@
-export interface CompanyAdministratorModel {
+export interface CompanyAdministrator {
+    id?:number;
     name: string;
     address: string;
     email: string;

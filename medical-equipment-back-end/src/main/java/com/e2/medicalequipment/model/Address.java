@@ -1,6 +1,7 @@
 package com.e2.medicalequipment.model;
 
 import com.e2.medicalequipment.dto.CreateAddressDTO;
+import com.e2.medicalequipment.dto.UpdateAddressDTO;
 import jakarta.persistence.*;
 
 import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
@@ -33,6 +34,13 @@ public class Address {
     }
 
     public Address(CreateAddressDTO dto) {
+        this.street = dto.street;
+        this.city = dto.city;
+        this.country = dto.country;
+    }
+
+    public Address(UpdateAddressDTO dto) {
+        this.id = dto.id;
         this.street = dto.street;
         this.city = dto.city;
         this.country = dto.country;
