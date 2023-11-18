@@ -1,9 +1,12 @@
 package com.e2.medicalequipment.controller;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+import com.e2.medicalequipment.dto.UpdateCustomerDTO;
 import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.service.CustomerService;
 import com.e2.medicalequipment.dto.CreateCustomerDTO;
 import com.e2.medicalequipment.service.EmailService;
+import jakarta.ws.rs.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,33 @@ public class CustomerController {
         return "welcome";
     }
 
+    @GetMapping(value = "/profile/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<Customer> getCustomer(@PathVariable String id){
+        System.out.println("ID: "+ id);
+        Customer customer = null;
+        try {
+            customer = customerService.Get(id);
+            return new ResponseEntity<Customer>(customer, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Customer>(customer, HttpStatus.CONFLICT);
+        }
+    }
+
+    @PutMapping(value = "/profile/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<Customer> updateCustomer(@RequestBody UpdateCustomerDTO customerDTO){
+        Customer customer = null;
+        try {
+            customer = customerService.Update(customerDTO);
+            return new ResponseEntity<Customer>(customer, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Customer>(customer, HttpStatus.CONFLICT);
+        }
+    }
+
     @PostMapping(value = "/register",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Customer> createTest(@RequestBody CreateCustomerDTO customerDto)  {
         Customer savedCustomer = null;
@@ -40,4 +70,6 @@ public class CustomerController {
             return new ResponseEntity<Customer>(savedCustomer, HttpStatus.CONFLICT);
         }
     }
+
+
 }

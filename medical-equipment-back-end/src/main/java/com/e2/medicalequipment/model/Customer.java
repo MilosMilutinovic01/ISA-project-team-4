@@ -1,6 +1,7 @@
 package com.e2.medicalequipment.model;
 
 import com.e2.medicalequipment.dto.CreateCustomerDTO;
+import com.e2.medicalequipment.dto.UpdateCustomerDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,11 +13,14 @@ public class Customer extends User{
     @Column(name = "penaltyPoints")
     private Long penaltyPoints;
 
+    @Column(name = "category")
+    private CustomerCategory category;
+
     public Customer() {
 
     }
 
-    public Customer(Long id, String name, String lastname, String email, String city, String country, String address, String phoneNumber, String password, UserType userType, String profession, Long penaltyPoints) {
+    public Customer(Long id, String name, String lastname, String email, String city, String country, String address, String phoneNumber, String password, UserType userType, String profession, Long penaltyPoints, CustomerCategory category) {
         super(id,
                 name,
                 lastname,
@@ -29,6 +33,7 @@ public class Customer extends User{
                 userType);
         this.profession = profession;
         this.penaltyPoints = penaltyPoints;
+        this.category = category;
     }
 
     public Customer(CreateCustomerDTO createCustomerDTO) {
@@ -42,6 +47,20 @@ public class Customer extends User{
                 createCustomerDTO.phoneNumber,
                 createCustomerDTO.password);
         this.profession = createCustomerDTO.profession;
+    }
+    public Customer(UpdateCustomerDTO updateCustomerDTO) {
+        super(updateCustomerDTO.id,
+                updateCustomerDTO.name,
+                updateCustomerDTO.lastname,
+                updateCustomerDTO.email,
+                updateCustomerDTO.city,
+                updateCustomerDTO.country,
+                updateCustomerDTO.address,
+                updateCustomerDTO.phoneNumber,
+                updateCustomerDTO.password);
+        this.profession = updateCustomerDTO.profession;
+        this.penaltyPoints = updateCustomerDTO.penaltyPoints;
+        this.category = updateCustomerDTO.category;
     }
 
     public String getProfession() {
@@ -60,4 +79,11 @@ public class Customer extends User{
         this.penaltyPoints = penaltyPoints;
     }
 
+    public CustomerCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(CustomerCategory category) {
+        this.category = category;
+    }
 }
