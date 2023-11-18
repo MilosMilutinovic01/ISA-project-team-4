@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CustomerProfile } from 'src/app/infrastructure/auth/model/customer-profile.model';
+import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
 import { CreateCompanyModel } from './model/create-company.model';
 import { environment } from 'src/env/environment';
+import { Company } from 'src/app/shared/model/company.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,11 @@ export class StakeholderService {
 
   registerCompany(Company: CreateCompanyModel): Observable<CreateCompanyModel> {
     return this.http.post<CreateCompanyModel>(environment.apiHost + 'companies/register', Company);
+  }
+
+  getCompanies(): Observable<Company[]> {
+    return this.http.get<Company[]>(
+      environment.apiHost + 'companies/'
+    );
   }
 }

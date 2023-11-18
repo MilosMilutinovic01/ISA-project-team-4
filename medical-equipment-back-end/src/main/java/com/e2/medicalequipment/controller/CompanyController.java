@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/companies", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin
@@ -28,6 +31,19 @@ public class CompanyController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Company>(savedCompany, HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<Company>> getAll(){
+        List<Company> companies = null;
+        try {
+            companies = companyService.GetAll();
+            return new ResponseEntity<List<Company>>(companies, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Company>>(companies, HttpStatus.CONFLICT);
         }
     }
 }

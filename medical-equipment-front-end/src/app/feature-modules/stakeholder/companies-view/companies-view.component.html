@@ -1,13 +1,29 @@
 <div>
+    <form class="search-form" [formGroup]="searchForm">
+        <div>
+          <mat-form-field class="form-field" appearance="outline">
+              <mat-label>Name:</mat-label>
+              <input matInput placeholder="Name" formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field class="form-field" appearance="outline">
+              <mat-label>Address:</mat-label>
+              <input matInput placeholder="Address" formControlName="address">
+          </mat-form-field>
+
+          <button mat-fab class="search-button">
+            <mat-icon>search</mat-icon>
+        </button>
+        </div>
+    </form>
+
     <div class="card-container">
-        <mat-card class="company-card">
+        <mat-card *ngFor="let c of companies" class="company-card">
             <div>
                 <mat-card-header>
-                    <mat-card-title class="card-title">Kompanija</mat-card-title>
-                    <div class="number-container">
-                        <span class="card-number">Rating: 0</span>
-                    </div>
-                    <mat-card-subtitle class="card-subtitle">Bozidara Jankovica 5, Banovci, Srbija</mat-card-subtitle>
+                    <mat-card-title class="card-title">{{c.name}}</mat-card-title>
+                    <span class="card-number">Rating: {{c.averageRating}}</span>
+                    <mat-card-subtitle class="card-subtitle">{{c.address}}, {{c.city}}, {{c.country}}</mat-card-subtitle>
                 </mat-card-header>
             </div>
         </mat-card>

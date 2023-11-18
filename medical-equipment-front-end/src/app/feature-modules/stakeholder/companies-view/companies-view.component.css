@@ -15,13 +15,6 @@
     transform: scale(1.01);
   }
 
-  .title-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 20px;
-  }
-
   .card-title {
     font-size: 30px;
     font-weight: bold;
@@ -37,12 +30,36 @@
     padding-bottom: 20px;
   }
 
-  .number-container {
-    margin-left: 610px;
-    margin-top: 5px;
+  .card-number{
+    font-weight: bold;
+    font-size: 17px;
+    margin-top: 7px;
   }
   
-  .card-number {
-    font-size: 20px;
-    font-weight: bold;
+  .search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 20vh; 
+  }
+
+  .search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .form-field {
+    margin-bottom: 3px;
+    margin-top: 10px;
+    padding-right: 20px;
+    flex: 1; 
+    align-self: stretch;
+  }
+
+  .search-button {
+    background-color: #3498db;
+    top: 5px;
   }

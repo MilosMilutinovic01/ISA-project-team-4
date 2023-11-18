@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CustomerProfile } from 'src/app/infrastructure/auth/model/customer-profile.model';
+import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
 import { StakeholderService } from '../stakeholder.service';
 
 @Component({
