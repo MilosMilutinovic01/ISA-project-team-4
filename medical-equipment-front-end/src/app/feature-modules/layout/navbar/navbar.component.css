@@ -36,7 +36,7 @@ body {
   transition: background-color 0.15s, padding 0.15s;
 }
 
-.navbar-button button {
+.navbar-button {
   background: none;
   border: none;
   color: white;
@@ -48,4 +48,8 @@ body {
 
 .navbar-button:hover {
   background-color: #2980b9;
+}
+
+.navbar-logo-text:hover {
+  cursor: pointer;
 }

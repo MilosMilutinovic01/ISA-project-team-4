@@ -30,7 +30,7 @@ export class CompanyProfileComponent {
   }
 
   getCompany(): void {
-    this.companyId = '31';
+    this.companyId = '1';
     this.service.getCompanyProfile(this.companyId).subscribe({
       next: (result) =>{
         this.company = result;
