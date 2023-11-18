@@ -10,7 +10,7 @@ import { environment } from 'src/env/environment';
 })
 export class NavbarComponent {
   constructor(public router: Router) {}
-  
+
   register(): void {
     this.router.navigate(['/register']);
   }
@@ -25,5 +25,8 @@ export class NavbarComponent {
 
   companyAdministratorRegistration(): void {
     this.router.navigate(['/companyAdministratorRegistration']);
+  }
+  companyProfile(): void {
+    this.router.navigate(['/companyProfile']);
   }
 }

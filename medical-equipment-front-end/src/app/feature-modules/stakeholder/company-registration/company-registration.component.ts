@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { StakeholderService } from '../stakeholder.service';
-import { CreateCompanyModel } from '../model/create-company.model';
-import { CreateAddressModel } from '../model/create-address.model';
+import { CompanyModel } from '../model/company.model';
+import { AddressModel } from '../model/address.model';
 @Component({
   selector: 'app-company-registration',
   templateUrl: './company-registration.component.html',
@@ -25,13 +25,13 @@ export class CompanyRegistrationComponent {
   
   registerCompany(): void {
     
-    const address: CreateAddressModel = {
+    const address: AddressModel = {
       street: this.companyForm.value.street || '',
       city: this.companyForm.value.city || '',
       country: this.companyForm.value.country || '',
     };
     
-    const company: CreateCompanyModel = {
+    const company: CompanyModel = {
       name: this.companyForm.value.name || '',
       address: address,
       city: this.companyForm.value.city || '',

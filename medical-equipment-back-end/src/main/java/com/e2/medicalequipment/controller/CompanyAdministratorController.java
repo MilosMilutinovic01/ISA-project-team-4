@@ -1,6 +1,7 @@
 package com.e2.medicalequipment.controller;
 
 import com.e2.medicalequipment.dto.CompanyAdministratorDTO;
+import com.e2.medicalequipment.model.Company;
 import com.e2.medicalequipment.model.CompanyAdministrator;
 import com.e2.medicalequipment.service.CompanyAdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;

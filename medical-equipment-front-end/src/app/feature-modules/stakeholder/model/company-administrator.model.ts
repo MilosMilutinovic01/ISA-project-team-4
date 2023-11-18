@@ -1,4 +1,4 @@
-export interface CreateCompanyAdministratorModel {
+export interface CompanyAdministratorModel {
     name: string;
     address: string;
     email: string;

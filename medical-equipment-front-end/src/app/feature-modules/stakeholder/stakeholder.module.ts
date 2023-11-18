@@ -6,6 +6,8 @@ import { EditCustomerProfileComponent } from './edit-customer-profile/edit-custo
 import { ReactiveFormsModule } from '@angular/forms';
 import { CompanyRegistrationComponent } from './company-registration/company-registration.component';
 import { CompanyAdministartorRegistrationComponent } from './company-administartor-registration/company-administartor-registration.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
 @NgModule({
   declarations: [
     CustomerProfileComponent,
@@ -17,6 +19,7 @@ import { CompanyAdministartorRegistrationComponent } from './company-administart
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
+    MatDialogModule
   ],
   exports: [
     CustomerProfileComponent,
