@@ -62,4 +62,18 @@ public class CompanyController {
             return new ResponseEntity<List<Company>>(searchedCompanies, HttpStatus.CONFLICT);
         }
     }
+
+    @PutMapping(value = "/filter/{rate}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<Company>> filterCompanies(@PathVariable String rate,
+                                                         @RequestBody List<Company> companies){
+        List<Company> filteredCompanies = null;
+        try {
+            filteredCompanies = companyService.Filter(rate, companies);
+            return new ResponseEntity<List<Company>>(filteredCompanies, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Company>>(filteredCompanies, HttpStatus.CONFLICT);
+        }
+    }
 }

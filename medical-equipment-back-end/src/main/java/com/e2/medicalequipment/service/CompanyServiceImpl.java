@@ -54,4 +54,12 @@ public class CompanyServiceImpl implements CompanyService {
                         (c.getAddress().getCountry().toLowerCase().contains(country) || country.equals("empty"))).collect(Collectors.toList());
         return searchedCompanies;
     }
+
+    @Override
+    public List<Company> Filter(String rate, List<Company> companies) throws Exception {
+        Double rating = Double.parseDouble(rate);
+        List<Company> filteredCompanies = companies.stream()
+                .filter(c -> c.getAverageRating() > (rating-1) && c.getAverageRating() <= rating).collect(Collectors.toList());
+        return filteredCompanies;
+    }
 }

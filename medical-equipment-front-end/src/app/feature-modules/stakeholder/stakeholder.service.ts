@@ -50,4 +50,13 @@ export class StakeholderService {
       country
     );
   }
+
+  filterCompanies(rate : string, 
+                  companies : Company[]): Observable<Company[]> {
+    return this.http.put<Company[]>(
+      environment.apiHost + 'companies/filter/'+
+      rate,
+      companies
+    );
+    }
 }

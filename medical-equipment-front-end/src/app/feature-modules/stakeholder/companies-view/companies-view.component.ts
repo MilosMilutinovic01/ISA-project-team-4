@@ -14,6 +14,7 @@ import { FilterCompaniesDialogComponent } from '../filter-companies-dialog/filte
 export class CompaniesViewComponent implements OnInit {
   companies : Company[] = [];
   rate : string = '';
+  filterLabel : string = ''; 
 
   searchForm = new FormGroup({
     name: new FormControl(''),
@@ -66,12 +67,53 @@ export class CompaniesViewComponent implements OnInit {
       height: '65%',
       data: { rate: this.rate } 
       }).afterClosed().subscribe(result => {
-        console.log(result);
         this.rate = result;
+        console.log(this.rate);
+
+        if(result){
+          this.filterCompanies(this.rate);
+          this.changeFilterLabel(this.rate);
+        }
       });
+  }
+
+  filterCompanies(rate : string):void{
+    this.service.filterCompanies(rate, this.companies).subscribe({
+      next:(result : Company[]) => {
+        this.companies = result
+      },
+      error: () =>{
+        console.log(console.error())
+      }
+    })
+  }
+
+  changeFilterLabel(rate : string):void{
+      switch(parseInt(rate)){
+        case 1:
+            this.filterLabel = "Rate lesser than 1";
+            break;
+        case 2:
+            this.filterLabel = "Rate between 1 and 2";
+            break;
+        case 3:
+            this.filterLabel = "Rate between 2 and 3";
+            break;
+        case 4:
+            this.filterLabel = "Rate between 3 and 4";
+            break;
+        case 5:
+            this.filterLabel = "Rate between 4 and 5";
+            break;
+        default:
+            this.filterLabel = "";
+            break;
+      }
   }
 
   refresh():void {
     this.getCompanies();
+    this.filterLabel = "";
+    this.searchForm.setValue({name: '', street: '', city: '', country: ''})
   }
 }

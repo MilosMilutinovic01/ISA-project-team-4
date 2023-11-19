@@ -13,4 +13,7 @@ public interface CompanyService {
                          String street,
                          String city,
                          String country) throws Exception;
+
+    List<Company> Filter(String rate,
+                         List<Company> companies) throws Exception;
 }

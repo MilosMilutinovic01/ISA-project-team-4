@@ -67,6 +67,7 @@ export class EditCustomerProfileComponent implements OnInit{
   }
 
   saveChanges(): void{
+    
     const editProfile: CustomerProfile = {
       id: this.profile.id,
       name: this.editProfileForm.value.name || '',
