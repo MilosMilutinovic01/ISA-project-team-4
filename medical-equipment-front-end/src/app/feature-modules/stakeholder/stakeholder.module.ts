@@ -14,6 +14,8 @@ import { CompaniesViewComponent } from './companies-view/companies-view.componen
 import { FilterCompaniesDialogComponent } from './filter-companies-dialog/filter-companies-dialog.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { EditCompanyAdministratorProfileComponent } from './edit-company-administrator-profile/edit-company-administrator-profile.component'
+import { EquipmentViewComponent } from './equipment-view/equipment-view.component'
+import {MatChip, MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -26,14 +28,16 @@ import { EditCompanyAdministratorProfileComponent } from './edit-company-adminis
     CompanyProfileComponent,
     EditCompanyProfileComponent,
     CompanyAdministratorProfileComponent,
-    EditCompanyAdministratorProfileComponent
+    EditCompanyAdministratorProfileComponent,
+    EquipmentViewComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatChipsModule
   ],
   exports: [
     CustomerProfileComponent,
@@ -43,9 +47,11 @@ import { EditCompanyAdministratorProfileComponent } from './edit-company-adminis
     FilterCompaniesDialogComponent,
     CompanyAdministartorRegistrationComponent,
     CompanyProfileComponent,
+    EquipmentViewComponent,
     MaterialModule,
     ReactiveFormsModule,
     FormsModule
+
   ]
 })
 export class StakeholderModule { }

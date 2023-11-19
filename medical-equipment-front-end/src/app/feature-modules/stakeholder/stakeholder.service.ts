@@ -6,6 +6,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/env/environment';
 import { Company } from 'src/app/shared/model/company.model';
 import { UpdateCompanyAdministrator } from 'src/app/shared/model/update-company-administrator.model';
+import { Equipment } from 'src/app/shared/model/equipment.model';
+import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model';
 
 @Injectable({
   providedIn: 'root',
@@ -66,6 +68,16 @@ export class StakeholderService {
     return this.http.get<Company[]>(environment.apiHost + 'companies/');
   }
 
+  getEquipment(): Observable<Equipment[]> {
+    return this.http.get<Equipment[]>(environment.apiHost + 'equipment/');
+  }
+
+  searchEquipment(name:string,type:string): Observable<EquipmentTracking[]> {
+    return this.http.get<EquipmentTracking[]>(environment.apiHost + 'equipmentTracking/search/'+ name +
+    '/' +
+    type);
+  }
+
   searchCompanies(
     name: string,
     street: string,
@@ -94,4 +106,12 @@ export class StakeholderService {
 
   editCompanyAdministratorProfile(profile : UpdateCompanyAdministrator): Observable<UpdateCompanyAdministrator> {
     return this.http.put<UpdateCompanyAdministrator>(environment.apiHost + 'companyAdministrators/profile/edit',profile);}
-}
+
+  getAllEquipmentTrackings(): Observable<EquipmentTracking[]> {
+    return this.http.get<EquipmentTracking[]>(environment.apiHost + 'equipmentTracking/');
+  }
+  
+  getAllCompanyAdministrators(): Observable<CompanyAdministrator[]> {
+    return this.http.get<CompanyAdministrator[]>(environment.apiHost + 'companyAdministrators/');
+  }
+ }

@@ -1,6 +1,5 @@
 import { Company } from "./company.model";
-import { Address } from "./address.model";
-
+import { Address } from './address.model';
 export interface CompanyAdministrator {
     id?:number;
     name: string;
@@ -11,5 +10,5 @@ export interface CompanyAdministrator {
     city: string,
     country: string,
     phoneNumber: string;
-    companyId?: number;
+    companyId: number;
 }
