@@ -7,5 +7,5 @@ export interface Company {
     startTime: string;
     endTime: string;
     description: string;
-    averageRating: number;
+    averageRating?: number;
 }
