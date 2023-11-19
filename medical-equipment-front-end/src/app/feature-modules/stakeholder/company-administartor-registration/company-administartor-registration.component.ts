@@ -41,10 +41,16 @@ export class CompanyAdministartorRegistrationComponent {
   });
 
   registerCompanyAdministrator(): void {
+    const a: Address = {
+      street: this.companyAdministratorForm.value.street || '',
+      city: this.companyAdministratorForm.value.city || '',
+      country: this.companyAdministratorForm.value.country || '',
+    };
+
     const companyAdministrator: CompanyAdministrator = {
       name: this.companyAdministratorForm.value.name || '',
       lastname: this.companyAdministratorForm.value.lastname || '',
-      address: this.companyAdministratorForm.value.street || '',
+      address: a,
       city: this.companyAdministratorForm.value.city || '',
       country: this.companyAdministratorForm.value.country || '',
       email: this.companyAdministratorForm.value.email || '',
