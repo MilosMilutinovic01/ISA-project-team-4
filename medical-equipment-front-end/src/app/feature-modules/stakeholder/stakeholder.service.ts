@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
-import { CompanyAdministrator } from './model/company-administrator.model';
+import { CompanyAdministrator } from '../../shared/model/company-administrator.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/env/environment';
 import { Company } from 'src/app/shared/model/company.model';
@@ -79,5 +79,8 @@ export class StakeholderService {
       rate,
       companies
     );
-    }
+  }
+
+  editCompanyAdministratorProfile(profile : CompanyAdministrator): Observable<CompanyAdministrator> {
+    return this.http.put<CompanyAdministrator>(environment.apiHost + 'companyAdministrators/profile/edit',profile);}
 }

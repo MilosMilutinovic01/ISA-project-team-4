@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/companyAdministrators", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin
@@ -44,4 +46,20 @@ public class CompanyAdministratorController {
         }
         return new ResponseEntity<>(new CompanyAdministratorDTO(companyAdministrator), HttpStatus.OK);
     }
+/*
+    @PutMapping(value = "/profile/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<CompanyAdministrator> updateCompanyAdministrator(@RequestBody CompanyAdministratorDTO companyAdministratorDTO) {
+        CompanyAdministrator companyAdministrator = null;
+        try {
+            companyAdministrator = companyAdministratorService.Update(companyAdministratorDTO);
+            return new ResponseEntity<CompanyAdministrator>(companyAdministrator, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<CompanyAdministrator>(companyAdministrator, HttpStatus.CONFLICT);
+
+        }
+    }
+
+ */
 }

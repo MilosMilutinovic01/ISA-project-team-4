@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StakeholderService } from '../stakeholder.service';
-import { CompanyAdministrator } from '../model/company-administrator.model';
+import { CompanyAdministrator } from '../../../shared/model/company-administrator.model';
+import { Address } from '../../../shared/model/address.model';
 
 @Component({
   selector: 'app-company-administrator-profile',
@@ -12,7 +13,7 @@ export class CompanyAdministratorProfileComponent implements OnInit {
     profile: CompanyAdministrator = {
         id: NaN,
         name: '',
-        address: '',
+        address: { id: NaN, street:'', city:'',country:''},
         email: '',
         password: '',
         lastname: '',
@@ -32,7 +33,8 @@ export class CompanyAdministratorProfileComponent implements OnInit {
       this.service.getCompanyAdministratorProfile('28').subscribe({
         next: (result: CompanyAdministrator) => {
           this.profile = result;
-          console.log("CompanyAdmin this.profile:"+ result);
+          console.log("CompanyAdmin this.profile:");
+          console.log(this.profile);
         },
         error: () => {
           console.log(console.error());

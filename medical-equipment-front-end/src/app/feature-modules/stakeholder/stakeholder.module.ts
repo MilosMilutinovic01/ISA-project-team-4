@@ -12,7 +12,8 @@ import { EditCompanyProfileComponent } from './edit-company-profile/edit-company
 import { CompanyAdministratorProfileComponent } from './company-administrator-profile/company-administrator-profile.component';
 import { CompaniesViewComponent } from './companies-view/companies-view.component';
 import { FilterCompaniesDialogComponent } from './filter-companies-dialog/filter-companies-dialog.component';
-import {MatTooltipModule} from '@angular/material/tooltip'
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { EditCompanyAdministratorProfileComponent } from './edit-company-administrator-profile/edit-company-administrator-profile.component'
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {MatTooltipModule} from '@angular/material/tooltip'
     CompanyAdministartorRegistrationComponent,
     CompanyProfileComponent,
     EditCompanyProfileComponent,
-    CompanyAdministratorProfileComponent
+    CompanyAdministratorProfileComponent,
+    EditCompanyAdministratorProfileComponent
   ],
   imports: [
     CommonModule,

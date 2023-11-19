@@ -11,7 +11,7 @@ import { CompanyAdministartorRegistrationComponent } from 'src/app/feature-modul
 import { CompanyProfileComponent } from 'src/app/feature-modules/stakeholder/company-profile/company-profile.component';
 import { EditCompanyProfileComponent } from 'src/app/feature-modules/stakeholder/edit-company-profile/edit-company-profile.component';
 import { CompanyAdministratorProfileComponent } from 'src/app/feature-modules/stakeholder/company-administrator-profile/company-administrator-profile.component';
-
+import { EditCompanyAdministratorProfileComponent } from 'src/app/feature-modules/stakeholder/edit-company-administrator-profile/edit-company-administrator-profile.component';
 const routes: Routes = [
   { path: 'register', component: RegistrationComponent },
   { path: 'customerProfile', component: CustomerProfileComponent},
@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: 'companyProfile', component: CompanyProfileComponent},
   { path: 'editCompanyProfile', component: EditCompanyProfileComponent},
   { path: 'companyAdministratorProfile', component: CompanyAdministratorProfileComponent},
+  { path: 'editCompanyAdministratorProfile', component: EditCompanyAdministratorProfileComponent},
   { path: '', component: HomeComponent },
 ];
 

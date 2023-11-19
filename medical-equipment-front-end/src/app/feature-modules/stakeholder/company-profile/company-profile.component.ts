@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { StakeholderService } from '../stakeholder.service';
-import { Company } from '../model/company.model';
-import { Address } from '../model/address.model';
+import { Company } from '../../../shared/model/company.model';
+import { Address } from '../../../shared/model/address.model';
 import { MatDialog } from '@angular/material/dialog';
 import { CompanyAdministartorRegistrationComponent } from '../company-administartor-registration/company-administartor-registration.component';
 

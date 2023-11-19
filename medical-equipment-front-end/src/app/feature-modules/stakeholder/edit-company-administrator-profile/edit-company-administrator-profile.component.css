@@ -1,0 +1,39 @@
+.edit-profile-form {
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+  }
+
+  .form-field {
+    margin-bottom: 3px;
+    margin-top: 10px;
+  }
+
+  .password-eye {
+    font-size: 1.25rem;
+    color: #757575;
+    cursor: pointer;
+    transition: color 0.3s;
+    margin-left: 1rem;
+    width: auto;
+  }
+
+  .password-eye:hover {
+    color: #212121;
+  }
+
+  .bottom-right-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+  }

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { StakeholderService } from '../stakeholder.service';
-import { Company } from '../model/company.model';
-import { Address } from '../model/address.model';
+import { Company } from '../../../shared/model/company.model';
+import { Address } from '../../../shared/model/address.model';
 @Component({
   selector: 'app-company-registration',
   templateUrl: './company-registration.component.html',
