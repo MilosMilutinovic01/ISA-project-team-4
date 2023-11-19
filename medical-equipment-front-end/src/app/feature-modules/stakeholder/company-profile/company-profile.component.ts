@@ -65,6 +65,7 @@ export class CompanyProfileComponent {
       })
       .afterClosed()
       .subscribe((result) => {
+        this.otherAdministrators = [];
         this.getAllCompanyAdministrators();
       });
   }

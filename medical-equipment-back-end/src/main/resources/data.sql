@@ -15,21 +15,21 @@ INSERT INTO stakeholders.addresses(
 VALUES (-5, 'Novi Sad', 'Srbija', 'Cara Dusana 12');
 INSERT INTO stakeholders.companies(
     average_rating, end_time, start_time, address_id, id, description, name)
-VALUES (4,'14:30:45','08:30:45', -5, -1, 'Neki opiss', 'MEDLAB');
+VALUES (4,'14:30','08:30', -5, -1, 'Neki opiss', 'MEDLAB');
 
 INSERT INTO stakeholders.addresses(
     id, city, country, street)
 VALUES (-6, 'Novi Sad', 'Srbija', 'Fruskogorska 12');
 INSERT INTO stakeholders.companies(
     average_rating, end_time, start_time, address_id, id, description, name)
-VALUES (3,'17:30:45','07:30:45', -6, -2, 'Neki opiss', 'MEDICINSKA OPREMA NS');
+VALUES (3,'17:30','07:30', -6, -2, 'Neki opiss', 'MEDICINSKA OPREMA NS');
 
 INSERT INTO stakeholders.addresses(
     id, city, country, street)
 VALUES (-7, 'Novi Sad', 'Srbija', 'Cara Dusana 12');
 INSERT INTO stakeholders.companies(
     average_rating, end_time, start_time, address_id, id, description, name)
-VALUES (5,'14:30:45','08:30:45', -7, -3, 'Neki opiss', 'OPREMA021');
+VALUES (5,'14:30','08:30', -7, -3, 'Neki opiss', 'OPREMA021');
 
 INSERT INTO stakeholders.equipment(
     id, description, name, price, type)

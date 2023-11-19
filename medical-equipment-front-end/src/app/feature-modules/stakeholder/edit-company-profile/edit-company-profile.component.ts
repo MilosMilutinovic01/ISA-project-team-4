@@ -79,7 +79,7 @@ export class EditCompanyProfileComponent implements OnInit {
     };
 
     if (this.editProfileForm.valid) {
-      console.log(editProfile);
+      console.log('Profil za editovanje', editProfile);
       this.service.editCompanyProfile(editProfile).subscribe({
         next: (result: Company) => {
           this.profile = result;
