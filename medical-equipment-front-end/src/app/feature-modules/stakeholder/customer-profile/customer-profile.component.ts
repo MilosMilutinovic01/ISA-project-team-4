@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CustomerProfile } from 'src/app/infrastructure/auth/model/customer-profile.model';
+import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
 import { StakeholderService } from '../stakeholder.service';
 
 @Component({
@@ -29,6 +29,7 @@ export class CustomerProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getCustomerProfile();
   }
+
 
   getCustomerProfile(): void {
     this.service.getCustomerProfile('1').subscribe({

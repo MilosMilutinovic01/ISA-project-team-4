@@ -4,6 +4,8 @@ import com.e2.medicalequipment.dto.CreateCompanyDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyDTO;
 import jakarta.persistence.*;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
 
@@ -32,14 +34,12 @@ public class Company {
     @Column(name = "averageRating")
     private double averageRating;
 
-    //lista opreme
-
     //slobodni termini
 
     public Company() {
     }
 
-    public Company(Long id, String name, Address address, LocalTime startTime, LocalTime endTime, String description, double averageRating) {
+    public Company(Long id, String name, Address address, LocalTime startTime, LocalTime endTime, String description) {
         this.id = id;
         this.name = name;
         this.address = address;

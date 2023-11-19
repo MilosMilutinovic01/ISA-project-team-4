@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
 import { CompanyAdministrator } from './model/company-administrator.model';
-import { Company } from './model/company.model';
-import { CustomerProfile } from 'src/app/infrastructure/auth/model/customer-profile.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/env/environment';
+import { Company } from 'src/app/shared/model/company.model';
 
 @Injectable({
   providedIn: 'root'
@@ -52,4 +52,32 @@ export class StakeholderService {
   getCompanyAdministratorProfile(id : string): Observable<CompanyAdministrator> {
     return this.http.get<CompanyAdministrator>(environment.apiHost + 'companyAdministrators/profile/'+ id);
   }
+  
+  getCompanies(): Observable<Company[]> {
+    return this.http.get<Company[]>(
+      environment.apiHost + 'companies/'
+    );
+  }
+
+  searchCompanies(name : string, 
+                  street : string, 
+                  city : string,
+                  country : string): Observable<Company[]> {
+    return this.http.get<Company[]>(
+      environment.apiHost + 'companies/search/'+
+      name + "/" +
+      street + "/" + 
+      city + "/" +
+      country
+    );
+  }
+
+  filterCompanies(rate : string, 
+                  companies : Company[]): Observable<Company[]> {
+    return this.http.put<Company[]>(
+      environment.apiHost + 'companies/filter/'+
+      rate,
+      companies
+    );
+    }
 }

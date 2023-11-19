@@ -6,6 +6,7 @@ import { HomeComponent } from 'src/app/feature-modules/layout/home/home.componen
 import { CustomerProfileComponent } from 'src/app/feature-modules/stakeholder/customer-profile/customer-profile.component';
 import { EditCustomerProfileComponent } from 'src/app/feature-modules/stakeholder/edit-customer-profile/edit-customer-profile.component';
 import { CompanyRegistrationComponent } from 'src/app/feature-modules/stakeholder/company-registration/company-registration.component';
+import { CompaniesViewComponent } from 'src/app/feature-modules/stakeholder/companies-view/companies-view.component';
 import { CompanyAdministartorRegistrationComponent } from 'src/app/feature-modules/stakeholder/company-administartor-registration/company-administartor-registration.component';
 import { CompanyProfileComponent } from 'src/app/feature-modules/stakeholder/company-profile/company-profile.component';
 import { EditCompanyProfileComponent } from 'src/app/feature-modules/stakeholder/edit-company-profile/edit-company-profile.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'customerProfile', component: CustomerProfileComponent},
   { path: 'editCustomerProfile', component: EditCustomerProfileComponent},
   { path: 'companyRegistration', component: CompanyRegistrationComponent},
+  { path: 'companiesView', component: CompaniesViewComponent},
   { path: 'companyAdministratorRegistration', component: CompanyAdministartorRegistrationComponent},
   { path: 'companyProfile', component: CompanyProfileComponent},
   { path: 'editCompanyProfile', component: EditCompanyProfileComponent},

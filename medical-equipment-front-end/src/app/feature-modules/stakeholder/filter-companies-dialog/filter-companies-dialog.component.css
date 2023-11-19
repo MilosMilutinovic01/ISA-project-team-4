@@ -1,0 +1,36 @@
+.radio-button-container {
+    flex-direction: column;
+    align-items: left;
+  }
+  
+  .radio-button {
+    margin: 5px;
+  }
+
+  mat-radio-label-content{
+    font-size: 40px;
+  }
+  
+  .mat-dialog-content {
+    height: 50%;
+    margin: auto;
+  }
+  
+  .mat-dialog-actions {
+    margin: auto;
+  }
+
+.form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.mat-dialog-title {
+    text-align: center;
+    font-weight: bold;
+}
+
+h1{
+    margin-top: 2rem;
+}
