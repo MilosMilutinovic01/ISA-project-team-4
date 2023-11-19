@@ -64,10 +64,10 @@ public class CompanyServiceImpl implements CompanyService {
     public List<Company> Search(String name, String street, String city, String country) throws Exception {
         List<Company> companies = this.companyRepository.findAll();
         List<Company> searchedCompanies = companies.stream()
-                .filter(c -> (c.getName().toLowerCase().contains(name) || name.equals("empty")) &&
-                        (c.getAddress().getStreet().toLowerCase().contains(street) || street.equals("empty")) &&
-                        (c.getAddress().getCity().toLowerCase().contains(city) || city.equals("empty")) &&
-                        (c.getAddress().getCountry().toLowerCase().contains(country) || country.equals("empty"))).collect(Collectors.toList());
+                .filter(c -> (c.getName().toLowerCase().contains(name.toLowerCase()) || name.equals("empty")) &&
+                        (c.getAddress().getStreet().toLowerCase().contains(street.toLowerCase()) || street.equals("empty")) &&
+                        (c.getAddress().getCity().toLowerCase().contains(city.toLowerCase()) || city.equals("empty")) &&
+                        (c.getAddress().getCountry().toLowerCase().contains(country.toLowerCase()) || country.equals("empty"))).collect(Collectors.toList());
         return searchedCompanies;
     }
 
@@ -75,7 +75,7 @@ public class CompanyServiceImpl implements CompanyService {
     public List<Company> Filter(String rate, List<Company> companies) throws Exception {
         Double rating = Double.parseDouble(rate);
         List<Company> filteredCompanies = companies.stream()
-                .filter(c -> c.getAverageRating() > (rating-1) && c.getAverageRating() <= rating).collect(Collectors.toList());
+                .filter(c -> c.getAverageRating() >= (rating-1) && c.getAverageRating() <= rating).collect(Collectors.toList());
         return filteredCompanies;
     }
 }
