@@ -64,4 +64,8 @@ export class NavbarComponent implements OnInit {
   navigateToMedicalEquipment(): void {
     this.router.navigate(['/']);
   }
+  
+  companyAdministratorProfile(): void {
+    this.router.navigate(['/companyAdministratorProfile']);
+  }
 }

@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { StakeholderService } from '../stakeholder.service';
+import { Company } from '../../../shared/model/company.model';
+import { Address } from '../../../shared/model/address.model';
 import { MatDialog } from '@angular/material/dialog';
 import { CompanyAdministartorRegistrationComponent } from '../company-administartor-registration/company-administartor-registration.component';
-import { Company } from 'src/app/shared/model/company.model';
+import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model';
+import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
 
 @Component({
   selector: 'app-company-profile',
@@ -20,7 +23,11 @@ export class CompanyProfileComponent {
     endTime: '',
     averageRating: NaN,
   };
-  companyId: string = '';
+
+  otherAdministrators: CompanyAdministrator[] = [];
+  equipmentTrackings: EquipmentTracking[] = [];
+  filteredEquipmentTrackings: EquipmentTracking[] = [];
+  
 
   constructor(
     private service: StakeholderService,
@@ -30,11 +37,12 @@ export class CompanyProfileComponent {
 
   ngOnInit(): void {
     this.getCompany();
+    this.getAllEquipmentTrackings();
+    this.getAllCompanyAdministrators();
   }
 
   getCompany(): void {
-    this.companyId = '1';
-    this.service.getCompanyProfile(this.companyId).subscribe({
+    this.service.getCompanyProfile('-1').subscribe({
       next: (result) => {
         this.company = result;
         console.log(this.company);
@@ -58,5 +66,42 @@ export class CompanyProfileComponent {
         data: { compId: this.company.id },
       }
     );
+  }
+
+  getAllEquipmentTrackings(): void {
+    this.service.getAllEquipmentTrackings().subscribe({
+      next: (result) => {
+        this.equipmentTrackings = result;
+        this.sort();
+      },
+      error: () => {
+        console.log(console.error);
+      },
+    });
+  }
+
+  sort(): void {
+    for (let el of this.equipmentTrackings) {
+      if(el.company.id === this.company.id && el.count > 0){
+        this.filteredEquipmentTrackings.push(el);
+      }
+    }
+  }
+
+  getAllCompanyAdministrators(): void {
+    this.service.getAllCompanyAdministrators().subscribe({
+      next: (result) => {
+        console.log(result)
+        for (let a of result) {
+          if((a.companyId === this.company.id) && a.id !== -1){
+            this.otherAdministrators.push(a);
+          }
+        }        
+        console.log(this.otherAdministrators)
+      },
+      error: () => {
+        console.log(console.error);
+      },
+    });
   }
 }

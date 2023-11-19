@@ -67,3 +67,13 @@ VALUES (-5, 240, -3, -4);
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
 VALUES (-6, 100, -2, -3);
+
+INSERT INTO stakeholders.company_administrators(
+    user_type, address_id, company_id, id, email, lastname, name, password, phone_number)
+VALUES (1, -1, -1, -1, 'pajic@gmail.com', 'Pajic', 'Petar', '123', '+381649699696');
+INSERT INTO stakeholders.company_administrators(
+    user_type, address_id, company_id, id, email, lastname, name, password, phone_number)
+VALUES (1, -2, -1, -2, 'gajic@gmail.com', 'Gajic', 'Goran', '123456', '+381649699696');
+INSERT INTO stakeholders.company_administrators(
+    user_type, address_id, company_id, id, email, lastname, name, password, phone_number)
+VALUES (1, -3, -1, -3, 'djajic@gmail.com', 'Djajic', 'Zoran', '321', '+381633699696');

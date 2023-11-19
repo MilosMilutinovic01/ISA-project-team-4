@@ -1,9 +1,10 @@
 package com.e2.medicalequipment.dto;
 
-import com.e2.medicalequipment.model.CompanyAdministrator;
 import com.e2.medicalequipment.model.Address;
+import com.e2.medicalequipment.model.CompanyAdministrator;
 
-public class CompanyAdministratorDTO {
+public class UpdateCompanyAdministratorDTO {
+    public Long id;
     public String password;
     public String email;
 
@@ -16,10 +17,10 @@ public class CompanyAdministratorDTO {
     public String phoneNumber;
     public long companyId;
 
-    public CompanyAdministratorDTO() {
+    public UpdateCompanyAdministratorDTO() {
     }
 
-    public CompanyAdministratorDTO(CompanyAdministrator companyAdministrator) {
+    public UpdateCompanyAdministratorDTO(CompanyAdministrator companyAdministrator) {
         this.password = companyAdministrator.getPassword();
         this.email = companyAdministrator.getEmail();
         this.address = companyAdministrator.getAddress();

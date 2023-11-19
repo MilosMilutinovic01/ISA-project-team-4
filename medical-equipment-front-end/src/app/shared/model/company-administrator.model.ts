@@ -7,8 +7,8 @@ export interface CompanyAdministrator {
     email: string;
     password?: string;
     lastname: string;
-    city: string;
-    country: string;
+    city: string,
+    country: string,
     phoneNumber: string;
     companyId: number;
 }

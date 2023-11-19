@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StakeholderService } from '../stakeholder.service';
-import { Company } from 'src/app/shared/model/company.model';
-import { Address } from 'src/app/shared/model/address.model';
+import { Company } from '../../../shared/model/company.model';
+import { Address } from '../../../shared/model/address.model';
 @Component({
   selector: 'app-company-registration',
   templateUrl: './company-registration.component.html',

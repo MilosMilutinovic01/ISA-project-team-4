@@ -9,10 +9,12 @@ import { CompanyAdministartorRegistrationComponent } from './company-administart
 import { MatDialogModule } from '@angular/material/dialog';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { EditCompanyProfileComponent } from './edit-company-profile/edit-company-profile.component';
-import { EquipmentViewComponent } from './equipment-view/equipment-view.component'
+import { CompanyAdministratorProfileComponent } from './company-administrator-profile/company-administrator-profile.component';
 import { CompaniesViewComponent } from './companies-view/companies-view.component';
 import { FilterCompaniesDialogComponent } from './filter-companies-dialog/filter-companies-dialog.component';
-import {MatTooltipModule} from '@angular/material/tooltip'
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { EditCompanyAdministratorProfileComponent } from './edit-company-administrator-profile/edit-company-administrator-profile.component'
+import { EquipmentViewComponent } from './equipment-view/equipment-view.component'
 import {MatChip, MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
@@ -25,6 +27,8 @@ import {MatChip, MatChipsModule} from '@angular/material/chips';
     CompanyAdministartorRegistrationComponent,
     CompanyProfileComponent,
     EditCompanyProfileComponent,
+    CompanyAdministratorProfileComponent,
+    EditCompanyAdministratorProfileComponent,
     EquipmentViewComponent
   ],
   imports: [
