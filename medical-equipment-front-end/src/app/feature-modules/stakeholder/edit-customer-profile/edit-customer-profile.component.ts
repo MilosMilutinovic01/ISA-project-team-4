@@ -74,6 +74,7 @@ export class EditCustomerProfileComponent implements OnInit {
 
   saveChanges(): void {
     const userAddress: Address = {
+      id: this.profile.address.id,
       street: this.editProfileForm.value.street || '',
       city: this.editProfileForm.value.city || '',
       country: this.editProfileForm.value.country || '',

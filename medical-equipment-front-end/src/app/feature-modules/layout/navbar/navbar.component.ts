@@ -40,6 +40,10 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  login(): void {
+    this.router.navigate(['/login']);
+  }
+
   register(): void {
     this.router.navigate(['/register']);
   }
