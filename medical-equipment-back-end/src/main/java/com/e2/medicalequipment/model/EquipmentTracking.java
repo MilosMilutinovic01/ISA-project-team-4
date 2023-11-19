@@ -11,7 +11,7 @@ public class EquipmentTracking {
     @Column(name = "count")
     private int count;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
     private Company company;
 

@@ -34,15 +34,12 @@ public class Company {
     @Column(name = "averageRating")
     private double averageRating;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<EquipmentTracking> equipmentTrackings = new HashSet<EquipmentTracking>();
-
     //slobodni termini
 
     public Company() {
     }
 
-    public Company(Long id, String name, Address address, LocalTime startTime, LocalTime endTime, String description, double averageRating) {
+    public Company(Long id, String name, Address address, LocalTime startTime, LocalTime endTime, String description) {
         this.id = id;
         this.name = name;
         this.address = address;
