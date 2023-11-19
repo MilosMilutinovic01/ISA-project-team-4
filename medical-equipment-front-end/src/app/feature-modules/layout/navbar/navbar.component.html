@@ -1,15 +1,37 @@
 <div class="navbar">
-    <div class="navbar-logo-text">Medical equipment</div>
-    <div class="navbar-right">
-        <div class="navbar-menu">
-            <div class="navbar-button-panel">
-                <div class="navbar-button navbar-log-in-button">
-                    <button>Login</button>
-                </div>
-                <div class="navbar-button navbar-register-button">
-                    <button (click)="register()">Register</button>
-                </div>
-            </div>
+  <div class="navbar-logo-text" (click)="navigateToMedicalEquipment()">
+    Medical equipment
+  </div>
+  <div class="navbar-right">
+    <div class="navbar-menu">
+      <div class="navbar-button-panel">
+        <div>
+          <button class="navbar-button" (click)="login()">Login</button>
         </div>
+        <div>
+          <button class="navbar-button" (click)="register()">Register</button>
+        </div>
+        <div *ngIf="displayProfile">
+          <button class="navbar-button" (click)="customerProfile()">
+            Profile
+          </button>
+        </div>
+        <div>
+          <button class="navbar-button" (click)="companyProfile()">
+            Company Profile
+          </button>
+        </div>
+        <div>
+          <button class="navbar-button" (click)="companyRegistration()">
+            New Company
+          </button>
+        </div>
+        <div>
+          <button class="navbar-button" (click)="companyAdministratorProfile()">
+            Company Administrator Profile
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

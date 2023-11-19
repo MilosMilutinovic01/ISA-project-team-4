@@ -1,0 +1,19 @@
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.toggle-button {
+  background-color: #3498db !important;
+  color: white !important;
+  padding-top: 5px;
+  margin-right: 10px;
+  justify-content: right;
+}
+
+.search-container {
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}

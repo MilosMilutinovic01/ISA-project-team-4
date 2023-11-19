@@ -1,0 +1,67 @@
+<div class="card">
+  <div class="profile-info">
+    <div class="label">Name:</div>
+    <div class="value">{{ company.name }}</div>
+  </div>
+  <div class="profile-info">
+    <div class="label">Address:</div>
+    <div class="value">{{ company.address.street }},{{company.address.city}},{{company.address.country}}</div>
+  </div>
+
+  <div class="profile-info">
+    <div class="label">Average rating:</div>
+    <div class="value">{{ company.averageRating }}</div>
+  </div>
+  <br />
+
+  <div>
+    <div class="title">
+      Equipment in stock:
+    </div>
+    <div class="card-container" *ngFor="let e of filteredEquipmentTrackings">
+      <mat-card class="card">
+        <div class="title-container">
+        <div class="type-title">{{ e.equipment.type }}</div>
+        <div class="type-title">{{ e.count }} available in {{ e.company.name }}</div>
+      </div>
+        <mat-card-title class="title-container">
+          <p>{{ e.equipment.name }}</p>
+        </mat-card-title>
+        <mat-card-content class="card-content">
+          <div class="card-number">{{ e.equipment.description }}</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <br/>
+  <br/>
+
+  <div>
+    <div class="title">
+      Other administrators in company:
+    </div>
+    <div class="card-container" *ngFor="let a of otherAdministrators">
+      <mat-card class="card">
+        <div class="title-container">
+        <div class="type-title">{{ a.name }}</div>
+        <div class="type-title">{{ a.lastname }}</div>
+      </div>
+        <mat-card-content class="card-content">
+          <div class="type-title">{{ a.phoneNumber }}</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <br/>
+  <br/>
+  
+  <button mat-icon-button (click)="addCompanyAdministrator()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<button class="bottom-right-button" mat-icon-button (click)="editProfile()">
+  <mat-icon>edit</mat-icon>
+</button>

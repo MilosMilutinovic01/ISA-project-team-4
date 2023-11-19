@@ -1,0 +1,39 @@
+<div class="card">
+    <div class="category">{{profile.category}}</div>
+    <div class="profile-info">
+      <div class="label">Name:</div>
+      <div class="value">{{profile.name}}</div>
+    </div>
+    <div class="profile-info">
+      <div class="label">Last Name:</div>
+      <div class="value">{{profile.lastname}}</div>
+    </div>
+    <div class="profile-info">
+      <div class="label">Email:</div>
+      <div class="value">{{profile.email}}</div>
+    </div>
+    <div class="profile-info">
+      <div class="label">Street:</div>
+      <div class="value">{{profile.address.street}}</div>
+    </div>
+    <div class="profile-info">
+      <div class="label">City:</div>
+      <div class="value">{{profile.address.city}}</div>
+    </div>
+    <div class="profile-info">
+      <div class="label">Country:</div>
+      <div class="value">{{profile.address.country}}</div>
+    </div>
+    <div class="profile-info">
+      <div class="label">Phone Number:</div>
+      <div class="value">{{profile.phoneNumber}}</div>
+    </div>
+    <div class="profile-info">
+      <div class="label">Profession:</div>
+      <div class="value">{{profile.profession}}</div>
+    </div><br>
+    <div *ngIf="hasPenaltyPoints" class="penalty-points">Penalty Points: {{profile.penaltyPoints}}</div>
+</div>
+<button class="bottom-right-button" mat-icon-button (click)="editProfile()">
+    <mat-icon>edit</mat-icon>
+</button>

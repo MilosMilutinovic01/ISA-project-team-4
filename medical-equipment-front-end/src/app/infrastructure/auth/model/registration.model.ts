@@ -1,12 +1,11 @@
+import { Address } from 'src/app/shared/model/address.model';
+
 export interface Registration {
-    username: string,
-    password: string,
-    email: string,
-    address: string,
-    name: string,
-    lastname: string,
-    city: string,
-    country: string,
-    phoneNumber: string,
-    profession: string
+  password: string;
+  email: string;
+  address: Address;
+  name: string;
+  lastname: string;
+  phoneNumber: string;
+  profession: string;
 }

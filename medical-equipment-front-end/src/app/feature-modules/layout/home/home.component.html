@@ -1,1 +1,12 @@
-<p>home works!</p>
+<div class="button-container">
+  <button mat-raised-button class="toggle-button" (click)="toggleSearchMode()">
+    Switch to {{ searchForEquipment ? "Equipment" : "Companies" }} Search
+  </button>
+</div>
+
+<div class="search-container" *ngIf="searchForEquipment">
+  <app-companies-view></app-companies-view>
+</div>
+<div class="search-container" *ngIf="!searchForEquipment">
+  <app-equipment-view></app-equipment-view>
+</div>
