@@ -3,7 +3,7 @@ import { faXmark, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CustomerProfile } from 'src/app/infrastructure/auth/model/customer-profile.model';
+import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
 import { StakeholderService } from '../stakeholder.service';
 
 @Component({
@@ -52,6 +52,7 @@ export class EditCustomerProfileComponent implements OnInit {
     this.getCustomerProfile();
   }
 
+
   getCustomerProfile(): void {
     this.service.getCustomerProfile('1').subscribe({
       next: (result: CustomerProfile) => {
@@ -64,6 +65,7 @@ export class EditCustomerProfileComponent implements OnInit {
       },
     });
   }
+
 
   saveChanges(): void {
     const editProfile: CustomerProfile = {

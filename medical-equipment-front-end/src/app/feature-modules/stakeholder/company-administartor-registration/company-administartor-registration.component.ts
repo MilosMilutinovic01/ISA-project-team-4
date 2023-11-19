@@ -10,9 +10,9 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StakeholderService } from '../stakeholder.service';
-import { CompanyAdministrator } from '../model/company-administrator.model';
-import { Company } from '../model/company.model';
-import { Address } from '../model/address.model';
+import { CompanyAdministrator } from '../../../shared/model/company-administrator.model';
+import { Company } from 'src/app/shared/model/company.model';
+import { Address } from 'src/app/shared/model/address.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({

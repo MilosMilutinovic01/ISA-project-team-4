@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { StakeholderService } from '../stakeholder.service';
 import { Router } from '@angular/router';
-import { Company } from '../model/company.model';
-import { Address } from '../model/address.model';
+import { Company } from 'src/app/shared/model/company.model';
+import { Address } from 'src/app/shared/model/address.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
