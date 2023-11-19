@@ -33,7 +33,7 @@ export class CompanyProfileComponent {
   }
 
   getCompany(): void {
-    this.service.getCompanyProfile('1').subscribe({
+    this.service.getCompanyProfile('-1').subscribe({
       next: (result) => {
         this.company = result;
         console.log(this.company);

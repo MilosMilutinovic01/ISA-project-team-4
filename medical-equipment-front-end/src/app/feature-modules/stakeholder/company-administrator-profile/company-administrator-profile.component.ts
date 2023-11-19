@@ -30,7 +30,7 @@ export class CompanyAdministratorProfileComponent implements OnInit {
     }
   
     getCompanyAdministratorProfile(): void {
-      this.service.getCompanyAdministratorProfile('1').subscribe({
+      this.service.getCompanyAdministratorProfile('-1').subscribe({
         next: (result: CompanyAdministrator) => {
           this.profile = result;
           console.log("CompanyAdmin this.profile:");

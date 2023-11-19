@@ -48,7 +48,7 @@ export class EditCompanyAdministratorProfileComponent {
   }
 
   getCompanyAdministratorProfile(): void{
-    this.service.getCompanyAdministratorProfile("1").subscribe({
+    this.service.getCompanyAdministratorProfile("-1").subscribe({
       next:(result : CompanyAdministrator) => {
           this.profile = result;
           console.log("ID PROFILA ")

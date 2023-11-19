@@ -43,7 +43,7 @@ export class EditCompanyProfileComponent implements OnInit {
   }
 
   getCompanyProfile(): void{
-    this.service.getCompanyProfile("1").subscribe({
+    this.service.getCompanyProfile("-1").subscribe({
       next:(result : Company) => {
           this.profile = result;
           this.editProfileForm.patchValue({
