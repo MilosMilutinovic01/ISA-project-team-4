@@ -9,5 +9,5 @@ import java.util.Set;
 
 public interface EquipmentTrackingService {
     List<EquipmentTrackingDTO> GetAll() throws Exception;
-    List<EquipmentTrackingDTO> GetWanted(String searchName,String type,Double minPrice,Double maxPrice) throws Exception;
+    List<EquipmentTrackingDTO> GetWanted(String searchName,String type) throws Exception;
 }

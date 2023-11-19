@@ -5,6 +5,8 @@ import { CompanyAdministrator } from 'src/app/shared/model/company-administrator
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/env/environment';
 import { Company } from 'src/app/shared/model/company.model';
+import { Equipment } from 'src/app/shared/model/equipment.model';
+import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model';
 
 @Injectable({
   providedIn: 'root',
@@ -66,6 +68,16 @@ export class StakeholderService {
 
   getCompanies(): Observable<Company[]> {
     return this.http.get<Company[]>(environment.apiHost + 'companies/');
+  }
+
+  getEquipment(): Observable<Equipment[]> {
+    return this.http.get<Equipment[]>(environment.apiHost + 'equipment/');
+  }
+
+  searchEquipment(name:string,type:string): Observable<EquipmentTracking[]> {
+    return this.http.get<EquipmentTracking[]>(environment.apiHost + 'equipmentTracking/search/'+ name +
+    '/' +
+    type);
   }
 
   searchCompanies(

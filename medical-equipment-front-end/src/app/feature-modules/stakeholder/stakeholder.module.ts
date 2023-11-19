@@ -13,7 +13,7 @@ import { EquipmentViewComponent } from './equipment-view/equipment-view.componen
 import { CompaniesViewComponent } from './companies-view/companies-view.component';
 import { FilterCompaniesDialogComponent } from './filter-companies-dialog/filter-companies-dialog.component';
 import {MatTooltipModule} from '@angular/material/tooltip'
-
+import {MatChip, MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,8 @@ import {MatTooltipModule} from '@angular/material/tooltip'
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatChipsModule
   ],
   exports: [
     CustomerProfileComponent,
