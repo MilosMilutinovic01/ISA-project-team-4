@@ -17,15 +17,19 @@ public class Equipment {
     @Column(name = "type")
     private EquipmentType type;
 
+    @Column(name = "price")
+    private Double price;
+
     public Equipment() {
 
     }
 
-    public Equipment(Long id, String name, String description, EquipmentType type) {
+    public Equipment(Long id, String name, String description, EquipmentType type, Double price) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.type = type;
+        this.price = price;
     }
 
     public Long getId() {
@@ -58,5 +62,13 @@ public class Equipment {
 
     public void setType(EquipmentType type) {
         this.type = type;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

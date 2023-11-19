@@ -11,11 +11,11 @@ public class EquipmentTracking {
     @Column(name = "count")
     private int count;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "equipment_id", referencedColumnName = "id")
     private Equipment equipment;
 
