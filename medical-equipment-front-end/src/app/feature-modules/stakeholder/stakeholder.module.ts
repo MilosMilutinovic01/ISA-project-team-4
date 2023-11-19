@@ -11,7 +11,7 @@ import { CompanyProfileComponent } from './company-profile/company-profile.compo
 import { EditCompanyProfileComponent } from './edit-company-profile/edit-company-profile.component';
 import { CompaniesViewComponent } from './companies-view/companies-view.component';
 import { FilterCompaniesDialogComponent } from './filter-companies-dialog/filter-companies-dialog.component';
-import {MatTooltipModule} from '@angular/material/tooltip'
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -22,14 +22,14 @@ import {MatTooltipModule} from '@angular/material/tooltip'
     FilterCompaniesDialogComponent,
     CompanyAdministartorRegistrationComponent,
     CompanyProfileComponent,
-    EditCompanyProfileComponent
+    EditCompanyProfileComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   exports: [
     CustomerProfileComponent,
@@ -41,7 +41,7 @@ import {MatTooltipModule} from '@angular/material/tooltip'
     CompanyProfileComponent,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
-  ]
+    FormsModule,
+  ],
 })
-export class StakeholderModule { }
+export class StakeholderModule {}

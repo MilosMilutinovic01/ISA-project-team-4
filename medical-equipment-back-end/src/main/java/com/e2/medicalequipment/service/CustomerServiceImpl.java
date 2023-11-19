@@ -2,6 +2,7 @@ package com.e2.medicalequipment.service;
 
 import com.e2.medicalequipment.dto.CreateCustomerDTO;
 import com.e2.medicalequipment.dto.UpdateCustomerDTO;
+import com.e2.medicalequipment.model.Address;
 import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.model.CustomerCategory;
 import com.e2.medicalequipment.model.UserType;

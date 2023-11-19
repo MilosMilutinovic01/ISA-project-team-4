@@ -51,12 +51,10 @@ export class EditCustomerProfileComponent implements OnInit {
     this.getCustomerProfile();
   }
 
-
   getCustomerProfile(): void {
     this.service.getCustomerProfile('1').subscribe({
       next: (result: CustomerProfile) => {
         this.profile = result;
-        console.log(result);
         this.editProfileForm.patchValue({
           name: result.name,
           lastname: result.name,
@@ -65,7 +63,7 @@ export class EditCustomerProfileComponent implements OnInit {
           country: result.address.country,
           phoneNumber: result.phoneNumber,
           profession: result.profession,
-          password: result.password
+          password: result.password,
         });
       },
       error: () => {
@@ -74,13 +72,12 @@ export class EditCustomerProfileComponent implements OnInit {
     });
   }
 
-
   saveChanges(): void {
     const userAddress: Address = {
       street: this.editProfileForm.value.street || '',
       city: this.editProfileForm.value.city || '',
       country: this.editProfileForm.value.country || '',
-    }
+    };
     const editProfile: CustomerProfile = {
       id: this.profile.id,
       name: this.editProfileForm.value.name || '',
@@ -95,11 +92,9 @@ export class EditCustomerProfileComponent implements OnInit {
     };
 
     if (this.editProfileForm.valid) {
-      console.log(editProfile);
       this.service.editCustomerProfile(editProfile).subscribe({
         next: (result: CustomerProfile) => {
           this.profile = result;
-          console.log(result);
 
           this.router.navigate(['/customerProfile']);
           this.snackBar.open('Succesfully edited profile', 'Close', {

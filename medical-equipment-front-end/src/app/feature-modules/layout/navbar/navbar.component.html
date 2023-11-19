@@ -11,7 +11,7 @@
         <div>
           <button class="navbar-button" (click)="register()">Register</button>
         </div>
-        <div>
+        <div *ngIf="displayProfile">
           <button class="navbar-button" (click)="customerProfile()">
             Profile
           </button>
