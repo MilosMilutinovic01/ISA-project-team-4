@@ -1,11 +1,11 @@
+import { Address } from "./address.model";
+
 export interface CustomerProfile {
     id?: number;
     name: string;
     lastname: string;
     email: string;
-    address: string;
-    city: string;
-    country: string;
+    address: Address;
     phoneNumber: string;
     profession: string;
     penaltyPoints?: number;

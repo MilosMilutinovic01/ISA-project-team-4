@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
 import { StakeholderService } from '../stakeholder.service';
+import { Address } from 'src/app/shared/model/address.model';
 
 @Component({
   selector: 'app-edit-customer-profile',
@@ -18,9 +19,7 @@ export class EditCustomerProfileComponent implements OnInit {
     name: '',
     lastname: '',
     email: '',
-    address: '',
-    city: '',
-    country: '',
+    address: { id: NaN, street: '', city: '', country: '' },
     phoneNumber: '',
     profession: '',
     penaltyPoints: NaN,
@@ -31,7 +30,7 @@ export class EditCustomerProfileComponent implements OnInit {
   editProfileForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     lastname: new FormControl('', [Validators.required]),
-    address: new FormControl('', [Validators.required]),
+    street: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
     phoneNumber: new FormControl('', [
@@ -58,7 +57,16 @@ export class EditCustomerProfileComponent implements OnInit {
       next: (result: CustomerProfile) => {
         this.profile = result;
         console.log(result);
-        this.editProfileForm.patchValue(result);
+        this.editProfileForm.patchValue({
+          name: result.name,
+          lastname: result.name,
+          street: result.address.street,
+          city: result.address.city,
+          country: result.address.country,
+          phoneNumber: result.phoneNumber,
+          profession: result.profession,
+          password: result.password
+        });
       },
       error: () => {
         console.log(console.error());
@@ -68,14 +76,17 @@ export class EditCustomerProfileComponent implements OnInit {
 
 
   saveChanges(): void {
+    const userAddress: Address = {
+      street: this.editProfileForm.value.street || '',
+      city: this.editProfileForm.value.city || '',
+      country: this.editProfileForm.value.country || '',
+    }
     const editProfile: CustomerProfile = {
       id: this.profile.id,
       name: this.editProfileForm.value.name || '',
       lastname: this.editProfileForm.value.lastname || '',
       email: this.profile.email,
-      address: this.editProfileForm.value.address || '',
-      city: this.editProfileForm.value.city || '',
-      country: this.editProfileForm.value.country || '',
+      address: userAddress,
       phoneNumber: this.editProfileForm.value.phoneNumber || '',
       profession: this.editProfileForm.value.profession || '',
       penaltyPoints: this.profile.penaltyPoints,
