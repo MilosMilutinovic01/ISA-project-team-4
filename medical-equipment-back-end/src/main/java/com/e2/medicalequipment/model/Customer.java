@@ -20,13 +20,11 @@ public class Customer extends User{
 
     }
 
-    public Customer(Long id, String name, String lastname, String email, String city, String country, String address, String phoneNumber, String password, UserType userType, String profession, Long penaltyPoints, CustomerCategory category) {
+    public Customer(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType, String profession, Long penaltyPoints, CustomerCategory category) {
         super(id,
                 name,
                 lastname,
                 email,
-                city,
-                country,
                 address,
                 phoneNumber,
                 password,
@@ -41,8 +39,6 @@ public class Customer extends User{
                 createCustomerDTO.name,
                 createCustomerDTO.lastname,
                 createCustomerDTO.email,
-                createCustomerDTO.city,
-                createCustomerDTO.country,
                 createCustomerDTO.address,
                 createCustomerDTO.phoneNumber,
                 createCustomerDTO.password);
@@ -53,8 +49,6 @@ public class Customer extends User{
                 updateCustomerDTO.name,
                 updateCustomerDTO.lastname,
                 updateCustomerDTO.email,
-                updateCustomerDTO.city,
-                updateCustomerDTO.country,
                 updateCustomerDTO.address,
                 updateCustomerDTO.phoneNumber,
                 updateCustomerDTO.password);

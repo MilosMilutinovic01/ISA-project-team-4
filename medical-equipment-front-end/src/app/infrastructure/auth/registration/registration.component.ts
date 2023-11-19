@@ -10,6 +10,7 @@ import {
 import { Registration } from '../model/registration.model';
 import { faXmark, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
+import { Address } from 'src/app/feature-modules/stakeholder/model/address.model';
 
 @Component({
   selector: 'app-registration',
@@ -34,7 +35,7 @@ export class RegistrationComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
     rePassword: new FormControl('', [Validators.required]),
-    address: new FormControl('', [Validators.required]),
+    street: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
     phoneNumber: new FormControl('', [
@@ -45,14 +46,18 @@ export class RegistrationComponent {
   });
 
   register(): void {
+    const address: Address = {
+      street: this.registrationForm.value.street || '',
+      city: this.registrationForm.value.city || '',
+      country: this.registrationForm.value.country || '',
+    };
+
     const registration: Registration = {
       name: this.registrationForm.value.name || '',
       lastname: this.registrationForm.value.lastname || '',
       email: this.registrationForm.value.email || '',
       password: this.registrationForm.value.password || '',
-      address: this.registrationForm.value.address || '',
-      city: this.registrationForm.value.city || '',
-      country: this.registrationForm.value.country || '',
+      address: address,
       phoneNumber: this.registrationForm.value.phoneNumber || '',
       profession: this.registrationForm.value.profession || '',
     };
@@ -74,6 +79,8 @@ export class RegistrationComponent {
     ) {
       alert('Must enter same passwords!');
     } else {
+      console.log(registration);
+      console.log(this.registrationForm.value);
       alert('Must enter valid fields!');
     }
   }

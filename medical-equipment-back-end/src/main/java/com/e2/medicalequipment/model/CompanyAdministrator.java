@@ -10,21 +10,19 @@ public class CompanyAdministrator extends User{
     @Column(name = "company_id")
     private Long companyId;
 
-/*
-    @Column(name = "appointments")
-    private Long[] appointments;
-*/
+    /*
+        @Column(name = "appointments")
+        private Long[] appointments;
+    */
     public CompanyAdministrator() {
 
     }
 
-    public CompanyAdministrator(Long id, String name, String lastname, String email, String city, String country, String address, String phoneNumber, String password, UserType userType, Long companyId) {
+    public CompanyAdministrator(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType, Long companyId) {
         super(id,
                 name,
                 lastname,
                 email,
-                city,
-                country,
                 address,
                 phoneNumber,
                 password,
@@ -37,8 +35,6 @@ public class CompanyAdministrator extends User{
                 companyAdministratorDTO.name,
                 companyAdministratorDTO.lastname,
                 companyAdministratorDTO.email,
-                companyAdministratorDTO.city,
-                companyAdministratorDTO.country,
                 companyAdministratorDTO.address,
                 companyAdministratorDTO.phoneNumber,
                 companyAdministratorDTO.password);
