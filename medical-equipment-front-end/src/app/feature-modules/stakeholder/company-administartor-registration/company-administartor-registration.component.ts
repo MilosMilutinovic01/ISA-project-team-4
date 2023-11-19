@@ -10,10 +10,8 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StakeholderService } from '../stakeholder.service';
-import { CompanyAdministrator } from '../model/company-administrator.model';
-import { Company } from '../model/company.model';
-import { Address } from '../model/address.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
 
 @Component({
   selector: 'app-company-administartor-registration',
@@ -49,20 +47,19 @@ export class CompanyAdministartorRegistrationComponent {
       country: this.companyAdministratorForm.value.country || '',
       email: this.companyAdministratorForm.value.email || '',
       phoneNumber: this.companyAdministratorForm.value.phoneNumber || '',
-      companyId: this.data.compId 
+      companyId: this.data.compId,
     };
-    console.log(companyAdministrator.companyId)
+    console.log(companyAdministrator.companyId);
     if (this.companyAdministratorForm.valid) {
-      this.service.registerCompanyAdministrator(companyAdministrator)
-        .subscribe(
-          (response) => {
-            console.log('Registration successful:', response);
-          },
-          (error) => {
-            console.error('Registration failed:', error);
-          }
-        );
-  
+      this.service.registerCompanyAdministrator(companyAdministrator).subscribe(
+        (response) => {
+          console.log('Registration successful:', response);
+        },
+        (error) => {
+          console.error('Registration failed:', error);
+        }
+      );
+
       this.dialogRef.close(companyAdministrator);
     }
   }

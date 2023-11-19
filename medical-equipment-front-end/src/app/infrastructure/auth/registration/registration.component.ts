@@ -10,7 +10,7 @@ import {
 import { Registration } from '../model/registration.model';
 import { faXmark, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
-import { Address } from 'src/app/feature-modules/stakeholder/model/address.model';
+import { Address } from 'src/app/shared/model/address.model';
 
 @Component({
   selector: 'app-registration',

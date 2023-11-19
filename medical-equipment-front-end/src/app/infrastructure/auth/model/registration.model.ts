@@ -1,4 +1,4 @@
-import { Address } from 'src/app/feature-modules/stakeholder/model/address.model';
+import { Address } from 'src/app/shared/model/address.model';
 
 export interface Registration {
   password: string;
