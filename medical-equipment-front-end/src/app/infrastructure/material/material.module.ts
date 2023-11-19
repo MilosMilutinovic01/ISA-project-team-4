@@ -17,6 +17,9 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatRadioModule } from '@angular/material/radio';
+
 
 @NgModule({
   declarations: [],
@@ -31,7 +34,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatSnackBarModule,
     MatCardModule,
     MatFormFieldModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule,
+    MatRadioModule
   ],
   exports: [
     MatToolbar,
@@ -47,6 +52,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatFormFieldModule,
     MatButtonModule,
     MatGridListModule,
+    MatDialogModule,
+    MatRadioModule
   ],
 })
 export class MaterialModule {}
