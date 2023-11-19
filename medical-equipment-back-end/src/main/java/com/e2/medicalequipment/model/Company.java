@@ -4,6 +4,8 @@ import com.e2.medicalequipment.dto.CreateCompanyDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyDTO;
 import jakarta.persistence.*;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
 
@@ -32,7 +34,8 @@ public class Company {
     @Column(name = "averageRating")
     private double averageRating;
 
-    //lista opreme
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<EquipmentTracking> equipmentTrackings = new HashSet<EquipmentTracking>();
 
     //slobodni termini
 
