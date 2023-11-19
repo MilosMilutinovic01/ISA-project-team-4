@@ -29,6 +29,9 @@ export class NavbarComponent {
   companyProfile(): void {
     this.router.navigate(['/companyProfile']);
   }
+  equipment(): void {
+    this.router.navigate(['/equipment']);
+  }
   navigateToMedicalEquipment(): void {
     this.router.navigate(['/']);
   }

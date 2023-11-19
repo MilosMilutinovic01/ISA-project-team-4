@@ -9,7 +9,8 @@ import { CompanyAdministartorRegistrationComponent } from './company-administart
 import { MatDialogModule } from '@angular/material/dialog';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { EditCompanyProfileComponent } from './edit-company-profile/edit-company-profile.component';
-import {MatTooltipModule} from '@angular/material/tooltip'
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { EquipmentViewComponent } from './equipment-view/equipment-view.component'
 @NgModule({
   declarations: [
     CustomerProfileComponent,
@@ -17,7 +18,8 @@ import {MatTooltipModule} from '@angular/material/tooltip'
     CompanyRegistrationComponent,
     CompanyAdministartorRegistrationComponent,
     CompanyProfileComponent,
-    EditCompanyProfileComponent
+    EditCompanyProfileComponent,
+    EquipmentViewComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import {MatTooltipModule} from '@angular/material/tooltip'
     CustomerProfileComponent,
     CompanyRegistrationComponent,
     CompanyAdministartorRegistrationComponent,
-    CompanyProfileComponent
+    CompanyProfileComponent,
+    EquipmentViewComponent
   ]
 })
 export class StakeholderModule { }
