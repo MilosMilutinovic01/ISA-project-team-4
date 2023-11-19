@@ -13,7 +13,10 @@ import { EditCompanyProfileComponent } from 'src/app/feature-modules/stakeholder
 import { EquipmentViewComponent } from 'src/app/feature-modules/stakeholder/equipment-view/equipment-view.component';
 import { CompanyAdministratorProfileComponent } from 'src/app/feature-modules/stakeholder/company-administrator-profile/company-administrator-profile.component';
 import { EditCompanyAdministratorProfileComponent } from 'src/app/feature-modules/stakeholder/edit-company-administrator-profile/edit-company-administrator-profile.component';
+import { LoginComponent } from '../auth/login/login.component';
+
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'customerProfile', component: CustomerProfileComponent},
   { path: 'editCustomerProfile', component: EditCustomerProfileComponent},
