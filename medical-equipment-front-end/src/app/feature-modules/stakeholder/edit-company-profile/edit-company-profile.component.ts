@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { StakeholderService } from '../stakeholder.service';
 import { Router } from '@angular/router';
-import { Company } from '../model/company.model';
-import { Address } from '../model/address.model';
+import { Company } from '../../../shared/model/company.model';
+import { Address } from '../../../shared/model/address.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { min } from 'rxjs';
@@ -48,7 +48,6 @@ export class EditCompanyProfileComponent implements OnInit{
     this.service.getCompanyProfile("4").subscribe({
       next:(result : Company) => {
           this.profile = result;
-          console.log('GET COMPANY PROFILE '+ result);
           this.editProfileForm.patchValue({
             name: result.name,
             street: result.address.street,
@@ -83,17 +82,10 @@ export class EditCompanyProfileComponent implements OnInit{
       averageRating: this.editProfileForm.value.averageRating || 0
     };
 
-    if(this.editProfileForm.valid){
-        console.log('SAVE CHANGES editprofile: ')
-        console.log(editProfile);
-        
+    if(this.editProfileForm.valid){        
         this.service.editCompanyProfile(editProfile).subscribe({
           next: (result : Company) => {
-            this.profile = result;
-            
-            console.log('AFTER SAVE CHANGES ');
-            console.log(this.profile)
-            
+            this.profile = result;            
             this.router.navigate(['/companyProfile']);
             this.snackBar.open('Succesfully edited profile', 'Close', {
               duration: 5000
@@ -110,16 +102,4 @@ export class EditCompanyProfileComponent implements OnInit{
       });
     }
   }
- /* 
-  convertTimeToString(timeArray: string): string {
-    // Convert time array [hours, minutes] to string format "HH:mm"
-    console.log(timeArray) 
-    const [hours, minutes] = timeArray;
-    console.log('h: '+hours)
-    console.log('m: '+minutes)
-    const formattedTime = `${hours}:${minutes}`;
-    return formattedTime;
-  }
-  */
-} 
-
+}
