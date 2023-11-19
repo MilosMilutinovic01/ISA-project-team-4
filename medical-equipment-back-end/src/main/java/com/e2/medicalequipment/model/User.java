@@ -20,14 +20,9 @@ public class User {
     @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "city")
-    private String city;
-
-    @Column(name = "country")
-    private String country;
-
-    @Column(name = "address")
-    private String address;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Address address;
 
     @Column(name = "phoneNumber")
     private String phoneNumber;
@@ -41,26 +36,22 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String name, String lastname, String email, String city, String country, String address, String phoneNumber, String password, UserType userType) {
+    public User(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
         this.email = email;
-        this.city = city;
-        this.country = country;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.userType = userType;
     }
 
-    public User(Long id, String name, String lastname, String email, String city, String country, String address, String phoneNumber, String password) {
+    public User(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
         this.email = email;
-        this.city = city;
-        this.country = country;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.password = password;
@@ -98,27 +89,11 @@ public class User {
         this.email = email;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
