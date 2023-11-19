@@ -10,35 +10,35 @@ import { min } from 'rxjs';
 @Component({
   selector: 'app-edit-company-profile',
   templateUrl: './edit-company-profile.component.html',
-  styleUrls: ['./edit-company-profile.component.css']
+  styleUrls: ['./edit-company-profile.component.css'],
 })
-export class EditCompanyProfileComponent implements OnInit{
-  profile : Company = {
+export class EditCompanyProfileComponent implements OnInit {
+  profile: Company = {
     id: NaN,
     name: '',
-    address: { id: NaN, street:'', city:'',country:''},
-    startTime : '',
-    endTime : '',
+    address: { id: NaN, street: '', city: '', country: '' },
+    startTime: '',
+    endTime: '',
     description: '',
-    averageRating: NaN
-  }
+    averageRating: NaN,
+  };
 
   editProfileForm = new FormGroup({
-    name: new FormControl('', [Validators.required]), 
+    name: new FormControl('', [Validators.required]),
     street: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
     startTime: new FormControl('', [Validators.required]),
     endTime: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
-    averageRating: new FormControl(0, [Validators.required])
+    averageRating: new FormControl(0, [Validators.required]),
   });
 
-
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private snackBar: MatSnackBar,
-    private service: StakeholderService){
-  }
+    private service: StakeholderService
+  ) {}
 
   ngOnInit(): void {
     this.getCompanyProfile();
@@ -59,13 +59,13 @@ export class EditCompanyProfileComponent implements OnInit{
             averageRating: result.averageRating
           });
       },
-      error: () =>{
+      error: () => {
         console.log(console.error());
-      }
-    }) 
+      },
+    });
   }
 
-  saveChanges(): void{
+  saveChanges(): void {
     const editAddress: Address = {
       id: this.profile.address.id,
       street: this.editProfileForm.value.street || '',
@@ -79,7 +79,7 @@ export class EditCompanyProfileComponent implements OnInit{
       startTime: this.profile.startTime,
       endTime: this.profile.endTime,
       description: this.editProfileForm.value.description || '',
-      averageRating: this.editProfileForm.value.averageRating || 0
+      averageRating: this.editProfileForm.value.averageRating || 0,
     };
 
     if(this.editProfileForm.valid){        

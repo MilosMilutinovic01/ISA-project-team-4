@@ -1,18 +1,25 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StakeholderService } from '../stakeholder.service';
 import { Company } from '../../../shared/model/company.model';
 import { Address } from '../../../shared/model/address.model';
 @Component({
   selector: 'app-company-registration',
   templateUrl: './company-registration.component.html',
-  styleUrls: ['./company-registration.component.css']
+  styleUrls: ['./company-registration.component.css'],
 })
-
 export class CompanyRegistrationComponent {
-
   constructor(private service: StakeholderService) {}
-  
+
   companyForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     street: new FormControl('', [Validators.required]),
@@ -22,15 +29,14 @@ export class CompanyRegistrationComponent {
     startTime: new FormControl('', [Validators.required]),
     endTime: new FormControl('', [Validators.required]),
   });
-  
+
   registerCompany(): void {
-    
     const address: Address = {
       street: this.companyForm.value.street || '',
       city: this.companyForm.value.city || '',
       country: this.companyForm.value.country || '',
     };
-    
+
     const company: Company = {
       name: this.companyForm.value.name || '',
       address: address,
@@ -38,14 +44,13 @@ export class CompanyRegistrationComponent {
       startTime: this.companyForm.value.startTime || '',
       endTime: this.companyForm.value.endTime || '',
     };
-    if (
-      this.companyForm.valid) {
+    if (this.companyForm.valid) {
       this.service.registerCompany(company).subscribe({
         next: () => {
           alert('Succesfully created!');
           window.location.reload();
         },
       });
-    } 
-  }  
+    }
+  }
 }

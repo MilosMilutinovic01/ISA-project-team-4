@@ -9,21 +9,25 @@ import { CompanyAdministartorRegistrationComponent } from '../company-administar
 @Component({
   selector: 'app-company-profile',
   templateUrl: './company-profile.component.html',
-  styleUrls: ['./company-profile.component.css']
+  styleUrls: ['./company-profile.component.css'],
 })
 export class CompanyProfileComponent {
-  company : Company = {
-    id : NaN,
-    name : '',
-    address: { id: NaN, street:'', city:'',country:''},
-    description : '',
+  company: Company = {
+    id: NaN,
+    name: '',
+    address: { id: NaN, street: '', city: '', country: '' },
+    description: '',
     startTime: '',
     endTime: '',
-    averageRating : NaN,
-  }
-  companyId : string = '';
+    averageRating: NaN,
+  };
+  companyId: string = '';
 
-  constructor(private service: StakeholderService,private dialog: MatDialog, private router: Router) { }
+  constructor(
+    private service: StakeholderService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getCompany();
@@ -32,14 +36,14 @@ export class CompanyProfileComponent {
   getCompany(): void {
     this.companyId = '4';
     this.service.getCompanyProfile(this.companyId).subscribe({
-      next: (result) =>{
+      next: (result) => {
         this.company = result;
         console.log(this.company);
-      },     
+      },
       error: () => {
         console.log(console.error);
-      }
-    })
+      },
+    });
   }
 
   editProfile(): void {
@@ -47,10 +51,13 @@ export class CompanyProfileComponent {
   }
 
   addCompanyAdministrator(): void {
-      const dialogRef = this.dialog.open(CompanyAdministartorRegistrationComponent, {
-        width: '50%', 
+    const dialogRef = this.dialog.open(
+      CompanyAdministartorRegistrationComponent,
+      {
+        width: '50%',
         height: '100%',
-        data: {compId : this.company.id}
-      });    
+        data: { compId: this.company.id },
+      }
+    );
   }
 }

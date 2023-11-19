@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
-import { CompanyAdministrator } from '../../shared/model/company-administrator.model';
+import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/env/environment';
 import { Company } from 'src/app/shared/model/company.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class StakeholderService {
   private refreshNavbarSource = new BehaviorSubject<boolean>(false);
   refreshNavbar$ = this.refreshNavbarSource.asObservable();
@@ -23,18 +22,19 @@ export class StakeholderService {
     return this.http.put<Company>(environment.apiHost + 'companies/profile/edit', companyProfile);
   }
 
-  getCompany(companyId: string): Observable<Company>{
-    return this.http.get<Company>(environment.apiHost + "companies/companyProfile/" + companyId);
-  }
-
-  getCustomerProfile(id : string): Observable<CustomerProfile> {
-    return this.http.get<CustomerProfile>(
-      environment.apiHost + 'users/profile/'+
-      id
+  getCompany(companyId: string): Observable<Company> {
+    return this.http.get<Company>(
+      environment.apiHost + 'companies/companyProfile/' + companyId
     );
   }
 
-  editCustomerProfile(profile : CustomerProfile): Observable<CustomerProfile> {
+  getCustomerProfile(id: string): Observable<CustomerProfile> {
+    return this.http.get<CustomerProfile>(
+      environment.apiHost + 'users/profile/' + id
+    );
+  }
+
+  editCustomerProfile(profile: CustomerProfile): Observable<CustomerProfile> {
     return this.http.put<CustomerProfile>(
       environment.apiHost + 'users/profile/edit',
       profile
@@ -42,11 +42,19 @@ export class StakeholderService {
   }
 
   registerCompany(Company: Company): Observable<Company> {
-    return this.http.post<Company>(environment.apiHost + 'companies/register', Company);
+    return this.http.post<Company>(
+      environment.apiHost + 'companies/register',
+      Company
+    );
   }
 
-  registerCompanyAdministrator(CompanyAdministrator: CompanyAdministrator): Observable<Company> {
-    return this.http.post<Company>(environment.apiHost + 'companyAdministrators/register', CompanyAdministrator);
+  registerCompanyAdministrator(
+    CompanyAdministrator: CompanyAdministrator
+  ): Observable<Company> {
+    return this.http.post<Company>(
+      environment.apiHost + 'companyAdministrators/register',
+      CompanyAdministrator
+    );
   }
 
   getCompanyAdministratorProfile(id : string): Observable<CompanyAdministrator> {
@@ -54,29 +62,31 @@ export class StakeholderService {
   }
   
   getCompanies(): Observable<Company[]> {
+    return this.http.get<Company[]>(environment.apiHost + 'companies/');
+  }
+
+  searchCompanies(
+    name: string,
+    street: string,
+    city: string,
+    country: string
+  ): Observable<Company[]> {
     return this.http.get<Company[]>(
-      environment.apiHost + 'companies/'
+      environment.apiHost +
+        'companies/search/' +
+        name +
+        '/' +
+        street +
+        '/' +
+        city +
+        '/' +
+        country
     );
   }
 
-  searchCompanies(name : string, 
-                  street : string, 
-                  city : string,
-                  country : string): Observable<Company[]> {
-    return this.http.get<Company[]>(
-      environment.apiHost + 'companies/search/'+
-      name + "/" +
-      street + "/" + 
-      city + "/" +
-      country
-    );
-  }
-
-  filterCompanies(rate : string, 
-                  companies : Company[]): Observable<Company[]> {
+  filterCompanies(rate: string, companies: Company[]): Observable<Company[]> {
     return this.http.put<Company[]>(
-      environment.apiHost + 'companies/filter/'+
-      rate,
+      environment.apiHost + 'companies/filter/' + rate,
       companies
     );
   }
