@@ -1,6 +1,7 @@
 package com.e2.medicalequipment.controller;
 
 import com.e2.medicalequipment.dto.CompanyAdministratorDTO;
+import com.e2.medicalequipment.model.Company;
 import com.e2.medicalequipment.model.CompanyAdministrator;
 import com.e2.medicalequipment.service.CompanyAdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class CompanyAdministratorController {
     }
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CompanyAdministrator> createTest(@RequestBody CompanyAdministratorDTO companyAdministratorDto)  {
+    public ResponseEntity<CompanyAdministrator> registerCompanyAdministrator(@RequestBody CompanyAdministratorDTO companyAdministratorDto)  {
         CompanyAdministrator savedCompanyAdministrator = null;
         try {System.out.println("Thread id: " + Thread.currentThread().getId());
             savedCompanyAdministrator = companyAdministratorService.Create(companyAdministratorDto);

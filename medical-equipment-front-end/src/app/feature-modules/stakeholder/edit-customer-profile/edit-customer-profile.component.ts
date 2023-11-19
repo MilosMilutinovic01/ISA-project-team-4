@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faXmark, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import {
-  FormControl,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
@@ -13,11 +9,11 @@ import { StakeholderService } from '../stakeholder.service';
 @Component({
   selector: 'app-edit-customer-profile',
   templateUrl: './edit-customer-profile.component.html',
-  styleUrls: ['./edit-customer-profile.component.css']
+  styleUrls: ['./edit-customer-profile.component.css'],
 })
-export class EditCustomerProfileComponent implements OnInit{
+export class EditCustomerProfileComponent implements OnInit {
   isPasswordVisible: boolean = false;
-  profile : CustomerProfile = {
+  profile: CustomerProfile = {
     id: NaN,
     name: '',
     lastname: '',
@@ -29,8 +25,8 @@ export class EditCustomerProfileComponent implements OnInit{
     profession: '',
     penaltyPoints: NaN,
     password: '',
-    category: ''
-  }
+    category: '',
+  };
 
   editProfileForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -38,36 +34,40 @@ export class EditCustomerProfileComponent implements OnInit{
     address: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
-    phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^\d{10}$/),]),
+    phoneNumber: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^\d{10}$/),
+    ]),
     profession: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required])
+    password: new FormControl('', [Validators.required]),
   });
 
-
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private snackBar: MatSnackBar,
-    private service: StakeholderService){
-  }
+    private service: StakeholderService
+  ) {}
 
   ngOnInit(): void {
     this.getCustomerProfile();
   }
 
-  getCustomerProfile(): void{
-    this.service.getCustomerProfile("15").subscribe({
-      next:(result : CustomerProfile) => {
-          this.profile = result;
-          console.log(result);
-          this.editProfileForm.patchValue(result);
+
+  getCustomerProfile(): void {
+    this.service.getCustomerProfile('1').subscribe({
+      next: (result: CustomerProfile) => {
+        this.profile = result;
+        console.log(result);
+        this.editProfileForm.patchValue(result);
       },
-      error: () =>{
+      error: () => {
         console.log(console.error());
-      }
-    }) 
+      },
+    });
   }
 
-  saveChanges(): void{
-    
+
+  saveChanges(): void {
     const editProfile: CustomerProfile = {
       id: this.profile.id,
       name: this.editProfileForm.value.name || '',
@@ -80,31 +80,29 @@ export class EditCustomerProfileComponent implements OnInit{
       profession: this.editProfileForm.value.profession || '',
       penaltyPoints: this.profile.penaltyPoints,
       password: this.editProfileForm.value.password || '',
-      category: this.profile.category
+      category: this.profile.category,
     };
 
-    if(this.editProfileForm.valid){
-        console.log(editProfile);
-        this.service.editCustomerProfile(editProfile).subscribe({
-          next: (result : CustomerProfile) => {
-            this.profile = result;
-            console.log(result);
+    if (this.editProfileForm.valid) {
+      console.log(editProfile);
+      this.service.editCustomerProfile(editProfile).subscribe({
+        next: (result: CustomerProfile) => {
+          this.profile = result;
+          console.log(result);
 
-            this.router.navigate(['/customerProfile']);
-            this.snackBar.open('Succesfully edited profile', 'Close', {
-              duration: 5000
-            });
-          },
-          error: () => {
-            console.log(console.error());
-          }
-        })
-    }
-    else{
+          this.router.navigate(['/customerProfile']);
+          this.snackBar.open('Succesfully edited profile', 'Close', {
+            duration: 5000,
+          });
+        },
+        error: () => {
+          console.log(console.error());
+        },
+      });
+    } else {
       this.snackBar.open('All fields must be entered correctly!', 'Close', {
-        duration: 5000
+        duration: 5000,
       });
     }
-    
   }
 }

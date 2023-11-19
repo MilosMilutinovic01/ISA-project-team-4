@@ -1,9 +1,8 @@
 package com.e2.medicalequipment.service;
 
 import com.e2.medicalequipment.dto.CreateCompanyDTO;
-import com.e2.medicalequipment.model.Address;
-import com.e2.medicalequipment.model.Company;
-import com.e2.medicalequipment.repository.AddressRepository;
+import com.e2.medicalequipment.dto.UpdateCompanyDTO;
+import com.e2.medicalequipment.model.*;
 import com.e2.medicalequipment.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +18,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Autowired
     private CompanyRepository companyRepository;
+
     @Override
     public Company Create(CreateCompanyDTO createCompanyDto) throws Exception {
         Address address = new Address(createCompanyDto.address);
@@ -33,9 +33,25 @@ public class CompanyServiceImpl implements CompanyService {
         if (company.getId() != null) {
             throw new Exception("ID must be null for a new entity.");
         }
-
         Company savedCompany = companyRepository.save(company);
+        return savedCompany;
+    }
 
+    public Company Get(String id) {
+        return companyRepository.findById(Long.valueOf(id)).get();
+    }
+    public Company Update(UpdateCompanyDTO companyDTO) throws Exception{
+        Company company = new Company(companyDTO);
+        Address address = new Address(companyDTO.address);
+        if ((company.getId() == null) || (address.getId() == null)){
+            throw new Exception("ID must not be null for updating entity.");
+        }
+        company.setAddress(address);
+        LocalTime startTime = LocalTime.parse(companyDTO.startTime, formatter);
+        company.setStartTime(startTime);
+        LocalTime endTime = LocalTime.parse(companyDTO.endTime, formatter);
+        company.setEndTime(endTime);
+        Company savedCompany = companyRepository.save(company);
         return savedCompany;
     }
 

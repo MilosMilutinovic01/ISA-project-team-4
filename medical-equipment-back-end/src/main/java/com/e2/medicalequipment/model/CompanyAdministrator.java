@@ -7,8 +7,9 @@ import jakarta.persistence.*;
 @Table(schema = "stakeholders", name = "companyAdministrators")
 public class CompanyAdministrator extends User{
 
-    @Column(name = "companyId")
+    @Column(name = "company_id")
     private Long companyId;
+
 /*
     @Column(name = "appointments")
     private Long[] appointments;
@@ -41,6 +42,7 @@ public class CompanyAdministrator extends User{
                 companyAdministratorDTO.address,
                 companyAdministratorDTO.phoneNumber,
                 companyAdministratorDTO.password);
+        this.companyId = companyAdministratorDTO.companyId;
     }
 
     public Long getCompanyId() {
@@ -50,5 +52,4 @@ public class CompanyAdministrator extends User{
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }
-
 }

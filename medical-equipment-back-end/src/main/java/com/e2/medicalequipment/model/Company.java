@@ -1,16 +1,16 @@
 package com.e2.medicalequipment.model;
 
 import com.e2.medicalequipment.dto.CreateCompanyDTO;
-
+import com.e2.medicalequipment.dto.UpdateCompanyDTO;
 import jakarta.persistence.*;
-
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
 
 @Entity
 @Table(schema = "stakeholders", name = "companies")
-@Inheritance(strategy=TABLE_PER_CLASS)
 public class Company {
     @Id
     @SequenceGenerator(name = "companySeq", sequenceName = "companySeq", initialValue = 1, allocationSize = 1)
@@ -34,14 +34,12 @@ public class Company {
     @Column(name = "averageRating")
     private double averageRating;
 
-    //lista opreme
-
     //slobodni termini
 
     public Company() {
     }
 
-    public Company(Long id, String name, Address address, LocalTime startTime, LocalTime endTime, String description, double averageRating) {
+    public Company(Long id, String name, Address address, LocalTime startTime, LocalTime endTime, String description) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -53,6 +51,16 @@ public class Company {
     public Company(CreateCompanyDTO createCompanyDTO) {
         this.name = createCompanyDTO.name;
         this.description = createCompanyDTO.description;
+    }
+    public Company(UpdateCompanyDTO updateCompanyDTO) {
+        this.id = updateCompanyDTO.id;
+        this.name = updateCompanyDTO.name;
+       // this.address = updateCompanyDTO.address;
+
+       // this.startTime = LocalTime.parse(updateCompanyDTO.startTime);
+       // this.endTime = LocalTime.parse(updateCompanyDTO.endTime);
+        this.description = updateCompanyDTO.description;
+        this.averageRating = updateCompanyDTO.averageRating;
     }
     public Long getId() {
         return id;
