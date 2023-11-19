@@ -1,6 +1,7 @@
 package com.e2.medicalequipment.controller;
 
 import com.e2.medicalequipment.dto.CompanyAdministratorDTO;
+import com.e2.medicalequipment.dto.UpdateCompanyDTO;
 import com.e2.medicalequipment.model.Company;
 import com.e2.medicalequipment.model.CompanyAdministrator;
 import com.e2.medicalequipment.service.CompanyAdministratorService;
@@ -32,5 +33,15 @@ public class CompanyAdministratorController {
             e.printStackTrace();
             return new ResponseEntity<CompanyAdministrator>(savedCompanyAdministrator, HttpStatus.CONFLICT);
         }
+    }
+
+    @GetMapping(value = "/profile/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<CompanyAdministratorDTO> getCompanyAdministrator(@PathVariable String id) throws Exception {
+        CompanyAdministrator companyAdministrator = companyAdministratorService.Get(id);
+        if (companyAdministrator == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(new CompanyAdministratorDTO(companyAdministrator), HttpStatus.OK);
     }
 }

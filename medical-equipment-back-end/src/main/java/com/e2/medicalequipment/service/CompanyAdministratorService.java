@@ -5,4 +5,5 @@ import com.e2.medicalequipment.model.CompanyAdministrator;
 
 public interface CompanyAdministratorService {
     CompanyAdministrator Create(CompanyAdministratorDTO test) throws Exception;
+    CompanyAdministrator Get(String id) throws Exception;
 }

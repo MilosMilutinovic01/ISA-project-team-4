@@ -16,16 +16,11 @@ export class StakeholderService {
   constructor(private http: HttpClient) { }
   
   getCompanyProfile(companyId: string): Observable<Company>{
-    return this.http.get<Company>(
-      environment.apiHost + "companies/profile/" + companyId);
+    return this.http.get<Company>(environment.apiHost + "companies/profile/" + companyId);
   }
 
   editCompanyProfile(companyProfile : Company): Observable<Company> {
-    console.log("U SERVISU: ")
-    console.log(companyProfile)
-    return this.http.put<Company>(
-      environment.apiHost + 'companies/profile/edit', companyProfile
-    );
+    return this.http.put<Company>(environment.apiHost + 'companies/profile/edit', companyProfile);
   }
 
   getCompany(companyId: string): Observable<Company>{
@@ -52,5 +47,9 @@ export class StakeholderService {
 
   registerCompanyAdministrator(CompanyAdministrator: CompanyAdministrator): Observable<Company> {
     return this.http.post<Company>(environment.apiHost + 'companyAdministrators/register', CompanyAdministrator);
+  }
+
+  getCompanyAdministratorProfile(id : string): Observable<CompanyAdministrator> {
+    return this.http.get<CompanyAdministrator>(environment.apiHost + 'companyAdministrators/profile/'+ id);
   }
 }

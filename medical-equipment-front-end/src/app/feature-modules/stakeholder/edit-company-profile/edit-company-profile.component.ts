@@ -45,7 +45,7 @@ export class EditCompanyProfileComponent implements OnInit{
   }
 
   getCompanyProfile(): void{
-    this.service.getCompanyProfile("1").subscribe({
+    this.service.getCompanyProfile("4").subscribe({
       next:(result : Company) => {
           this.profile = result;
           console.log('GET COMPANY PROFILE '+ result);

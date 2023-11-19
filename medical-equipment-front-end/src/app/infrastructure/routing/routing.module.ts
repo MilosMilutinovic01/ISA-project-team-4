@@ -9,6 +9,7 @@ import { CompanyRegistrationComponent } from 'src/app/feature-modules/stakeholde
 import { CompanyAdministartorRegistrationComponent } from 'src/app/feature-modules/stakeholder/company-administartor-registration/company-administartor-registration.component';
 import { CompanyProfileComponent } from 'src/app/feature-modules/stakeholder/company-profile/company-profile.component';
 import { EditCompanyProfileComponent } from 'src/app/feature-modules/stakeholder/edit-company-profile/edit-company-profile.component';
+import { CompanyAdministratorProfileComponent } from 'src/app/feature-modules/stakeholder/company-administrator-profile/company-administrator-profile.component';
 
 const routes: Routes = [
   { path: 'register', component: RegistrationComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'companyAdministratorRegistration', component: CompanyAdministartorRegistrationComponent},
   { path: 'companyProfile', component: CompanyProfileComponent},
   { path: 'editCompanyProfile', component: EditCompanyProfileComponent},
+  { path: 'companyAdministratorProfile', component: CompanyAdministratorProfileComponent},
   { path: '', component: HomeComponent },
 ];
 

@@ -9,7 +9,9 @@ import { CompanyAdministartorRegistrationComponent } from './company-administart
 import { MatDialogModule } from '@angular/material/dialog';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { EditCompanyProfileComponent } from './edit-company-profile/edit-company-profile.component';
-import {MatTooltipModule} from '@angular/material/tooltip'
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { CompanyAdministratorProfileComponent } from './company-administrator-profile/company-administrator-profile.component';
+
 @NgModule({
   declarations: [
     CustomerProfileComponent,
@@ -17,7 +19,8 @@ import {MatTooltipModule} from '@angular/material/tooltip'
     CompanyRegistrationComponent,
     CompanyAdministartorRegistrationComponent,
     CompanyProfileComponent,
-    EditCompanyProfileComponent
+    EditCompanyProfileComponent,
+    CompanyAdministratorProfileComponent
   ],
   imports: [
     CommonModule,

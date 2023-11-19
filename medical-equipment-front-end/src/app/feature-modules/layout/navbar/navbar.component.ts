@@ -32,4 +32,8 @@ export class NavbarComponent {
   navigateToMedicalEquipment(): void {
     this.router.navigate(['/']);
   }
+  
+  companyAdministratorProfile(): void {
+    this.router.navigate(['/companyAdministratorProfile']);
+  }
 }

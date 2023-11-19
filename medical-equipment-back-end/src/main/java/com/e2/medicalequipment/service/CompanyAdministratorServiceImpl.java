@@ -3,6 +3,7 @@ package com.e2.medicalequipment.service;
 import com.e2.medicalequipment.dto.CompanyAdministratorDTO;
 import com.e2.medicalequipment.model.Company;
 import com.e2.medicalequipment.model.CompanyAdministrator;
+import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.model.UserType;
 import com.e2.medicalequipment.repository.CompanyAdministratorRepository;
 import com.e2.medicalequipment.repository.CompanyRepository;
@@ -32,5 +33,10 @@ public class CompanyAdministratorServiceImpl implements CompanyAdministratorServ
         CompanyAdministrator savedCompanyAdministrator = companyAdministratorRepository.save(companyAdministrator);
 
         return savedCompanyAdministrator;
+    }
+
+    @Override
+    public CompanyAdministrator Get(String id) throws Exception{
+        return this.companyAdministratorRepository.findById(Long.parseLong(id)).get();
     }
 }
