@@ -43,6 +43,7 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepository.findById(Long.valueOf(id)).get();
     }
 
+    @Override
     public Company Update(UpdateCompanyDTO companyDTO) throws Exception{
         Company company = new Company(companyDTO);
 

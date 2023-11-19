@@ -51,11 +51,11 @@ public class CompanyController {
     }
 
     @PutMapping(value = "/profile/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public ResponseEntity<Company> updateCompany(@RequestBody UpdateCompanyDTO companyDTO) {
         Company company = null;
         try {
-
-            System.out.println("\n\n\nEVO ME\n\n\n       ");            company = companyService.Update(companyDTO);
+            company = companyService.Update(companyDTO);
             return new ResponseEntity<Company>(company, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
