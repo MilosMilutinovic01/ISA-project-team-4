@@ -10,7 +10,7 @@ import { CompaniesViewComponent } from 'src/app/feature-modules/stakeholder/comp
 import { CompanyAdministartorRegistrationComponent } from 'src/app/feature-modules/stakeholder/company-administartor-registration/company-administartor-registration.component';
 import { CompanyProfileComponent } from 'src/app/feature-modules/stakeholder/company-profile/company-profile.component';
 import { EditCompanyProfileComponent } from 'src/app/feature-modules/stakeholder/edit-company-profile/edit-company-profile.component';
-
+import { EquipmentViewComponent } from 'src/app/feature-modules/stakeholder/equipment-view/equipment-view.component';
 const routes: Routes = [
   { path: 'register', component: RegistrationComponent },
   { path: 'customerProfile', component: CustomerProfileComponent},
@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'companyAdministratorRegistration', component: CompanyAdministartorRegistrationComponent},
   { path: 'companyProfile', component: CompanyProfileComponent},
   { path: 'editCompanyProfile', component: EditCompanyProfileComponent},
+  { path: 'equipment', component: EquipmentViewComponent},
   { path: '', component: HomeComponent },
 ];
 

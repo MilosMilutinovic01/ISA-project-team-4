@@ -10,6 +10,8 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StakeholderService } from '../stakeholder.service';
+import { Company } from 'src/app/shared/model/company.model';
+import { Address } from 'src/app/shared/model/address.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
 
@@ -39,10 +41,16 @@ export class CompanyAdministartorRegistrationComponent {
   });
 
   registerCompanyAdministrator(): void {
+    const a: Address = {
+      street: this.companyAdministratorForm.value.street || '',
+      city: this.companyAdministratorForm.value.city || '',
+      country: this.companyAdministratorForm.value.country || '',
+    };
+
     const companyAdministrator: CompanyAdministrator = {
       name: this.companyAdministratorForm.value.name || '',
       lastname: this.companyAdministratorForm.value.lastname || '',
-      address: this.companyAdministratorForm.value.street || '',
+      address: a,
       city: this.companyAdministratorForm.value.city || '',
       country: this.companyAdministratorForm.value.country || '',
       email: this.companyAdministratorForm.value.email || '',

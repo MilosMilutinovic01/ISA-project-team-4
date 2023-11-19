@@ -51,11 +51,6 @@ export class NavbarComponent implements OnInit {
   companyRegistration(): void {
     this.router.navigate(['/companyRegistration']);
   }
-
-  companiesView(): void {
-    this.router.navigate(['/companiesView']);
-  }
-
   companyAdministratorRegistration(): void {
     this.router.navigate(['/companyAdministratorRegistration']);
   }

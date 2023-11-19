@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class EquipmentTrackingServiceImpl implements EquipmentTrackingService {
@@ -27,5 +28,17 @@ public class EquipmentTrackingServiceImpl implements EquipmentTrackingService {
             result.add( new EquipmentTrackingDTO(e));
         }
         return result;
+    }
+
+    @Override
+    public List<EquipmentTrackingDTO> GetWanted(String searchName,String type) throws Exception {
+        List<EquipmentTrackingDTO> allEquipment = new ArrayList<>();
+        for(EquipmentTracking e : equipmentTrackingRepository.findAll()) {
+                allEquipment.add(new EquipmentTrackingDTO(e));
+        }
+        return allEquipment.stream()
+                    .filter(e -> searchName.equals("empty") || e.equipment.name.toLowerCase().contains(searchName.toLowerCase()))
+                    .filter(e -> type.equals("empty") || e.equipment.type.toString().equals(type))
+                    .collect(Collectors.toList());
     }
 }
