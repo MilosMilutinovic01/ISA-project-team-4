@@ -28,4 +28,10 @@ public class EquipmentTrackingController {
         List<EquipmentTrackingDTO> trackings = equipmentTrackingService.GetAll();
         return new ResponseEntity<List<EquipmentTrackingDTO>>(trackings, HttpStatus.OK);
     }
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<EquipmentTrackingDTO>> filterAndSearch(@RequestParam String searchName,@RequestParam String type,@RequestParam Double minPrice,@RequestParam Double maxPrice) throws Exception {
+        List<EquipmentTrackingDTO> trackings = equipmentTrackingService.GetWanted(searchName,type,minPrice,maxPrice);
+        return new ResponseEntity<List<EquipmentTrackingDTO>>(trackings, HttpStatus.OK);
+    }
 }
