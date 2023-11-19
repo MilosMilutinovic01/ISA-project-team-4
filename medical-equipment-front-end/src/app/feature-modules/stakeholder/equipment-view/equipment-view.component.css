@@ -1,13 +1,11 @@
 .equipment-view{
-  margin:100px;
   justify-content: center;
   align-items: center;
-  width:75%;
+  width:100%;
 }
 
 .card-container {
     justify-content: center;
-    max-width: 1200px;
     margin: 0 auto;
     flex-direction: column;
   }

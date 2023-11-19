@@ -12,9 +12,15 @@ import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model'
   providedIn: 'root',
 })
 export class StakeholderService {
+  private isRegister = new BehaviorSubject(false);
+  getIsRegister = this.isRegister.asObservable();
   private refreshNavbarSource = new BehaviorSubject<boolean>(false);
   refreshNavbar$ = this.refreshNavbarSource.asObservable();
   constructor(private http: HttpClient) {}
+
+  setIsRegister(isRegister: boolean) {
+    this.isRegister.next(isRegister);
+  }
 
   getCompanyProfile(companyId: string): Observable<Company> {
     return this.http.get<Company>(

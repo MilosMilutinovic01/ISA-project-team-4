@@ -47,7 +47,6 @@ import {MatChip, MatChipsModule} from '@angular/material/chips';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule
-
   ]
 })
-export class StakeholderModule { }
+export class StakeholderModule {}

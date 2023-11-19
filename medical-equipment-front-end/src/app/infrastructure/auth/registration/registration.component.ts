@@ -11,6 +11,7 @@ import { Registration } from '../model/registration.model';
 import { faXmark, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { Address } from 'src/app/shared/model/address.model';
+import { StakeholderService } from 'src/app/feature-modules/stakeholder/stakeholder.service';
 
 @Component({
   selector: 'app-registration',
@@ -24,7 +25,11 @@ export class RegistrationComponent {
   faEye = faEye;
   faEyeSlash = faEyeSlash;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private stakeholderService: StakeholderService
+  ) {
     this.isPassword1Visible = false;
     this.isPassword2Visible = false;
   }
@@ -70,7 +75,13 @@ export class RegistrationComponent {
       this.authService.register(registration).subscribe({
         next: () => {
           alert('Succesfully created!');
+          this.stakeholderService.setIsRegister(true);
           this.router.navigate(['']);
+        },
+        error: (error) => {
+          if (error.status === 409) {
+            alert('Email already exist!');
+          }
         },
       });
     } else if (
