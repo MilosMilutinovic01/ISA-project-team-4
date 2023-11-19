@@ -1,9 +1,11 @@
 package com.e2.medicalequipment.controller;
 
 import com.e2.medicalequipment.dto.CompanyAdministratorDTO;
+import com.e2.medicalequipment.dto.UpdateCompanyAdministratorDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyDTO;
 import com.e2.medicalequipment.model.Company;
 import com.e2.medicalequipment.model.CompanyAdministrator;
+import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.service.CompanyAdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,17 +41,20 @@ public class CompanyAdministratorController {
 
     @GetMapping(value = "/profile/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<CompanyAdministratorDTO> getCompanyAdministrator(@PathVariable String id) throws Exception {
-        CompanyAdministrator companyAdministrator = companyAdministratorService.Get(id);
-        if (companyAdministrator == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(new CompanyAdministratorDTO(companyAdministrator), HttpStatus.OK);
-    }
-/*
+    public ResponseEntity<CompanyAdministrator> getCompanyAdministrator(@PathVariable String id) throws Exception {
+        System.out.println("ID: "+ id);
+        CompanyAdministrator customer = null;
+        try {
+            customer = companyAdministratorService.Get(id);
+            return new ResponseEntity<CompanyAdministrator>(customer, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<CompanyAdministrator>(customer, HttpStatus.CONFLICT);
+        }    }
+
     @PutMapping(value = "/profile/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<CompanyAdministrator> updateCompanyAdministrator(@RequestBody CompanyAdministratorDTO companyAdministratorDTO) {
+    public ResponseEntity<CompanyAdministrator> updateCompanyAdministrator(@RequestBody UpdateCompanyAdministratorDTO companyAdministratorDTO) {
         CompanyAdministrator companyAdministrator = null;
         try {
             companyAdministrator = companyAdministratorService.Update(companyAdministratorDTO);
@@ -60,6 +65,4 @@ public class CompanyAdministratorController {
 
         }
     }
-
- */
 }

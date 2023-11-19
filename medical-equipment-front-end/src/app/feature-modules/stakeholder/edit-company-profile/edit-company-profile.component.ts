@@ -28,8 +28,6 @@ export class EditCompanyProfileComponent implements OnInit {
     street: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
-    startTime: new FormControl('', [Validators.required]),
-    endTime: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
     averageRating: new FormControl(0, [Validators.required]),
   });
@@ -45,7 +43,7 @@ export class EditCompanyProfileComponent implements OnInit {
   }
 
   getCompanyProfile(): void{
-    this.service.getCompanyProfile("4").subscribe({
+    this.service.getCompanyProfile("1").subscribe({
       next:(result : Company) => {
           this.profile = result;
           this.editProfileForm.patchValue({
@@ -53,8 +51,6 @@ export class EditCompanyProfileComponent implements OnInit {
             street: result.address.street,
             city: result.address.city,
             country: result.address.country,
-            startTime: result.startTime,
-            endTime: result.endTime,
             description: result.description,
             averageRating: result.averageRating
           });

@@ -5,6 +5,7 @@ import { CompanyAdministrator } from 'src/app/shared/model/company-administrator
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/env/environment';
 import { Company } from 'src/app/shared/model/company.model';
+import { UpdateCompanyAdministrator } from 'src/app/shared/model/update-company-administrator.model';
 
 @Injectable({
   providedIn: 'root',
@@ -91,6 +92,6 @@ export class StakeholderService {
     );
   }
 
-  editCompanyAdministratorProfile(profile : CompanyAdministrator): Observable<CompanyAdministrator> {
-    return this.http.put<CompanyAdministrator>(environment.apiHost + 'companyAdministrators/profile/edit',profile);}
+  editCompanyAdministratorProfile(profile : UpdateCompanyAdministrator): Observable<UpdateCompanyAdministrator> {
+    return this.http.put<UpdateCompanyAdministrator>(environment.apiHost + 'companyAdministrators/profile/edit',profile);}
 }

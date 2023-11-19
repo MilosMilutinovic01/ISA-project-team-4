@@ -1,6 +1,7 @@
 package com.e2.medicalequipment.model;
 
 import com.e2.medicalequipment.dto.CompanyAdministratorDTO;
+import com.e2.medicalequipment.dto.UpdateCompanyAdministratorDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -39,6 +40,18 @@ public class CompanyAdministrator extends User{
                 companyAdministratorDTO.phoneNumber,
                 companyAdministratorDTO.password);
         this.companyId = companyAdministratorDTO.companyId;
+    }
+
+    public CompanyAdministrator(UpdateCompanyAdministratorDTO companyAdministratorDTO) {
+        super(companyAdministratorDTO.id,
+                companyAdministratorDTO.name,
+                companyAdministratorDTO.lastname,
+                companyAdministratorDTO.email,
+                companyAdministratorDTO.address,
+                companyAdministratorDTO.phoneNumber,
+                companyAdministratorDTO.password);
+        this.companyId = companyAdministratorDTO.companyId;
+
     }
 
     public Long getCompanyId() {

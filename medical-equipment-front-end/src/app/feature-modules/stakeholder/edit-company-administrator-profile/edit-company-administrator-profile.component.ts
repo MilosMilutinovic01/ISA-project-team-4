@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { StakeholderService } from '../stakeholder.service';
 import { Address } from 'src/app/shared/model/address.model';
 import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
+import { UpdateCompanyAdministrator } from 'src/app/shared/model/update-company-administrator.model';
 
 @Component({
   selector: 'app-edit-company-administrator-profile',
@@ -47,9 +48,11 @@ export class EditCompanyAdministratorProfileComponent {
   }
 
   getCompanyAdministratorProfile(): void{
-    this.service.getCompanyAdministratorProfile("-1").subscribe({
+    this.service.getCompanyAdministratorProfile("1").subscribe({
       next:(result : CompanyAdministrator) => {
           this.profile = result;
+          console.log("ID PROFILA ")
+          console.log(this.profile.id)
           this.editProfileForm.patchValue({
             name: result.name,
             street: result.address.street,
@@ -74,22 +77,39 @@ export class EditCompanyAdministratorProfileComponent {
       city: this.editProfileForm.value.city || '',
       country: this.editProfileForm.value.country || '',
     };
-    const editProfile: CompanyAdministrator = {
+    console.log(this.profile.id)
+    console.log(this.editProfileForm.value.password )
+    console.log(this.editProfileForm.value.email)
+    console.log(editAddress)
+    console.log(this.editProfileForm.value.name)
+    console.log(this.editProfileForm.value.lastname)
+    console.log(this.editProfileForm.value.phoneNumber)
+    console.log(this.profile.companyId)
+    const editProfile: UpdateCompanyAdministrator = {
       id: this.profile.id,
-      name: this.editProfileForm.value.name || '',
-      address: editAddress,
-      email: this.editProfileForm.value.email || '',
       password: this.editProfileForm.value.password || '',
+      email: this.editProfileForm.value.email || '',
+      address: editAddress,
+      name: this.editProfileForm.value.name || '',
       lastname: this.editProfileForm.value.lastname || '',
-      city: this.editProfileForm.value.city || '',
-      country: this.editProfileForm.value.country || '',
-      phoneNumber: this.editProfileForm.value.phoneNumber || ''
+      phoneNumber: this.editProfileForm.value.phoneNumber || '',
+      companyId: this.profile.companyId
     };
 
     if(this.editProfileForm.valid){        
         this.service.editCompanyAdministratorProfile(editProfile).subscribe({
-          next: (result : CompanyAdministrator) => {
-            this.profile = result;            
+          next: (result : UpdateCompanyAdministrator) => {
+            this.profile.id = result.id;
+            this.profile.name = result.name;            
+            this.profile.address = result.address;
+            this.profile.email = result.email;
+            this.profile.password = result.password;
+            this.profile.lastname = result.lastname;
+            this.profile.city = result.address.city;
+            this.profile.country = result.address.country;
+            this.profile.phoneNumber = result.phoneNumber;
+            console.log('Profil nakon dodjele result: ')
+            console.log(this.profile)
             this.router.navigate(['/companyAdministratorProfile']);
             this.snackBar.open('Succesfully edited profile', 'Close', {
               duration: 5000

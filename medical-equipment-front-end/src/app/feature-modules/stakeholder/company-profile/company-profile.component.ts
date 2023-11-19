@@ -21,7 +21,6 @@ export class CompanyProfileComponent {
     endTime: '',
     averageRating: NaN,
   };
-  companyId: string = '';
 
   constructor(
     private service: StakeholderService,
@@ -34,8 +33,7 @@ export class CompanyProfileComponent {
   }
 
   getCompany(): void {
-    this.companyId = '4';
-    this.service.getCompanyProfile(this.companyId).subscribe({
+    this.service.getCompanyProfile('1').subscribe({
       next: (result) => {
         this.company = result;
         console.log(this.company);
