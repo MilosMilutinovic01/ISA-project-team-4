@@ -41,7 +41,7 @@ public class EmailService {
             String htmlContent = "<p>Dear <strong>" + customer.name + "</strong>,</p>\n" +
                     "<p>Thank you for choosing ISA! We're excited to have you on board.</p>\n" +
                     "<p>Your registration is almost complete. Please click the following link to activate your account:</p>\n" +
-                    "<p><a href=\"#\">Activation Link</a></p>\n" +
+                    "<p><a href=\"http://localhost:4200/\">Activation Link</a></p>\n" +
                     "<p>If you have any questions, feel free to contact our support team.</p>\n" +
                     "<p>Best regards,<br/>The ISA Team</p>";
 

@@ -1,18 +1,14 @@
 package com.e2.medicalequipment.model;
 
 import com.e2.medicalequipment.dto.CreateCompanyDTO;
-
 import com.e2.medicalequipment.dto.UpdateCompanyDTO;
 import jakarta.persistence.*;
-
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
 
 @Entity
 @Table(schema = "stakeholders", name = "companies")
-@Inheritance(strategy=TABLE_PER_CLASS)
 public class Company {
     @Id
     @SequenceGenerator(name = "companySeq", sequenceName = "companySeq", initialValue = 1, allocationSize = 1)
@@ -20,13 +16,9 @@ public class Company {
     private Long id;
     @Column(name = "name")
     private String name;
-
-    @Column(name = "address")
-    private String address;
-    @Column(name = "city")
-    private String city;
-    @Column(name = "country")
-    private String country;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Address address;
 
     @Column(name = "startTime")
     private LocalTime startTime;
@@ -43,15 +35,14 @@ public class Company {
     //lista opreme
 
     //slobodni termini
+
     public Company() {
     }
 
-    public Company(Long id, String name, String address, String city, String country, LocalTime startTime, LocalTime endTime, String description, double averageRating) {
+    public Company(Long id, String name, Address address, LocalTime startTime, LocalTime endTime, String description, double averageRating) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.city = city;
-        this.country = country;
         this.startTime = startTime;
         this.endTime = endTime;
         this.description = description;
@@ -59,20 +50,15 @@ public class Company {
     }
     public Company(CreateCompanyDTO createCompanyDTO) {
         this.name = createCompanyDTO.name;
-        this.address = createCompanyDTO.address;
-        this.city = createCompanyDTO.city;
-        this.country = createCompanyDTO.country;
         this.description = createCompanyDTO.description;
     }
-
     public Company(UpdateCompanyDTO updateCompanyDTO) {
         this.id = updateCompanyDTO.id;
         this.name = updateCompanyDTO.name;
-        this.address = updateCompanyDTO.address;
-        this.city = updateCompanyDTO.city;
-        this.country = updateCompanyDTO.country;
-        this.startTime = LocalTime.parse(updateCompanyDTO.startTime);
-        this.endTime = LocalTime.parse(updateCompanyDTO.endTime);
+       // this.address = updateCompanyDTO.address;
+
+       // this.startTime = LocalTime.parse(updateCompanyDTO.startTime);
+       // this.endTime = LocalTime.parse(updateCompanyDTO.endTime);
         this.description = updateCompanyDTO.description;
         this.averageRating = updateCompanyDTO.averageRating;
     }
@@ -92,30 +78,12 @@ public class Company {
         this.name = name;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
-
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     public LocalTime getStartTime() {
         return startTime;
     }

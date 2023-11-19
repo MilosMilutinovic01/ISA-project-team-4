@@ -2,29 +2,29 @@ package com.e2.medicalequipment.service;
 
 import com.e2.medicalequipment.dto.CreateCompanyDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyDTO;
+import com.e2.medicalequipment.dto.UpdateAddressDTO;
+import com.e2.medicalequipment.model.Address;
 import com.e2.medicalequipment.model.Company;
-import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.model.UserType;
+import com.e2.medicalequipment.repository.AddressRepository;
 import com.e2.medicalequipment.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
     @Autowired
     private CompanyRepository companyRepository;
-
     @Override
     public Company Create(CreateCompanyDTO createCompanyDto) throws Exception {
+        Address address = new Address(createCompanyDto.address);
         Company company = new Company(createCompanyDto);
-        company.setAverageRating(-1L);
-       // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        company.setAddress(address);
+        company.setAverageRating(0L);
         LocalTime startTime = LocalTime.parse(createCompanyDto.startTime, formatter);
         company.setStartTime(startTime);
         LocalTime endTime = LocalTime.parse(createCompanyDto.endTime, formatter);
@@ -42,16 +42,18 @@ public class CompanyServiceImpl implements CompanyService {
     public Company Get(String id) {
         return companyRepository.findById(Long.valueOf(id)).get();
     }
-
-    @Override
     public Company Update(UpdateCompanyDTO companyDTO) throws Exception{
         Company company = new Company(companyDTO);
-
-        if (company.getId() == null) {
+        Address address = new Address(companyDTO.address);
+        if ((company.getId() == null) || (address.getId() == null)){
             throw new Exception("ID must not be null for updating entity.");
         }
+        company.setAddress(address);
+        LocalTime startTime = LocalTime.parse(companyDTO.startTime, formatter);
+        company.setStartTime(startTime);
+        LocalTime endTime = LocalTime.parse(companyDTO.endTime, formatter);
+        company.setEndTime(endTime);
         Company savedCompany = companyRepository.save(company);
-
         return savedCompany;
     }
 }

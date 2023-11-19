@@ -40,14 +40,12 @@ public class CompanyController {
 
     @GetMapping(value = "/profile/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<Company> getCompany(@PathVariable String id) throws Exception {
+    public ResponseEntity<UpdateCompanyDTO> getCompany(@PathVariable String id) throws Exception {
         Company company = companyService.Get(id);
-
         if (company == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>(company, HttpStatus.OK);
+        return new ResponseEntity<>(new UpdateCompanyDTO(company), HttpStatus.OK);
     }
 
     @PutMapping(value = "/profile/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

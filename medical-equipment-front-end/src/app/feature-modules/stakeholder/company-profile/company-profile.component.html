@@ -1,22 +1,24 @@
 <div class="card">
-    <div class="profile-info">
-      <div class="label">Name:</div>
-      <div class="value">{{ company.name }}</div>
-    </div>
-    <div class="profile-info">
-      <div class="label">Address:</div>
-      <div class="value">{{ company.address }}</div>
-    </div>
-  
-    <div class="profile-info">
-      <div class="label">Average rating:</div>
-      <div class="value">{{ company.averageRating }}</div>
-    </div>
+  <div class="profile-info">
+    <div class="label">Name:</div>
+    <div class="value">{{ company.name }}</div>
+  </div>
+  <div class="profile-info">
+    <div class="label">Address:</div>
+    <div class="value">{{ company.address.street }},{{company.address.city}},{{company.address.country}}</div>
+  </div>
 
-    <p>lista opreme koju kompanija ima na stanju</p>
-      
-    <br>
+  <div class="profile-info">
+    <div class="label">Average rating:</div>
+    <div class="value">{{ company.averageRating }}</div>
+  </div>
+  <br />
+  <p>lista opreme koju kompanija ima na stanju</p>
+  <br />
+  <button mat-icon-button (click)="addCompanyAdministrator()">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>
 <button class="bottom-right-button" mat-icon-button (click)="editProfile()">
-    <mat-icon>edit</mat-icon>
+  <mat-icon>edit</mat-icon>
 </button>

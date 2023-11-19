@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { StakeholderService } from '../stakeholder.service';
-import { Company } from 'src/app/infrastructure/auth/model/company.model';
+import { Company } from '../model/company.model';
+import { Address } from '../model/address.model';
+import { MatDialog } from '@angular/material/dialog';
+import { CompanyAdministartorRegistrationComponent } from '../company-administartor-registration/company-administartor-registration.component';
 
 @Component({
   selector: 'app-company-profile',
@@ -12,17 +15,15 @@ export class CompanyProfileComponent {
   company : Company = {
     id : NaN,
     name : '',
-    address : '',
+    address: { id: NaN, street:'', city:'',country:''},
     description : '',
-    city: '',
-    country: '',
     startTime: '',
     endTime: '',
     averageRating : NaN,
   }
   companyId : string = '';
 
-  constructor(private service: StakeholderService, private router: Router) { }
+  constructor(private service: StakeholderService,private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
     this.getCompany();
@@ -43,5 +44,13 @@ export class CompanyProfileComponent {
 
   editProfile(): void {
     this.router.navigate(['/editCompanyProfile']);
+  }
+
+  addCompanyAdministrator(): void {
+      const dialogRef = this.dialog.open(CompanyAdministartorRegistrationComponent, {
+        width: '50%', 
+        height: '100%',
+        data: {compId : this.company.id}
+      });    
   }
 }
