@@ -27,7 +27,6 @@ export class CompanyProfileComponent {
   otherAdministrators: CompanyAdministrator[] = [];
   equipmentTrackings: EquipmentTracking[] = [];
   filteredEquipmentTrackings: EquipmentTracking[] = [];
-  
 
   constructor(
     private service: StakeholderService,
@@ -58,14 +57,16 @@ export class CompanyProfileComponent {
   }
 
   addCompanyAdministrator(): void {
-    const dialogRef = this.dialog.open(
-      CompanyAdministartorRegistrationComponent,
-      {
+    const dialogRef = this.dialog
+      .open(CompanyAdministartorRegistrationComponent, {
         width: '50%',
         height: '100%',
         data: { compId: this.company.id },
-      }
-    );
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        this.getAllCompanyAdministrators();
+      });
   }
 
   getAllEquipmentTrackings(): void {
@@ -82,7 +83,7 @@ export class CompanyProfileComponent {
 
   sort(): void {
     for (let el of this.equipmentTrackings) {
-      if(el.company.id === this.company.id && el.count > 0){
+      if (el.company.id === this.company.id && el.count > 0) {
         this.filteredEquipmentTrackings.push(el);
       }
     }
@@ -91,13 +92,13 @@ export class CompanyProfileComponent {
   getAllCompanyAdministrators(): void {
     this.service.getAllCompanyAdministrators().subscribe({
       next: (result) => {
-        console.log(result)
+        console.log(result);
         for (let a of result) {
-          if((a.companyId === this.company.id) && a.id !== -1){
+          if (a.companyId === this.company.id && a.id !== -1) {
             this.otherAdministrators.push(a);
           }
-        }        
-        console.log(this.otherAdministrators)
+        }
+        console.log(this.otherAdministrators);
       },
       error: () => {
         console.log(console.error);

@@ -42,18 +42,18 @@ export class EditCompanyProfileComponent implements OnInit {
     this.getCompanyProfile();
   }
 
-  getCompanyProfile(): void{
-    this.service.getCompanyProfile("-1").subscribe({
-      next:(result : Company) => {
-          this.profile = result;
-          this.editProfileForm.patchValue({
-            name: result.name,
-            street: result.address.street,
-            city: result.address.city,
-            country: result.address.country,
-            description: result.description,
-            averageRating: result.averageRating
-          });
+  getCompanyProfile(): void {
+    this.service.getCompanyProfile('-1').subscribe({
+      next: (result: Company) => {
+        this.profile = result;
+        this.editProfileForm.patchValue({
+          name: result.name,
+          street: result.address.street,
+          city: result.address.city,
+          country: result.address.country,
+          description: result.description,
+          averageRating: result.averageRating,
+        });
       },
       error: () => {
         console.log(console.error());
@@ -78,23 +78,23 @@ export class EditCompanyProfileComponent implements OnInit {
       averageRating: this.editProfileForm.value.averageRating || 0,
     };
 
-    if(this.editProfileForm.valid){        
-        this.service.editCompanyProfile(editProfile).subscribe({
-          next: (result : Company) => {
-            this.profile = result;            
-            this.router.navigate(['/companyProfile']);
-            this.snackBar.open('Succesfully edited profile', 'Close', {
-              duration: 5000
-            });
-          },
-          error: () => {
-            console.log(console.error());
-          }
-        })
-    }
-    else{
+    if (this.editProfileForm.valid) {
+      console.log(editProfile);
+      this.service.editCompanyProfile(editProfile).subscribe({
+        next: (result: Company) => {
+          this.profile = result;
+          this.router.navigate(['/companyProfile']);
+          this.snackBar.open('Succesfully edited profile', 'Close', {
+            duration: 5000,
+          });
+        },
+        error: () => {
+          console.log(console.error());
+        },
+      });
+    } else {
       this.snackBar.open('All fields must be entered correctly!', 'Close', {
-        duration: 5000
+        duration: 5000,
       });
     }
   }

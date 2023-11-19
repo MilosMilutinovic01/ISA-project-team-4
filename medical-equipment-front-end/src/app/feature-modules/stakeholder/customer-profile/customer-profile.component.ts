@@ -15,7 +15,7 @@ export class CustomerProfileComponent implements OnInit {
     name: '',
     lastname: '',
     email: '',
-    address: {street:'', city:'', country:''},
+    address: { street: '', city: '', country: '' },
     phoneNumber: '',
     profession: '',
     penaltyPoints: NaN,
@@ -27,7 +27,6 @@ export class CustomerProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getCustomerProfile();
   }
-
 
   getCustomerProfile(): void {
     this.service.getCustomerProfile('1').subscribe({
