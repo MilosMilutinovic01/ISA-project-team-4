@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/companies", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin
@@ -38,9 +41,53 @@ public class CompanyController {
         }
     }
 
+
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<Company>> getAll(){
+        List<Company> companies = null;
+        try {
+            companies = companyService.GetAll();
+            return new ResponseEntity<List<Company>>(companies, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Company>>(companies, HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(value = "/search/{name}/{street}/{city}/{country}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<Company>> searchCompanies(@PathVariable String name,
+                                                         @PathVariable String street,
+                                                         @PathVariable String city,
+                                                         @PathVariable String country){
+        List<Company> searchedCompanies = null;
+        try {
+            searchedCompanies = companyService.Search(name, street, city, country);
+            return new ResponseEntity<List<Company>>(searchedCompanies, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Company>>(searchedCompanies, HttpStatus.CONFLICT);
+        }
+    }
+
+    @PutMapping(value = "/filter/{rate}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<Company>> filterCompanies(@PathVariable String rate,
+                                                         @RequestBody List<Company> companies) {
+        List<Company> filteredCompanies = null;
+        try {
+            filteredCompanies = companyService.Filter(rate, companies);
+            return new ResponseEntity<List<Company>>(filteredCompanies, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Company>>(filteredCompanies, HttpStatus.CONFLICT);
+        }
+    }
+
     @GetMapping(value = "/profile/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<UpdateCompanyDTO> getCompany(@PathVariable String id) throws Exception {
+    public ResponseEntity<UpdateCompanyDTO> getCompany (@PathVariable String id) throws Exception {
         Company company = companyService.Get(id);
         if (company == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -49,15 +96,17 @@ public class CompanyController {
     }
 
     @PutMapping(value = "/profile/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Company> updateCompany(@RequestBody UpdateCompanyDTO companyDTO) {
+    public ResponseEntity<Company> updateCompany (@RequestBody UpdateCompanyDTO companyDTO){
         Company company = null;
         try {
 
-            System.out.println("\n\n\nEVO ME\n\n\n       ");            company = companyService.Update(companyDTO);
+            System.out.println("\n\n\nEVO ME\n\n\n       ");
+            company = companyService.Update(companyDTO);
             return new ResponseEntity<Company>(company, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Company>(company, HttpStatus.CONFLICT);
+
         }
     }
 }
