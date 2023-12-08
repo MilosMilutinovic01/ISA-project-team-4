@@ -37,7 +37,6 @@ public class EmailService {
             System.out.println(env.getProperty("spring.mail.username"));
             helper.setSubject("Mejl za potvrdu registracije ISA-team-34");
 
-            // HTML content with basic styling
             String htmlContent = "<p>Dear <strong>" + customer.name + "</strong>,</p>\n" +
                     "<p>Thank you for choosing ISA! We're excited to have you on board.</p>\n" +
                     "<p>Your registration is almost complete. Please click the following link to activate your account:</p>\n" +
@@ -45,7 +44,7 @@ public class EmailService {
                     "<p>If you have any questions, feel free to contact our support team.</p>\n" +
                     "<p>Best regards,<br/>The ISA Team</p>";
 
-            helper.setText(htmlContent, true);  // Set to true for HTML content
+            helper.setText(htmlContent, true);
             javaMailSender.send(mimeMessage);
 
             System.out.println("Email poslat!");
@@ -53,22 +52,5 @@ public class EmailService {
             throw new MailException("Failed to send email", e) {
             };
         }
-
-        /*SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo(customer.email);
-        mail.setFrom(env.getProperty("spring.mail.username"));
-        System.out.println(env.getProperty("spring.mail.username"));
-        mail.setSubject("Mejl za potvrdu registracije ISA-team-34");
-
-        String htmlContent = "<p>Pozdrav <strong>" + customer.name + "</strong>,</p>"
-                + "<p>Hvala što pratiš ISA.</p>"
-                + "<p style='color: #007bff;'>Tvoja registracija je uspešna!</p>"
-                + "<p>...</p>";
-
-        mail.setText(htmlContent);
-        mail.setHtml(true);
-        javaMailSender.send(mail);
-
-        System.out.println("Email poslat!");*/
     }
 }
