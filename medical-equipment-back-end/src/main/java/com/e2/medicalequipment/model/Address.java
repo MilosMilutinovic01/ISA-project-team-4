@@ -2,9 +2,9 @@ package com.e2.medicalequipment.model;
 
 import com.e2.medicalequipment.dto.CreateAddressDTO;
 import com.e2.medicalequipment.dto.UpdateAddressDTO;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
-import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
+import static javax.persistence.InheritanceType.TABLE_PER_CLASS;
 
 @Entity
 @Table(schema = "stakeholders", name = "addresses")

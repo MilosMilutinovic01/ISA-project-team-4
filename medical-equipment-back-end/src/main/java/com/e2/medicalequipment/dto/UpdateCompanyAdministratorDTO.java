@@ -22,10 +22,10 @@ public class UpdateCompanyAdministratorDTO {
 
     public UpdateCompanyAdministratorDTO(CompanyAdministrator companyAdministrator) {
         this.password = companyAdministrator.getPassword();
-        this.email = companyAdministrator.getEmail();
+        this.email = companyAdministrator.getUsername();
         this.address = companyAdministrator.getAddress();
-        this.name = companyAdministrator.getName();
-        this.lastname = companyAdministrator.getLastname();
+        this.name = companyAdministrator.getFirstName();
+        this.lastname = companyAdministrator.getLastName();
         this.phoneNumber = companyAdministrator.getPhoneNumber();
         this.companyId = companyAdministrator.getCompanyId();
     }

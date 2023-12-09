@@ -1,6 +1,6 @@
-package com.e2.medicalequipment.service.Impl;
+package com.e2.medicalequipment.service.impl;
 
-import com.e2.medicalequipment.dto.CreateCustomerDTO;
+import com.e2.medicalequipment.dto.UserRequest;
 import com.e2.medicalequipment.model.Role;
 import com.e2.medicalequipment.model.User;
 import com.e2.medicalequipment.repository.UserRepository;
@@ -40,18 +40,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User save(CreateCustomerDTO userRequest) {
+	public User save(UserRequest userRequest) {
 		User u = new User();
-		u.setEmail(userRequest.email);
+		u.setUsername(userRequest.getUsername());
 		
 		// pre nego sto postavimo lozinku u atribut hesiramo je kako bi se u bazi nalazila hesirana lozinka
 		// treba voditi racuna da se koristi isi password encoder bean koji je postavljen u AUthenticationManager-u kako bi koristili isti algoritam
-		u.setPassword(passwordEncoder.encode(userRequest.password));
+		u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 		
-		u.setName(userRequest.name);
-		u.setLastname(userRequest.lastname);
+		u.setFirstName(userRequest.getFirstname());
+		u.setLastName(userRequest.getLastname());
 		u.setEnabled(true);
-		u.setEmail(userRequest.email);
+		u.setUsername(userRequest.getEmail());
 
 		// u primeru se registruju samo obicni korisnici i u skladu sa tim im se i dodeljuje samo rola USER
 		List<Role> roles = roleService.findByName("ROLE_USER");

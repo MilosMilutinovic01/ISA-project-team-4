@@ -3,15 +3,16 @@ package com.e2.medicalequipment.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
+// POJO koji implementira Spring Security GrantedAuthority kojim se mogu definisati role u aplikaciji
 @Entity
-@Table(name="ROLE")
+@Table(schema = "stakeholders", name="ROLE")
 public class Role implements GrantedAuthority {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
+    @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -24,7 +25,7 @@ public class Role implements GrantedAuthority {
     public String getAuthority() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }

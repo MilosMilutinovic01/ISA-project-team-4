@@ -1,7 +1,7 @@
 package com.e2.medicalequipment.dto;
 
 import com.e2.medicalequipment.model.Company;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import com.e2.medicalequipment.dto.CreateAddressDTO;
 

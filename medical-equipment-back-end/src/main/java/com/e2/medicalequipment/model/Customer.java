@@ -2,7 +2,7 @@ package com.e2.medicalequipment.model;
 
 import com.e2.medicalequipment.dto.CreateCustomerDTO;
 import com.e2.medicalequipment.dto.UpdateCustomerDTO;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(schema = "stakeholders", name = "customers")
@@ -16,19 +16,21 @@ public class Customer extends User{
     @Column(name = "category")
     private CustomerCategory category;
 
+    @Column(name = "user_type")
+    private String user_type;
+
     public Customer() {
 
     }
 
-    public Customer(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType, String profession, Long penaltyPoints, CustomerCategory category) {
+    public Customer(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, String profession, Long penaltyPoints, CustomerCategory category) {
         super(id,
                 name,
                 lastname,
                 email,
                 address,
                 phoneNumber,
-                password,
-                userType);
+                password);
         this.profession = profession;
         this.penaltyPoints = penaltyPoints;
         this.category = category;

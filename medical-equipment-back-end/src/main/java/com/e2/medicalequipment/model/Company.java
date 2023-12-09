@@ -2,12 +2,12 @@ package com.e2.medicalequipment.model;
 
 import com.e2.medicalequipment.dto.CreateCompanyDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyDTO;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
+import static javax.persistence.InheritanceType.TABLE_PER_CLASS;
 
 @Entity
 @Table(schema = "stakeholders", name = "companies")

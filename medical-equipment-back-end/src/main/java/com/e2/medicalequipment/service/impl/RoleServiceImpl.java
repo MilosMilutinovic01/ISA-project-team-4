@@ -1,4 +1,4 @@
-package com.e2.medicalequipment.service.Impl;
+package com.e2.medicalequipment.service.impl;
 
 import com.e2.medicalequipment.model.Role;
 import com.e2.medicalequipment.repository.RoleRepository;

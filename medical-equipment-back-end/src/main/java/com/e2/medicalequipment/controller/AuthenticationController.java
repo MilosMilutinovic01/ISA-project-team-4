@@ -1,8 +1,9 @@
 package com.e2.medicalequipment.controller;
 
-import com.e2.medicalequipment.dto.CreateCustomerDTO;
 import com.e2.medicalequipment.dto.JwtAuthenticationRequest;
-import com.e2.medicalequipment.dto.UserTokenStateDTO;
+import com.e2.medicalequipment.dto.UserRequest;
+import com.e2.medicalequipment.dto.UserTokenState;
+import com.e2.medicalequipment.exception.ResourceConflictException;
 import com.e2.medicalequipment.model.User;
 import com.e2.medicalequipment.service.UserService;
 import com.e2.medicalequipment.util.TokenUtils;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
 
 //Kontroler zaduzen za autentifikaciju korisnika
@@ -40,7 +41,7 @@ public class AuthenticationController {
 	// Prvi endpoint koji pogadja korisnik kada se loguje.
 	// Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
 	@PostMapping("/login")
-	public ResponseEntity<UserTokenStateDTO> createAuthenticationToken(
+	public ResponseEntity<UserTokenState> createAuthenticationToken(
 			@RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
 		// Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
 		// AuthenticationException
@@ -53,20 +54,20 @@ public class AuthenticationController {
 
 		// Kreiraj token za tog korisnika
 		User user = (User) authentication.getPrincipal();
-		String jwt = tokenUtils.generateToken(user.getEmail());
+		String jwt = tokenUtils.generateToken(user.getUsername());
 		int expiresIn = tokenUtils.getExpiredIn();
 
 		// Vrati token kao odgovor na uspesnu autentifikaciju
-		return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn));
+		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
 	}
 
 	// Endpoint za registraciju novog korisnika
 	@PostMapping("/signup")
-	public ResponseEntity<User> addUser(@RequestBody CreateCustomerDTO userRequest, UriComponentsBuilder ucBuilder) throws Exception {
-		User existUser = this.userService.findByUsername(userRequest.email);
+	public ResponseEntity<User> addUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
+		User existUser = this.userService.findByUsername(userRequest.getUsername());
 
 		if (existUser != null) {
-			throw new Exception("Username already exists");
+			throw new ResourceConflictException(userRequest.getId(), "Username already exists");
 		}
 
 		User user = this.userService.save(userRequest);

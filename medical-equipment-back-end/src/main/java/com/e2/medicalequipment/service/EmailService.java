@@ -1,8 +1,8 @@
 package com.e2.medicalequipment.service;
 
 import com.e2.medicalequipment.dto.CreateCustomerDTO;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.MailException;

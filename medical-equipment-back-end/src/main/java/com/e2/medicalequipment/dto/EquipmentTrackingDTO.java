@@ -5,7 +5,7 @@ import com.e2.medicalequipment.dto.EquipmentDTO;
 
 import com.e2.medicalequipment.model.Equipment;
 import com.e2.medicalequipment.model.EquipmentTracking;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 public class EquipmentTrackingDTO {
 

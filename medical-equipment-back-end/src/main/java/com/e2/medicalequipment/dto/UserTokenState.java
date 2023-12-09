@@ -1,17 +1,17 @@
 package com.e2.medicalequipment.dto;
 
 // DTO koji enkapsulira generisani JWT i njegovo trajanje koji se vracaju klijentu
-public class UserTokenStateDTO {
+public class UserTokenState {
 	
     private String accessToken;
     private Long expiresIn;
 
-    public UserTokenStateDTO() {
+    public UserTokenState() {
         this.accessToken = null;
         this.expiresIn = null;
     }
 
-    public UserTokenStateDTO(String accessToken, long expiresIn) {
+    public UserTokenState(String accessToken, long expiresIn) {
         this.accessToken = accessToken;
         this.expiresIn = expiresIn;
     }

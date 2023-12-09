@@ -6,7 +6,7 @@ import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.service.CustomerService;
 import com.e2.medicalequipment.dto.CreateCustomerDTO;
 import com.e2.medicalequipment.service.EmailService;
-import jakarta.ws.rs.PathParam;
+import javax.ws.rs.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

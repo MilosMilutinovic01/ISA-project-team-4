@@ -2,10 +2,9 @@ package com.e2.medicalequipment.service;
 
 import com.e2.medicalequipment.dto.CreateCustomerDTO;
 import com.e2.medicalequipment.dto.UpdateCustomerDTO;
-import com.e2.medicalequipment.model.Address;
 import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.model.CustomerCategory;
-import com.e2.medicalequipment.model.UserType;
+import com.e2.medicalequipment.model.Role;
 import com.e2.medicalequipment.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer Create(CreateCustomerDTO createCustomerDto) throws Exception {
         Customer customer = new Customer(createCustomerDto);
-        customer.setUserType(UserType.CUSTOMER);
         customer.setPenaltyPoints(0L);
         customer.setCategory(CustomerCategory.REGULAR);
 
@@ -35,7 +33,6 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer Update(UpdateCustomerDTO customerDTO) throws Exception {
         Customer customer = new Customer(customerDTO);
-        customer.setUserType(UserType.CUSTOMER);
 
         if (customer.getId() == null) {
             throw new Exception("ID must not be null for updating entity.");

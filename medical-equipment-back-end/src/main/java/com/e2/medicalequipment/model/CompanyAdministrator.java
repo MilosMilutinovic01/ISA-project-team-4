@@ -2,7 +2,7 @@ package com.e2.medicalequipment.model;
 
 import com.e2.medicalequipment.dto.CompanyAdministratorDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyAdministratorDTO;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(schema = "stakeholders", name = "companyAdministrators")
@@ -19,15 +19,14 @@ public class CompanyAdministrator extends User{
 
     }
 
-    public CompanyAdministrator(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType, Long companyId) {
+    public CompanyAdministrator(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, Long companyId) {
         super(id,
                 name,
                 lastname,
                 email,
                 address,
                 phoneNumber,
-                password,
-                userType);
+                password);
         this.companyId = companyId;
     }
 

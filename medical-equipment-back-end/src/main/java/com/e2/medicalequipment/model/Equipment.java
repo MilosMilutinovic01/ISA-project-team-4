@@ -1,6 +1,6 @@
 package com.e2.medicalequipment.model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(schema = "stakeholders", name = "equipment")

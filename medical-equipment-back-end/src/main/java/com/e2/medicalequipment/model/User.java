@@ -1,30 +1,34 @@
 package com.e2.medicalequipment.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
-import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
+import static javax.persistence.InheritanceType.TABLE_PER_CLASS;
 
 @Entity
 @Inheritance(strategy=TABLE_PER_CLASS)
-public class User {
+@Table(schema = "stakeholders", name = "users")
+public class User implements UserDetails {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @SequenceGenerator(name = "userSeq", sequenceName = "userSeq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSeq")
     private Long id;
     @Column(name = "name")
-    private String name;
+    private String firstName;
 
     @Column(name = "lastname")
-    private String lastname;
+    private String lastName;
 
-    @Column(name = "email", unique = true)
-    private String email;
+    @Column(name = "username", unique = true)
+    private String username;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
@@ -36,9 +40,6 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "userType")
-    private UserType userType;
-
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -46,7 +47,7 @@ public class User {
     private Timestamp lastPasswordResetDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
+    @JoinTable(schema = "stakeholders", name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
@@ -54,22 +55,11 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType) {
+    public User(Long id, String firstName, String lastName, String username, Address address, String phoneNumber, String password) {
         this.id = id;
-        this.name = name;
-        this.lastname = lastname;
-        this.email = email;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.userType = userType;
-    }
-
-    public User(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password) {
-        this.id = id;
-        this.name = name;
-        this.lastname = lastname;
-        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.password = password;
@@ -83,28 +73,28 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String email) {
+        this.username = email;
     }
 
     public Address getAddress() {
@@ -123,28 +113,10 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPassword() {
-        return password;
-    }
+    public String getPassword() { return password; }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public UserType getUserType() {
-        return userType;
-    }
-
-    public void setUserType(UserType userType) {
-        this.userType = userType;
-    }
-
-    public boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     public void setRoles(List<Role> roles) {
@@ -155,11 +127,44 @@ public class User {
         return roles;
     }
 
+    @JsonIgnore
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public Timestamp getLastPasswordResetDate() {
         return lastPasswordResetDate;
     }
 
     public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
         this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 }
