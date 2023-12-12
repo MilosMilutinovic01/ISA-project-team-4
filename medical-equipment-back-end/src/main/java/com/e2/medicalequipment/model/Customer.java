@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(schema = "stakeholders", name = "customers")
+@PrimaryKeyJoinColumn(name = "cutomer_id")
 public class Customer extends User{
     @Column(name = "profession")
     private String profession;
@@ -20,7 +21,7 @@ public class Customer extends User{
 
     }
 
-    public Customer(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType, String profession, Long penaltyPoints, CustomerCategory category) {
+    public Customer(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType, String profession, Long penaltyPoints, CustomerCategory category, Boolean enabled) {
         super(id,
                 name,
                 lastname,
@@ -28,7 +29,8 @@ public class Customer extends User{
                 address,
                 phoneNumber,
                 password,
-                userType);
+                userType,
+                enabled);
         this.profession = profession;
         this.penaltyPoints = penaltyPoints;
         this.category = category;

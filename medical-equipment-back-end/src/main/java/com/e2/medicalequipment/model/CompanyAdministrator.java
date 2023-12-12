@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(schema = "stakeholders", name = "companyAdministrators")
+@PrimaryKeyJoinColumn(name = "company_administrator_id")
 public class CompanyAdministrator extends User{
 
     @Column(name = "company_id")
@@ -19,7 +20,7 @@ public class CompanyAdministrator extends User{
 
     }
 
-    public CompanyAdministrator(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType, Long companyId) {
+    public CompanyAdministrator(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType, Long companyId, Boolean enabled) {
         super(id,
                 name,
                 lastname,
@@ -27,7 +28,8 @@ public class CompanyAdministrator extends User{
                 address,
                 phoneNumber,
                 password,
-                userType);
+                userType,
+                enabled);
         this.companyId = companyId;
     }
 
