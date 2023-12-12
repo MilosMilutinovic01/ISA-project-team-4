@@ -90,8 +90,6 @@ export class RegistrationComponent {
     ) {
       alert('Must enter same passwords!');
     } else {
-      console.log(registration);
-      console.log(this.registrationForm.value);
       alert('Must enter valid fields!');
     }
   }
