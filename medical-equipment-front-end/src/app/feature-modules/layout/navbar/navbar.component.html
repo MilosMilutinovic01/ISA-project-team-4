@@ -5,31 +5,58 @@
   <div class="navbar-right">
     <div class="navbar-menu">
       <div class="navbar-button-panel">
-        <div>
-          <button class="navbar-button" (click)="register()">Register</button>
-        </div>
-        <div *ngIf="user && user.role === 'CUSTOMER'">
-          <button class="navbar-button" (click)="customerProfile()">
-            Profile
-          </button>
-        </div>
-        <div>
+        <div *ngIf="user && user.role === 'COMPANY_ADMINISTRATOR'">
           <button class="navbar-button" (click)="companyProfile()">
             Company Profile
           </button>
         </div>
         <div>
-          <button class="navbar-button" (click)="companyRegistration()">
+          <button
+            class="navbar-button"
+            (click)="companyRegistration()"
+            *ngIf="user && user.role === 'COMPANY_ADMINISTRATOR'"
+          >
             New Company
           </button>
         </div>
         <div>
-          <button class="navbar-button" (click)="companyAdministratorProfile()">
+          <button
+            class="navbar-button"
+            (click)="companyAdministratorProfile()"
+            *ngIf="user && user.role === 'COMPANY_ADMINISTRATOR'"
+          >
             Company Administrator Profile
           </button>
         </div>
-        <div>
-          <button class="navbar-button" (click)="login()">Login</button>
+        <div class="dropdown">
+          <button class="dropbtn">{{ user?.username }}</button>
+
+          <div
+            class="dropdown-content"
+            *ngIf="user?.id != 0; else loginRegisterButtons"
+          >
+            <button class="navbar-button" (click)="customerProfile()">
+              Profile
+            </button>
+            <button class="navbar-button" (click)="logout()">Logout</button>
+          </div>
+
+          <ng-template #loginRegisterButtons class="template">
+            <button
+              #loginRegisterButtons
+              class="navbar-button"
+              (click)="login()"
+            >
+              Login
+            </button>
+            <button
+              #loginRegisterButtons
+              class="navbar-button"
+              (click)="register()"
+            >
+              Register
+            </button>
+          </ng-template>
         </div>
       </div>
     </div>
