@@ -1,7 +1,9 @@
 package com.e2.medicalequipment.service;
 
+import com.e2.medicalequipment.dto.CreateCustomerDTO;
 import com.e2.medicalequipment.dto.JwtAuthenticationRequest;
 import com.e2.medicalequipment.dto.UserTokenState;
+import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.model.User;
 import com.e2.medicalequipment.repository.UserRepository;
 import com.e2.medicalequipment.security.JwtUtils;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -50,7 +53,7 @@ public class UserServiceImpl implements UserService{
         User existingUser = usersRepository.findById(user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        existingUser.setEnabled(user.isEnabled());
+        existingUser.setEnabled(true);
         return usersRepository.save(existingUser);
     }
 
@@ -74,6 +77,9 @@ public class UserServiceImpl implements UserService{
         UserTokenState tokenDTO = new UserTokenState();
         tokenDTO.setAccessToken(jwt);
         tokenDTO.setExpiresIn(10000000L);
+
+        List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
+        System.out.println("Authorities: " + authorities);
 
         return tokenDTO;
     }

@@ -13,4 +13,5 @@ public interface UserService {
     public Optional<User> findByUsername(String username);
     public User changeUserStatus(User user);
     public UserTokenState login(JwtAuthenticationRequest loginDto);
+
 }

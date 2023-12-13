@@ -9,7 +9,7 @@ public class SystemAdministrator extends User{
     public SystemAdministrator(){
 
     }
-    public SystemAdministrator(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType, Boolean enabled) {
+    public SystemAdministrator(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, Role role, Boolean enabled) {
         super(id,
                 name,
                 lastname,
@@ -17,7 +17,7 @@ public class SystemAdministrator extends User{
                 address,
                 phoneNumber,
                 password,
-                userType,
+                role,
                 enabled);
     }
 }

@@ -6,12 +6,9 @@
     <div class="navbar-menu">
       <div class="navbar-button-panel">
         <div>
-          <button class="navbar-button" (click)="login()">Login</button>
-        </div>
-        <div>
           <button class="navbar-button" (click)="register()">Register</button>
         </div>
-        <div *ngIf="displayProfile">
+        <div *ngIf="user && user.role === 'CUSTOMER'">
           <button class="navbar-button" (click)="customerProfile()">
             Profile
           </button>
@@ -30,6 +27,9 @@
           <button class="navbar-button" (click)="companyAdministratorProfile()">
             Company Administrator Profile
           </button>
+        </div>
+        <div>
+          <button class="navbar-button" (click)="login()">Login</button>
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(schema = "stakeholders", name = "customers")
-@PrimaryKeyJoinColumn(name = "cutomer_id")
+@PrimaryKeyJoinColumn(name = "customer_id")
 public class Customer extends User{
     @Column(name = "profession")
     private String profession;
@@ -21,15 +21,15 @@ public class Customer extends User{
 
     }
 
-    public Customer(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType, String profession, Long penaltyPoints, CustomerCategory category, Boolean enabled) {
+    public Customer(Long id, String name, String lastname, String username, Address address, String phoneNumber, String password, Role role, String profession, Long penaltyPoints, CustomerCategory category, Boolean enabled) {
         super(id,
                 name,
                 lastname,
-                email,
+                username,
                 address,
                 phoneNumber,
                 password,
-                userType,
+                role,
                 enabled);
         this.profession = profession;
         this.penaltyPoints = penaltyPoints;
@@ -40,7 +40,7 @@ public class Customer extends User{
         super(null,
                 createCustomerDTO.name,
                 createCustomerDTO.lastname,
-                createCustomerDTO.email,
+                createCustomerDTO.username,
                 createCustomerDTO.address,
                 createCustomerDTO.phoneNumber,
                 createCustomerDTO.password);
@@ -50,7 +50,7 @@ public class Customer extends User{
         super(updateCustomerDTO.id,
                 updateCustomerDTO.name,
                 updateCustomerDTO.lastname,
-                updateCustomerDTO.email,
+                updateCustomerDTO.username,
                 updateCustomerDTO.address,
                 updateCustomerDTO.phoneNumber,
                 updateCustomerDTO.password);

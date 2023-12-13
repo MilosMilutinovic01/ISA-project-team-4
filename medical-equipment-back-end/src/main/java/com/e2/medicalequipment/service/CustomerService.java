@@ -2,6 +2,7 @@ package com.e2.medicalequipment.service;
 
 import com.e2.medicalequipment.dto.CreateCustomerDTO;
 import com.e2.medicalequipment.dto.UpdateCustomerDTO;
+import com.e2.medicalequipment.dto.UserTokenState;
 import com.e2.medicalequipment.model.Customer;
 
 public interface CustomerService {

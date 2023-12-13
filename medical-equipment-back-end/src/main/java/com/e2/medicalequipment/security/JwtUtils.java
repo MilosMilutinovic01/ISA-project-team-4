@@ -29,7 +29,7 @@ public class JwtUtils {
         return JWT.create()
                 .withSubject(user.getUsername())
                 .withClaim("username", user.getUsername())
-                .withClaim("role", user.getUserType().toString())
+                .withClaim("role", user.getRole().toString())
                 .withClaim("id", user.getId())
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date((new Date()).getTime() + jwtExpirationMs))

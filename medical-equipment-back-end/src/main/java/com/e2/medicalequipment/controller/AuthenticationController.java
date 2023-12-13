@@ -15,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -38,33 +35,43 @@ public class AuthenticationController {
     @Autowired
     private EmailService emailService;
 
+
+    @GetMapping("/verify/{id}")
+    public Boolean verifyUser(@PathVariable Long id) throws Exception {
+        User existUser = this.userService.getUserById(id);
+        if(existUser == null)
+            return false;
+        userService.changeUserStatus(existUser);
+        System.out.println("Izmenjen korisnik: " + existUser.toString());
+        return true;
+    }
     @PostMapping("/customer/register")
-    public ResponseEntity<User> addUser(@RequestBody CreateCustomerDTO customer, UriComponentsBuilder ucBuilder) throws Exception {
-        Optional<User> existUser = this.userService.findByUsername(customer.email);
+    public ResponseEntity<Customer> addUser(@RequestBody CreateCustomerDTO customer, UriComponentsBuilder ucBuilder) throws Exception {
+        Optional<User> existUser = this.userService.findByUsername(customer.username);
 
         if (existUser.isPresent()) {
             throw new RuntimeException("Username already exists");
         }
 
-        Customer newCustomer = this.customerService.Create(customer);
+        Customer savedCustomer  = this.customerService.Create(customer);
 
-        /*String verificationLink = "http://localhost:8080/api/verify/" + newCustomer.getId();
-        String verificationMail = generateVerificationEmail(user.getUsername(), verificationLink);
+        String verificationLink = "http://localhost:4200/api/auth/verify/" + savedCustomer.getId();
+        String verificationMail = generateVerificationEmail(customer.name, verificationLink);
 
-        emailService.sendEmail(user.getEmail(), "Verification email", verificationMail);
+        emailService.sendNotificaitionAsync(customer.username, "Mejl za potvrdu registracije ISA-team-34", verificationMail);
         System.out.println("Email poslat valjda...");
-*/
-        return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
+
+        return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
     }
 
-    private String generateVerificationEmail(String userName, String verificationLink) {
-        return String.format("Subject: Verify Your Profile\n\n" +
-                "Dear %s,\n\n" +
-                "Thank you for signing up with our medical equipment system!\n\n" +
-                "To complete the registration process, please click the following link to verify your email address:\n\n" +
-                "%s\n\n" +
-                "Best regards,\n" +
-                "Marko, Uros and Filip", userName, verificationLink);
+    private String generateVerificationEmail(String name, String verificationLink) {
+        return String.format("<p>Dear <strong>" + name + "</strong>,</p>\n" +
+                "<p>Thank you for choosing ISA! We're excited to have you on board.</p>\n" +
+                "<p>Your registration is almost complete. Please click the following link to activate your account:</p>\n" +
+                "<p><a href=" + verificationLink + ">Activation Link</a></p>\n" +
+                "<p>If you have any questions, feel free to contact our support team.</p>\n" +
+                "<p>Best regards,<br/>The ISA Team</p>"
+, name, verificationLink);
     }
 
     @PostMapping(value = "login", consumes = "application/json")

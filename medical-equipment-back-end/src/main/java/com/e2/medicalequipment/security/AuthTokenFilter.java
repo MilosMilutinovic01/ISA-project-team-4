@@ -29,6 +29,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
+
             logger.info("Parsing JWT token...");
             String jwt = parseJwt(request);
             logger.info("Validating JWT token...");

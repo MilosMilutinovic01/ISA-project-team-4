@@ -38,21 +38,6 @@ public class WebSecurityConfig {
         return authenticationManagerBuilder.build();
     }
 
-    /*@Bean
-    public PasswordEncoder passwordEncoder() {
-        return new PasswordEncoder(){
-            @Override
-            public String encode(CharSequence rawPassword) {
-                return rawPassword.toString();
-            }
-
-            @Override
-            public boolean matches(CharSequence rawPassword, String encodedPassword) {
-                return encode(rawPassword).equals(encodedPassword);
-            }
-        };
-    }*/
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -63,7 +48,7 @@ public class WebSecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests((requests) -> {
-                    requests.requestMatchers("/api/**").permitAll();
+                    requests.requestMatchers("/api/auth/**").permitAll();
                     requests.anyRequest().permitAll();
                 });
 
