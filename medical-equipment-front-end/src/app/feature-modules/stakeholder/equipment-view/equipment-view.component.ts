@@ -15,8 +15,7 @@ import { MatSelectionListChange } from '@angular/material/list';
 export class EquipmentViewComponent implements OnInit {
   equipment: Equipment[] = [];
   equipmentTracking: EquipmentTracking[] = [];
-  selectedOption: string = "empty";
-
+  selectedOption: string = 'empty';
 
   searchForm = new FormGroup({
     name: new FormControl(''),
@@ -41,14 +40,12 @@ export class EquipmentViewComponent implements OnInit {
 
   selectChip(type: string): void {
     this.selectedOption = type;
-    const name = this.searchForm.value.name || "empty";
-
+    const name = this.searchForm.value.name || 'empty';
 
     this.service.searchEquipment(name, this.selectedOption).subscribe({
       next: (result: EquipmentTracking[]) => {
         this.equipmentTracking = result;
         this.equipment = [];
-        console.log(result);
       },
       error: () => {
         console.log(console.error());
@@ -57,14 +54,12 @@ export class EquipmentViewComponent implements OnInit {
   }
 
   search(): void {
-    const name = this.searchForm.value.name || "empty";
-
+    const name = this.searchForm.value.name || 'empty';
 
     this.service.searchEquipment(name, this.selectedOption).subscribe({
       next: (result: EquipmentTracking[]) => {
         this.equipmentTracking = result;
         this.equipment = [];
-        console.log(result);
       },
       error: () => {
         console.log(console.error());
@@ -72,10 +67,10 @@ export class EquipmentViewComponent implements OnInit {
     });
   }
 
-   refresh():void {
+  refresh(): void {
     this.getEquipment();
     this.equipmentTracking = [];
-     this.searchForm.setValue({name: ''})
-     this.selectedOption = "empty"
-   }
+    this.searchForm.setValue({ name: '' });
+    this.selectedOption = 'empty';
+  }
 }

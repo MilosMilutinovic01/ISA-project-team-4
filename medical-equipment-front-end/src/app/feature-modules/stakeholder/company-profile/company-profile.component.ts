@@ -41,10 +41,9 @@ export class CompanyProfileComponent {
   }
 
   getCompany(): void {
-    this.service.getCompanyProfile('-1').subscribe({
+    this.service.getCompanyProfile('1').subscribe({
       next: (result) => {
         this.company = result;
-        console.log(this.company);
       },
       error: () => {
         console.log(console.error);
@@ -93,13 +92,11 @@ export class CompanyProfileComponent {
   getAllCompanyAdministrators(): void {
     this.service.getAllCompanyAdministrators().subscribe({
       next: (result) => {
-        console.log(result);
         for (let a of result) {
           if (a.companyId === this.company.id && a.id !== -1) {
             this.otherAdministrators.push(a);
           }
         }
-        console.log(this.otherAdministrators);
       },
       error: () => {
         console.log(console.error);

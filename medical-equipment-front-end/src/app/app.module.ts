@@ -7,10 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './infrastructure/auth/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RoutingModule } from './infrastructure/routing/routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MaterialModule } from './infrastructure/material/material.module';
 import { StakeholderModule } from './feature-modules/stakeholder/stakeholder.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
@@ -24,9 +25,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AuthModule,
     MaterialModule,
     StakeholderModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
