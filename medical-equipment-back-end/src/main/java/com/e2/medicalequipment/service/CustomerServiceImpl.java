@@ -15,6 +15,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
@@ -38,6 +42,8 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setCategory(CustomerCategory.REGULAR);
         customer.setEnabled(false);
         customer.setUsername(createCustomerDto.username);
+        String verificationToken = UUID.randomUUID().toString().replaceAll("-", "");
+        customer.setVerificationToken(verificationToken);
 
         if (customer.getId() != null) {
             throw new Exception("ID must be null for a new entity.");
@@ -65,5 +71,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer Get(String id) throws Exception {
         return this.customerRepository.findById(Long.parseLong(id)).get();
+    }
+
+    @Override
+    public Customer findByVerificationToken(String token) throws Exception {
+        return customerRepository.findByVerificationToken(token);
     }
 }
