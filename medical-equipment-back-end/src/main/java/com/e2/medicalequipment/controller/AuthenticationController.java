@@ -54,7 +54,7 @@ public class AuthenticationController {
 
         Customer savedCustomer  = this.customerService.Create(customer);
 
-        String verificationLink = "http://localhost:4200/api/auth/verify/" + savedCustomer.getVerificationToken();
+        String verificationLink = "http://localhost:4200/api/auth/verify/id=" + savedCustomer.getVerificationToken();
         String verificationMail = generateVerificationEmail(customer.name, verificationLink);
 
         emailService.sendNotificaitionAsync(customer.username, "Mejl za potvrdu registracije ISA-team-34", verificationMail);

@@ -21,6 +21,7 @@ export class VerificationComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
+      this.id = this.id.split('=')[1];
       this.authService.verify(this.id).subscribe({
         next: () => {
           this.error = false;
