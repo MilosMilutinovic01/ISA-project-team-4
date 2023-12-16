@@ -45,6 +45,10 @@ export class CompaniesViewComponent implements OnInit {
     });
   }
 
+  showCompany(id : number): void{
+    this.router.navigate(['/companyProfile/', id]);
+  }
+
   search(): void {
     const name = this.searchForm.value.name || 'empty';
     const street = this.searchForm.value.street || 'empty';
