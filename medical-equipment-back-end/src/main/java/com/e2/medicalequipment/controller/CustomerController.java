@@ -60,19 +60,4 @@ public class CustomerController {
             return new ResponseEntity<Customer>(customer, HttpStatus.CONFLICT);
         }
     }
-
-  /*  @PostMapping(value = "/register",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> createTest(@RequestBody CreateCustomerDTO customerDto)  {
-        Customer savedCustomer = null;
-        try {System.out.println("Thread id: " + Thread.currentThread().getId());
-            //emailService.sendNotificaitionAsync(customerDto);
-            savedCustomer = customerService.Create(customerDto);
-            return new ResponseEntity<Customer>(savedCustomer, HttpStatus.CREATED);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<Customer>(savedCustomer, HttpStatus.CONFLICT);
-        }
-    }
-*/
-
 }

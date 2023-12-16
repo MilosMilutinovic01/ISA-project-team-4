@@ -37,12 +37,11 @@ public class AuthenticationController {
 
 
     @GetMapping("/verify/{id}")
-    public Boolean verifyUser(@PathVariable Long id) throws Exception {
-        User existUser = this.userService.getUserById(id);
-        if(existUser == null)
-            return false;
-        userService.changeUserStatus(existUser);
-        System.out.println("Izmenjen korisnik: " + existUser.toString());
+    public Boolean verifyUser(@PathVariable String id) throws Exception {
+        Customer existCustomer = this.customerService.findByVerificationToken(id);
+        if(existCustomer == null)
+            throw new RuntimeException();
+        userService.changeUserStatus(userService.getUserById(existCustomer.getId()));
         return true;
     }
     @PostMapping("/customer/register")
@@ -55,7 +54,7 @@ public class AuthenticationController {
 
         Customer savedCustomer  = this.customerService.Create(customer);
 
-        String verificationLink = "http://localhost:4200/api/auth/verify/" + savedCustomer.getId();
+        String verificationLink = "http://localhost:4200/api/auth/verify/id=" + savedCustomer.getVerificationToken();
         String verificationMail = generateVerificationEmail(customer.name, verificationLink);
 
         emailService.sendNotificaitionAsync(customer.username, "Mejl za potvrdu registracije ISA-team-34", verificationMail);

@@ -9,7 +9,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./verification.component.css'],
 })
 export class VerificationComponent implements OnInit {
-  id: number = 0;
+  id: String = '';
+  error: Boolean = true;
 
   constructor(
     private router: Router,
@@ -20,16 +21,19 @@ export class VerificationComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
-      console.log(this.id);
+      this.id = this.id.split('=')[1];
       this.authService.verify(this.id).subscribe({
         next: () => {
-          alert('Successfully verified!');
-          this.router.navigate(['']);
+          this.error = false;
+          setTimeout(() => {
+            this.router.navigate(['']);
+          }, 2000);
         },
         error: (error) => {
-          if (error.status === 409) {
-            alert('Error!');
-          }
+          this.error = true;
+          setTimeout(() => {
+            this.router.navigate(['']);
+          }, 2000);
         },
       });
     });
