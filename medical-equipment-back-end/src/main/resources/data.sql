@@ -17,7 +17,7 @@ VALUES (-3, true, 'Company', 'Vlado', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchA
 
 INSERT INTO stakeholders.users(
     id, enabled, lastname, name, password, phone_number, role, username, address_id)
-VALUES (-4, true, 'Company', 'Verica', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 1, 'verica@gmail.com', -4);
+VALUES (-4, true, 'Company', 'Verica', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 0, 'verica@gmail.com', -4);
 
 INSERT INTO stakeholders.company_administrators(
     company_id, company_administrator_id)
@@ -25,9 +25,7 @@ VALUES (-1, -2);
 INSERT INTO stakeholders.company_administrators(
     company_id, company_administrator_id)
 VALUES (-2, -3);
-INSERT INTO stakeholders.company_administrators(
-    company_id, company_administrator_id)
-VALUES (-3, -4);
+
 
 
 INSERT INTO stakeholders.addresses(

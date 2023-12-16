@@ -5,8 +5,6 @@ import { MaterialModule } from 'src/app/infrastructure/material/material.module'
 import { EditCustomerProfileComponent } from './edit-customer-profile/edit-customer-profile.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CompanyRegistrationComponent } from './company-registration/company-registration.component';
-import { CompanyAdministartorRegistrationComponent } from './company-administartor-registration/company-administartor-registration.component';
-import { MatDialogModule } from '@angular/material/dialog';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { EditCompanyProfileComponent } from './edit-company-profile/edit-company-profile.component';
 import { CompanyAdministratorProfileComponent } from './company-administrator-profile/company-administrator-profile.component';
@@ -19,6 +17,7 @@ import {MatChip, MatChipsModule} from '@angular/material/chips';
 import { CompanyCalendarComponent } from './company-calendar/company-calendar.component';
 import { DxCalendarModule } from 'devextreme-angular';
 import { DxSchedulerModule, DxTemplateModule } from 'devextreme-angular';
+import { AdministratorRegistrationComponent } from './administrator-registration/administrator-registration.component';
 @NgModule({
   declarations: [
     CustomerProfileComponent,
@@ -26,13 +25,13 @@ import { DxSchedulerModule, DxTemplateModule } from 'devextreme-angular';
     CompanyRegistrationComponent,
     CompaniesViewComponent,
     FilterCompaniesDialogComponent,
-    CompanyAdministartorRegistrationComponent,
     CompanyProfileComponent,
     EditCompanyProfileComponent,
     CompanyAdministratorProfileComponent,
     EditCompanyAdministratorProfileComponent,
     EquipmentViewComponent,
-    CompanyCalendarComponent
+    CompanyCalendarComponent,
+    AdministratorRegistrationComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +50,6 @@ import { DxSchedulerModule, DxTemplateModule } from 'devextreme-angular';
     CompanyRegistrationComponent,
     CompaniesViewComponent,
     FilterCompaniesDialogComponent,
-    CompanyAdministartorRegistrationComponent,
     CompanyProfileComponent,
     EquipmentViewComponent,
     MaterialModule,
@@ -60,6 +58,7 @@ import { DxSchedulerModule, DxTemplateModule } from 'devextreme-angular';
     CompanyCalendarComponent,
     DxCalendarModule,
     DxSchedulerModule,
+    AdministratorRegistrationComponent
   ]
 })
 export class StakeholderModule {}
