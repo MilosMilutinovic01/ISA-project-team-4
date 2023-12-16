@@ -16,7 +16,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { EditCompanyAdministratorProfileComponent } from './edit-company-administrator-profile/edit-company-administrator-profile.component'
 import { EquipmentViewComponent } from './equipment-view/equipment-view.component'
 import {MatChip, MatChipsModule} from '@angular/material/chips';
-
+import { CompanyCalendarComponent } from './company-calendar/company-calendar.component';
+import { DxCalendarModule } from 'devextreme-angular';
+import { DxSchedulerModule, DxTemplateModule } from 'devextreme-angular';
 @NgModule({
   declarations: [
     CustomerProfileComponent,
@@ -29,7 +31,8 @@ import {MatChip, MatChipsModule} from '@angular/material/chips';
     EditCompanyProfileComponent,
     CompanyAdministratorProfileComponent,
     EditCompanyAdministratorProfileComponent,
-    EquipmentViewComponent
+    EquipmentViewComponent,
+    CompanyCalendarComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +40,10 @@ import {MatChip, MatChipsModule} from '@angular/material/chips';
     ReactiveFormsModule,
     FormsModule,
     MatTooltipModule,
-    MatChipsModule
+    MatChipsModule,
+    DxCalendarModule,
+    DxSchedulerModule,
+
   ],
   exports: [
     CustomerProfileComponent,
@@ -50,7 +56,10 @@ import {MatChip, MatChipsModule} from '@angular/material/chips';
     EquipmentViewComponent,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    CompanyCalendarComponent,
+    DxCalendarModule,
+    DxSchedulerModule,
   ]
 })
 export class StakeholderModule {}

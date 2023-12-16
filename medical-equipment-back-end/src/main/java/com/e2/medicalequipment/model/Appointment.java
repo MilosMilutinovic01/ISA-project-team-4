@@ -12,10 +12,10 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointmentSeq")
     private Long id;
 
-    @Column(name = "start")
+    @Column(name = "startTime")
     private LocalDateTime start;
 
-    @Column(name = "end")
+    @Column(name = "endTime")
     private LocalDateTime end;
 
     public Appointment() {
