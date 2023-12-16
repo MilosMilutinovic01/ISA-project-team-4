@@ -5,7 +5,7 @@ import com.e2.medicalequipment.model.Address;
 public class CreateCustomerDTO {
     public String password;
 
-    public String email;
+    public String username;
 
     public Address address;
 

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RegistrationComponent } from 'src/app/infrastructure/auth/registration/registration.component';
 import { Router } from '@angular/router';
-import { environment } from 'src/env/environment';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { StakeholderService } from '../../stakeholder/stakeholder.service';
 import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
@@ -14,34 +12,39 @@ import { Address } from 'src/app/shared/model/address.model';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  displayProfile: boolean = false;
-  user: CustomerProfile = {
+  isDropdownOpen = false;
+  user: User | undefined;
+  customer: CustomerProfile = {
     name: '',
     lastname: '',
-    email: '',
+    username: '',
     address: {} as Address,
     phoneNumber: '',
     profession: '',
     password: '',
   };
-  constructor(public router: Router, public service: StakeholderService) {
-    this.service.getIsRegister.subscribe((msg) => (this.displayProfile = msg));
-  }
+  constructor(
+    public router: Router,
+    public service: StakeholderService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.service.getCustomerProfile('1').subscribe({
-      next: (result: CustomerProfile) => {
-        this.user = result;
-        this.displayProfile = true;
-      },
-      error: () => {
-        this.displayProfile = false;
-      },
+    this.authService.user$.subscribe((user) => {
+      this.user = user;
     });
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 
   login(): void {
     this.router.navigate(['/login']);
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
   register(): void {
@@ -64,7 +67,7 @@ export class NavbarComponent implements OnInit {
   navigateToMedicalEquipment(): void {
     this.router.navigate(['/']);
   }
-  
+
   companyAdministratorProfile(): void {
     this.router.navigate(['/companyAdministratorProfile']);
   }

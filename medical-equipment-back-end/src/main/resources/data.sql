@@ -3,9 +3,14 @@ INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-2, 'Vlase
 INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-3, 'Bijeljina', 'BIH', 'ulica1');
 INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-4, 'Novi Sad', 'Srbija', 'ulica2');
 
+INSERT INTO stakeholders.users(
+	id, enabled, lastname, name, password, phone_number, role, username, address_id)
+	VALUES (-1, true, 'test', 'test', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 2, 'test@gmail.com', -1);
+
 INSERT INTO stakeholders.customers(
-    category, user_type, address_id, id, penalty_points, email, lastname, name, password, phone_number, profession)
-VALUES (0, 2, -1, -1, 10, 'milosmilutinovicg@gmail.com', 'milutinovic', 'milos', 'sifra1', '0603908001', 'student');
+    category, penalty_points, profession, customer_id)
+VALUES (0, 0, 'student', -1);
+  /*
 INSERT INTO stakeholders.customers(
     category, user_type, address_id, id, penalty_points, email, lastname, name, password, phone_number, profession)
 VALUES (0, 2, -2, -2, 10, 'jblanusa13@gmail.com', 'blanusa', 'jelena', 'sifra2', '0603908001', 'student');
@@ -77,3 +82,4 @@ VALUES (1, -2, -1, -2, 'gajic@gmail.com', 'Gajic', 'Goran', '123456', '+38164969
 INSERT INTO stakeholders.company_administrators(
     user_type, address_id, company_id, id, email, lastname, name, password, phone_number)
 VALUES (1, -3, -1, -3, 'djajic@gmail.com', 'Djajic', 'Zoran', '321', '+381633699696');
+*/

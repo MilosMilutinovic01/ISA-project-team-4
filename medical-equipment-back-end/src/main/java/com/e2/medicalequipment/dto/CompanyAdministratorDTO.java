@@ -21,7 +21,7 @@ public class CompanyAdministratorDTO {
 
     public CompanyAdministratorDTO(CompanyAdministrator companyAdministrator) {
         this.password = companyAdministrator.getPassword();
-        this.email = companyAdministrator.getEmail();
+        this.email = companyAdministrator.getUsername();
         this.address = companyAdministrator.getAddress();
         this.name = companyAdministrator.getName();
         this.lastname = companyAdministrator.getLastname();

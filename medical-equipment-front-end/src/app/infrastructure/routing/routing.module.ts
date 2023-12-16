@@ -14,21 +14,32 @@ import { EquipmentViewComponent } from 'src/app/feature-modules/stakeholder/equi
 import { CompanyAdministratorProfileComponent } from 'src/app/feature-modules/stakeholder/company-administrator-profile/company-administrator-profile.component';
 import { EditCompanyAdministratorProfileComponent } from 'src/app/feature-modules/stakeholder/edit-company-administrator-profile/edit-company-administrator-profile.component';
 import { LoginComponent } from '../auth/login/login.component';
+import { VerificationComponent } from '../auth/verification/verification.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
-  { path: 'customerProfile', component: CustomerProfileComponent},
-  { path: 'editCustomerProfile', component: EditCustomerProfileComponent},
-  { path: 'companyRegistration', component: CompanyRegistrationComponent},
-  { path: 'companiesView', component: CompaniesViewComponent},
-  { path: 'companyAdministratorRegistration', component: CompanyAdministartorRegistrationComponent},
-  { path: 'companyProfile', component: CompanyProfileComponent},
-  { path: 'editCompanyProfile', component: EditCompanyProfileComponent},
-  { path: 'companyAdministratorProfile', component: CompanyAdministratorProfileComponent},
-  { path: 'editCompanyAdministratorProfile', component: EditCompanyAdministratorProfileComponent},
-  { path: 'equipment', component: EquipmentViewComponent},
+  { path: 'customerProfile', component: CustomerProfileComponent },
+  { path: 'editCustomerProfile', component: EditCustomerProfileComponent },
+  { path: 'companyRegistration', component: CompanyRegistrationComponent },
+  { path: 'companiesView', component: CompaniesViewComponent },
+  {
+    path: 'companyAdministratorRegistration',
+    component: CompanyAdministartorRegistrationComponent,
+  },
+  { path: 'companyProfile', component: CompanyProfileComponent },
+  { path: 'editCompanyProfile', component: EditCompanyProfileComponent },
+  {
+    path: 'companyAdministratorProfile',
+    component: CompanyAdministratorProfileComponent,
+  },
+  {
+    path: 'editCompanyAdministratorProfile',
+    component: EditCompanyAdministratorProfileComponent,
+  },
+  { path: 'equipment', component: EquipmentViewComponent },
   { path: '', component: HomeComponent },
+  { path: 'api/auth/verify/:id', component: VerificationComponent },
 ];
 
 @NgModule({

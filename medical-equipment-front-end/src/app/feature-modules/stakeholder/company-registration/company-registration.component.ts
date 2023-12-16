@@ -44,11 +44,19 @@ export class CompanyRegistrationComponent {
       startTime: this.companyForm.value.startTime || '',
       endTime: this.companyForm.value.endTime || '',
     };
+
     if (this.companyForm.valid) {
       this.service.registerCompany(company).subscribe({
         next: () => {
-          alert('Succesfully created!');
+          alert('Successfully created!');
           window.location.reload();
+        },
+        error: (err) => {
+          if (err.status === 403) {
+            alert('Forbidden');
+          } else {
+            console.error('Error:', err);
+          }
         },
       });
     }
