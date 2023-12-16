@@ -9,6 +9,7 @@ import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model'
 import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
 
 @Component({
   selector: 'app-company-profile',
@@ -26,6 +27,7 @@ export class CompanyProfileComponent {
     averageRating: NaN,
   };
 
+  user: User | undefined;
   otherAdministrators: CompanyAdministrator[] = [];
   filteredEquipmentTrackings: EquipmentTracking[] = [];
   equipmentTracking: EquipmentTracking[] = [];
@@ -44,20 +46,34 @@ export class CompanyProfileComponent {
   ) {}
 
   ngOnInit(): void {
+    this.authService.user$.subscribe((user) => {
+      this.user = user;
+    });
     this.getCompany();
     this.getAllEquipmentTrackings();
     this.getAllCompanyAdministrators();
   }
 
   getCompany(): void {
-    this.service.getCompanyProfile("-1").subscribe({
+    this.service.getCompanyAdministratorProfile((this.user?.id!).toString()).subscribe({
       next: (result) => {
-        this.company = result;
+        this.service.getCompanyProfile(result.companyId.toString()).subscribe({
+          next: (result) => {
+            this.company = result;
+            console.log(this.company);
+          },
+          error: () => {
+            console.log(console.error);
+          },
+        });
       },
       error: () => {
         console.log(console.error);
       },
     });
+
+    
+    
   }
 
   editProfile(): void {

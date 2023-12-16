@@ -1,6 +1,8 @@
 package com.e2.medicalequipment.model;
 
+import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 
 import java.time.LocalDateTime;
 
@@ -20,6 +22,11 @@ public class Appointment {
 
     public Appointment() {
 
+    }
+
+    public Appointment(CreateAppointmentDTO appointmentDTO) {
+        this.startTime = LocalDateTime.parse(appointmentDTO.startTime);
+        this.endTime = LocalDateTime.parse(appointmentDTO.endTime);
     }
 
     public Appointment(Long id, LocalDateTime startTime, LocalDateTime endTime) {
