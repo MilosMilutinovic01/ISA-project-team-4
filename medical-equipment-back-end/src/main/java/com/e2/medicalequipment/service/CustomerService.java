@@ -9,4 +9,5 @@ public interface CustomerService {
     Customer Create(CreateCustomerDTO test) throws Exception;
     Customer Update(UpdateCustomerDTO customerDTO) throws Exception;
     Customer Get(String id) throws Exception;
+    Customer findByVerificationToken(String id) throws Exception;
 }

@@ -17,6 +17,10 @@ public class Customer extends User{
     @Column(name = "category")
     private CustomerCategory category;
 
+
+    @Column(name = "verificationToken")
+    private String verificationToken;
+
     public Customer() {
 
     }
@@ -82,4 +86,8 @@ public class Customer extends User{
     public void setCategory(CustomerCategory category) {
         this.category = category;
     }
+
+    public String getVerificationToken() { return verificationToken; }
+
+    public void setVerificationToken(String verificationToken) { this.verificationToken = verificationToken; }
 }

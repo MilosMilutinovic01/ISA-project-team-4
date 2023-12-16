@@ -34,7 +34,7 @@ export class AuthService {
     );
   }
 
-  verify(id: Number): Observable<Boolean> {
+  verify(id: String): Observable<Boolean> {
     return this.http.get<Boolean>(environment.apiHost + 'auth/verify/' + id);
   }
 
