@@ -37,7 +37,7 @@
         </div>
     </form>
 
-    <div class="card-container" *ngFor="let c of companies">
+    <div class="card-container" *ngFor="let c of companies" (click)="showCompany(c.id || 0)">
         <div class="card">
           <div class="card-content">
             <div class="card-details">
