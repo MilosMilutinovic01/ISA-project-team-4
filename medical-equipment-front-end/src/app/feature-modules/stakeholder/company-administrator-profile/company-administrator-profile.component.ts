@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { StakeholderService } from '../stakeholder.service';
 import { CompanyAdministrator } from '../../../shared/model/company-administrator.model';
 import { Address } from '../../../shared/model/address.model';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'app-company-administrator-profile',
@@ -23,14 +24,18 @@ export class CompanyAdministratorProfileComponent implements OnInit {
         companyId: NaN
     };
 
-    constructor(public router: Router, private service: StakeholderService) {}
+    constructor(
+      public router: Router,
+      private service: StakeholderService,
+      private authService: AuthService
+      ) {}
   
     ngOnInit(): void {
       this.getCompanyAdministratorProfile();
     }
   
     getCompanyAdministratorProfile(): void {
-      this.service.getCompanyAdministratorProfile('-1').subscribe({
+      this.service.getCompanyAdministratorProfile(this.authService.getCurrentUserId().toString()).subscribe({
         next: (result: CompanyAdministrator) => {
           this.profile = result;
           console.log("CompanyAdmin this.profile:");

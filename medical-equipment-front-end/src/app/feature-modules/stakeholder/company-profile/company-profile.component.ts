@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CompanyAdministartorRegistrationComponent } from '../company-administartor-registration/company-administartor-registration.component';
 import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model';
 import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'app-company-profile',
@@ -31,7 +32,8 @@ export class CompanyProfileComponent {
   constructor(
     private service: StakeholderService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +43,7 @@ export class CompanyProfileComponent {
   }
 
   getCompany(): void {
-    this.service.getCompanyProfile('1').subscribe({
+    this.service.getCompanyProfile("-1").subscribe({
       next: (result) => {
         this.company = result;
       },
