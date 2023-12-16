@@ -19,11 +19,6 @@ INSERT INTO stakeholders.users(
     id, enabled, lastname, name, password, phone_number, role, username, address_id)
 VALUES (-4, true, 'Company', 'Verica', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 1, 'verica@gmail.com', -4);
 
-
-INSERT INTO stakeholders.customers(
-    category, penalty_points, profession, customer_id)
-VALUES (0, 0, 'student', -1);
-
 INSERT INTO stakeholders.company_administrators(
     company_id, company_administrator_id)
 VALUES (-1, -2);
@@ -92,3 +87,4 @@ VALUES (-5, 240, -3, -4);
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
 VALUES (-6, 100, -2, -3);
+

@@ -15,6 +15,7 @@ import { CompanyAdministratorProfileComponent } from 'src/app/feature-modules/st
 import { EditCompanyAdministratorProfileComponent } from 'src/app/feature-modules/stakeholder/edit-company-administrator-profile/edit-company-administrator-profile.component';
 import { LoginComponent } from '../auth/login/login.component';
 import { VerificationComponent } from '../auth/verification/verification.component';
+import { CompanyCalendarComponent } from 'src/app/feature-modules/stakeholder/company-calendar/company-calendar.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path: 'equipment', component: EquipmentViewComponent },
   { path: '', component: HomeComponent },
   { path: 'api/auth/verify/:id', component: VerificationComponent },
+  { path: 'companyCalendar', component: CompanyCalendarComponent },
 ];
 
 @NgModule({
