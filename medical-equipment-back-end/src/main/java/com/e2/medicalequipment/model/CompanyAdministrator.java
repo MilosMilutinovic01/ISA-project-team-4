@@ -29,7 +29,7 @@ public class CompanyAdministrator extends User{
                 phoneNumber,
                 password,
                 role,
-                enabled);
+                true);
         this.companyId = companyId;
     }
 
@@ -40,7 +40,9 @@ public class CompanyAdministrator extends User{
                 companyAdministratorDTO.email,
                 companyAdministratorDTO.address,
                 companyAdministratorDTO.phoneNumber,
-                companyAdministratorDTO.password);
+                companyAdministratorDTO.password,
+                Role.COMPANY_ADMINISTRATOR,
+                true);
         this.companyId = companyAdministratorDTO.companyId;
     }
 
@@ -51,7 +53,9 @@ public class CompanyAdministrator extends User{
                 companyAdministratorDTO.email,
                 companyAdministratorDTO.address,
                 companyAdministratorDTO.phoneNumber,
-                companyAdministratorDTO.password);
+                companyAdministratorDTO.password,
+                Role.COMPANY_ADMINISTRATOR,
+                true);
         this.companyId = companyAdministratorDTO.companyId;
 
     }

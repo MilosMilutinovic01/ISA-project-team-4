@@ -5,11 +5,13 @@ INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-4, 'Novi 
 
 INSERT INTO stakeholders.users(
 	id, enabled, lastname, name, password, phone_number, role, username, address_id)
-	VALUES (-1, true, 'test', 'test', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 2, 'test@gmail.com', -1);
+	VALUES (-1, true, 'test', 'test', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 0, 'test@gmail.com', -1);
 
 INSERT INTO stakeholders.customers(
     category, penalty_points, profession, customer_id)
 VALUES (0, 0, 'student', -1);
+
+
   /*
 INSERT INTO stakeholders.customers(
     category, user_type, address_id, id, penalty_points, email, lastname, name, password, phone_number, profession)
