@@ -5,17 +5,35 @@ INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-4, 'Novi 
 
 INSERT INTO stakeholders.users(
 	id, enabled, lastname, name, password, phone_number, role, username, address_id)
-	VALUES (-1, true, 'test', 'test', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 0, 'test@gmail.com', -1);
+	VALUES (-1, true, 'Customer', 'Mare', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 2, 'mare@gmail.com', -1);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-2, true, 'Company', 'Petar', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 1, 'petar@gmail.com', -2);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-3, true, 'Company', 'Vlado', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 1, 'vlado@gmail.com', -3);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-4, true, 'Company', 'Verica', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 1, 'verica@gmail.com', -4);
+
 
 INSERT INTO stakeholders.customers(
     category, penalty_points, profession, customer_id)
 VALUES (0, 0, 'student', -1);
 
+INSERT INTO stakeholders.company_administrators(
+    company_id, company_administrator_id)
+VALUES (-1, -2);
+INSERT INTO stakeholders.company_administrators(
+    company_id, company_administrator_id)
+VALUES (-2, -3);
+INSERT INTO stakeholders.company_administrators(
+    company_id, company_administrator_id)
+VALUES (-3, -4);
 
-  /*
-INSERT INTO stakeholders.customers(
-    category, user_type, address_id, id, penalty_points, email, lastname, name, password, phone_number, profession)
-VALUES (0, 2, -2, -2, 10, 'jblanusa13@gmail.com', 'blanusa', 'jelena', 'sifra2', '0603908001', 'student');
 
 INSERT INTO stakeholders.addresses(
     id, city, country, street)
@@ -74,14 +92,3 @@ VALUES (-5, 240, -3, -4);
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
 VALUES (-6, 100, -2, -3);
-
-INSERT INTO stakeholders.company_administrators(
-    user_type, address_id, company_id, id, email, lastname, name, password, phone_number)
-VALUES (1, -1, -1, -1, 'pajic@gmail.com', 'Pajic', 'Petar', '123', '+381649699696');
-INSERT INTO stakeholders.company_administrators(
-    user_type, address_id, company_id, id, email, lastname, name, password, phone_number)
-VALUES (1, -2, -1, -2, 'gajic@gmail.com', 'Gajic', 'Goran', '123456', '+381649699696');
-INSERT INTO stakeholders.company_administrators(
-    user_type, address_id, company_id, id, email, lastname, name, password, phone_number)
-VALUES (1, -3, -1, -3, 'djajic@gmail.com', 'Djajic', 'Zoran', '321', '+381633699696');
-*/

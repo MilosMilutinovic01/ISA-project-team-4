@@ -6,6 +6,7 @@ import { StakeholderService } from '../stakeholder.service';
 import { Address } from 'src/app/shared/model/address.model';
 import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
 import { UpdateCompanyAdministrator } from 'src/app/shared/model/update-company-administrator.model';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'app-edit-company-administrator-profile',
@@ -40,7 +41,8 @@ export class EditCompanyAdministratorProfileComponent {
 
   constructor(private router: Router,
     private snackBar: MatSnackBar,
-    private service: StakeholderService){
+    private service: StakeholderService,
+    private authService: AuthService){
   }
 
   ngOnInit(): void {
@@ -48,7 +50,7 @@ export class EditCompanyAdministratorProfileComponent {
   }
 
   getCompanyAdministratorProfile(): void{
-    this.service.getCompanyAdministratorProfile("-1").subscribe({
+    this.service.getCompanyAdministratorProfile(this.authService.getCurrentUserId().toString()).subscribe({
       next:(result : CompanyAdministrator) => {
           this.profile = result;
           console.log("ID PROFILA ")
