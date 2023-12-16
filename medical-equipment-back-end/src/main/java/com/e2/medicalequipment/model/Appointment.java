@@ -12,20 +12,20 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointmentSeq")
     private Long id;
 
-    @Column(name = "start")
-    private LocalDateTime start;
+    @Column(name = "startTime")
+    private LocalDateTime startTime;
 
-    @Column(name = "end")
-    private LocalDateTime end;
+    @Column(name = "endTime")
+    private LocalDateTime endTime;
 
     public Appointment() {
 
     }
 
-    public Appointment(Long id, LocalDateTime start, LocalDateTime end) {
+    public Appointment(Long id, LocalDateTime startTime, LocalDateTime endTime) {
         this.id = id;
-        this.start = start;
-        this.end = end;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public Long getId() {
@@ -36,19 +36,19 @@ public class Appointment {
         this.id = id;
     }
 
-    public LocalDateTime getStart() {
-        return start;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
-    public void setStart(LocalDateTime start) {
-        this.start = start;
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 
-    public LocalDateTime getEnd() {
-        return end;
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 }
