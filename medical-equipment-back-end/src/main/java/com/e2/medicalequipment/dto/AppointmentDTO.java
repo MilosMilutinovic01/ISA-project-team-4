@@ -7,7 +7,6 @@ public class AppointmentDTO {
     public String startTime;
     public String endTime;
     public UpdateCompanyAdministratorDTO companyAdministrator;
-    public UpdateCustomerDTO customer;
 
     /*public AppointmentDTO(Long id, String start, String end, CompanyAdministrator companyAdministrator, Customer customer) {
         this.id = id;

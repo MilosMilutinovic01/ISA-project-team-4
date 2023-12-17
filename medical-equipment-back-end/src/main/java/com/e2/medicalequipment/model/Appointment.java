@@ -22,20 +22,15 @@ public class Appointment {
     @JoinColumn(name = "company_administrator_id", referencedColumnName = "company_administrator_id")
     private CompanyAdministrator companyAdministrator;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
-    private Customer customer;
-
     public Appointment() {
 
     }
 
-    public Appointment(Long id, LocalDateTime start, LocalDateTime end, CompanyAdministrator companyAdministrator, Customer customer) {
+    public Appointment(Long id, LocalDateTime start, LocalDateTime end, CompanyAdministrator companyAdministrator) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
         this.companyAdministrator = companyAdministrator;
-        this.customer = customer;
     }
 
     public Long getId() {
@@ -70,11 +65,4 @@ public class Appointment {
         this.companyAdministrator = companyAdministrator;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
 }

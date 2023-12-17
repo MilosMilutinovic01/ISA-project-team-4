@@ -17,6 +17,7 @@ import { EditCompanyAdministratorProfileComponent } from './edit-company-adminis
 import { EquipmentViewComponent } from './equipment-view/equipment-view.component'
 import {MatChip, MatChipsModule} from '@angular/material/chips';
 import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialog.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialo
     CompanyAdministratorProfileComponent,
     EditCompanyAdministratorProfileComponent,
     EquipmentViewComponent,
-    AddToCartDialogComponent
+    AddToCartDialogComponent,
+    CartComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +55,8 @@ import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialo
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    AddToCartDialogComponent
+    AddToCartDialogComponent, 
+    CartComponent
   ]
 })
 export class StakeholderModule {}

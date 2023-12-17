@@ -5,7 +5,8 @@ import com.e2.medicalequipment.model.Equipment;
 
 public class CreateItemDTO {
     public int count;
-    public EquipmentDTO equipment;
+    public Equipment equipment;
+    public long customerId;
 
     /*public ItemDTO(Long id, int count, Appointment appointment, Equipment equipment) {
         this.id = id;

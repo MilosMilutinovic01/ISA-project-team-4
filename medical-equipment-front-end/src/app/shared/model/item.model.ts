@@ -6,5 +6,6 @@ export interface Item {
     count: number;
     appointment?: Appointment;
     equipment?: Equipment;
+    customerId: number;
   }
   

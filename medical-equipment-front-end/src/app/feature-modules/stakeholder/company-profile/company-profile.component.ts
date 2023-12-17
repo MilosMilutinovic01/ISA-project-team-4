@@ -30,7 +30,7 @@ export class CompanyProfileComponent {
   };
 
   // appointment: Appointment = {
-  //   id: NaN,
+  //   ccid: NaN,
   //   startTime: '',
   //   endTime: '',
   //   companyAdministrator: { id:NaN,
@@ -193,16 +193,17 @@ export class CompanyProfileComponent {
         if(result){
           const item : Item = {
             count: result || '',
+            customerId: this.authService.getCurrentUserId() || 0
           };
   
           const selectedEquipment = this.filteredEquipmentTrackings.find(e => e.id === id)?.equipment;
           item.equipment = selectedEquipment;
-          console.log("EQUIPMENT: ", item.equipment);
           console.log("ITEM: ", item);
   
           this.service.createItem(item).subscribe({
             next: (result) => {
-              console.log(result);
+              console.log("RES: ",result);
+              this.items.push(result);
             },
             error: () => {
               console.log(console.error);
@@ -210,5 +211,10 @@ export class CompanyProfileComponent {
           });
         }
       });
-  }
+
+    }
+    
+    showCart():void{
+      
+    }
 }

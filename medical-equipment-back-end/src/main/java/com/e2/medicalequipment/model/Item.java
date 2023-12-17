@@ -19,18 +19,23 @@ public class Item {
     private Appointment appointment;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "equipment_id", referencedColumnName = "id")
+    @JoinColumn(name = "equipment_id")
     private Equipment equipment;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+    private Customer customer;
 
     public Item() {
 
     }
 
-    public Item(Long id, int count, Appointment appointment, Equipment equipment) {
+    public Item(Long id, int count, Appointment appointment, Equipment equipment, Customer customer) {
         this.id = id;
         this.count = count;
         this.appointment = appointment;
         this.equipment = equipment;
+        this.customer = customer;
     }
 
     public Item(CreateItemDTO itemDto){
@@ -67,5 +72,13 @@ public class Item {
 
     public void setEquipment(Equipment equipment) {
         this.equipment = equipment;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }
