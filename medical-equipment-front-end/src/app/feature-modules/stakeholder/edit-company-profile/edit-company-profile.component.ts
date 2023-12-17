@@ -6,6 +6,7 @@ import { Address } from '../../../shared/model/address.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { min } from 'rxjs';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'app-edit-company-profile',
@@ -35,7 +36,8 @@ export class EditCompanyProfileComponent implements OnInit {
   constructor(
     private router: Router,
     private snackBar: MatSnackBar,
-    private service: StakeholderService
+    private service: StakeholderService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -43,22 +45,24 @@ export class EditCompanyProfileComponent implements OnInit {
   }
 
   getCompanyProfile(): void {
-    this.service.getCompanyProfile('-1').subscribe({
-      next: (result: Company) => {
-        this.profile = result;
-        this.editProfileForm.patchValue({
-          name: result.name,
-          street: result.address.street,
-          city: result.address.city,
-          country: result.address.country,
-          description: result.description,
-          averageRating: result.averageRating,
-        });
-      },
-      error: () => {
-        console.log(console.error());
-      },
-    });
+    this.service
+      .getCompanyProfile(this.authService.getCurrentUserId().toString())
+      .subscribe({
+        next: (result: Company) => {
+          this.profile = result;
+          this.editProfileForm.patchValue({
+            name: result.name,
+            street: result.address.street,
+            city: result.address.city,
+            country: result.address.country,
+            description: result.description,
+            averageRating: result.averageRating,
+          });
+        },
+        error: () => {
+          console.log(console.error());
+        },
+      });
   }
 
   saveChanges(): void {

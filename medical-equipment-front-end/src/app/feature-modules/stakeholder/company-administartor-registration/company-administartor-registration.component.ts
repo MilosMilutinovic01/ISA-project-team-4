@@ -53,7 +53,7 @@ export class CompanyAdministartorRegistrationComponent {
       address: a,
       city: this.companyAdministratorForm.value.city || '',
       country: this.companyAdministratorForm.value.country || '',
-      email: this.companyAdministratorForm.value.email || '',
+      username: this.companyAdministratorForm.value.email || '',
       phoneNumber: this.companyAdministratorForm.value.phoneNumber || '',
       companyId: this.data.compId,
     };
