@@ -31,6 +31,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialog.component';
 import { CartComponent } from './cart/cart.component';
 import { SelectAppointmentDialogComponent } from './select-appointment-dialog/select-appointment-dialog.component';
+import { SelectIrregularAppointmentDialogComponent } from './select-irregular-appointment-dialog/select-irregular-appointment-dialog.component';
 @NgModule({
   declarations: [
     CustomerProfileComponent,
@@ -55,6 +56,7 @@ import { SelectAppointmentDialogComponent } from './select-appointment-dialog/se
     AdministratorRegistrationComponent,
     ChangePasswordComponent,
     SelectAppointmentDialogComponent,
+    SelectIrregularAppointmentDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -95,7 +97,8 @@ import { SelectAppointmentDialogComponent } from './select-appointment-dialog/se
     ChangePasswordComponent,
     FontAwesomeModule,
     AddToCartDialogComponent, 
-    CartComponent
+    CartComponent,
+    SelectIrregularAppointmentDialogComponent
   ]
 })
 export class StakeholderModule {}

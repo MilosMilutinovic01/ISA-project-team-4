@@ -9,6 +9,8 @@ import { SelectAppointmentDialogComponent } from '../select-appointment-dialog/s
 import { Appointment } from 'src/app/shared/model/appointment.model';
 import { MatStepper } from '@angular/material/stepper';
 import { DxCalendarModule } from 'devextreme-angular';
+import { Company } from 'src/app/shared/model/company.model';
+import { SelectIrregularAppointmentDialogComponent } from '../select-irregular-appointment-dialog/select-irregular-appointment-dialog.component';
 
 @Component({
   selector: 'app-cart',
@@ -16,12 +18,21 @@ import { DxCalendarModule } from 'devextreme-angular';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent {
-  @ViewChild('stepper') stepper: any;
-
   items : Item[] = [];
   totalPrice : number = 0;
   isIrregular: boolean = false;
+  companyId : string = '';
+  company: Company = {
+    id: NaN,
+    name: '',
+    address: { id: NaN, street: '', city: '', country: '' },
+    description: '',
+    startTime: '',
+    endTime: '',
+    averageRating: NaN,
+  };
   predefinedAppointments : Appointment[] = [];
+  irregularAppointments : Appointment[] = [];
   selectedAppointment: Appointment = {
     id: NaN,
     startTime: '',
@@ -39,12 +50,20 @@ export class CartComponent {
   };
   selectedDate = new Date(Date.now());
   calendar_value: Date = new Date();
+  calendar_value_irregular: Date = new Date();
 
   calendar_valueChanged(e: any) {
     const previousValue = e.previousValue;
     const newValue = e.value;
     this.calendar_value = newValue;
     this.openDialog();
+  }
+
+  calendar_value_irregularChanged(e: any) {
+    const previousValue = e.previousValue;
+    const newValue = e.value;
+    this.calendar_value_irregular = newValue;
+    this.openIrregularAppointmentsDialog();
   }
   allowedDates: Date[] = [];
   firstFormGroup = this._formBuilder.group({
@@ -62,16 +81,37 @@ export class CartComponent {
 
   ngOnInit():void{
     this.route.params.subscribe((params) => {
-      this.getItems(params);
-      this.getAppointments();
+      this.companyId = params["id"];
+      this.getItems();
+      this.getCompany();
     });
   }
 
-  getItems(params: Params): void{
+  getPredefinedDates(): void{
+    this.allowedDates = [];
+    this.getAppointments();
+  }
+
+  getIrregularDates(): void{
+    this.allowedDates = [];
+    let startDate = new Date();
+    let endDate = new Date(startDate.getFullYear(),
+                          startDate.getMonth() + 1,
+                          startDate.getDate());
+
+    while (startDate <= endDate) {
+      this.allowedDates.push(new Date (startDate));
+      startDate = new Date(startDate.getFullYear(),
+                            startDate.getMonth(),
+                            startDate.getDate() + 1)
+    }
+  }
+
+  getItems(): void{
     this.service.getItemsByCustomerId(this.authService.getCurrentUserId().toString()).subscribe({
       next: (result) => {
         this.items = result.filter(
-          i => i.company.id === Number(params["id"])
+          i => i.company.id === Number(this.companyId)
         );
 
         for (let i of this.items){
@@ -88,7 +128,6 @@ export class CartComponent {
     this.service.getAppointments().subscribe({
       next: (result) => {
         this.predefinedAppointments = result;
-        console.log("APP: ", this.predefinedAppointments);
 
         for(let a of result){
 
@@ -102,7 +141,17 @@ export class CartComponent {
             this.allowedDates.push(newDate);
           }
         }
-        console.log("ALL: ", this.allowedDates);
+      },
+      error: () => {
+        console.log(console.error);
+      },
+    });
+  }
+
+  getCompany(): void {
+    this.service.getCompanyProfile(this.companyId).subscribe({
+      next: (result) => {
+        this.company = result;
       },
       error: () => {
         console.log(console.error);
@@ -134,12 +183,27 @@ export class CartComponent {
     });
   }
 
+  openIrregularAppointmentsDialog(): void {
+    const dialogRef = this.dialog.open(SelectIrregularAppointmentDialogComponent, {
+      data: { selectedDate: this.calendar_value },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.calendar_value = result.selectedDate;
+        this.allowedDates = result.allowedDates || [];
+      }
+    });
+  }
+
   chooseIrregular() : void{
     this.isIrregular = true;
+    this.getIrregularDates();
   }
 
   choosePredefined() : void{
     this.isIrregular = false;
+    this.getPredefinedDates();
   }
   private isSameDate(date1: Date, date2: Date): boolean {
     return (
