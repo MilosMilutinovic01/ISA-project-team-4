@@ -1,9 +1,25 @@
 <div class="company-schedule">
-    <p class="header">Company schedule</p>
-        <dx-scheduler timeZone="Europe/London" id="scheduler" [views]="['month', 'week', 'year']"
-            [dataSource]="appointmentsData" currentView="month" [firstDayOfWeek]="1" [startDayHour]="8"
-            [endDayHour]="20" [showAllDayPanel]="false" [height]="700" [width]="1000"><dxo-editing [allowAdding]="false"
-                [allowUpdating]="false" [allowDeleting]="false"></dxo-editing>
-            <dxi-resource fieldExpr="aid" [dataSource]="coloredAppointments"></dxi-resource>
-        </dx-scheduler>
+  <p class="header">Company schedule</p>
+  <dx-scheduler
+    timeZone="Europe/London"
+    id="scheduler"
+    [views]="['month', 'week', 'year']"
+    [dataSource]="appointmentsData"
+    currentView="month"
+    [firstDayOfWeek]="1"
+    [startDayHour]="8"
+    [endDayHour]="20"
+    [showAllDayPanel]="false"
+    [height]="700"
+    [width]="1000"
+    ><dxo-editing
+      [allowAdding]="false"
+      [allowUpdating]="false"
+      [allowDeleting]="false"
+    ></dxo-editing>
+    <dxi-resource
+      fieldExpr="aid"
+      [dataSource]="coloredAppointments"
+    ></dxi-resource>
+  </dx-scheduler>
 </div>
