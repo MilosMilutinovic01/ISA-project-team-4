@@ -18,15 +18,16 @@ import { DxCalendarModule } from 'devextreme-angular';
 export class CartComponent {
   @ViewChild('stepper') stepper: any;
 
-  items : Item[] = [];
-  totalPrice : number = 0;
+  items: Item[] = [];
+  totalPrice: number = 0;
   isIrregular: boolean = false;
-  predefinedAppointments : Appointment[] = [];
+  predefinedAppointments: Appointment[] = [];
   selectedAppointment: Appointment = {
     id: NaN,
     startTime: '',
     endTime: '',
-    companyAdministrator: { id:NaN,
+    companyAdministrator: {
+      id: NaN,
       name: '',
       address: { id: NaN, street: '', city: '', country: '' },
       username: '',
@@ -35,10 +36,12 @@ export class CartComponent {
       city: '',
       country: '',
       phoneNumber: '',
-      companyId: NaN }
+      companyId: NaN,
+    },
   };
   selectedDate = new Date(Date.now());
   calendar_value: Date = new Date();
+  selected_appointment: Date = new Date();
 
   calendar_valueChanged(e: any) {
     const previousValue = e.previousValue;
@@ -54,55 +57,55 @@ export class CartComponent {
     secondCtrl: ['', Validators.required],
   });
 
-  constructor(private _formBuilder: FormBuilder,
+  constructor(
+    private _formBuilder: FormBuilder,
     private service: StakeholderService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog
+  ) {}
 
-  ngOnInit():void{
+  ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.getItems(params);
       this.getAppointments();
     });
   }
 
-  getItems(params: Params): void{
-    this.service.getItemsByCustomerId(this.authService.getCurrentUserId().toString()).subscribe({
-      next: (result) => {
-        this.items = result.filter(
-          i => i.company.id === Number(params["id"])
-        );
+  getItems(params: Params): void {
+    this.service
+      .getItemsByCustomerId(this.authService.getCurrentUserId().toString())
+      .subscribe({
+        next: (result) => {
+          this.items = result.filter(
+            (i) => i.company.id === Number(params['id'])
+          );
 
-        for (let i of this.items){
-          this.totalPrice += i.count * Number(i.equipment?.price);
-        }
-      },
-      error: () => {
-        console.log(console.error);
-      }
-    });
+          for (let i of this.items) {
+            this.totalPrice += i.count * Number(i.equipment?.price);
+          }
+        },
+        error: () => {
+          console.log(console.error);
+        },
+      });
   }
 
-  getAppointments(): void{
+  getAppointments(): void {
     this.service.getAppointments().subscribe({
       next: (result) => {
         this.predefinedAppointments = result;
-        console.log("APP: ", this.predefinedAppointments);
 
-        for(let a of result){
-
+        for (let a of result) {
           const newDate = new Date(
-            parseFloat(a.startTime[0]) ,
+            parseFloat(a.startTime[0]),
             parseFloat(a.startTime[1]) - 1,
-            parseFloat(a.startTime[2]),
+            parseFloat(a.startTime[2])
           );
-          if(!this.allowedDates.includes(newDate)){
-
+          if (!this.allowedDates.includes(newDate)) {
             this.allowedDates.push(newDate);
           }
         }
-        console.log("ALL: ", this.allowedDates);
       },
       error: () => {
         console.log(console.error);
@@ -110,7 +113,7 @@ export class CartComponent {
     });
   }
 
-  calculatePrice(item: Item):number{
+  calculatePrice(item: Item): number {
     return item.count * Number(item.equipment?.price);
   }
 
@@ -121,24 +124,26 @@ export class CartComponent {
   };
 
   openDialog(): void {
-    console.log('Nova vrednost: ', this.calendar_value);
+    const selectedDayOfMonth = this.calendar_value.getDate();
     const dialogRef = this.dialog.open(SelectAppointmentDialogComponent, {
-      data: { selectedDate: this.calendar_value },
+      data: {
+        appointments: this.predefinedAppointments,
+        selectedDayOfMonth: selectedDayOfMonth,
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.calendar_value = result.selectedDate;
-        this.allowedDates = result.allowedDates || [];
+        this.selected_appointment = result.selectedAppointment;
       }
     });
   }
 
-  chooseIrregular() : void{
+  chooseIrregular(): void {
     this.isIrregular = true;
   }
 
-  choosePredefined() : void{
+  choosePredefined(): void {
     this.isIrregular = false;
   }
   private isSameDate(date1: Date, date2: Date): boolean {
