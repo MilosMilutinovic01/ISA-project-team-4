@@ -3,7 +3,8 @@
   flex-direction: column;
   text-align: center;
   width: 20rem;
-  height: 30rem;
+  padding: 1rem;
+  overflow: hidden;
 }
 
 .dialog-title {
@@ -13,7 +14,7 @@
 
 .dialog-content {
   margin: auto;
-  width: 100%;
+  width: max-content;
 }
 
 .dialog-actions {

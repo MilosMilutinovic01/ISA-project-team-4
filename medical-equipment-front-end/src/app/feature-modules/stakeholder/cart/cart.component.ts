@@ -37,7 +37,8 @@ export class CartComponent {
     id: NaN,
     startTime: '',
     endTime: '',
-    companyAdministrator: { id:NaN,
+    companyAdministrator: {
+      id: NaN,
       name: '',
       address: { id: NaN, street: '', city: '', country: '' },
       username: '',
@@ -46,11 +47,13 @@ export class CartComponent {
       city: '',
       country: '',
       phoneNumber: '',
-      companyId: NaN }
+      companyId: NaN,
+    },
   };
   selectedDate = new Date(Date.now());
   calendar_value: Date = new Date();
   calendar_value_irregular: Date = new Date();
+  selected_appointment: Date = new Date();
 
   calendar_valueChanged(e: any) {
     const previousValue = e.previousValue;
@@ -73,13 +76,15 @@ export class CartComponent {
     secondCtrl: ['', Validators.required],
   });
 
-  constructor(private _formBuilder: FormBuilder,
+  constructor(
+    private _formBuilder: FormBuilder,
     private service: StakeholderService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog
+  ) {}
 
-  ngOnInit():void{
+  ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.companyId = params["id"];
       this.getItems();
@@ -114,30 +119,28 @@ export class CartComponent {
           i => i.company.id === Number(this.companyId)
         );
 
-        for (let i of this.items){
-          this.totalPrice += i.count * Number(i.equipment?.price);
-        }
-      },
-      error: () => {
-        console.log(console.error);
-      }
-    });
+          for (let i of this.items) {
+            this.totalPrice += i.count * Number(i.equipment?.price);
+          }
+        },
+        error: () => {
+          console.log(console.error);
+        },
+      });
   }
 
-  getAppointments(): void{
+  getAppointments(): void {
     this.service.getAppointments().subscribe({
       next: (result) => {
         this.predefinedAppointments = result;
 
-        for(let a of result){
-
+        for (let a of result) {
           const newDate = new Date(
-            parseFloat(a.startTime[0]) ,
+            parseFloat(a.startTime[0]),
             parseFloat(a.startTime[1]) - 1,
-            parseFloat(a.startTime[2]),
+            parseFloat(a.startTime[2])
           );
-          if(!this.allowedDates.includes(newDate)){
-
+          if (!this.allowedDates.includes(newDate)) {
             this.allowedDates.push(newDate);
           }
         }
@@ -159,7 +162,7 @@ export class CartComponent {
     });
   }
 
-  calculatePrice(item: Item):number{
+  calculatePrice(item: Item): number {
     return item.count * Number(item.equipment?.price);
   }
 
@@ -170,15 +173,17 @@ export class CartComponent {
   };
 
   openDialog(): void {
-    console.log('Nova vrednost: ', this.calendar_value);
+    const selectedDayOfMonth = this.calendar_value.getDate();
     const dialogRef = this.dialog.open(SelectAppointmentDialogComponent, {
-      data: { selectedDate: this.calendar_value },
+      data: {
+        appointments: this.predefinedAppointments,
+        selectedDayOfMonth: selectedDayOfMonth,
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.calendar_value = result.selectedDate;
-        this.allowedDates = result.allowedDates || [];
+        this.selected_appointment = result.selectedAppointment;
       }
     });
   }
@@ -201,7 +206,7 @@ export class CartComponent {
     this.getIrregularDates();
   }
 
-  choosePredefined() : void{
+  choosePredefined(): void {
     this.isIrregular = false;
     this.getPredefinedDates();
   }

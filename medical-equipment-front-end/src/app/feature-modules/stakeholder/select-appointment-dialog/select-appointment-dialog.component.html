@@ -2,9 +2,9 @@
   <h1 class="dialog-title">Select appointment</h1>
   <div class="dialog-content">
     <ul>
-      <li *ngFor="let date of availableDates">
+      <li *ngFor="let date of availableAppointments">
         <button mat-button (click)="ok(date)">
-          {{ date | date : "medium" }}
+          {{ date }}
         </button>
       </li>
     </ul>
@@ -14,8 +14,8 @@
     <button
       mat-button
       class="right-button"
-      *ngIf="availableDates.length > 0"
-      (click)="ok(availableDates[0])"
+      *ngIf="availableAppointments.length > 0"
+      (click)="ok(availableAppointments[0])"
       cdkFocusInitial
     >
       Ok
