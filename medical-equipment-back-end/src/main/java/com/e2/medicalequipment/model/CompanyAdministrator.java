@@ -60,6 +60,10 @@ public class CompanyAdministrator extends User{
 
     }
 
+    public CompanyAdministrator(CompanyAdministrator companyAdministrator) {
+        this.companyId = companyAdministrator.companyId;
+    }
+
     public Long getCompanyId() {
         return companyId;
     }

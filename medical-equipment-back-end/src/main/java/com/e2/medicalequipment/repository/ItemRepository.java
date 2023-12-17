@@ -7,8 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("SELECT i FROM Item i WHERE i.customer.id = :customer_id")
     List<Item> findAllByCustomerId(@Param("customer_id") String customerId);
+
+    Item findById(long id);
 }

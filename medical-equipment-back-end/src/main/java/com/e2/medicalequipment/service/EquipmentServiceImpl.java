@@ -23,5 +23,10 @@ public class EquipmentServiceImpl implements EquipmentService {
         }
         return allEquipment;
     }
+
+    @Override
+    public Equipment Get(Long id) {
+        return equipmentRepository.findById(id).orElse(null);
+    }
 }
 

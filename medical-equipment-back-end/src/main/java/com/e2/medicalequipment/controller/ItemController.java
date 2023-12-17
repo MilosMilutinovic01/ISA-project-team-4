@@ -1,10 +1,16 @@
 package com.e2.medicalequipment.controller;
 
+import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import com.e2.medicalequipment.dto.CreateCompanyDTO;
 import com.e2.medicalequipment.dto.CreateItemDTO;
+import com.e2.medicalequipment.dto.UpdateItemDTO;
+import com.e2.medicalequipment.model.Appointment;
 import com.e2.medicalequipment.model.Company;
 import com.e2.medicalequipment.model.Item;
+import com.e2.medicalequipment.service.EquipmentService;
 import com.e2.medicalequipment.service.ItemService;
+import com.e2.medicalequipment.service.QRCodeService;
+import com.e2.medicalequipment.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +26,15 @@ import java.util.List;
 public class ItemController {
     @Autowired
     private ItemService itemService;
+
+    @Autowired
+    private QRCodeService qrCodeService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private EquipmentService equipmentService;
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('CUSTOMER')")
@@ -46,5 +61,20 @@ public class ItemController {
             e.printStackTrace();
             return new ResponseEntity<List<Item>>(items, HttpStatus.CONFLICT);
         }
+    }
+
+    @PostMapping(value = "/reserve", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public boolean reserve(@RequestBody List<UpdateItemDTO> items) throws Exception {
+        long userId = 0;
+        int price = 0;
+        for(UpdateItemDTO item : items){
+            userId = item.CustomerId;
+            price += equipmentService.Get(item.EquipmentId).getPrice() * item.Count;
+            itemService.Update(item);
+        }
+        String message = "Ukupna cena: " + price;
+        qrCodeService.sendQRCode("Your cart",userService.getUserById(userId).getUsername(),message);
+        return true;
     }
 }
