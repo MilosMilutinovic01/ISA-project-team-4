@@ -46,7 +46,12 @@
   </button> -->
 
   <div class="equipment-view">
-    <h1 class="title">Equipment</h1>
+    <div class="title">
+    <h1 >Equipment</h1>
+      <button class="new-equipment-button" *ngIf="user?.role === 'COMPANY_ADMINISTRATOR' " mat-mini-fab (click)="registerNewEquipment()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
     <form class="search-form" [formGroup]="searchForm">
       <div class="search-container">
       <mat-form-field class="form-field" appearance="outline">
@@ -79,8 +84,19 @@
           <p>{{ e.equipment.name }}</p>
           <p>{{ e.equipment.price }} RSD</p>
         </mat-card-title>
-        <mat-card-content class="card-content">
-          <div class="card-number">{{ e.equipment.description }}</div>
+        <mat-card-content class="title-container">
+          <p>{{ e.equipment.description }}</p>
+          <button class="add-button" *ngIf="user?.role === 'CUSTOMER'" (click)="addToCart(e.id || 0, e.count)">
+            <mat-icon>add</mat-icon>
+          </button>
+          <div class="modify-buttons">
+            <button mat-button class="delete-button" *ngIf="user?.role === 'COMPANY_ADMINISTRATOR'" (click)="deleteEquipmentTracking(e)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-button class="edit-button" *ngIf="user?.role === 'COMPANY_ADMINISTRATOR'" (click)="editEquipmentTracking(e)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>
@@ -88,7 +104,7 @@
   <div class="appointments-container">
     <div class="table-title">
       Appointments
-      <button *ngIf="user?.role === 'COMPANY_ADMINISTRATOR'" mat-mini-fab (click)="registerNewAppointment()">
+      <button *ngIf="user?.role === 'COMPANY_ADMINISTRATOR' " mat-mini-fab (click)="registerNewAppointment()">
         <mat-icon>add</mat-icon>
       </button>
     </div>
@@ -113,26 +129,8 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-  </form>
-  <div class="card-container" *ngFor="let e of filteredEquipmentTrackings">
-    <mat-card class="card-equipment">
-      <div class="title-container">
-      <div class="type-title">{{ e.equipment.type }}</div>
-      <div class="type-title">{{ e.count }} available</div>
-    </div>
-      <mat-card-title class="title-container">
-        <p>{{ e.equipment.name }}</p>
-        <p>{{ e.equipment.price }} RSD</p>
-      </mat-card-title>
-      <mat-card-content class="title-container">
-        <p>{{ e.equipment.description }}</p>
-        <button class="add-button" (click)="addToCart(e.id || 0, e.count)">
-          <mat-icon>add</mat-icon>
-        </button>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  <button class="bottom-right-button" mat-icon-button (click)="showCart()">
+
+  <button class="bottom-right-button" *ngIf="user?.role === 'CUSTOMER'" mat-icon-button (click)="showCart()">
     <mat-icon>shopping_cart</mat-icon>
   </button>
 </div>

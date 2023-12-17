@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { StakeholderService } from '../stakeholder.service';
+import { StakeholderService } from '../../stakeholder/stakeholder.service';
 import { Address } from 'src/app/shared/model/address.model';
 import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
 import { UpdateCompanyAdministrator } from 'src/app/shared/model/update-company-administrator.model';

@@ -14,6 +14,9 @@ import { Item } from 'src/app/shared/model/item.model';
 import { Appointment } from 'src/app/shared/model/appointment.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AppointmentRegistrationComponent } from '../appointment-registration/appointment-registration.component';
+import { EquipmentRegistrationComponent } from '../equipment-registration/equipment-registration.component';
+import { EquipmentType } from 'src/app/shared/model/equipment.model';
+import { EditEquipmentTrackingComponent } from '../edit-equipment-tracking/edit-equipment-tracking.component';
 
 @Component({
   selector: 'app-company-profile',
@@ -67,14 +70,44 @@ export class CompanyProfileComponent {
   appointments: Appointment[] = [];
   displayedColumns: string[] = ['startTime', 'endTime', 'customerId'];
   newStartDate: string = '';
-
+  companyAdministrator: CompanyAdministrator = { 
+    id:NaN,
+    name: '',
+    address: { id: NaN, street: '', city: '', country: '' },
+    email: '',
+    password: '',
+    lastname: '',
+    city: '',
+    country: '',
+    phoneNumber: '',
+    companyId: NaN 
+  }
   equipmentCount: number = 0;
   items: Item[] = [];
+  selectedEquipmentTracking: EquipmentTracking = {
+    id: NaN,
+    count: 0,
+    company: {
+      id: NaN,
+      name: '',
+      address: { id: NaN, street: '', city: '', country: '' },
+      startTime: '',
+      endTime: '',
+      description: '',
+      averageRating: NaN
+    },
+    equipment: {
+      id: NaN,
+      name: '',
+      description: '',
+      type: EquipmentType.DENTAL,
+      price: 0
+    }
+  }
 
   searchForm = new FormGroup({
     name: new FormControl(''),
   });
-
 
   constructor(
     private service: StakeholderService,
@@ -94,6 +127,7 @@ export class CompanyProfileComponent {
     this.getAllEquipmentTrackings();
     this.getAllCompanyAdministrators();
     this.getAllAppointments();
+    this.getCompanyAdministratorProfile();
     });
   }
   
@@ -107,22 +141,19 @@ export class CompanyProfileComponent {
       },
     });
   }
-/*
+
   getCompanyAdministratorProfile(): void {
     this.service.getCompanyAdministratorProfile((this.user?.id!).toString()).subscribe({
       next: (result) => {
-        this.service.getCompanyProfile(result.companyId.toString()).subscribe({
-          next: (result) => {
-            this.company = result;
-            console.log(this.company);
-          },
-          error: () => {
-            console.log(console.error);
-          },
-        });
-      }
+        console.log('Company administrator:')
+        console.log(result)
+        this.companyAdministrator = result;
+      },
+      error: () => {
+        console.log(console.error);
+      },
     });
-  }*/
+  }
 
   editProfile(): void {
     this.router.navigate(['/editCompanyProfile']);
@@ -236,7 +267,7 @@ export class CompanyProfileComponent {
     const dialogRef = this.dialog
       .open(AppointmentRegistrationComponent, {
         width: '35%',
-        height: '70%',
+        height: '75%',
         data: { company: this.company}
       })
       .afterClosed()
@@ -245,21 +276,6 @@ export class CompanyProfileComponent {
         this.getAllAppointments();
       }); 
   }
-
-/*
-  registerAppointment(): void {
-    this.service.registerAppointment().subscribe({
-      next: (result: Appointment) => {
-        this.equipmentTracking = result;
-        this.sort();
-      },
-      error: () => {
-        console.log(console.error());
-      },
-    });
-  } 
-  */
-
 
   addToCart(id: number, availableCount: number): void {
     const dialogRef = this.dialog
@@ -291,10 +307,64 @@ export class CompanyProfileComponent {
           });
         }
       });
-
     }
     
     showCart():void{
       this.router.navigate(['/cart']);
+    }
+
+    registerNewEquipment(): void {
+      const dialogRef = this.dialog
+      .open(EquipmentRegistrationComponent, {
+        width: '37%',
+        height: '66%',
+        data: { compId: this.company.id },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        this.equipmentTracking = [];
+        this.getAllEquipmentTrackings;
+      });
+    }
+    
+    deleteEquipmentTracking(e: any): void {
+      console.log('delete')
+      console.log(e)
+      this.filteredEquipmentTrackings.forEach(element => {
+        if(element.id === e.id){
+          this.filteredEquipmentTrackings.splice(e.id, 1)
+        }
+      });
+    }
+
+    editEquipmentTracking(equipmentTracking: any): void {
+      console.log('edit')
+      console.log(equipmentTracking)
+      const dialogRef = this.dialog
+      .open(EditEquipmentTrackingComponent, {
+        width: '39%',
+        height: '72%',
+        data: { compId: this.company.id,
+                selectedEquipmentTracking: equipmentTracking },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        this.equipmentTracking = [];
+        this.getAllEquipmentTrackings;
+        this.sort();
+      });
+    }
+
+    getEquipmentTracking(id: number) : EquipmentTracking {
+      let equipmentTracking: any;
+      this.service.getEquipmentTracking(id.toString()).subscribe({
+        next: (result: EquipmentTracking) => {
+          equipmentTracking = result;
+        },
+        error: () => {
+          console.log(console.error());
+        },
+      });
+      return equipmentTracking;
     }
 }

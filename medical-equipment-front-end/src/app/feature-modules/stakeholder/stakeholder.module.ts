@@ -25,6 +25,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialog.component';
 import { CartComponent } from './cart/cart.component';
+import { EquipmentRegistrationComponent } from './equipment-registration/equipment-registration.component';
+import { EditEquipmentTrackingComponent } from './edit-equipment-tracking/edit-equipment-tracking.component';
 
 @NgModule({
   declarations: [
@@ -39,9 +41,11 @@ import { CartComponent } from './cart/cart.component';
     CompanyAdministratorProfileComponent,
     EditCompanyAdministratorProfileComponent,
     EquipmentViewComponent,
-    AppointmentRegistrationComponent
+    AppointmentRegistrationComponent,
     AddToCartDialogComponent,
-    CartComponent
+    CartComponent,
+    EquipmentRegistrationComponent,
+    EditEquipmentTrackingComponent
   ],
   imports: [
     CommonModule,

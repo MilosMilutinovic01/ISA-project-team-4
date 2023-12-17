@@ -9,6 +9,7 @@ import { UpdateCompanyAdministrator } from 'src/app/shared/model/update-company-
 import { Equipment } from 'src/app/shared/model/equipment.model';
 import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model';
 import { Item } from 'src/app/shared/model/item.model';
+import { Appointment } from 'src/app/shared/model/appointment.model';
 
 @Injectable({
   providedIn: 'root',
@@ -133,5 +134,16 @@ export class StakeholderService {
   createItem(item: Item): Observable<Item>{
     return this.http.post<Item>(environment.apiHost + 'items/create', item);
   }
+  
+  registerNewEquipment(equipment: Equipment): Observable<Equipment> {
+    return this.http.post<Equipment>(environment.apiHost + 'equipment/register', equipment);
+  }
 
+  getEquipmentTracking(id: string): Observable<EquipmentTracking> {
+    return this.http.get<EquipmentTracking>(environment.apiHost + 'equipmentTracking/'+ id);
+  }
+
+  editEquipmentTracking(equipmentTracking: EquipmentTracking): Observable<EquipmentTracking> {
+    return this.http.put<EquipmentTracking>(environment.apiHost + 'equipmentTracking/edit', equipmentTracking);
+  }
  }

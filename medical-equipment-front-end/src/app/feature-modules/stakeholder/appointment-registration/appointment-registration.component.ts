@@ -16,6 +16,20 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 })
 export class AppointmentRegistrationComponent {
   user: User | undefined;
+  
+  companyAdministrator: CompanyAdministrator = {
+    id: NaN,
+    name: '',
+    address: { id: NaN, street:'', city:'',country:''},
+    email: '',
+    password: '',
+    lastname: '',
+    city: '',
+    country: '',
+    phoneNumber: '',
+    companyId: NaN
+  };
+
   administrators: CompanyAdministrator[] = [
     {
       name: 'Jovan',
@@ -85,12 +99,11 @@ export class AppointmentRegistrationComponent {
     const appointment: Appointment = {
       startTime: startDateInput.toString(),
       endTime: endDate.toString(),
-      companyAdministratorId: this.user?.id!,
-      customerId: 0
+      companyAdministrator: this.getCompanyAdministratorProfile(),
     };
 
     console.log('Appointment ')
-    console.log(appointment)
+   // console.log(appointment)
 
     if (this.appointmentForm.valid) {
       this.service.registerAppointment(appointment).subscribe(
@@ -104,5 +117,32 @@ export class AppointmentRegistrationComponent {
 
       this.dialogRef.close(appointment);
     }
+  }
+    
+  getCompanyAdministratorProfile(): CompanyAdministrator {
+    let companyAdministrator: CompanyAdministrator = {
+      id: NaN,
+      name: '',
+      address: { id: NaN, street:'', city:'',country:''},
+      email: '',
+      password: '',
+      lastname: '',
+      city: '',
+      country: '',
+      phoneNumber: '',
+      companyId: NaN
+    };
+
+    this.service.getCompanyAdministratorProfile(this.authService.getCurrentUserId().toString()).subscribe({
+      next: (result: CompanyAdministrator) => {
+        this.companyAdministrator = result;
+        console.log("CompanyAdmin this.profile:");
+        console.log(this.companyAdministrator);
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+    return companyAdministrator;
   }
 }
