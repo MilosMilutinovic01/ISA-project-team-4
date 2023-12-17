@@ -4,7 +4,7 @@ import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
 import {
   MatButton,
   MatButtonModule,
-  MatIconButton
+  MatIconButton,
 } from '@angular/material/button';
 import {
   MatFormField,
@@ -62,7 +62,9 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatRadioModule,
     MatOptionModule,
     MatSelectModule,
-    MatStepperModule
+    MatStepperModule,
+    MatOptionModule,
+    MatSelectModule,
   ],
 })
 export class MaterialModule {}

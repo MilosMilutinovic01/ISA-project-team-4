@@ -10,10 +10,10 @@ import { EditCompanyProfileComponent } from './edit-company-profile/edit-company
 import { CompanyAdministratorProfileComponent } from './company-administrator-profile/company-administrator-profile.component';
 import { CompaniesViewComponent } from './companies-view/companies-view.component';
 import { FilterCompaniesDialogComponent } from './filter-companies-dialog/filter-companies-dialog.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import { EditCompanyAdministratorProfileComponent } from './edit-company-administrator-profile/edit-company-administrator-profile.component'
-import { EquipmentViewComponent } from './equipment-view/equipment-view.component'
-import {MatChip, MatChipsModule} from '@angular/material/chips';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { EditCompanyAdministratorProfileComponent } from './edit-company-administrator-profile/edit-company-administrator-profile.component';
+import { EquipmentViewComponent } from './equipment-view/equipment-view.component';
+import { MatChip, MatChipsModule } from '@angular/material/chips';
 import { CompanyCalendarComponent } from './company-calendar/company-calendar.component';
 import { DxCalendarModule } from 'devextreme-angular';
 import { DxSchedulerModule, DxTemplateModule } from 'devextreme-angular';
@@ -40,7 +40,12 @@ import { CartComponent } from './cart/cart.component';
     AdministratorRegistrationComponent,
     ChangePasswordComponent,
     AddToCartDialogComponent,
-    CartComponent
+    CartComponent,
+    AddToCartDialogComponent,
+    CartComponent,
+    CompanyCalendarComponent,
+    AdministratorRegistrationComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,
@@ -52,8 +57,7 @@ import { CartComponent } from './cart/cart.component';
     DxCalendarModule,
     DxSchedulerModule,
     MatDialogModule,
-    FontAwesomeModule
-
+    FontAwesomeModule,
   ],
   exports: [
     CustomerProfileComponent,
@@ -66,6 +70,8 @@ import { CartComponent } from './cart/cart.component';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    AddToCartDialogComponent,
+    CartComponent,
     CompanyCalendarComponent,
     DxCalendarModule,
     DxSchedulerModule,

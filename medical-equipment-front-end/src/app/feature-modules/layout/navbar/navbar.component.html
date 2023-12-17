@@ -14,7 +14,9 @@
           <button
             class="navbar-button"
             (click)="companyRegistration()"
-            *ngIf="user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled"
+            *ngIf="
+              user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled
+            "
           >
             New Company
           </button>
@@ -23,7 +25,9 @@
           <button
             class="navbar-button"
             (click)="companyAdministratorRegistration()"
-            *ngIf="user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled"
+            *ngIf="
+              user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled
+            "
           >
             New Company Administrator
           </button>
@@ -32,12 +36,14 @@
           <button
             class="navbar-button"
             (click)="systemAdministratorRegistration()"
-            *ngIf="user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled"
+            *ngIf="
+              user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled
+            "
           >
             New System Administrator
           </button>
         </div>
-        <div>
+        <!-- <div>
           <button
             class="navbar-button"
             (click)="companyAdministratorProfile()"
@@ -45,7 +51,7 @@
           >
             Company Administrator Profile
           </button>
-        </div>
+        </div> -->
         <div class="dropdown">
           <button class="dropbtn">{{ user?.username }}</button>
 
@@ -53,7 +59,8 @@
             class="dropdown-content"
             *ngIf="user?.id != 0; else loginRegisterButtons"
           >
-            <button *ngIf="user && user.role !== 'SYSTEM_ADMINISTRATOR'"
+            <button
+              *ngIf="user && user.role !== 'SYSTEM_ADMINISTRATOR'"
               class="navbar-button"
               (click)="
                 user && user.role === 'COMPANY_ADMINISTRATOR'

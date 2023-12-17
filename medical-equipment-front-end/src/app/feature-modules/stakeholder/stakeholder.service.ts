@@ -11,6 +11,7 @@ import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model'
 import { SystemAdministrator } from 'src/app/shared/model/system-administrator.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { Item } from 'src/app/shared/model/item.model';
+import { Appointment } from 'src/app/shared/model/appointment.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,18 +21,23 @@ export class StakeholderService {
   getIsRegister = this.isRegister.asObservable();
   private refreshNavbarSource = new BehaviorSubject<boolean>(false);
   refreshNavbar$ = this.refreshNavbarSource.asObservable();
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   setIsRegister(isRegister: boolean) {
     this.isRegister.next(isRegister);
   }
 
   getCompanyProfile(companyId: string): Observable<Company> {
-    return this.http.get<Company>(environment.apiHost + "companies/profile/" + companyId);
+    return this.http.get<Company>(
+      environment.apiHost + 'companies/profile/' + companyId
+    );
   }
 
   editCompanyProfile(companyProfile: Company): Observable<Company> {
-    return this.http.put<Company>(environment.apiHost + 'companies/profile/edit', companyProfile);
+    return this.http.put<Company>(
+      environment.apiHost + 'companies/profile/edit',
+      companyProfile
+    );
   }
 
   getCompany(companyId: string): Observable<Company> {
@@ -61,17 +67,27 @@ export class StakeholderService {
   }
 
   registerCompanyAdministrator(
-    CompanyAdministrator: CompanyAdministrator): Observable<Company> {
-    return this.http.post<Company>(environment.apiHost + 'companyAdministrators/register',CompanyAdministrator);
+    CompanyAdministrator: CompanyAdministrator
+  ): Observable<Company> {
+    return this.http.post<Company>(
+      environment.apiHost + 'companyAdministrators/register',
+      CompanyAdministrator
+    );
   }
 
   registerSystemAdministrator(
-    SystemAdministrator: SystemAdministrator): Observable<Company> {
-    return this.http.post<Company>(environment.apiHost + 'systemAdministrators/register',SystemAdministrator);
+    SystemAdministrator: SystemAdministrator
+  ): Observable<Company> {
+    return this.http.post<Company>(
+      environment.apiHost + 'systemAdministrators/register',
+      SystemAdministrator
+    );
   }
 
   getCompanyAdministratorProfile(id: string): Observable<CompanyAdministrator> {
-    return this.http.get<CompanyAdministrator>(environment.apiHost + 'companyAdministrators/profile/' + id);
+    return this.http.get<CompanyAdministrator>(
+      environment.apiHost + 'companyAdministrators/profile/' + id
+    );
   }
 
   getCompanies(): Observable<Company[]> {
@@ -83,9 +99,9 @@ export class StakeholderService {
   }
 
   searchEquipment(name: string, type: string): Observable<EquipmentTracking[]> {
-    return this.http.get<EquipmentTracking[]>(environment.apiHost + 'equipmentTracking/search/' + name +
-      '/' +
-      type);
+    return this.http.get<EquipmentTracking[]>(
+      environment.apiHost + 'equipmentTracking/search/' + name + '/' + type
+    );
   }
 
   searchCompanies(
@@ -96,14 +112,14 @@ export class StakeholderService {
   ): Observable<Company[]> {
     return this.http.get<Company[]>(
       environment.apiHost +
-      'companies/search/' +
-      name +
-      '/' +
-      street +
-      '/' +
-      city +
-      '/' +
-      country
+        'companies/search/' +
+        name +
+        '/' +
+        street +
+        '/' +
+        city +
+        '/' +
+        country
     );
   }
 
@@ -114,16 +130,25 @@ export class StakeholderService {
     );
   }
 
-  editCompanyAdministratorProfile(profile: UpdateCompanyAdministrator): Observable<UpdateCompanyAdministrator> {
-    return this.http.put<UpdateCompanyAdministrator>(environment.apiHost + 'companyAdministrators/profile/edit', profile);
+  editCompanyAdministratorProfile(
+    profile: UpdateCompanyAdministrator
+  ): Observable<UpdateCompanyAdministrator> {
+    return this.http.put<UpdateCompanyAdministrator>(
+      environment.apiHost + 'companyAdministrators/profile/edit',
+      profile
+    );
   }
 
   getAllEquipmentTrackings(): Observable<EquipmentTracking[]> {
-    return this.http.get<EquipmentTracking[]>(environment.apiHost + 'equipmentTracking/');
+    return this.http.get<EquipmentTracking[]>(
+      environment.apiHost + 'equipmentTracking/'
+    );
   }
 
   getAllCompanyAdministrators(): Observable<CompanyAdministrator[]> {
-    return this.http.get<CompanyAdministrator[]>(environment.apiHost + 'companyAdministrators/');
+    return this.http.get<CompanyAdministrator[]>(
+      environment.apiHost + 'companyAdministrators/'
+    );
   }
 
   getSystemAdministrator(id: number): Observable<SystemAdministrator> {
@@ -142,5 +167,11 @@ export class StakeholderService {
 
   getItemsByCustomerId(id: string): Observable<Item[]>{
     return this.http.get<Item[]>(environment.apiHost + 'items/' + id);
+  }
+
+  getAllAppointments(): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(
+      environment.apiHost + 'appointments/'
+    );
   }
  }

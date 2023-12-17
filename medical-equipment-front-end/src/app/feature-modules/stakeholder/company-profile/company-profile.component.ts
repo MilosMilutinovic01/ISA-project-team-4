@@ -53,7 +53,7 @@ export class CompanyProfileComponent {
   //     penaltyPoints: NaN,
   //     password: '',
   //     category: ''},
-    
+
   // };
 
   otherAdministrators: CompanyAdministrator[] = [];
@@ -68,7 +68,6 @@ export class CompanyProfileComponent {
     name: new FormControl(''),
   });
 
-
   constructor(
     private service: StakeholderService,
     private dialog: MatDialog,
@@ -80,7 +79,7 @@ export class CompanyProfileComponent {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
-      
+
       this.getCompany();
       this.getAllEquipmentTrackings();
       this.getAllCompanyAdministrators();
@@ -183,18 +182,22 @@ export class CompanyProfileComponent {
       })
       .afterClosed()
       .subscribe((result) => {
-        if(result){
-          const item : Item = {
+        if (result) {
+          const item: Item = {
             count: result || '',
             customerId: this.authService.getCurrentUserId() || 0,
             companyId: this.company.id || 0
           };
-  
-          const selectedEquipment = this.filteredEquipmentTrackings.find(e => e.id === id)?.equipment;
+
+          const selectedEquipment = this.filteredEquipmentTrackings.find(
+            (e) => e.id === id
+          )?.equipment;
           item.equipment = selectedEquipment;
-  
+          console.log('ITEM: ', item);
+
           this.service.createItem(item).subscribe({
             next: (result) => {
+              console.log('RES: ', result);
               this.items.push(result);
             },
             error: () => {
@@ -203,10 +206,9 @@ export class CompanyProfileComponent {
           });
         }
       });
+  }
 
-    }
-    
-    showCart():void{
-      this.router.navigate(['/cart', this.company.id ]);
-    }
+  showCart(): void {
+    this.router.navigate(['/cart']);
+  }
 }

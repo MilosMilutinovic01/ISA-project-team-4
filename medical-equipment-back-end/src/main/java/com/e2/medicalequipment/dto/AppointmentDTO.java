@@ -4,6 +4,8 @@ import com.e2.medicalequipment.model.CompanyAdministrator;
 import com.e2.medicalequipment.model.Customer;
 
 public class AppointmentDTO {
+
+    public Long id;
     public String startTime;
     public String endTime;
     public UpdateCompanyAdministratorDTO companyAdministrator;
