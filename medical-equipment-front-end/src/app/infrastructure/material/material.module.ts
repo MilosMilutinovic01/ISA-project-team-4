@@ -19,9 +19,10 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatStepperModule } from '@angular/material/stepper';
 import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
+import {MatSelectModule} from '@angular/material/select';
+import {MatStepperModule} from '@angular/material/stepper';
+
 
 @NgModule({
   declarations: [],
@@ -39,9 +40,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatSnackBarModule,
     MatDialogModule,
     MatRadioModule,
-    MatStepperModule,
     MatOptionModule,
     MatSelectModule,
+    MatStepperModule
   ],
   exports: [
     MatToolbar,
@@ -59,6 +60,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatGridListModule,
     MatDialogModule,
     MatRadioModule,
+    MatOptionModule,
+    MatSelectModule,
     MatStepperModule,
     MatOptionModule,
     MatSelectModule,

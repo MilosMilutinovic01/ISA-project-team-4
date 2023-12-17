@@ -27,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/companies", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin
+
 public class CompanyController {
     @Autowired
     private CompanyService companyService;

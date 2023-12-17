@@ -31,7 +31,6 @@ const routes: Routes = [
     path: 'administratorRegistration/:type',
     component: AdministratorRegistrationComponent,
   },
-  { path: 'companyProfile', component: CompanyProfileComponent },
   { path: 'editCompanyProfile', component: EditCompanyProfileComponent },
   {
     path: 'companyAdministratorProfile',

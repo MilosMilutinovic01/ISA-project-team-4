@@ -50,7 +50,7 @@ public class CompanyAdministrator extends User{
         super(companyAdministratorDTO.id,
                 companyAdministratorDTO.name,
                 companyAdministratorDTO.lastname,
-                companyAdministratorDTO.email,
+                companyAdministratorDTO.username,
                 companyAdministratorDTO.address,
                 companyAdministratorDTO.phoneNumber,
                 companyAdministratorDTO.password,

@@ -21,6 +21,13 @@ import { AdministratorRegistrationComponent } from './administrator-registration
 import { MatDialogModule } from '@angular/material/dialog';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AppointmentRegistrationComponent } from './appointment-registration/appointment-registration.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialog.component';
 import { CartComponent } from './cart/cart.component';
 import { SelectAppointmentDialogComponent } from './select-appointment-dialog/select-appointment-dialog.component';
@@ -36,6 +43,12 @@ import { SelectAppointmentDialogComponent } from './select-appointment-dialog/se
     CompanyAdministratorProfileComponent,
     EditCompanyAdministratorProfileComponent,
     EquipmentViewComponent,
+    CompanyCalendarComponent,
+    AdministratorRegistrationComponent,
+    ChangePasswordComponent,
+    AppointmentRegistrationComponent,
+    AddToCartDialogComponent,
+    CartComponent,
     AddToCartDialogComponent,
     CartComponent,
     CompanyCalendarComponent,
@@ -54,6 +67,12 @@ import { SelectAppointmentDialogComponent } from './select-appointment-dialog/se
     DxSchedulerModule,
     MatDialogModule,
     FontAwesomeModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
   ],
   exports: [
     CustomerProfileComponent,
@@ -75,6 +94,8 @@ import { SelectAppointmentDialogComponent } from './select-appointment-dialog/se
     MatDialogModule,
     ChangePasswordComponent,
     FontAwesomeModule,
-  ],
+    AddToCartDialogComponent, 
+    CartComponent
+  ]
 })
 export class StakeholderModule {}

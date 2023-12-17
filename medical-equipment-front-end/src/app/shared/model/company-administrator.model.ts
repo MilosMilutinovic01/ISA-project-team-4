@@ -7,7 +7,7 @@ export interface CompanyAdministrator {
   username: string;
   password?: string;
   lastname: string;
-  city: string;
+  city?: string;
   country: string;
   phoneNumber: string;
   companyId: number;

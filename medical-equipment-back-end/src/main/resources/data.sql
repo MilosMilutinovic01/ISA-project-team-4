@@ -100,3 +100,12 @@ INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
 VALUES (-6, 100, -2, -3);
 
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, company_administrator_id)
+VALUES (-1, '2023-12-29T17:00:00.000Z', '2023-12-29T16:30:00.000Z', -2);
+
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, company_administrator_id)
+VALUES (-2, '2023-12-29T19:00:00.000Z', '2023-12-29T18:30:00.000Z', -2);
+
