@@ -53,7 +53,14 @@
             class="dropdown-content"
             *ngIf="user?.id != 0; else loginRegisterButtons"
           >
-            <button class="navbar-button" (click)="customerProfile()">
+            <button *ngIf="user && user.role !== 'SYSTEM_ADMINISTRATOR'"
+              class="navbar-button"
+              (click)="
+                user && user.role === 'COMPANY_ADMINISTRATOR'
+                  ? companyAdministratorProfile()
+                  : customerProfile()
+              "
+            >
               Profile
             </button>
             <button class="navbar-button" (click)="logout()">Logout</button>

@@ -37,7 +37,7 @@ public class CompanyAdministrator extends User{
         super(null,
                 companyAdministratorDTO.name,
                 companyAdministratorDTO.lastname,
-                companyAdministratorDTO.email,
+                companyAdministratorDTO.username,
                 companyAdministratorDTO.address,
                 companyAdministratorDTO.phoneNumber,
                 companyAdministratorDTO.password,

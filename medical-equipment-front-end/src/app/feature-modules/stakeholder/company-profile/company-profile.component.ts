@@ -42,14 +42,16 @@ export class CompanyProfileComponent {
   }
 
   getCompany(): void {
-    this.service.getCompanyProfile("-1").subscribe({
-      next: (result) => {
-        this.company = result;
-      },
-      error: () => {
-        console.log(console.error);
-      },
-    });
+    this.service
+      .getCompanyProfile(this.authService.getCurrentUserId().toString())
+      .subscribe({
+        next: (result) => {
+          this.company = result;
+        },
+        error: () => {
+          console.log(console.error);
+        },
+      });
   }
 
   editProfile(): void {

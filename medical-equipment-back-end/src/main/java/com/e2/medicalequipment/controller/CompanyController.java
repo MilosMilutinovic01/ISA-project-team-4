@@ -6,6 +6,8 @@ import com.e2.medicalequipment.dto.UpdateCustomerDTO;
 import com.e2.medicalequipment.model.Company;
 import com.e2.medicalequipment.model.CompanyAdministrator;
 import com.e2.medicalequipment.model.Customer;
+import com.e2.medicalequipment.model.User;
+import com.e2.medicalequipment.service.CompanyAdministratorService;
 import com.e2.medicalequipment.service.CompanyService;
 import com.e2.medicalequipment.dto.CreateCompanyDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ import java.util.List;
 public class CompanyController {
     @Autowired
     private CompanyService companyService;
+
+    @Autowired
+    private CompanyAdministratorService companyAdministratorService;
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('SYSTEM_ADMINISTRATOR')")
@@ -91,7 +96,8 @@ public class CompanyController {
     @GetMapping(value = "/profile/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<UpdateCompanyDTO> getCompany (@PathVariable String id) throws Exception {
-        Company company = companyService.Get(id);
+        CompanyAdministrator admin = companyAdministratorService.Get(id);
+        Company company = companyService.Get(admin.getCompanyId().toString());
         if (company == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

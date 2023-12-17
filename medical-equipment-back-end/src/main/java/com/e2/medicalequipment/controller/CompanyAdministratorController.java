@@ -44,6 +44,7 @@ public class CompanyAdministratorController {
 
     @GetMapping(value = "/profile/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public ResponseEntity<CompanyAdministrator> getCompanyAdministrator(@PathVariable String id) throws Exception {
         System.out.println("ID: "+ id);
         CompanyAdministrator customer = null;
