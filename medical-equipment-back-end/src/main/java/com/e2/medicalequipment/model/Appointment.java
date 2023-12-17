@@ -20,8 +20,8 @@ public class Appointment {
     @Column(name = "endTime")
     private LocalDateTime endTime;
 
-    @Column(name = "appointmentId")
-    private Long appointmentId;
+    @Column(name = "companyAdministratorId")
+    private Long companyAdministratorId;
 
     @Column(name = "customerId")
     private Long customerId;
@@ -34,15 +34,15 @@ public class Appointment {
     public Appointment(CreateAppointmentDTO appointmentDTO) {
         this.startTime = LocalDateTime.parse(appointmentDTO.startTime);
         this.endTime = LocalDateTime.parse(appointmentDTO.endTime);
-        this.appointmentId = appointmentDTO.appointmentId;
+        this.companyAdministratorId = appointmentDTO.companyAdministratorId;
         this.customerId = appointmentDTO.customerId;
     }
 
-    public Appointment(Long id, LocalDateTime startTime, LocalDateTime endTime, Long appointmentId, Long customerId) {
+    public Appointment(Long id, LocalDateTime startTime, LocalDateTime endTime, Long companyAdministratorId, Long customerId) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.appointmentId = appointmentId;
+        this.companyAdministratorId = companyAdministratorId;
         this.customerId = customerId;
     }
 
@@ -70,9 +70,9 @@ public class Appointment {
         this.endTime = endTime;
     }
 
-    public Long getAppointmentId() { return appointmentId; }
+    public Long getcompanyAdministratorId() { return companyAdministratorId; }
 
-    public void setAppointmentId(Long appointmentId) { this.appointmentId = appointmentId; }
+    public void setcompanyAdministratorId(Long companyAdministratorId) { this.companyAdministratorId = companyAdministratorId; }
 
     public Long getCustomerId() { return customerId; }
 
