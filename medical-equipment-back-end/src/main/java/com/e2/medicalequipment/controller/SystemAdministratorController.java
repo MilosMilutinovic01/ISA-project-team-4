@@ -1,6 +1,8 @@
 package com.e2.medicalequipment.controller;
 
 import com.e2.medicalequipment.dto.SystemAdministratorDTO;
+import com.e2.medicalequipment.dto.UpdateCustomerDTO;
+import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.model.SystemAdministrator;
 import com.e2.medicalequipment.service.SystemAdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,35 @@ public class SystemAdministratorController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<SystemAdministrator>(savedSystemAdministrator, HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('SYSTEM_ADMINISTRATOR')")
+    @ResponseBody
+    public ResponseEntity<SystemAdministrator> getSystemAdministrator(@PathVariable Long id){
+        SystemAdministrator systemAdministrator = null;
+        System.out.println("usao");
+        try {
+            systemAdministrator = systemAdministratorService.Get(id);
+            return new ResponseEntity<SystemAdministrator>(systemAdministrator, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<SystemAdministrator>(systemAdministrator, HttpStatus.CONFLICT);
+        }
+    }
+
+    @PutMapping(value = "/changePassword", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('SYSTEM_ADMINISTRATOR')")
+    @ResponseBody
+    public ResponseEntity<SystemAdministrator> updateSystemAdministrator(@RequestBody SystemAdministratorDTO systemAdministratorDTO){
+        SystemAdministrator systemAdministrator = null;
+        try {
+            systemAdministrator = systemAdministratorService.Update(systemAdministratorDTO);
+            return new ResponseEntity<SystemAdministrator>(systemAdministrator, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<SystemAdministrator>(systemAdministrator, HttpStatus.CONFLICT);
         }
     }
 }

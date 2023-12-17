@@ -14,7 +14,7 @@
           <button
             class="navbar-button"
             (click)="companyRegistration()"
-            *ngIf="user && user.role === 'SYSTEM_ADMINISTRATOR'"
+            *ngIf="user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled"
           >
             New Company
           </button>
@@ -23,7 +23,7 @@
           <button
             class="navbar-button"
             (click)="companyAdministratorRegistration()"
-            *ngIf="user && user.role === 'SYSTEM_ADMINISTRATOR'"
+            *ngIf="user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled"
           >
             New Company Administrator
           </button>
@@ -32,7 +32,7 @@
           <button
             class="navbar-button"
             (click)="systemAdministratorRegistration()"
-            *ngIf="user && user.role === 'SYSTEM_ADMINISTRATOR'"
+            *ngIf="user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled"
           >
             New System Administrator
           </button>

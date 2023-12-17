@@ -33,12 +33,14 @@ public class SystemAdministratorServiceImpl implements SystemAdministratorServic
     }
 
     @Override
-    public SystemAdministrator Get(String id) throws Exception{
-        return this.systemAdministratorRepository.findById(Long.parseLong(id)).get();
+    public SystemAdministrator Get(Long id) throws Exception{
+        return this.systemAdministratorRepository.findById(id).get();
     }
 
     public SystemAdministrator Update(SystemAdministratorDTO systemAdministratorDTO) throws Exception{
+        String encodedPassword = passwordEncoder.encode(systemAdministratorDTO.password);
         SystemAdministrator systemAdministrator = new SystemAdministrator(systemAdministratorDTO);
+        systemAdministrator.setPassword(encodedPassword);
         if ((systemAdministrator.getId() == null)){
             throw new Exception("ID must not be null for updating entity.");
         }

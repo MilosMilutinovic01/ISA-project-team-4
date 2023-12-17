@@ -16,6 +16,7 @@ import { LoginComponent } from '../auth/login/login.component';
 import { VerificationComponent } from '../auth/verification/verification.component';
 import { CompanyCalendarComponent } from 'src/app/feature-modules/stakeholder/company-calendar/company-calendar.component';
 import { AdministratorRegistrationComponent } from 'src/app/feature-modules/stakeholder/administrator-registration/administrator-registration.component';
+import { ChangePasswordComponent } from 'src/app/feature-modules/stakeholder/change-password/change-password.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'api/auth/verify/:id', component: VerificationComponent },
   { path: 'companyCalendar', component: CompanyCalendarComponent },
+  { path: 'changePassword', component: ChangePasswordComponent },
 ];
 
 @NgModule({

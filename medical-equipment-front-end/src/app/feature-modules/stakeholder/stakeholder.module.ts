@@ -18,6 +18,9 @@ import { CompanyCalendarComponent } from './company-calendar/company-calendar.co
 import { DxCalendarModule } from 'devextreme-angular';
 import { DxSchedulerModule, DxTemplateModule } from 'devextreme-angular';
 import { AdministratorRegistrationComponent } from './administrator-registration/administrator-registration.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @NgModule({
   declarations: [
     CustomerProfileComponent,
@@ -31,7 +34,8 @@ import { AdministratorRegistrationComponent } from './administrator-registration
     EditCompanyAdministratorProfileComponent,
     EquipmentViewComponent,
     CompanyCalendarComponent,
-    AdministratorRegistrationComponent
+    AdministratorRegistrationComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +46,8 @@ import { AdministratorRegistrationComponent } from './administrator-registration
     MatChipsModule,
     DxCalendarModule,
     DxSchedulerModule,
+    MatDialogModule,
+    FontAwesomeModule
 
   ],
   exports: [
@@ -58,7 +64,10 @@ import { AdministratorRegistrationComponent } from './administrator-registration
     CompanyCalendarComponent,
     DxCalendarModule,
     DxSchedulerModule,
-    AdministratorRegistrationComponent
+    AdministratorRegistrationComponent,
+    MatDialogModule,
+    ChangePasswordComponent,
+    FontAwesomeModule
   ]
 })
 export class StakeholderModule {}

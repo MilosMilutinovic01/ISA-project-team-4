@@ -9,6 +9,7 @@ import { UpdateCompanyAdministrator } from 'src/app/shared/model/update-company-
 import { Equipment } from 'src/app/shared/model/equipment.model';
 import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model';
 import { SystemAdministrator } from 'src/app/shared/model/system-administrator.model';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -123,4 +124,15 @@ export class StakeholderService {
   getAllCompanyAdministrators(): Observable<CompanyAdministrator[]> {
     return this.http.get<CompanyAdministrator[]>(environment.apiHost + 'companyAdministrators/');
   }
+
+  getSystemAdministrator(id: number): Observable<SystemAdministrator> {
+    return this.http.get<SystemAdministrator>(environment.apiHost + 'systemAdministrators/' + id);
+  }
+
+  updateSystemAdministrator(admin: SystemAdministrator): Observable<SystemAdministrator> {
+    console.log(admin);
+    return this.http.put<SystemAdministrator>(
+       environment.apiHost + 'systemAdministrators/changePassword', admin);
+   }
+
 }

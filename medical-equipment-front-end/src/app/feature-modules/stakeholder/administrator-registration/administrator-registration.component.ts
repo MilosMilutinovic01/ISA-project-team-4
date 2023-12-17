@@ -90,7 +90,7 @@ export class AdministratorRegistrationComponent {
         address: a,
         city: this.systemAdministratorForm.value.city || '',
         country: this.systemAdministratorForm.value.country || '',
-        email: this.systemAdministratorForm.value.email || '',
+        username: this.systemAdministratorForm.value.email || '',
         phoneNumber: this.systemAdministratorForm.value.phoneNumber || '',
         hasLoggedBefore: false 
       };
@@ -141,8 +141,5 @@ export class AdministratorRegistrationComponent {
       }
 
     }
-
-
-
   }
 }

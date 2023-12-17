@@ -7,7 +7,7 @@ public class SystemAdministratorDTO {
     public Long id;
 
     public String password;
-    public String email;
+    public String username;
 
     public Address address;
 
@@ -24,7 +24,7 @@ public class SystemAdministratorDTO {
     public SystemAdministratorDTO(SystemAdministrator systemAdministrator) {
         this.id = systemAdministrator.getId();
         this.password = systemAdministrator.getPassword();
-        this.email = systemAdministrator.getUsername();
+        this.username = systemAdministrator.getUsername();
         this.address = systemAdministrator.getAddress();
         this.name = systemAdministrator.getName();
         this.lastname = systemAdministrator.getLastname();

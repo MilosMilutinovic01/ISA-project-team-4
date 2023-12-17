@@ -25,7 +25,9 @@ VALUES (-1, -2);
 INSERT INTO stakeholders.company_administrators(
     company_id, company_administrator_id)
 VALUES (-2, -3);
-
+INSERT INTO stakeholders.system_administrators(
+    has_logged_before, system_administrator_id)
+VALUES (true, -4);
 
 
 INSERT INTO stakeholders.addresses(

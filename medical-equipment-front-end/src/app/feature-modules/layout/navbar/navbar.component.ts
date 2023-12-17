@@ -5,6 +5,7 @@ import { StakeholderService } from '../../stakeholder/stakeholder.service';
 import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { Address } from 'src/app/shared/model/address.model';
+import { SystemAdministrator } from 'src/app/shared/model/system-administrator.model';
 
 @Component({
   selector: 'xp-navbar',
@@ -13,6 +14,7 @@ import { Address } from 'src/app/shared/model/address.model';
 })
 export class NavbarComponent implements OnInit {
   isDropdownOpen = false;
+  systemAdminEnabled = false;
   user: User | undefined;
   customer: CustomerProfile = {
     name: '',
@@ -32,6 +34,9 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.authService.user$.subscribe((user) => {
       this.user = user;
+      if (this.user.role === 'SYSTEM_ADMINISTRATOR'){
+        this.isFirstLogin()
+      }
     });
   }
 
@@ -78,4 +83,28 @@ export class NavbarComponent implements OnInit {
   companyAdministratorProfile(): void {
     this.router.navigate(['/companyAdministratorProfile']);
   }
+  
+  isFirstLogin(){
+    if (this.user) {
+      this.service
+        .getSystemAdministrator(this.user.id)
+        .subscribe({
+          next: (result: SystemAdministrator) => {
+            if (!result.hasLoggedBefore) {
+              this.router.navigate(['/changePassword'])
+              this.systemAdminEnabled = false
+            }
+            else{
+              this.systemAdminEnabled = true
+            }
+          },
+          error: (error) => {
+            console.error('Error getting system administrator:', error);
+          },
+        });
+    } else {
+      console.warn('User is undefined. Cannot check first login status.');
+    }
+  }
+  
 }

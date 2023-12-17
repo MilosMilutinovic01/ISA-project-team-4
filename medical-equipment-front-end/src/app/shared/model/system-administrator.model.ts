@@ -3,7 +3,7 @@ export interface SystemAdministrator {
     id?:number;
     name: string;
     address: Address;
-    email: string;
+    username: string;
     password?: string;
     lastname: string;
     city: string,

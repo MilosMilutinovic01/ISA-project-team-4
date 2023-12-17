@@ -29,7 +29,7 @@ public class SystemAdministrator extends User{
         super(systemAdministratorDTO.id,
                 systemAdministratorDTO.name,
                 systemAdministratorDTO.lastname,
-                systemAdministratorDTO.email,
+                systemAdministratorDTO.username,
                 systemAdministratorDTO.address,
                 systemAdministratorDTO.phoneNumber,
                 systemAdministratorDTO.password,
