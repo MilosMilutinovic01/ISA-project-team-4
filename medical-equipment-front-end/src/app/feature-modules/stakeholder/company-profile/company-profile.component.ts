@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model';
 import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
 
 @Component({
   selector: 'app-company-profile',
@@ -24,9 +26,16 @@ export class CompanyProfileComponent {
     averageRating: NaN,
   };
 
+  user: User | undefined;
   otherAdministrators: CompanyAdministrator[] = [];
-  equipmentTrackings: EquipmentTracking[] = [];
   filteredEquipmentTrackings: EquipmentTracking[] = [];
+  equipmentTracking: EquipmentTracking[] = [];
+  selectedOption: string = 'empty';
+
+  searchForm = new FormGroup({
+    name: new FormControl(''),
+  });
+
 
   constructor(
     private service: StakeholderService,
@@ -36,22 +45,34 @@ export class CompanyProfileComponent {
   ) {}
 
   ngOnInit(): void {
+    this.authService.user$.subscribe((user) => {
+      this.user = user;
+    });
     this.getCompany();
     this.getAllEquipmentTrackings();
     this.getAllCompanyAdministrators();
   }
 
   getCompany(): void {
-    this.service
-      .getCompanyProfile(this.authService.getCurrentUserId().toString())
-      .subscribe({
-        next: (result) => {
-          this.company = result;
-        },
-        error: () => {
-          console.log(console.error);
-        },
-      });
+    this.service.getCompanyAdministratorProfile((this.user?.id!).toString()).subscribe({
+      next: (result) => {
+        this.service.getCompanyProfile(result.companyId.toString()).subscribe({
+          next: (result) => {
+            this.company = result;
+            console.log(this.company);
+          },
+          error: () => {
+            console.log(console.error);
+          },
+        });
+      },
+      error: () => {
+        console.log(console.error);
+      },
+    });
+
+    
+    
   }
 
   editProfile(): void {
@@ -61,7 +82,7 @@ export class CompanyProfileComponent {
   getAllEquipmentTrackings(): void {
     this.service.getAllEquipmentTrackings().subscribe({
       next: (result) => {
-        this.equipmentTrackings = result;
+        this.equipmentTracking = result;
         this.sort();
       },
       error: () => {
@@ -70,12 +91,47 @@ export class CompanyProfileComponent {
     });
   }
 
+  selectChip(type: string): void {
+    this.selectedOption = type;
+    const name = this.searchForm.value.name || 'empty';
+
+    this.service.searchEquipment(name, this.selectedOption).subscribe({
+      next: (result: EquipmentTracking[]) => {
+        this.equipmentTracking = result;
+        this.sort();
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+  }
+
+  search(): void {
+    const name = this.searchForm.value.name || 'empty';
+
+    this.service.searchEquipment(name, this.selectedOption).subscribe({
+      next: (result: EquipmentTracking[]) => {
+        this.equipmentTracking = result;
+        this.sort();
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+  }
+
   sort(): void {
-    for (let el of this.equipmentTrackings) {
+    for (let el of this.equipmentTracking) {
       if (el.company.id === this.company.id && el.count > 0) {
         this.filteredEquipmentTrackings.push(el);
       }
     }
+  }
+
+  refresh(): void {
+    this.equipmentTracking = [];
+    this.searchForm.setValue({ name: '' });
+    this.selectedOption = 'empty';
   }
 
   getAllCompanyAdministrators(): void {

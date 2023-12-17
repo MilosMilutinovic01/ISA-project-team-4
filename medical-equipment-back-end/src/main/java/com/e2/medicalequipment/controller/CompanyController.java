@@ -52,6 +52,7 @@ public class CompanyController {
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+
     public ResponseEntity<List<Company>> getAll(){
         List<Company> companies = null;
         try {
@@ -106,6 +107,7 @@ public class CompanyController {
 
     @PutMapping(value = "/profile/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public ResponseEntity<Company> updateCompany(@RequestBody UpdateCompanyDTO companyDTO) {
         Company company = null;
         try {

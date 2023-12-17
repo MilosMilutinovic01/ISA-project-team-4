@@ -1,6 +1,8 @@
 package com.e2.medicalequipment.model;
 
+import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 
 import java.time.LocalDateTime;
 
@@ -18,14 +20,30 @@ public class Appointment {
     @Column(name = "endTime")
     private LocalDateTime endTime;
 
+    @Column(name = "companyAdministratorId")
+    private Long companyAdministratorId;
+
+    @Column(name = "customerId")
+    private Long customerId;
+
+
     public Appointment() {
 
     }
 
-    public Appointment(Long id, LocalDateTime startTime, LocalDateTime endTime) {
+    public Appointment(CreateAppointmentDTO appointmentDTO) {
+        this.startTime = LocalDateTime.parse(appointmentDTO.startTime);
+        this.endTime = LocalDateTime.parse(appointmentDTO.endTime);
+        this.companyAdministratorId = appointmentDTO.companyAdministratorId;
+        this.customerId = appointmentDTO.customerId;
+    }
+
+    public Appointment(Long id, LocalDateTime startTime, LocalDateTime endTime, Long companyAdministratorId, Long customerId) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.companyAdministratorId = companyAdministratorId;
+        this.customerId = customerId;
     }
 
     public Long getId() {
@@ -51,4 +69,12 @@ public class Appointment {
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
+
+    public Long getcompanyAdministratorId() { return companyAdministratorId; }
+
+    public void setcompanyAdministratorId(Long companyAdministratorId) { this.companyAdministratorId = companyAdministratorId; }
+
+    public Long getCustomerId() { return customerId; }
+
+    public void setCustomerId(Long customerId) { this.customerId = customerId; }
 }
