@@ -32,32 +32,6 @@ export class CompanyProfileComponent {
   };
 
   user: User | undefined;
-  // appointment: Appointment = {
-  //   ccid: NaN,
-  //   startTime: '',
-  //   endTime: '',
-  //   companyAdministrator: { id:NaN,
-  //     name: '',
-  //     address: { id: NaN, street: '', city: '', country: '' },
-  //     email: '',
-  //     password: '',
-  //     lastname: '',
-  //     city: '',
-  //     country: '',
-  //     phoneNumber: '',
-  //     companyId: NaN },
-  //   customer: { id:NaN,
-  //     name: '',
-  //     lastname: '',
-  //     username: '',
-  //     address: { id: NaN, street: '', city: '', country: '' },
-  //     phoneNumber: '',
-  //     profession: '',
-  //     penaltyPoints: NaN,
-  //     password: '',
-  //     category: ''},
-
-  // };
 
   otherAdministrators: CompanyAdministrator[] = [];
   filteredEquipmentTrackings: EquipmentTracking[] = [];
@@ -87,6 +61,7 @@ export class CompanyProfileComponent {
       this.id = params['id'];
 
       this.getCompany();
+      this.getAllAppointments();
       this.getAllEquipmentTrackings();
       this.getAllCompanyAdministrators();
     });

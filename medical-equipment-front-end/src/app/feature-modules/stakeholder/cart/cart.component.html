@@ -25,7 +25,7 @@
           <div class="total-price" *ngIf="this.items.length === 0">
             <p>Your cart is empty</p>
           </div>
-            <button mat-button matStepperNext disabled="this.items.length === 0" >Next</button>
+            <button mat-button matStepperNext >Next</button>
         </div>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup"  label="Select reservation date">
