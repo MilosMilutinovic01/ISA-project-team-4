@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface ItemService {
     Item Create(CreateItemDTO itemDto) throws Exception;
-    List<Item> GetAllByCustomerId(String id) throws Exception;
+    List<Item> GetAllByCustomerId(String customerId) throws Exception;
 }

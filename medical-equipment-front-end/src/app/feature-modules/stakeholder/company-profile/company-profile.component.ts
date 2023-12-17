@@ -199,16 +199,15 @@ export class CompanyProfileComponent {
         if(result){
           const item : Item = {
             count: result || '',
-            customerId: this.authService.getCurrentUserId() || 0
+            customerId: this.authService.getCurrentUserId() || 0,
+            companyId: this.company.id || 0
           };
   
           const selectedEquipment = this.filteredEquipmentTrackings.find(e => e.id === id)?.equipment;
           item.equipment = selectedEquipment;
-          console.log("ITEM: ", item);
   
           this.service.createItem(item).subscribe({
             next: (result) => {
-              console.log("RES: ",result);
               this.items.push(result);
             },
             error: () => {
@@ -221,6 +220,6 @@ export class CompanyProfileComponent {
     }
     
     showCart():void{
-      this.router.navigate(['/cart']);
+      this.router.navigate(['/cart', this.company.id ]);
     }
 }

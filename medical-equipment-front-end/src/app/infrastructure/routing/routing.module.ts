@@ -41,7 +41,7 @@ const routes: Routes = [
   { path: 'equipment', component: EquipmentViewComponent },
   { path: '', component: HomeComponent },
   { path: 'api/auth/verify/:id', component: VerificationComponent },
-  { path: 'cart', component: CartComponent },
+  { path: 'cart/:id', component: CartComponent },
 ];
 
 @NgModule({
