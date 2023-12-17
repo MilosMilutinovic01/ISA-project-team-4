@@ -8,6 +8,7 @@ import { Company } from 'src/app/shared/model/company.model';
 import { UpdateCompanyAdministrator } from 'src/app/shared/model/update-company-administrator.model';
 import { Equipment } from 'src/app/shared/model/equipment.model';
 import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model';
+import { Appointment } from 'src/app/shared/model/appointment.model';
 
 @Injectable({
   providedIn: 'root',
@@ -120,4 +121,11 @@ export class StakeholderService {
   getAllCompanyAdministrators(): Observable<CompanyAdministrator[]> {
     return this.http.get<CompanyAdministrator[]>(environment.apiHost + 'companyAdministrators/');
   }
- }
+
+  getAppointments(): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(environment.apiHost + 'appointments/');
+  }
+
+  registerAppointment(appointment: Appointment): Observable<Appointment> {
+    return this.http.post<Appointment>(environment.apiHost + 'appointments/register', appointment);
+  }}

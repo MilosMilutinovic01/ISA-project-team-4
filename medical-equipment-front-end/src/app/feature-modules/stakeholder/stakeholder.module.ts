@@ -16,6 +16,13 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { EditCompanyAdministratorProfileComponent } from './edit-company-administrator-profile/edit-company-administrator-profile.component'
 import { EquipmentViewComponent } from './equipment-view/equipment-view.component'
 import {MatChip, MatChipsModule} from '@angular/material/chips';
+import { AppointmentRegistrationComponent } from './appointment-registration/appointment-registration.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -29,7 +36,8 @@ import {MatChip, MatChipsModule} from '@angular/material/chips';
     EditCompanyProfileComponent,
     CompanyAdministratorProfileComponent,
     EditCompanyAdministratorProfileComponent,
-    EquipmentViewComponent
+    EquipmentViewComponent,
+    AppointmentRegistrationComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +45,13 @@ import {MatChip, MatChipsModule} from '@angular/material/chips';
     ReactiveFormsModule,
     FormsModule,
     MatTooltipModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
   ],
   exports: [
     CustomerProfileComponent,
@@ -50,7 +64,7 @@ import {MatChip, MatChipsModule} from '@angular/material/chips';
     EquipmentViewComponent,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ]
 })
 export class StakeholderModule {}

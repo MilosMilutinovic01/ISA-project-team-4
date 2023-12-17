@@ -10,11 +10,15 @@ import { CompanyAdministrator } from 'src/app/shared/model/company-administrator
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { Appointment } from 'src/app/shared/model/appointment.model';
+import { DatePipe } from '@angular/common';
+import { AppointmentRegistrationComponent } from '../appointment-registration/appointment-registration.component';
 
 @Component({
   selector: 'app-company-profile',
   templateUrl: './company-profile.component.html',
   styleUrls: ['./company-profile.component.css'],
+  providers: [DatePipe]
 })
 export class CompanyProfileComponent {
   company: Company = {
@@ -32,6 +36,9 @@ export class CompanyProfileComponent {
   filteredEquipmentTrackings: EquipmentTracking[] = [];
   equipmentTracking: EquipmentTracking[] = [];
   selectedOption: string = 'empty';
+  appointments: Appointment[] = [];
+  displayedColumns: string[] = ['startTime', 'endTime', 'customerId'];
+  newStartDate: string = '';
 
   searchForm = new FormGroup({
     name: new FormControl(''),
@@ -42,7 +49,8 @@ export class CompanyProfileComponent {
     private service: StakeholderService,
     private dialog: MatDialog,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -52,8 +60,9 @@ export class CompanyProfileComponent {
     this.getCompany();
     this.getAllEquipmentTrackings();
     this.getAllCompanyAdministrators();
+    this.getAllAppointments();
   }
-
+  
   getCompany(): void {
     this.service.getCompanyAdministratorProfile((this.user?.id!).toString()).subscribe({
       next: (result) => {
@@ -71,9 +80,6 @@ export class CompanyProfileComponent {
         console.log(console.error);
       },
     });
-
-    
-    
   }
 
   editProfile(): void {
@@ -95,6 +101,7 @@ export class CompanyProfileComponent {
   }
 
   getAllEquipmentTrackings(): void {
+    console.log('getAllEquipmentTrackings')
     this.service.getAllEquipmentTrackings().subscribe({
       next: (result) => {
         this.equipmentTracking = result;
@@ -163,4 +170,52 @@ export class CompanyProfileComponent {
       },
     });
   }
+
+  getAllAppointments(): void {
+    this.service.getAppointments().subscribe({
+      next: (result) => {
+        this.appointments = result;
+      },
+      error: () => {
+        console.log(console.error);
+      },
+    });
+  }
+  
+  parseAndFormatDate(dateString: string): string {
+    this.newStartDate = dateString[2] + '.' + dateString[1] + '.' + dateString[0]+ '.' + ' ' + dateString[3] + ':' + dateString[4];
+    if(dateString[4].toString() === "0"){
+      this.newStartDate += '0';
+    }
+   return this.newStartDate || '';
+  }
+
+  registerNewAppointment(): void {
+    const dialogRef = this.dialog
+      .open(AppointmentRegistrationComponent, {
+        width: '35%',
+        height: '70%',
+        data: { company: this.company}
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        this.appointments = [];
+        this.getAllAppointments();
+      }); 
+  }
+
+/*
+  registerAppointment(): void {
+    this.service.registerAppointment().subscribe({
+      next: (result: Appointment) => {
+        this.equipmentTracking = result;
+        this.sort();
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+  } 
+  */
+
 }

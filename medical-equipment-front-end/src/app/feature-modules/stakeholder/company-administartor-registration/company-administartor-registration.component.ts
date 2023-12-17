@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { StakeholderService } from '../stakeholder.service';
+import { StakeholderService } from '../../stakeholder/stakeholder.service';
 import { Company } from 'src/app/shared/model/company.model';
 import { Address } from 'src/app/shared/model/address.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
