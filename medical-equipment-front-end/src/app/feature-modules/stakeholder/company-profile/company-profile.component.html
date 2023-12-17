@@ -113,8 +113,28 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
+  </form>
+  <div class="card-container" *ngFor="let e of filteredEquipmentTrackings">
+    <mat-card class="card-equipment">
+      <div class="title-container">
+      <div class="type-title">{{ e.equipment.type }}</div>
+      <div class="type-title">{{ e.count }} available</div>
+    </div>
+      <mat-card-title class="title-container">
+        <p>{{ e.equipment.name }}</p>
+        <p>{{ e.equipment.price }} RSD</p>
+      </mat-card-title>
+      <mat-card-content class="title-container">
+        <p>{{ e.equipment.description }}</p>
+        <button class="add-button" (click)="addToCart(e.id || 0, e.count)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-card-content>
+    </mat-card>
   </div>
-  <br>
+  <button class="bottom-right-button" mat-icon-button (click)="showCart()">
+    <mat-icon>shopping_cart</mat-icon>
+  </button>
 </div>
 
 

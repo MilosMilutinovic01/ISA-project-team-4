@@ -1,7 +1,10 @@
+import { CompanyAdministrator } from "./company-administrator.model";
+import { CustomerProfile } from "./customer-profile.model";
+
 export interface Appointment {
-  id?: number;
-  startTime: string;
-  endTime: string;
-  companyAdministratorId: number;
-  customerId: number;
-}
+    id?: number;
+    startTime: string;
+    endTime: string;
+    companyAdministrator: CompanyAdministrator;
+    customer: CustomerProfile;
+  }

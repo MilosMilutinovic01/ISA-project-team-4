@@ -29,12 +29,9 @@ public class Appointment {
     @Column(name = "endTime")
     private LocalDateTime endTime;
 
-    @Column(name = "companyAdministratorId")
-    private Long companyAdministratorId;
-
-    @Column(name = "customerId")
-    private Long customerId;
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_administrator_id", referencedColumnName = "company_administrator_id")
+    private CompanyAdministrator companyAdministrator;
 
     public Appointment() {
 
@@ -73,18 +70,6 @@ public class Appointment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
-        /*System.out.println("(Start): " + this.startTime);
-        System.out.println("(End): " + this.endTime);
-        appointmentDTO.startTime = appointmentDTO.startTime.substring(0, appointmentDTO.startTime.length() - 5);
-        appointmentDTO.endTime = appointmentDTO.endTime.substring(0, appointmentDTO.endTime.length() - 5);
-        System.out.println("Parsed LocalDateTime (Start): " + this.startTime);
-        System.out.println("Parsed LocalDateTime (End): " + this.endTime);
-        this.startTime = LocalDateTime.parse(appointmentDTO.startTime);
-        this.endTime = LocalDateTime.parse(appointmentDTO.endTime);
-        System.out.println("After Parsed LocalDateTime (Start): " + this.startTime);
-        System.out.println("After Parsed LocalDateTime (End): " + this.endTime);*/
     }
 
     public Appointment(Long id, LocalDateTime startTime, LocalDateTime endTime, Long companyAdministratorId, Long customerId) {
@@ -93,6 +78,12 @@ public class Appointment {
         this.endTime = endTime;
         this.companyAdministratorId = companyAdministratorId;
         this.customerId = customerId;
+
+    public Appointment(Long id, LocalDateTime start, LocalDateTime end, CompanyAdministrator companyAdministrator) {
+        this.id = id;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.companyAdministrator = companyAdministrator;
     }
 
     public Long getId() {
@@ -123,7 +114,12 @@ public class Appointment {
 
     public void setcompanyAdministratorId(Long companyAdministratorId) { this.companyAdministratorId = companyAdministratorId; }
 
-    public Long getCustomerId() { return customerId; }
+    public CompanyAdministrator getCompanyAdministrator() {
+        return companyAdministrator;
+    }
 
-    public void setCustomerId(Long customerId) { this.customerId = customerId; }
+    public void setCompanyAdministrator(CompanyAdministrator companyAdministrator) {
+        this.companyAdministrator = companyAdministrator;
+    }
+
 }

@@ -23,6 +23,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
+import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialog.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { MatInputModule } from '@angular/material/input';
     EditCompanyAdministratorProfileComponent,
     EquipmentViewComponent,
     AppointmentRegistrationComponent
+    AddToCartDialogComponent,
+    CartComponent
   ],
   imports: [
     CommonModule,
@@ -65,6 +69,8 @@ import { MatInputModule } from '@angular/material/input';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    AddToCartDialogComponent, 
+    CartComponent
   ]
 })
 export class StakeholderModule {}
