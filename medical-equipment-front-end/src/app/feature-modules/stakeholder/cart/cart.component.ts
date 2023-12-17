@@ -50,6 +50,24 @@ export class CartComponent {
       companyId: NaN,
     },
   };
+
+  selectedIrregularAppointment: Appointment = {
+    id: NaN,
+    startTime: '',
+    endTime: '',
+    companyAdministrator: {
+      id: NaN,
+      name: '',
+      address: { id: NaN, street: '', city: '', country: '' },
+      username: '',
+      password: '',
+      lastname: '',
+      city: '',
+      country: '',
+      phoneNumber: '',
+      companyId: NaN,
+    },
+  };
   selectedDate = new Date(Date.now());
   calendar_value: Date = new Date();
   calendar_value_irregular: Date = new Date();
@@ -183,27 +201,64 @@ export class CartComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.selected_appointment = result.selectedAppointment;
+        this.selectedAppointment = result.selectedAppointment;
       }
     });
   }
 
   openIrregularAppointmentsDialog(): void {
+    const selectedDayOfMonth = this.calendar_value_irregular.getDate();
     const dialogRef = this.dialog.open(SelectIrregularAppointmentDialogComponent, {
-      data: { selectedDate: this.calendar_value },
+      data: { 
+        predefinedAppointments: this.predefinedAppointments,
+        startTime : this.company.startTime,
+        endTime: this.company.endTime,
+        selectedDayOfMonth: selectedDayOfMonth },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.calendar_value = result.selectedDate;
-        this.allowedDates = result.allowedDates || [];
+        const month = this.calendar_value_irregular.getMonth() + 1;
+        const start = new Date(this.calendar_value_irregular.getFullYear(),
+                        month,
+                        this.calendar_value_irregular.getDate(),
+                        Number(result.selectedDate.split(" - ")[0].split(":")[0]),
+                        Number(result.selectedDate.split(" - ")[0].split(":")[1]));
+
+        const end = new Date(this.calendar_value_irregular.getFullYear(),
+                        month,
+                        this.calendar_value_irregular.getDate(),
+                        Number(result.selectedDate.split(" - ")[1].split(":")[0]),
+                        Number(result.selectedDate.split(" - ")[1].split(":")[1]));
+
+        this.selectedIrregularAppointment.startTime = start.toString();
+        this.selectedIrregularAppointment.endTime = end.toString();
       }
     });
   }
 
+  finishIrregularReservation():void{
+    if(this.selectedIrregularAppointment.startTime && this.selectedIrregularAppointment.endTime){
+      this.service.registerIrregularAppointment(this.selectedIrregularAppointment).subscribe(
+        (response) => {
+          console.log('Registration successful:', response);
+        },
+        (error) => {
+          console.error('Registration failed:', error);
+        }
+      );
+    }
+  }
+
   chooseIrregular() : void{
-    this.isIrregular = true;
-    this.getIrregularDates();
+    //if(!this.selectedAppointment){
+      
+      this.isIrregular = true;
+      this.getIrregularDates();
+    //}
+    // else{
+    //   alert('Appointment already selected!');
+    // }
   }
 
   choosePredefined(): void {

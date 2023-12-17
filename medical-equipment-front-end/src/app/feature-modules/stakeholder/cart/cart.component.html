@@ -25,7 +25,7 @@
           <div class="total-price" *ngIf="this.items.length === 0">
             <p>Your cart is empty</p>
           </div>
-            <button mat-button matStepperNext (click)="getPredefinedDates()">Next</button>
+            <button mat-button matStepperNext (click)="choosePredefined()">Next</button>
         </div>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup"  label="Select reservation date">
@@ -61,7 +61,7 @@
       </div>
       <div *ngIf="isIrregular">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button (click)="finishIrregularReservation()">Finish reservation</button>
         <h1>Irregular appointments</h1>
         <div class="appointment-info">
           <p class="info-message">
@@ -90,12 +90,4 @@
       </button>
     </div>
     </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button>Finish reservation</button>
-    </div>
-  </mat-step>
 </mat-stepper>

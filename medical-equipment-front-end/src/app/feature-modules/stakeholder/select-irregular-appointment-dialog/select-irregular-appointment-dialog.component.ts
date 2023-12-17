@@ -2,6 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CompanyProfileComponent } from '../company-profile/company-profile.component';
+import { Appointment } from 'src/app/shared/model/appointment.model';
+import { CartComponent } from '../cart/cart.component';
 
 @Component({
   selector: 'app-select-irregular-appointment-dialog',
@@ -9,27 +11,88 @@ import { CompanyProfileComponent } from '../company-profile/company-profile.comp
   styleUrls: ['./select-irregular-appointment-dialog.component.css']
 })
 export class SelectIrregularAppointmentDialogComponent {
-  availableDates: Date[] = [];
+  availableAppointments: String[] = [];
   constructor(
     public dialogRef: MatDialogRef<CompanyProfileComponent>,
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    const currentDate = new Date();
-    for (let i = 0; i < 4; i++) {
-      this.availableDates.push(
-        new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth(),
-          currentDate.getDate() + i
-        )
-      );
-    }
+      let startStr = "2023-12-12T" + data.startTime + ":00.000Z";
+      let startDate = new Date(startStr);
+      console.log("START: ", startDate);
+      let endStr = "2023-12-12T" + data.endTime + ":00.000Z";
+      let end = new Date(endStr);
+      let endDate = new Date(startDate.getFullYear(),
+                            startDate.getMonth(),
+                            startDate.getDate(),
+                            startDate.getHours(),
+                            startDate.getMinutes() + 30)
+      while(endDate <= end){
+         let isPredefined : boolean = false;
+         console.log(data.predefinedAppointments);
+         console.log(data.selectedDayOfMonth);
+         for(let a of data.predefinedAppointments){
+
+           if (a.startTime[2] === data.selectedDayOfMonth
+                && a.startTime[3] === startDate.getHours()
+                && a.startTime[4] === startDate.getMinutes()){
+            isPredefined = true;
+            break;
+          }
+         }
+         if(!isPredefined){
+         if(startDate.getMinutes() === 0)
+          this.availableAppointments.push(
+            new String(
+              startDate.getHours() +
+                ':' +
+                startDate.getMinutes() + "0" +
+                ' - ' +
+                endDate.getHours() +
+                ':' +
+                endDate.getMinutes() 
+            )
+          );
+          else if(endDate.getMinutes() === 0)
+            this.availableAppointments.push(
+              new String(
+                startDate.getHours() +
+                  ':' +
+                  startDate.getMinutes() +
+                  ' - ' +
+                  endDate.getHours() +
+                  ':' +
+                  endDate.getMinutes() + "0"
+              )
+            );
+          else{
+            this.availableAppointments.push(
+              new String(
+                startDate.getHours() +
+                  ':' +
+                  startDate.getMinutes() +
+                  ' - ' +
+                  endDate.getHours() +
+                  ':' +
+                  endDate.getMinutes()
+              )
+            );
+          }
+        }
+      
+          startDate = endDate;
+          endDate = new Date(startDate.getFullYear(),
+                              startDate.getMonth(),
+                              startDate.getDate(),
+                              startDate.getHours(),
+                              startDate.getMinutes() + 30);
+
+      }
+      console.log(this.availableAppointments);
   }
 
-  ok(selectedDate: Date): void {
-    console.log(selectedDate);
-    this.dialogRef.close();
+  ok(selectedDate: String): void {
+    this.dialogRef.close({ selectedDate });
   }
 
   onCancel(): void {
