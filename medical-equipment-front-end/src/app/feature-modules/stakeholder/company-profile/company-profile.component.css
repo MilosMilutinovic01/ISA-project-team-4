@@ -68,9 +68,10 @@
       height: 25%;
       width: 75%;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-      margin: 5vh 0vw 0vh 15vw;
+      margin: 3vh 0vw 3vh 15vw;
       padding: 20px;
     }
+
     .category-title {
       background-color: #ccc; 
       padding: 10px; 
@@ -118,6 +119,16 @@
     
     .form-button {
       background-color: #3498db;
+    }
+
+    .add-button{
+      background-color: white;
+      border-radius: 10px;
+      border: solid 0.5px rgb(200,200,200);
+    }
+
+    .add-button:hover{
+      background-color: rgb(200,200,200);
     }
   
     

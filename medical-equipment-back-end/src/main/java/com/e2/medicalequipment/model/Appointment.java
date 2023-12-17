@@ -12,20 +12,30 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointmentSeq")
     private Long id;
 
-    @Column(name = "start")
+    @Column(name = "startTime")
     private LocalDateTime start;
 
-    @Column(name = "end")
+    @Column(name = "endTime")
     private LocalDateTime end;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_administrator_id", referencedColumnName = "company_administrator_id")
+    private CompanyAdministrator companyAdministrator;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+    private Customer customer;
 
     public Appointment() {
 
     }
 
-    public Appointment(Long id, LocalDateTime start, LocalDateTime end) {
+    public Appointment(Long id, LocalDateTime start, LocalDateTime end, CompanyAdministrator companyAdministrator, Customer customer) {
         this.id = id;
         this.start = start;
         this.end = end;
+        this.companyAdministrator = companyAdministrator;
+        this.customer = customer;
     }
 
     public Long getId() {
@@ -50,5 +60,21 @@ public class Appointment {
 
     public void setEnd(LocalDateTime end) {
         this.end = end;
+    }
+
+    public CompanyAdministrator getCompanyAdministrator() {
+        return companyAdministrator;
+    }
+
+    public void setCompanyAdministrator(CompanyAdministrator companyAdministrator) {
+        this.companyAdministrator = companyAdministrator;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

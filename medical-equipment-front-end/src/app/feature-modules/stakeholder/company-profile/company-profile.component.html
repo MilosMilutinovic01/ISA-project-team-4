@@ -77,8 +77,11 @@
         <p>{{ e.equipment.name }}</p>
         <p>{{ e.equipment.price }} RSD</p>
       </mat-card-title>
-      <mat-card-content class="card-content">
-        <div class="card-number">{{ e.equipment.description }}</div>
+      <mat-card-content class="title-container">
+        <p>{{ e.equipment.description }}</p>
+        <button class="add-button" (click)="addToCart(e.id || 0)">
+          <mat-icon>add</mat-icon>
+        </button>
       </mat-card-content>
     </mat-card>
   </div>

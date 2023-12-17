@@ -1,5 +1,6 @@
 package com.e2.medicalequipment.model;
 
+import com.e2.medicalequipment.dto.ItemDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -30,6 +31,10 @@ public class Item {
         this.count = count;
         this.appointment = appointment;
         this.equipment = equipment;
+    }
+
+    public Item(ItemDTO itemDto){
+        this.count = itemDto.count;
     }
 
     public Long getId() {

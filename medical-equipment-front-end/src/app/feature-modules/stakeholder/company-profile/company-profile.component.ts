@@ -9,6 +9,8 @@ import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model'
 import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dialog.component';
+import { Item } from 'src/app/shared/model/item.model';
 
 @Component({
   selector: 'app-company-profile',
@@ -30,6 +32,9 @@ export class CompanyProfileComponent {
   filteredEquipmentTrackings: EquipmentTracking[] = [];
   equipmentTracking: EquipmentTracking[] = [];
   selectedOption: string = 'empty';
+
+  equipmentCount: number = 0;
+  items: Item[] = [];
 
   searchForm = new FormGroup({
     name: new FormControl(''),
@@ -146,5 +151,34 @@ export class CompanyProfileComponent {
         console.log(console.error);
       },
     });
+  }
+
+  addToCart(id: number): void {
+    const dialogRef = this.dialog
+      .open(AddToCartDialogComponent, {
+        width: '45%',
+        height: '35%',
+        data: { count: this.equipmentCount },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if(result){
+          const item : Item = {
+            count: result || '',
+          };
+  
+          const selectedEquipment = this.filteredEquipmentTrackings.find(e => e.id === id)?.equipment;
+          item.equipment = selectedEquipment;
+  
+          this.service.createItem(item).subscribe({
+            next: (result) => {
+              console.log(result);
+            },
+            error: () => {
+              console.log(console.error);
+            },
+          });
+        }
+      });
   }
 }
