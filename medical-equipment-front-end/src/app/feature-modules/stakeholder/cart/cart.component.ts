@@ -9,6 +9,8 @@ import { SelectAppointmentDialogComponent } from '../select-appointment-dialog/s
 import { Appointment } from 'src/app/shared/model/appointment.model';
 import { MatStepper } from '@angular/material/stepper';
 import { DxCalendarModule } from 'devextreme-angular';
+import { Company } from 'src/app/shared/model/company.model';
+import { SelectIrregularAppointmentDialogComponent } from '../select-irregular-appointment-dialog/select-irregular-appointment-dialog.component';
 import { UpdateItem } from 'src/app/shared/model/update-item.model';
 
 @Component({
@@ -17,13 +19,40 @@ import { UpdateItem } from 'src/app/shared/model/update-item.model';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent {
-  @ViewChild('stepper') stepper: any;
-
-  items: Item[] = [];
-  totalPrice: number = 0;
+  items : Item[] = [];
+  totalPrice : number = 0;
   isIrregular: boolean = false;
-  predefinedAppointments: Appointment[] = [];
+  companyId : string = '';
+  company: Company = {
+    id: NaN,
+    name: '',
+    address: { id: NaN, street: '', city: '', country: '' },
+    description: '',
+    startTime: '',
+    endTime: '',
+    averageRating: NaN,
+  };
+  predefinedAppointments : Appointment[] = [];
+  irregularAppointments : Appointment[] = [];
   selectedAppointment: Appointment = {
+    id: NaN,
+    startTime: '',
+    endTime: '',
+    companyAdministrator: {
+      id: NaN,
+      name: '',
+      address: { id: NaN, street: '', city: '', country: '' },
+      username: '',
+      password: '',
+      lastname: '',
+      city: '',
+      country: '',
+      phoneNumber: '',
+      companyId: NaN,
+    },
+  };
+
+  selectedIrregularAppointment: Appointment = {
     id: NaN,
     startTime: '',
     endTime: '',
@@ -42,6 +71,7 @@ export class CartComponent {
   };
   selectedDate = new Date(Date.now());
   calendar_value: Date = new Date();
+  calendar_value_irregular: Date = new Date();
   selected_appointment: Appointment | undefined;
   isSelected: boolean = false;
 
@@ -50,6 +80,13 @@ export class CartComponent {
     const newValue = e.value;
     this.calendar_value = newValue;
     this.openDialog();
+  }
+
+  calendar_value_irregularChanged(e: any) {
+    const previousValue = e.previousValue;
+    const newValue = e.value;
+    this.calendar_value_irregular = newValue;
+    this.openIrregularAppointmentsDialog();
   }
   allowedDates: Date[] = [];
   firstFormGroup = this._formBuilder.group({
@@ -69,19 +106,38 @@ export class CartComponent {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.getItems(params);
-      this.getAppointments();
+      this.companyId = params["id"];
+      this.getItems();
+      this.getCompany();
     });
   }
 
-  getItems(params: Params): void {
-    this.service
-      .getItemsByCustomerId(this.authService.getCurrentUserId().toString())
-      .subscribe({
-        next: (result) => {
-          this.items = result.filter(
-            (i) => i.company.id === Number(params['id'])
-          );
+  getPredefinedDates(): void{
+    this.allowedDates = [];
+    this.getAppointments();
+  }
+
+  getIrregularDates(): void{
+    this.allowedDates = [];
+    let startDate = new Date();
+    let endDate = new Date(startDate.getFullYear(),
+                          startDate.getMonth() + 1,
+                          startDate.getDate());
+
+    while (startDate <= endDate) {
+      this.allowedDates.push(new Date (startDate));
+      startDate = new Date(startDate.getFullYear(),
+                            startDate.getMonth(),
+                            startDate.getDate() + 1)
+    }
+  }
+
+  getItems(): void{
+    this.service.getItemsByCustomerId(this.authService.getCurrentUserId().toString()).subscribe({
+      next: (result) => {
+        this.items = result.filter(
+          i => i.company.id === Number(this.companyId)
+        );
 
           for (let i of this.items) {
             this.totalPrice += i.count * Number(i.equipment?.price);
@@ -108,6 +164,17 @@ export class CartComponent {
             this.allowedDates.push(newDate);
           }
         }
+      },
+      error: () => {
+        console.log(console.error);
+      },
+    });
+  }
+
+  getCompany(): void {
+    this.service.getCompanyProfile(this.companyId).subscribe({
+      next: (result) => {
+        this.company = result;
       },
       error: () => {
         console.log(console.error);
@@ -142,12 +209,64 @@ export class CartComponent {
     });
   }
 
-  chooseIrregular(): void {
-    this.isIrregular = true;
+  openIrregularAppointmentsDialog(): void {
+    const selectedDayOfMonth = this.calendar_value_irregular.getDate();
+    const dialogRef = this.dialog.open(SelectIrregularAppointmentDialogComponent, {
+      data: { 
+        predefinedAppointments: this.predefinedAppointments,
+        startTime : this.company.startTime,
+        endTime: this.company.endTime,
+        selectedDayOfMonth: selectedDayOfMonth },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const month = this.calendar_value_irregular.getMonth() + 1;
+        const start = new Date(this.calendar_value_irregular.getFullYear(),
+                        month,
+                        this.calendar_value_irregular.getDate(),
+                        Number(result.selectedDate.split(" - ")[0].split(":")[0]),
+                        Number(result.selectedDate.split(" - ")[0].split(":")[1]));
+
+        const end = new Date(this.calendar_value_irregular.getFullYear(),
+                        month,
+                        this.calendar_value_irregular.getDate(),
+                        Number(result.selectedDate.split(" - ")[1].split(":")[0]),
+                        Number(result.selectedDate.split(" - ")[1].split(":")[1]));
+
+        this.selectedIrregularAppointment.startTime = start.toString();
+        this.selectedIrregularAppointment.endTime = end.toString();
+      }
+    });
+  }
+
+  finishIrregularReservation():void{
+    if(this.selectedIrregularAppointment.startTime && this.selectedIrregularAppointment.endTime){
+      this.service.registerIrregularAppointment(this.selectedIrregularAppointment).subscribe(
+        (response) => {
+          console.log('Registration successful:', response);
+        },
+        (error) => {
+          console.error('Registration failed:', error);
+        }
+      );
+    }
+  }
+
+  chooseIrregular() : void{
+    //if(!this.selectedAppointment){
+      
+      this.isIrregular = true;
+      this.getIrregularDates();
+    //}
+    // else{
+    //   alert('Appointment already selected!');
+    // }
   }
 
   choosePredefined(): void {
     this.isIrregular = false;
+    this.getPredefinedDates();
   }
   private isSameDate(date1: Date, date2: Date): boolean {
     return (
@@ -194,6 +313,7 @@ export class CartComponent {
       console.log('item ', i, ': ', this.items[i]);
     }
 
+    console.log("UPDATE: ", updateItems);
     this.service.reserveAppointment(updateItems).subscribe({
       next: (result: boolean) => {
         if (result === true) {
