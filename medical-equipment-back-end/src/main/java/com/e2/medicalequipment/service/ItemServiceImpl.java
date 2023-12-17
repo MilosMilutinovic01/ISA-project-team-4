@@ -1,19 +1,16 @@
 package com.e2.medicalequipment.service;
 
 import com.e2.medicalequipment.dto.CreateItemDTO;
-import com.e2.medicalequipment.model.Company;
-import com.e2.medicalequipment.model.Customer;
-import com.e2.medicalequipment.model.Equipment;
-import com.e2.medicalequipment.model.Item;
-import com.e2.medicalequipment.repository.CompanyRepository;
-import com.e2.medicalequipment.repository.CustomerRepository;
-import com.e2.medicalequipment.repository.EquipmentRepository;
-import com.e2.medicalequipment.repository.ItemRepository;
+import com.e2.medicalequipment.dto.UpdateCompanyAdministratorDTO;
+import com.e2.medicalequipment.dto.UpdateItemDTO;
+import com.e2.medicalequipment.model.*;
+import com.e2.medicalequipment.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemServiceImpl implements ItemService{
@@ -28,6 +25,9 @@ public class ItemServiceImpl implements ItemService{
 
     @Autowired
     private CompanyRepository companyRepository;
+
+    @Autowired
+    private AppointmentRepository appointmentRepository;
     @Override
     public Item Create(CreateItemDTO itemDto) throws Exception {
         Item item = new Item(itemDto);
@@ -60,5 +60,16 @@ public class ItemServiceImpl implements ItemService{
         List<Item> items = itemRepository.findAllByAppointmentId(appointmentId);
         return items.get(0).getCustomer();
     }
-
+    public Item Get(Long id) throws Exception{
+        return this.itemRepository.findById(id).get();
+    }
+    public Item Update(UpdateItemDTO newItem) throws Exception{
+        Item item = itemRepository.findById(newItem.Id);
+        item.setAppointment(appointmentRepository.findById(newItem.AppointmentId));
+        if ((item.getId() == null)){
+            throw new Exception("ID must not be null for updating entity.");
+        }
+        Item savedItem = itemRepository.save(item);
+        return savedItem;
+    }
 }

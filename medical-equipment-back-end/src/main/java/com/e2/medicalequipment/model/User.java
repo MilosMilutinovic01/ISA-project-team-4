@@ -41,6 +41,9 @@ public class User implements UserDetails {
     @Column(name = "role")
     private Role role;
 
+    public User(Customer customer) {
+    }
+
     public Boolean getEnabled() {
         return enabled;
     }

@@ -62,6 +62,17 @@ public class Company {
         this.description = updateCompanyDTO.description;
         this.averageRating = updateCompanyDTO.averageRating;
     }
+
+    public Company(Company company) {
+        this.id = company.id;
+        this.name = company.name;
+        this.address = company.address;
+        this.startTime = company.startTime;
+        this.endTime = company.endTime;
+        this.description = company.description;
+        this.averageRating = company.averageRating;
+    }
+
     public Long getId() {
         return id;
     }

@@ -78,6 +78,17 @@ public class Appointment {
         this.companyAdministrator = companyAdministrator;
     }
 
+    public Appointment(Appointment appointment) {
+        this.id = appointment.id;
+        this.startTime = appointment.startTime;
+        this.endTime = appointment.endTime;
+
+        // Copying company administrator
+        if (appointment.companyAdministrator != null) {
+            this.companyAdministrator = new CompanyAdministrator(appointment.companyAdministrator);
+        }
+    }
+
     public Long getId() {
         return id;
     }

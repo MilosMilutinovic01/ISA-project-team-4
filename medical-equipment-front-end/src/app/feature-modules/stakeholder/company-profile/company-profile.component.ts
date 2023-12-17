@@ -9,7 +9,7 @@ import { CompanyAdministrator } from 'src/app/shared/model/company-administrator
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dialog.component';
-import { Item } from 'src/app/shared/model/item.model';
+import { CreateItem, Item } from 'src/app/shared/model/item.model';
 import { Appointment } from 'src/app/shared/model/appointment.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AppointmentRegistrationComponent } from '../appointment-registration/appointment-registration.component';
@@ -32,32 +32,6 @@ export class CompanyProfileComponent {
   };
 
   user: User | undefined;
-  // appointment: Appointment = {
-  //   ccid: NaN,
-  //   startTime: '',
-  //   endTime: '',
-  //   companyAdministrator: { id:NaN,
-  //     name: '',
-  //     address: { id: NaN, street: '', city: '', country: '' },
-  //     email: '',
-  //     password: '',
-  //     lastname: '',
-  //     city: '',
-  //     country: '',
-  //     phoneNumber: '',
-  //     companyId: NaN },
-  //   customer: { id:NaN,
-  //     name: '',
-  //     lastname: '',
-  //     username: '',
-  //     address: { id: NaN, street: '', city: '', country: '' },
-  //     phoneNumber: '',
-  //     profession: '',
-  //     penaltyPoints: NaN,
-  //     password: '',
-  //     category: ''},
-
-  // };
 
   otherAdministrators: CompanyAdministrator[] = [];
   filteredEquipmentTrackings: EquipmentTracking[] = [];
@@ -68,7 +42,7 @@ export class CompanyProfileComponent {
   newStartDate: string = '';
 
   equipmentCount: number = 0;
-  items: Item[] = [];
+  items: CreateItem[] = [];
 
   searchForm = new FormGroup({
     name: new FormControl(''),
@@ -87,6 +61,7 @@ export class CompanyProfileComponent {
       this.id = params['id'];
 
       this.getCompany();
+      this.getAllAppointments();
       this.getAllEquipmentTrackings();
       this.getAllCompanyAdministrators();
       this.getAllAppointments();
@@ -238,8 +213,8 @@ export class CompanyProfileComponent {
       })
       .afterClosed()
       .subscribe((result) => {
-        if (result) {
-          const item: Item = {
+        if(result){
+          const item : CreateItem = {
             count: result || '',
             customerId: this.authService.getCurrentUserId() || 0,
             companyId: this.company.id || 0
@@ -249,11 +224,9 @@ export class CompanyProfileComponent {
             (e) => e.id === id
           )?.equipment;
           item.equipment = selectedEquipment;
-          console.log('ITEM: ', item);
-
+  
           this.service.createItem(item).subscribe({
             next: (result) => {
-              console.log('RES: ', result);
               this.items.push(result);
             },
             error: () => {

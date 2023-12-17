@@ -41,6 +41,14 @@ public class Equipment {
         this.price = equipmentDTO.price;
     }
 
+    public Equipment(Equipment equipment) {
+        this.id = equipment.id;
+        this.name = equipment.name;
+        this.description = equipment.description;
+        this.type = equipment.type;
+        this.price = equipment.price;
+    }
+
     public Long getId() {
         return id;
     }

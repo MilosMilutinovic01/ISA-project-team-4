@@ -30,7 +30,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialog.component';
 import { CartComponent } from './cart/cart.component';
-
+import { SelectAppointmentDialogComponent } from './select-appointment-dialog/select-appointment-dialog.component';
 @NgModule({
   declarations: [
     CustomerProfileComponent,
@@ -54,6 +54,7 @@ import { CartComponent } from './cart/cart.component';
     CompanyCalendarComponent,
     AdministratorRegistrationComponent,
     ChangePasswordComponent,
+    SelectAppointmentDialogComponent,
   ],
   imports: [
     CommonModule,
