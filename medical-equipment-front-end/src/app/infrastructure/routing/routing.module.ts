@@ -15,6 +15,7 @@ import { CompanyAdministratorProfileComponent } from 'src/app/feature-modules/st
 import { EditCompanyAdministratorProfileComponent } from 'src/app/feature-modules/stakeholder/edit-company-administrator-profile/edit-company-administrator-profile.component';
 import { LoginComponent } from '../auth/login/login.component';
 import { VerificationComponent } from '../auth/verification/verification.component';
+import { CartComponent } from 'src/app/feature-modules/stakeholder/cart/cart.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -27,7 +28,7 @@ const routes: Routes = [
     path: 'companyAdministratorRegistration',
     component: CompanyAdministartorRegistrationComponent,
   },
-  { path: 'companyProfile', component: CompanyProfileComponent },
+  { path: 'companyProfile/:id', component: CompanyProfileComponent },
   { path: 'editCompanyProfile', component: EditCompanyProfileComponent },
   {
     path: 'companyAdministratorProfile',
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path: 'equipment', component: EquipmentViewComponent },
   { path: '', component: HomeComponent },
   { path: 'api/auth/verify/:id', component: VerificationComponent },
+  { path: 'cart', component: CartComponent },
 ];
 
 @NgModule({

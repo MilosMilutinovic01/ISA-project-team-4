@@ -4,8 +4,8 @@ INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-3, 'Bijel
 INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-4, 'Novi Sad', 'Srbija', 'ulica2');
 
 INSERT INTO stakeholders.users(
-    id, enabled, lastname, name, password, phone_number, role, username, address_id)
-VALUES (-1, true, 'Customer', 'Mare', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 2, 'mare@gmail.com', -1);
+	id, enabled, lastname, name, password, phone_number, role, username, address_id)
+	VALUES (-1, true, 'Customer', 'Mare', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 2, 'mare@gmail.com', -1);
 
 INSERT INTO stakeholders.users(
     id, enabled, lastname, name, password, phone_number, role, username, address_id)

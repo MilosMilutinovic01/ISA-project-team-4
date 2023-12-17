@@ -59,6 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer Update(UpdateCustomerDTO customerDTO) throws Exception {
         Customer customer = new Customer(customerDTO);
         customer.setRole(Role.CUSTOMER);
+        customer.setEnabled(true);
 
         if (customer.getId() == null) {
             throw new Exception("ID must not be null for updating entity.");

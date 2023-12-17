@@ -27,7 +27,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/companies", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin
-@PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
 public class CompanyController {
     @Autowired
     private CompanyService companyService;
@@ -36,6 +35,7 @@ public class CompanyController {
     private CompanyAdministratorService companyAdministratorService;
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('SYSTEM_ADMINISTRATOR')")
     public ResponseEntity<Company> registerCompany(@RequestBody CreateCompanyDTO companyDto) {
         Company savedCompany = null;
         try {
@@ -51,6 +51,7 @@ public class CompanyController {
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+
     public ResponseEntity<List<Company>> getAll(){
         List<Company> companies = null;
         try {
@@ -105,6 +106,7 @@ public class CompanyController {
 
     @PutMapping(value = "/profile/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public ResponseEntity<Company> updateCompany(@RequestBody UpdateCompanyDTO companyDTO) {
         Company company = null;
         try {
