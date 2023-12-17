@@ -79,7 +79,7 @@
       </mat-card-title>
       <mat-card-content class="title-container">
         <p>{{ e.equipment.description }}</p>
-        <button class="add-button" (click)="addToCart(e.id || 0)">
+        <button class="add-button" (click)="addToCart(e.id || 0, e.count)">
           <mat-icon>add</mat-icon>
         </button>
       </mat-card-content>

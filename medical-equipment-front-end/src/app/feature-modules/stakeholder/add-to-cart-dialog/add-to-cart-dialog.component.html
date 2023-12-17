@@ -4,7 +4,12 @@
         <form [formGroup]="countForm" >
             <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Count to buy:</mat-label>
-                <input matInput  placeholder="Count" type="number" formControlName="count">
+                <input matInput  
+                placeholder="Count" 
+                type="number" 
+                formControlName="count" 
+                [max]="data.availableCount"
+                [min]="1">
             </mat-form-field>
         </form>
     </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StakeholderService } from '../stakeholder.service';
 import { Company } from '../../../shared/model/company.model';
 import { Address } from '../../../shared/model/address.model';
@@ -19,6 +19,7 @@ import { Appointment } from 'src/app/shared/model/appointment.model';
   styleUrls: ['./company-profile.component.css'],
 })
 export class CompanyProfileComponent {
+  id: string = '';
   company: Company = {
     id: NaN,
     name: '',
@@ -73,17 +74,22 @@ export class CompanyProfileComponent {
     private service: StakeholderService,
     private dialog: MatDialog,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.getCompany();
-    this.getAllEquipmentTrackings();
-    this.getAllCompanyAdministrators();
+    this.route.params.subscribe((params) => {
+      this.id = params['id'];
+      
+      this.getCompany();
+      this.getAllEquipmentTrackings();
+      this.getAllCompanyAdministrators();
+    });
   }
 
   getCompany(): void {
-    this.service.getCompanyProfile("-1").subscribe({
+    this.service.getCompanyProfile(this.id).subscribe({
       next: (result) => {
         this.company = result;
       },
@@ -181,12 +187,12 @@ export class CompanyProfileComponent {
     });
   }
 
-  addToCart(id: number): void {
+  addToCart(id: number, availableCount: number): void {
     const dialogRef = this.dialog
       .open(AddToCartDialogComponent, {
         width: '45%',
         height: '35%',
-        data: { count: this.equipmentCount },
+        data: { count: this.equipmentCount, availableCount },
       })
       .afterClosed()
       .subscribe((result) => {
@@ -215,6 +221,6 @@ export class CompanyProfileComponent {
     }
     
     showCart():void{
-      
+      this.router.navigate(['/cart']);
     }
 }

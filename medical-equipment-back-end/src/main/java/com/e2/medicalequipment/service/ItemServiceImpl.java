@@ -11,6 +11,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @Service
 public class ItemServiceImpl implements ItemService{
     @Autowired
@@ -38,5 +40,10 @@ public class ItemServiceImpl implements ItemService{
 
         Item savedItem = itemRepository.save(item);
         return savedItem;
+    }
+
+    @Override
+    public List<Item> GetAllByCustomerId(String id) throws Exception {
+        return null;
     }
 }
