@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Validators, FormBuilder } from '@angular/forms';
 import { StakeholderService } from '../stakeholder.service';
@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { Item } from 'src/app/shared/model/item.model';
 import { SelectAppointmentDialogComponent } from '../select-appointment-dialog/select-appointment-dialog.component';
+import { Appointment } from 'src/app/shared/model/appointment.model';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-cart',
@@ -13,9 +15,26 @@ import { SelectAppointmentDialogComponent } from '../select-appointment-dialog/s
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent {
+  @ViewChild('stepper') stepper: any;
 
   items : Item[] = [];
   totalPrice : number = 0;
+  isIrregular: boolean = false;
+  appointment: Appointment = {
+    id: NaN,
+    startTime: '',
+    endTime: '',
+    companyAdministrator: { id:NaN,
+      name: '',
+      address: { id: NaN, street: '', city: '', country: '' },
+      username: '',
+      password: '',
+      lastname: '',
+      city: '',
+      country: '',
+      phoneNumber: '',
+      companyId: NaN }
+  };
   selectedDate = new Date(Date.now());
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
@@ -62,5 +81,13 @@ export class CartComponent {
     dialogRef.afterClosed().subscribe((result) => {
       console.log('Dialog closed with result:', result);
     });
+  }
+
+  chooseIrregular() : void{
+    this.isIrregular = true;
+  }
+
+  choosePredefined() : void{
+    this.isIrregular = false;
   }
 }

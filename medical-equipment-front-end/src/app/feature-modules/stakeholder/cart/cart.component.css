@@ -29,3 +29,13 @@
     display: flex;
     justify-content: center;
   }
+
+  .bottom-right-button{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #3498db;
+    color: white !important;
+    border: none;
+    padding: 12px;
+  }

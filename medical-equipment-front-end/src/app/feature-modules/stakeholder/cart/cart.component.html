@@ -1,5 +1,5 @@
 <mat-stepper [linear]=false #stepper>
-    <mat-step [stepControl]="firstFormGroup" label="Your shopping cart">
+    <mat-step [stepControl]="firstFormGroup"  label="Your shopping cart">
         <div>
           <div class="card-container" *ngFor="let i of this.items">
             <mat-card class="card-equipment">
@@ -19,14 +19,20 @@
               </mat-card-content>
             </mat-card>
           </div>
-          <div class="total-price">
+          <div class="total-price" *ngIf="this.items.length !== 0">
             <p>Total price: {{ this.totalPrice }}</p>
           </div>
-            <button mat-button matStepperNext>Next</button>
+          <div class="total-price" *ngIf="this.items.length === 0">
+            <p>Your cart is empty</p>
+          </div>
+            <button mat-button matStepperNext disabled="this.items.length !== 0" >Next</button>
         </div>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup" label="Select reservation date">
-        <div>
+    <mat-step [stepControl]="secondFormGroup"  label="Select reservation date">
+        <div *ngIf="!isIrregular">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+          <h1>Predefined appointments</h1>
           <div class="calendar">
             <dx-calendar
               timeZone="Europe/London"
@@ -43,25 +49,43 @@
               ></dxo-editing>
               <dxi-resource fieldExpr="aid"></dxi-resource>
             </dx-calendar>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
-        </div>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done.</p>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        <button class="bottom-right-button" mat-button (click)="chooseIrregular()">
+          Choose irregular appointment
+        </button>
       </div>
+      <div *ngIf="isIrregular">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+        <h1>Irregular appointments</h1>
+        <div class="calendar">
+          <dx-calendar
+            timeZone="Europe/London"
+            currentView="month"
+            [value]="selectedDate"
+            [firstDayOfWeek]="1"
+            [height]="700"
+            [width]="1000"
+            (click)="openDialog()"
+            ><dxo-editing
+              [allowAdding]="false"
+              [allowUpdating]="false"
+              [allowDeleting]="false"
+            ></dxo-editing>
+            <dxi-resource fieldExpr="aid"></dxi-resource>
+          </dx-calendar>
+        </div>
+      <button class="bottom-right-button" mat-button (click)="choosePredefined()">
+        Back predefined appointmens
+      </button>
     </div>
-  </mat-step>
+    </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <p>You are now done.</p>
     <div>
       <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-button>Finish reservation</button>
     </div>
   </mat-step>
 </mat-stepper>

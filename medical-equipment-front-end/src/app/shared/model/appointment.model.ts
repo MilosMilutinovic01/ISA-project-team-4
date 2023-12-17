@@ -6,5 +6,4 @@ export interface Appointment {
     startTime: string;
     endTime: string;
     companyAdministrator: CompanyAdministrator;
-    customer: CustomerProfile;
   }
