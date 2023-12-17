@@ -27,7 +27,7 @@ public class ItemServiceImpl implements ItemService{
         item.setAppointment(null);
 
         Equipment equipment = equipmentRepository.findById(itemDto.equipment.getId()).orElseThrow(() -> new EntityNotFoundException("Equipment not found"));
-        item.setEquipment(itemDto.equipment);
+        item.setEquipment(equipment);
 
         Customer customer = customerRepository.findById(itemDto.customerId).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
         item.setCustomer(customer);
