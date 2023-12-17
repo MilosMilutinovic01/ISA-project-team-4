@@ -6,6 +6,7 @@ import com.e2.medicalequipment.model.*;
 import com.e2.medicalequipment.repository.CompanyAdministratorRepository;
 import com.e2.medicalequipment.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,12 +18,14 @@ public class CompanyAdministratorServiceImpl implements CompanyAdministratorServ
     private CompanyAdministratorRepository companyAdministratorRepository;
     @Autowired
     private CompanyRepository companyRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public CompanyAdministrator Create(CompanyAdministratorDTO createCompanyAdministratorDto) throws Exception {
         CompanyAdministrator companyAdministrator = new CompanyAdministrator(createCompanyAdministratorDto);
         companyAdministrator.setRole(Role.COMPANY_ADMINISTRATOR);
-        companyAdministrator.setPassword("copmanyAdmin");
+        companyAdministrator.setPassword(passwordEncoder.encode("ca"));
         if (companyAdministrator.getId() != null) {
             throw new Exception("ID must be null for a new entity.");
         }

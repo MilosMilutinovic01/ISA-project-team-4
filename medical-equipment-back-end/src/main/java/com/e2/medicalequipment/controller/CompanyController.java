@@ -96,8 +96,7 @@ public class CompanyController {
     @GetMapping(value = "/profile/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<UpdateCompanyDTO> getCompany (@PathVariable String id) throws Exception {
-        CompanyAdministrator admin = companyAdministratorService.Get(id);
-        Company company = companyService.Get(admin.getCompanyId().toString());
+        Company company = companyService.Get(id);
         if (company == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

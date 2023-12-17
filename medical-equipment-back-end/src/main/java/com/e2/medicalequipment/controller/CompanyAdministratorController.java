@@ -30,6 +30,7 @@ public class CompanyAdministratorController {
     }
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('SYSTEM_ADMINISTRATOR')")
     public ResponseEntity<CompanyAdministrator> registerCompanyAdministrator(@RequestBody CompanyAdministratorDTO companyAdministratorDto)  {
         CompanyAdministrator savedCompanyAdministrator = null;
         try {System.out.println("Thread id: " + Thread.currentThread().getId());

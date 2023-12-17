@@ -5,7 +5,11 @@
   </div>
   <div class="profile-info">
     <div class="label">Address:</div>
-    <div class="value">{{ company.address.street }},{{company.address.city}},{{company.address.country}}</div>
+    <div class="value">
+      {{ company.address.street }},{{ company.address.city }},{{
+        company.address.country
+      }}
+    </div>
   </div>
 
   <div class="profile-info">
@@ -14,7 +18,7 @@
   </div>
 </div>
 
-  <!-- <div>
+<!-- <div>
   <div>
     <div class="title">
       Other administrators in company:
@@ -47,10 +51,10 @@
   <h1 class="title">Equipment</h1>
   <form class="search-form" [formGroup]="searchForm">
     <div class="search-container">
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Seach by equipment name:</mat-label>
-      <input matInput placeholder="Name" formControlName="name" />
-    </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Seach by equipment name:</mat-label>
+        <input matInput placeholder="Name" formControlName="name" />
+      </mat-form-field>
       <button mat-fab class="form-button" (click)="search()">
         <mat-icon>search</mat-icon>
       </button>
@@ -60,19 +64,27 @@
     </div>
     <div class="search-container">
       <mat-chip-listbox>
-        <mat-chip-option (click)="selectChip('LABORATORY')" class="option-view">Laboratory</mat-chip-option>
-        <mat-chip-option (click)="selectChip('DIAGNOSTICS')" class="option-view">Diagnostics</mat-chip-option>
-        <mat-chip-option (click)="selectChip('DENTAL')" class="option-view">Dental</mat-chip-option>
-        <mat-chip-option  (click)="selectChip('SURGICAL')" class="option-view">Surgical</mat-chip-option>
+        <mat-chip-option (click)="selectChip('LABORATORY')" class="option-view"
+          >Laboratory</mat-chip-option
+        >
+        <mat-chip-option (click)="selectChip('DIAGNOSTICS')" class="option-view"
+          >Diagnostics</mat-chip-option
+        >
+        <mat-chip-option (click)="selectChip('DENTAL')" class="option-view"
+          >Dental</mat-chip-option
+        >
+        <mat-chip-option (click)="selectChip('SURGICAL')" class="option-view"
+          >Surgical</mat-chip-option
+        >
       </mat-chip-listbox>
     </div>
   </form>
   <div class="card-container" *ngFor="let e of filteredEquipmentTrackings">
     <mat-card class="card-equipment">
       <div class="title-container">
-      <div class="type-title">{{ e.equipment.type }}</div>
-      <div class="type-title">{{ e.count }} available</div>
-    </div>
+        <div class="type-title">{{ e.equipment.type }}</div>
+        <div class="type-title">{{ e.count }} available</div>
+      </div>
       <mat-card-title class="title-container">
         <p>{{ e.equipment.name }}</p>
         <p>{{ e.equipment.price }} RSD</p>
@@ -89,4 +101,3 @@
     <mat-icon>shopping_cart</mat-icon>
   </button>
 </div>
-
