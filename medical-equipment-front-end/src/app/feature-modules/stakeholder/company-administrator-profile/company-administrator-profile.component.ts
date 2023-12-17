@@ -8,46 +8,50 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 @Component({
   selector: 'app-company-administrator-profile',
   templateUrl: './company-administrator-profile.component.html',
-  styleUrls: ['./company-administrator-profile.component.css']
+  styleUrls: ['./company-administrator-profile.component.css'],
 })
 export class CompanyAdministratorProfileComponent implements OnInit {
-    profile: CompanyAdministrator = {
-        id: NaN,
-        name: '',
-        address: { id: NaN, street:'', city:'',country:''},
-        email: '',
-        password: '',
-        lastname: '',
-        city: '',
-        country: '',
-        phoneNumber: '',
-        companyId: NaN
-    };
+  profile: CompanyAdministrator = {
+    id: NaN,
+    name: '',
+    address: { id: NaN, street: '', city: '', country: '' },
+    username: '',
+    password: '',
+    lastname: '',
+    city: '',
+    country: '',
+    phoneNumber: '',
+    companyId: NaN,
+  };
 
-    constructor(
-      public router: Router,
-      private service: StakeholderService,
-      private authService: AuthService
-      ) {}
-  
-    ngOnInit(): void {
-      this.getCompanyAdministratorProfile();
-    }
-  
-    getCompanyAdministratorProfile(): void {
-      this.service.getCompanyAdministratorProfile(this.authService.getCurrentUserId().toString()).subscribe({
+  constructor(
+    public router: Router,
+    private service: StakeholderService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+    this.getCompanyAdministratorProfile();
+  }
+
+  getCompanyAdministratorProfile(): void {
+    this.service
+      .getCompanyAdministratorProfile(
+        this.authService.getCurrentUserId().toString()
+      )
+      .subscribe({
         next: (result: CompanyAdministrator) => {
           this.profile = result;
-          console.log("CompanyAdmin this.profile:");
+          console.log('CompanyAdmin this.profile:');
           console.log(this.profile);
         },
         error: () => {
           console.log(console.error());
         },
       });
-    }
-  
-    editProfile(): void {
-      this.router.navigate(['/editCompanyAdministratorProfile']);
-    }  
+  }
+
+  editProfile(): void {
+    this.router.navigate(['/editCompanyAdministratorProfile']);
+  }
 }

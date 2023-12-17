@@ -4,7 +4,6 @@ import { StakeholderService } from '../stakeholder.service';
 import { Company } from '../../../shared/model/company.model';
 import { Address } from '../../../shared/model/address.model';
 import { MatDialog } from '@angular/material/dialog';
-import { CompanyAdministartorRegistrationComponent } from '../company-administartor-registration/company-administartor-registration.component';
 import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model';
 import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
@@ -43,32 +42,20 @@ export class CompanyProfileComponent {
   }
 
   getCompany(): void {
-    this.service.getCompanyProfile("-1").subscribe({
-      next: (result) => {
-        this.company = result;
-      },
-      error: () => {
-        console.log(console.error);
-      },
-    });
+    this.service
+      .getCompanyProfile(this.authService.getCurrentUserId().toString())
+      .subscribe({
+        next: (result) => {
+          this.company = result;
+        },
+        error: () => {
+          console.log(console.error);
+        },
+      });
   }
 
   editProfile(): void {
     this.router.navigate(['/editCompanyProfile']);
-  }
-
-  addCompanyAdministrator(): void {
-    const dialogRef = this.dialog
-      .open(CompanyAdministartorRegistrationComponent, {
-        width: '50%',
-        height: '100%',
-        data: { compId: this.company.id },
-      })
-      .afterClosed()
-      .subscribe((result) => {
-        this.otherAdministrators = [];
-        this.getAllCompanyAdministrators();
-      });
   }
 
   getAllEquipmentTrackings(): void {
