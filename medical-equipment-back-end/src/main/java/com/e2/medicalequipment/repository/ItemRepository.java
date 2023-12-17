@@ -11,4 +11,7 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("SELECT i FROM Item i WHERE i.customer.id = :customer_id")
     List<Item> findAllByCustomerId(@Param("customer_id") String customerId);
+
+    @Query("SELECT i FROM Item i WHERE i.appointment.id = :appointment_id")
+    List<Item> findAllByAppointmentId(@Param("appointment_id") String appointmentId);
 }

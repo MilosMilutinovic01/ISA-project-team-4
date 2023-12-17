@@ -184,4 +184,16 @@ export class StakeholderService {
       environment.apiHost + 'appointments/'
     );
   }
+
+  getAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(
+      environment.apiHost + 'appointments/' + id
+    );
+  }
+
+  getCustomerByAppointmentId(id: string): Observable<CustomerProfile>{
+    return this.http.get<CustomerProfile>(
+      environment.apiHost + 'items/byAppointment/' + id
+    );
+  }
  }

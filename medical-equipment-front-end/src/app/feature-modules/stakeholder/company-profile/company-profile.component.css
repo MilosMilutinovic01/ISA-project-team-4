@@ -37,6 +37,18 @@
     padding: 10px;
   }
 
+  
+.calendar-button {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+}
+
 .title{
     text-align: center;
     font-size: 100;

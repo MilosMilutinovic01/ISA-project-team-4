@@ -89,6 +89,7 @@ export class CompanyProfileComponent {
       this.getCompany();
       this.getAllEquipmentTrackings();
       this.getAllCompanyAdministrators();
+      this.getAllAppointments();
     });
   }
   
@@ -213,19 +214,19 @@ export class CompanyProfileComponent {
       }); 
   }
 
-/*
-  registerAppointment(): void {
-    this.service.registerAppointment().subscribe({
-      next: (result: Appointment) => {
-        this.equipmentTracking = result;
-        this.sort();
-      },
-      error: () => {
-        console.log(console.error());
-      },
-    });
-  } 
-  */
+
+  // registerAppointment(): void {
+  //   this.service.registerAppointment().subscribe({
+  //     next: (result: Appointment) => {
+  //       //this.equipmentTracking = result;
+  //       this.sort();
+  //     },
+  //     error: () => {
+  //       console.log(console.error());
+  //     },
+  //   });
+  // } 
+
 
 
   addToCart(id: number, availableCount: number): void {
@@ -265,5 +266,9 @@ export class CompanyProfileComponent {
 
   showCart(): void {
     this.router.navigate(['/cart']);
+  }
+
+  showCalendar(): void {
+    this.router.navigate(['/companyCalendar']);
   }
 }

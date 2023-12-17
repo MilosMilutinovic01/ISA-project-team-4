@@ -2,6 +2,7 @@ package com.e2.medicalequipment.controller;
 
 import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import com.e2.medicalequipment.model.Appointment;
+import com.e2.medicalequipment.model.Item;
 import com.e2.medicalequipment.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,20 @@ public class AppointmentController {
         List<Appointment> appointments = null;
         try {
             appointments = appointmentService.GetAll();
+            return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
+    public ResponseEntity<List<Appointment>> getByCompanyId(@PathVariable String id){
+        List<Appointment> appointments = null;
+        try {
+            appointments = appointmentService.GetByCompanyId(Long.parseLong(id));
             return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

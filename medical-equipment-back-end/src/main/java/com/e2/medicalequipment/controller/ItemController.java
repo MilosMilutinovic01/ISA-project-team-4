@@ -3,6 +3,7 @@ package com.e2.medicalequipment.controller;
 import com.e2.medicalequipment.dto.CreateCompanyDTO;
 import com.e2.medicalequipment.dto.CreateItemDTO;
 import com.e2.medicalequipment.model.Company;
+import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.model.Item;
 import com.e2.medicalequipment.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,20 @@ public class ItemController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<List<Item>>(items, HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(value = "byAppointment/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
+    public ResponseEntity<Customer>  getCustomerByAppointmentId(@PathVariable String id){
+        Customer customer = null;
+        try {
+            customer = itemService.GetCustomerByAppointmentId(id);
+            return new ResponseEntity<Customer>(customer, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Customer>(customer, HttpStatus.CONFLICT);
         }
     }
 }

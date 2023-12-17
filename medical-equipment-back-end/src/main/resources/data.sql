@@ -109,3 +109,11 @@ INSERT INTO stakeholders.appointments(
     id, end_time, start_time, company_administrator_id)
 VALUES (-2, '2023-12-29T19:00:00.000Z', '2023-12-29T18:30:00.000Z', -2);
 
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id)
+VALUES (-1, 2, -1, -1, -1, -1);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id)
+VALUES (-2, 3, -2, -1, -1, -2);
+
