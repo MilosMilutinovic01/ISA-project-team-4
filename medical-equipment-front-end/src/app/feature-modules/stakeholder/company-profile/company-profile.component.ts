@@ -11,6 +11,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dialog.component';
 import { Item } from 'src/app/shared/model/item.model';
 import { Appointment } from 'src/app/shared/model/appointment.model';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { AppointmentRegistrationComponent } from '../appointment-registration/appointment-registration.component';
 
 @Component({
   selector: 'app-company-profile',
@@ -29,6 +31,7 @@ export class CompanyProfileComponent {
     averageRating: NaN,
   };
 
+  user: User | undefined;
   // appointment: Appointment = {
   //   ccid: NaN,
   //   startTime: '',
@@ -60,6 +63,9 @@ export class CompanyProfileComponent {
   filteredEquipmentTrackings: EquipmentTracking[] = [];
   equipmentTracking: EquipmentTracking[] = [];
   selectedOption: string = 'empty';
+  appointments: Appointment[] = [];
+  displayedColumns: string[] = ['startTime', 'endTime', 'customerId'];
+  newStartDate: string = '';
 
   equipmentCount: number = 0;
   items: Item[] = [];
@@ -85,7 +91,7 @@ export class CompanyProfileComponent {
       this.getAllCompanyAdministrators();
     });
   }
-
+  
   getCompany(): void {
     this.service.getCompanyProfile(this.id).subscribe({
       next: (result) => {
@@ -104,6 +110,7 @@ export class CompanyProfileComponent {
 
 
   getAllEquipmentTrackings(): void {
+    console.log('getAllEquipmentTrackings')
     this.service.getAllEquipmentTrackings().subscribe({
       next: (result) => {
         this.equipmentTracking = result;
@@ -172,6 +179,54 @@ export class CompanyProfileComponent {
       },
     });
   }
+
+  getAllAppointments(): void {
+    this.service.getAppointments().subscribe({
+      next: (result) => {
+        this.appointments = result;
+      },
+      error: () => {
+        console.log(console.error);
+      },
+    });
+  }
+  
+  parseAndFormatDate(dateString: string): string {
+    this.newStartDate = dateString[2] + '.' + dateString[1] + '.' + dateString[0]+ '.' + ' ' + dateString[3] + ':' + dateString[4];
+    if(dateString[4].toString() === "0"){
+      this.newStartDate += '0';
+    }
+   return this.newStartDate || '';
+  }
+
+  registerNewAppointment(): void {
+    const dialogRef = this.dialog
+      .open(AppointmentRegistrationComponent, {
+        width: '35%',
+        height: '70%',
+        data: { company: this.company}
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        this.appointments = [];
+        this.getAllAppointments();
+      }); 
+  }
+
+/*
+  registerAppointment(): void {
+    this.service.registerAppointment().subscribe({
+      next: (result: Appointment) => {
+        this.equipmentTracking = result;
+        this.sort();
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+  } 
+  */
+
 
   addToCart(id: number, availableCount: number): void {
     const dialogRef = this.dialog

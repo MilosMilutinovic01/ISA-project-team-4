@@ -161,6 +161,16 @@ export class StakeholderService {
        environment.apiHost + 'systemAdministrators/changePassword', admin);
    }
 
+  getAppointments(): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(environment.apiHost + 'appointments/');
+  }
+
+  registerAppointment(appointment: Appointment): Observable<Appointment> {
+    console.log('servis')
+    console.log(appointment)
+    return this.http.post<Appointment>(environment.apiHost + 'appointments/register', appointment);
+  }
+  
   createItem(item: Item): Observable<Item>{
     return this.http.post<Item>(environment.apiHost + 'items/create', item);
   }

@@ -3,7 +3,7 @@ import { CustomerProfile } from "./customer-profile.model";
 
 export interface Appointment {
     id?: number;
-    startTime: Date;
-    endTime: Date;
+    startTime: string;
+    endTime: string;
     companyAdministrator: CompanyAdministrator;
   }

@@ -24,7 +24,7 @@ export class CompanyCalendarComponent {
       next: (result: Appointment[]) => {
         this.appointments = result;
         result.forEach(appointment => {
-          console.log(...appointment.startTime.toISOString());
+          //console.log(...appointment.startTime.toISOString());
         });
         this.mapiraj()
       },

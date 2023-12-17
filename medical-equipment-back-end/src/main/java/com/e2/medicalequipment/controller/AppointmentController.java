@@ -19,7 +19,7 @@ public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
-   /* @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+   @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public ResponseEntity<Appointment> registerAppointment(@RequestBody CreateAppointmentDTO appointmentDTO) {
         Appointment savedAppointment = null;
@@ -31,7 +31,7 @@ public class AppointmentController {
             e.printStackTrace();
             return new ResponseEntity<Appointment>(savedAppointment, HttpStatus.CONFLICT);
         }
-    }*/
+    }
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
