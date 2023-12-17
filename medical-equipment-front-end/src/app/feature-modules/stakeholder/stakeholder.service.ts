@@ -8,7 +8,7 @@ import { Company } from 'src/app/shared/model/company.model';
 import { UpdateCompanyAdministrator } from 'src/app/shared/model/update-company-administrator.model';
 import { Equipment } from 'src/app/shared/model/equipment.model';
 import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model';
-import { Item } from 'src/app/shared/model/item.model';
+import { CreateItem, Item } from 'src/app/shared/model/item.model';
 
 @Injectable({
   providedIn: 'root',
@@ -122,8 +122,8 @@ export class StakeholderService {
     return this.http.get<CompanyAdministrator[]>(environment.apiHost + 'companyAdministrators/');
   }
 
-  createItem(item: Item): Observable<Item>{
-    return this.http.post<Item>(environment.apiHost + 'items/create', item);
+  createItem(item: CreateItem): Observable<CreateItem>{
+    return this.http.post<CreateItem>(environment.apiHost + 'items/create', item);
   }
 
   getItemsByCustomerId(id: string): Observable<Item[]>{

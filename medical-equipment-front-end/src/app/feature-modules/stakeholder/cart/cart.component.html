@@ -1,6 +1,27 @@
 <mat-stepper [linear]=false #stepper>
     <mat-step [stepControl]="firstFormGroup" label="Your shopping cart">
         <div>
+          <div class="card-container" *ngFor="let i of this.items">
+            <mat-card class="card-equipment">
+              <div class="title-container">
+              <div class="type-title">{{ i.equipment?.type }}</div>
+              <div class="type-title">{{ i.count }} selected</div>
+            </div>
+              <mat-card-title class="title-container">
+                <p>{{ i.equipment?.name }}</p>
+                <p>{{ this.calculatePrice(i) }} RSD</p>
+              </mat-card-title>
+              <mat-card-content class="title-container">
+                <p>{{ i.equipment?.description }}</p>
+                <!-- <button class="add-button" (click)="addToCart(e.id || 0, e.count)">
+                  <mat-icon>add</mat-icon>
+                </button> -->
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div class="total-price">
+            <p>Total price: {{ this.totalPrice }}</p>
+          </div>
             <button mat-button matStepperNext>Next</button>
         </div>
     </mat-step>

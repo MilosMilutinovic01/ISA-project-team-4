@@ -12,6 +12,7 @@ import { Item } from 'src/app/shared/model/item.model';
 })
 export class CartComponent {
   items : Item[] = [];
+  totalPrice : number = 0;
 
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
@@ -30,18 +31,22 @@ export class CartComponent {
       
       this.service.getItemsByCustomerId(this.authService.getCurrentUserId().toString()).subscribe({
         next: (result) => {
-          
-          for(let i of result){
-            if(i.companyId === params['id']){
-              this.items.push(i);
-            }
+          this.items = result.filter(
+            i => i.company.id === Number(params["id"])
+          );
+
+          for (let i of this.items){
+            this.totalPrice += i.count * Number(i.equipment?.price);
           }
-          console.log("ITEMS: ",this.items);
         },
         error: () => {
           console.log(console.error);
-        },
+        }
       });
     });
+  }
+
+  calculatePrice(item: Item):number{
+    return item.count * Number(item.equipment?.price);
   }
 }

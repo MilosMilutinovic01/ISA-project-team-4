@@ -10,7 +10,7 @@ import { CompanyAdministrator } from 'src/app/shared/model/company-administrator
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dialog.component';
-import { Item } from 'src/app/shared/model/item.model';
+import { CreateItem, Item } from 'src/app/shared/model/item.model';
 import { Appointment } from 'src/app/shared/model/appointment.model';
 
 @Component({
@@ -63,7 +63,7 @@ export class CompanyProfileComponent {
   selectedOption: string = 'empty';
 
   equipmentCount: number = 0;
-  items: Item[] = [];
+  items: CreateItem[] = [];
 
   searchForm = new FormGroup({
     name: new FormControl(''),
@@ -197,7 +197,7 @@ export class CompanyProfileComponent {
       .afterClosed()
       .subscribe((result) => {
         if(result){
-          const item : Item = {
+          const item : CreateItem = {
             count: result || '',
             customerId: this.authService.getCurrentUserId() || 0,
             companyId: this.company.id || 0
