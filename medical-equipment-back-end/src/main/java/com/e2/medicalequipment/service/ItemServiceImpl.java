@@ -1,6 +1,6 @@
 package com.e2.medicalequipment.service;
 
-import com.e2.medicalequipment.dto.ItemDTO;
+import com.e2.medicalequipment.dto.CreateItemDTO;
 import com.e2.medicalequipment.model.Item;
 import com.e2.medicalequipment.repository.ItemRepository;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ public class ItemServiceImpl implements ItemService{
     @Autowired
     private ItemRepository itemRepository;
     @Override
-    public Item Create(ItemDTO itemDto) throws Exception {
+    public Item Create(CreateItemDTO itemDto) throws Exception {
         Item item = new Item(itemDto);
         item.setAppointment(null);
 

@@ -1,6 +1,6 @@
 package com.e2.medicalequipment.model;
 
-import com.e2.medicalequipment.dto.ItemDTO;
+import com.e2.medicalequipment.dto.CreateItemDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -33,7 +33,7 @@ public class Item {
         this.equipment = equipment;
     }
 
-    public Item(ItemDTO itemDto){
+    public Item(CreateItemDTO itemDto){
         this.count = itemDto.count;
     }
 

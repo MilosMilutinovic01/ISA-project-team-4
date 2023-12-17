@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dialog.component';
 import { Item } from 'src/app/shared/model/item.model';
+import { Appointment } from 'src/app/shared/model/appointment.model';
 
 @Component({
   selector: 'app-company-profile',
@@ -27,6 +28,33 @@ export class CompanyProfileComponent {
     endTime: '',
     averageRating: NaN,
   };
+
+  // appointment: Appointment = {
+  //   id: NaN,
+  //   startTime: '',
+  //   endTime: '',
+  //   companyAdministrator: { id:NaN,
+  //     name: '',
+  //     address: { id: NaN, street: '', city: '', country: '' },
+  //     email: '',
+  //     password: '',
+  //     lastname: '',
+  //     city: '',
+  //     country: '',
+  //     phoneNumber: '',
+  //     companyId: NaN },
+  //   customer: { id:NaN,
+  //     name: '',
+  //     lastname: '',
+  //     username: '',
+  //     address: { id: NaN, street: '', city: '', country: '' },
+  //     phoneNumber: '',
+  //     profession: '',
+  //     penaltyPoints: NaN,
+  //     password: '',
+  //     category: ''},
+    
+  // };
 
   otherAdministrators: CompanyAdministrator[] = [];
   filteredEquipmentTrackings: EquipmentTracking[] = [];
@@ -169,6 +197,8 @@ export class CompanyProfileComponent {
   
           const selectedEquipment = this.filteredEquipmentTrackings.find(e => e.id === id)?.equipment;
           item.equipment = selectedEquipment;
+          console.log("EQUIPMENT: ", item.equipment);
+          console.log("ITEM: ", item);
   
           this.service.createItem(item).subscribe({
             next: (result) => {

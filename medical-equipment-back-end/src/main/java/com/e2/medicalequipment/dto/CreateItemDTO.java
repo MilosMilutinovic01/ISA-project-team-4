@@ -1,17 +1,16 @@
 package com.e2.medicalequipment.dto;
 
 import com.e2.medicalequipment.model.Appointment;
+import com.e2.medicalequipment.model.Equipment;
 
-public class ItemDTO {
-    public Long id;
+public class CreateItemDTO {
     public int count;
-    public AppointmentDTO appointment;
     public EquipmentDTO equipment;
 
-    public ItemDTO(Long id, int count, AppointmentDTO appointment, EquipmentDTO equipment) {
+    /*public ItemDTO(Long id, int count, Appointment appointment, Equipment equipment) {
         this.id = id;
         this.count = count;
         this.appointment = appointment;
         this.equipment = equipment;
-    }
+    }*/
 }

@@ -11,6 +11,9 @@ public class EquipmentDTO {
     public EquipmentType type;
     public Double price;
 
+    public EquipmentDTO() {
+    }
+
     public EquipmentDTO(Equipment equipment) {
         this.id = equipment.getId();
         this.name = equipment.getName();
