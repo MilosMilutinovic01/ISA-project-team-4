@@ -56,10 +56,13 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
+    public Customer GetCustomerByAppointmentId(String appointmentId) throws Exception {
+        List<Item> items = itemRepository.findAllByAppointmentId(appointmentId);
+        return items.get(0).getCustomer();
+    }
     public Item Get(Long id) throws Exception{
         return this.itemRepository.findById(id).get();
     }
-
     public Item Update(UpdateItemDTO newItem) throws Exception{
         Item item = itemRepository.findById(newItem.Id);
         item.setAppointment(appointmentRepository.findById(newItem.AppointmentId));

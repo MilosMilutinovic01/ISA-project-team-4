@@ -104,10 +104,17 @@ INSERT INTO stakeholders.appointments(
     id, end_time, start_time, company_administrator_id)
 VALUES (-1, '2023-12-29T13:00:00.000Z', '2023-12-29T12:30:00.000Z', -2);
 
-
 INSERT INTO stakeholders.appointments(
     id, end_time, start_time, company_administrator_id)
 VALUES (-2, '2023-12-29T11:00:00.000Z', '2023-12-29T10:30:00.000Z', -2);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id)
+VALUES (-1, 2, -1, -1, -1, -1);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id)
+VALUES (-2, 3, -2, -1, -1, -2);
 
 INSERT INTO stakeholders.appointments(
     id, end_time, start_time, company_administrator_id)
@@ -126,4 +133,5 @@ VALUES (-5, '2023-12-27T12:00:00.000Z', '2023-12-27T11:30:00.000Z', -2);
 INSERT INTO stakeholders.appointments(
     id, end_time, start_time, company_administrator_id)
 VALUES (-6, '2023-12-26T10:00:00.000Z', '2023-12-26T09:30:00.000Z', -2);
+
 

@@ -6,6 +6,7 @@ import com.e2.medicalequipment.dto.CreateItemDTO;
 import com.e2.medicalequipment.dto.UpdateItemDTO;
 import com.e2.medicalequipment.model.Appointment;
 import com.e2.medicalequipment.model.Company;
+import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.model.Item;
 import com.e2.medicalequipment.service.EquipmentService;
 import com.e2.medicalequipment.service.ItemService;
@@ -63,18 +64,32 @@ public class ItemController {
         }
     }
 
-    @PostMapping(value = "/reserve", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('CUSTOMER')")
-    public boolean reserve(@RequestBody List<UpdateItemDTO> items) throws Exception {
-        long userId = 0;
-        int price = 0;
-        for(UpdateItemDTO item : items){
-            userId = item.CustomerId;
-            price += equipmentService.Get(item.EquipmentId).getPrice() * item.Count;
-            itemService.Update(item);
+    @GetMapping(value = "byAppointment/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
+    public ResponseEntity<Customer>  getCustomerByAppointmentId(@PathVariable String id) {
+        Customer customer = null;
+        try {
+            customer = itemService.GetCustomerByAppointmentId(id);
+            return new ResponseEntity<Customer>(customer, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Customer>(customer, HttpStatus.CONFLICT);
         }
-        String message = "Ukupna cena: " + price;
-        qrCodeService.sendQRCode("Your cart",userService.getUserById(userId).getUsername(),message);
-        return true;
     }
-}
+
+        @PostMapping(value = "/reserve", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+        @PreAuthorize("hasAuthority('CUSTOMER')")
+        public boolean reserve (@RequestBody List < UpdateItemDTO > items) throws Exception {
+            long userId = 0;
+            int price = 0;
+            for (UpdateItemDTO item : items) {
+                userId = item.CustomerId;
+                price += equipmentService.Get(item.EquipmentId).getPrice() * item.Count;
+                itemService.Update(item);
+            }
+            String message = "Ukupna cena: " + price;
+            qrCodeService.sendQRCode("Your cart", userService.getUserById(userId).getUsername(), message);
+            return true;
+        }
+    }

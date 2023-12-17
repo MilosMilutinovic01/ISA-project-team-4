@@ -42,7 +42,6 @@ public class AppointmentServiceImpl implements AppointmentService{
         Appointment savedAppointment = appointmentRepository.save(appointment);
         return savedAppointment;
     }
-
     @Override
     public Appointment CreateIrregular(CreateAppointmentDTO createAppointmentDto) throws Exception {
 
@@ -64,6 +63,17 @@ public class AppointmentServiceImpl implements AppointmentService{
         List<Appointment> allAppointments = new ArrayList<>();
         for(Appointment a : appointmentRepository.findAll()) {
             allAppointments.add(a);
+        }
+        return allAppointments;
+    }
+
+    @Override
+    public List<Appointment> GetByCompanyId(Long companyId) throws Exception {
+        List<Appointment> allAppointments = new ArrayList<>();
+        for(Appointment a : appointmentRepository.findAll()) {
+            if(a.getCompanyAdministrator().getCompanyId() == companyId){
+                allAppointments.add(a);
+            }
         }
         return allAppointments;
     }
