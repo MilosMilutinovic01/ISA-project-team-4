@@ -12,13 +12,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StakeholderService } from '../stakeholder.service';
 import { Company } from '../../../shared/model/company.model';
 import { Address } from '../../../shared/model/address.model';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-company-registration',
   templateUrl: './company-registration.component.html',
   styleUrls: ['./company-registration.component.css'],
 })
 export class CompanyRegistrationComponent {
-  constructor(private service: StakeholderService) {}
+  constructor(private service: StakeholderService, private router: Router) {}
 
   companyForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -49,7 +50,7 @@ export class CompanyRegistrationComponent {
       this.service.registerCompany(company).subscribe({
         next: () => {
           alert('Successfully created!');
-          window.location.reload();
+          this.router.navigate(['/']);
         },
         error: (err) => {
           if (err.status === 403) {

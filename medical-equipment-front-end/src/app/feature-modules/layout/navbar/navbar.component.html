@@ -14,7 +14,9 @@
           <button
             class="navbar-button"
             (click)="companyRegistration()"
-            *ngIf="user && user.role === 'COMPANY_ADMINISTRATOR'"
+            *ngIf="
+              user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled
+            "
           >
             New Company
           </button>
@@ -22,12 +24,34 @@
         <div>
           <button
             class="navbar-button"
+            (click)="companyAdministratorRegistration()"
+            *ngIf="
+              user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled
+            "
+          >
+            New Company Administrator
+          </button>
+        </div>
+        <div>
+          <button
+            class="navbar-button"
+            (click)="systemAdministratorRegistration()"
+            *ngIf="
+              user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled
+            "
+          >
+            New System Administrator
+          </button>
+        </div>
+        <!-- <div>
+          <button
+            class="navbar-button"
             (click)="companyAdministratorProfile()"
             *ngIf="user && user.role === 'COMPANY_ADMINISTRATOR'"
           >
             Company Administrator Profile
           </button>
-        </div>
+        </div> -->
         <div class="dropdown">
           <button class="dropbtn">{{ user?.username }}</button>
 
@@ -35,7 +59,15 @@
             class="dropdown-content"
             *ngIf="user?.id != 0; else loginRegisterButtons"
           >
-            <button class="navbar-button" (click)="customerProfile()">
+            <button
+              *ngIf="user && user.role !== 'SYSTEM_ADMINISTRATOR'"
+              class="navbar-button"
+              (click)="
+                user && user.role === 'COMPANY_ADMINISTRATOR'
+                  ? companyAdministratorProfile()
+                  : customerProfile()
+              "
+            >
               Profile
             </button>
             <button class="navbar-button" (click)="logout()">Logout</button>

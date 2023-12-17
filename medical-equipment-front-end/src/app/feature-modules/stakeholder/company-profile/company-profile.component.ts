@@ -4,7 +4,6 @@ import { StakeholderService } from '../stakeholder.service';
 import { Company } from '../../../shared/model/company.model';
 import { Address } from '../../../shared/model/address.model';
 import { MatDialog } from '@angular/material/dialog';
-import { CompanyAdministartorRegistrationComponent } from '../company-administartor-registration/company-administartor-registration.component';
 import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model';
 import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
@@ -54,7 +53,7 @@ export class CompanyProfileComponent {
   //     penaltyPoints: NaN,
   //     password: '',
   //     category: ''},
-    
+
   // };
 
   otherAdministrators: CompanyAdministrator[] = [];
@@ -69,7 +68,6 @@ export class CompanyProfileComponent {
     name: new FormControl(''),
   });
 
-
   constructor(
     private service: StakeholderService,
     private dialog: MatDialog,
@@ -81,7 +79,7 @@ export class CompanyProfileComponent {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
-      
+
       this.getCompany();
       this.getAllEquipmentTrackings();
       this.getAllCompanyAdministrators();
@@ -101,20 +99,6 @@ export class CompanyProfileComponent {
 
   editProfile(): void {
     this.router.navigate(['/editCompanyProfile']);
-  }
-
-  addCompanyAdministrator(): void {
-    const dialogRef = this.dialog
-      .open(CompanyAdministartorRegistrationComponent, {
-        width: '50%',
-        height: '100%',
-        data: { compId: this.company.id },
-      })
-      .afterClosed()
-      .subscribe((result) => {
-        this.otherAdministrators = [];
-        this.getAllCompanyAdministrators();
-      });
   }
 
   getAllEquipmentTrackings(): void {
@@ -202,8 +186,10 @@ export class CompanyProfileComponent {
             customerId: this.authService.getCurrentUserId() || 0,
             companyId: this.company.id || 0
           };
-  
-          const selectedEquipment = this.filteredEquipmentTrackings.find(e => e.id === id)?.equipment;
+
+          const selectedEquipment = this.filteredEquipmentTrackings.find(
+            (e) => e.id === id
+          )?.equipment;
           item.equipment = selectedEquipment;
   
           this.service.createItem(item).subscribe({
@@ -216,8 +202,7 @@ export class CompanyProfileComponent {
           });
         }
       });
-
-    }
+  }
     
     showCart():void{
       this.router.navigate(['/cart', this.company.id ]);

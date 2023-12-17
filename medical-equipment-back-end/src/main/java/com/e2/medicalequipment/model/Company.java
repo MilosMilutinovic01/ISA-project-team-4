@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
+
 
 @Entity
 @Table(schema = "stakeholders", name = "companies")

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class CompanyAdministratorController {
     }
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('SYSTEM_ADMINISTRATOR')")
     public ResponseEntity<CompanyAdministrator> registerCompanyAdministrator(@RequestBody CompanyAdministratorDTO companyAdministratorDto)  {
         CompanyAdministrator savedCompanyAdministrator = null;
         try {System.out.println("Thread id: " + Thread.currentThread().getId());
@@ -42,6 +44,7 @@ public class CompanyAdministratorController {
 
     @GetMapping(value = "/profile/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public ResponseEntity<CompanyAdministrator> getCompanyAdministrator(@PathVariable String id) throws Exception {
         System.out.println("ID: "+ id);
         CompanyAdministrator customer = null;

@@ -27,6 +27,22 @@
     </mat-step>
     <mat-step [stepControl]="secondFormGroup" label="Select reservation date">
         <div>
+          <div class="calendar">
+            <dx-calendar
+              timeZone="Europe/London"
+              currentView="month"
+              [value]="selectedDate"
+              [firstDayOfWeek]="1"
+              [height]="700"
+              [width]="1000"
+              (click)="openDialog()"
+              ><dxo-editing
+                [allowAdding]="false"
+                [allowUpdating]="false"
+                [allowDeleting]="false"
+              ></dxo-editing>
+              <dxi-resource fieldExpr="aid"></dxi-resource>
+            </dx-calendar>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
         </div>
@@ -38,5 +54,14 @@
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>
       </div>
-    </mat-step>
-  </mat-stepper>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-stepper>

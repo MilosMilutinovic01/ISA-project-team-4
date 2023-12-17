@@ -7,7 +7,6 @@ import { CustomerProfileComponent } from 'src/app/feature-modules/stakeholder/cu
 import { EditCustomerProfileComponent } from 'src/app/feature-modules/stakeholder/edit-customer-profile/edit-customer-profile.component';
 import { CompanyRegistrationComponent } from 'src/app/feature-modules/stakeholder/company-registration/company-registration.component';
 import { CompaniesViewComponent } from 'src/app/feature-modules/stakeholder/companies-view/companies-view.component';
-import { CompanyAdministartorRegistrationComponent } from 'src/app/feature-modules/stakeholder/company-administartor-registration/company-administartor-registration.component';
 import { CompanyProfileComponent } from 'src/app/feature-modules/stakeholder/company-profile/company-profile.component';
 import { EditCompanyProfileComponent } from 'src/app/feature-modules/stakeholder/edit-company-profile/edit-company-profile.component';
 import { EquipmentViewComponent } from 'src/app/feature-modules/stakeholder/equipment-view/equipment-view.component';
@@ -16,6 +15,9 @@ import { EditCompanyAdministratorProfileComponent } from 'src/app/feature-module
 import { LoginComponent } from '../auth/login/login.component';
 import { VerificationComponent } from '../auth/verification/verification.component';
 import { CartComponent } from 'src/app/feature-modules/stakeholder/cart/cart.component';
+import { CompanyCalendarComponent } from 'src/app/feature-modules/stakeholder/company-calendar/company-calendar.component';
+import { AdministratorRegistrationComponent } from 'src/app/feature-modules/stakeholder/administrator-registration/administrator-registration.component';
+import { ChangePasswordComponent } from 'src/app/feature-modules/stakeholder/change-password/change-password.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -24,11 +26,12 @@ const routes: Routes = [
   { path: 'editCustomerProfile', component: EditCustomerProfileComponent },
   { path: 'companyRegistration', component: CompanyRegistrationComponent },
   { path: 'companiesView', component: CompaniesViewComponent },
-  {
-    path: 'companyAdministratorRegistration',
-    component: CompanyAdministartorRegistrationComponent,
-  },
   { path: 'companyProfile/:id', component: CompanyProfileComponent },
+  {
+    path: 'administratorRegistration/:type',
+    component: AdministratorRegistrationComponent,
+  },
+  { path: 'companyProfile', component: CompanyProfileComponent },
   { path: 'editCompanyProfile', component: EditCompanyProfileComponent },
   {
     path: 'companyAdministratorProfile',
@@ -42,6 +45,8 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'api/auth/verify/:id', component: VerificationComponent },
   { path: 'cart/:id', component: CartComponent },
+  { path: 'companyCalendar', component: CompanyCalendarComponent },
+  { path: 'changePassword', component: ChangePasswordComponent },
 ];
 
 @NgModule({
