@@ -237,8 +237,8 @@ export class CompanyProfileComponent {
       });
   }
 
-  showCart(): void {
-    this.router.navigate(['/cart']);
+  showCart():void{
+    this.router.navigate(['/cart', this.company.id ]);
   }
 
   showCalendar(): void {

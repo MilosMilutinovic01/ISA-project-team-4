@@ -184,12 +184,11 @@ export class StakeholderService {
   }
 
   registerAppointment(appointment: Appointment): Observable<Appointment> {
-    console.log('servis');
-    console.log(appointment);
-    return this.http.post<Appointment>(
-      environment.apiHost + 'appointments/register',
-      appointment
-    );
+    return this.http.post<Appointment>(environment.apiHost + 'appointments/register', appointment);
+  }
+
+  registerIrregularAppointment(appointment: Appointment): Observable<Appointment> {
+    return this.http.post<Appointment>(environment.apiHost + 'appointments/registerIrregular', appointment);
   }
 
   getAllAppointments(): Observable<Appointment[]> {

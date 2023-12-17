@@ -35,12 +35,29 @@ public class AppointmentServiceImpl implements AppointmentService{
         appointment.setEndTime(endTime);
         CompanyAdministrator ca = companyAdministratorRepository.findById(createAppointmentDto.companyAdministrator.id).orElseThrow(() -> new EntityNotFoundException("Company admin not found"));
         appointment.setCompanyAdministrator(ca);
+
         if (appointment.getId() != null) {
             throw new Exception("ID must be null for a new entity.");
         }
         Appointment savedAppointment = appointmentRepository.save(appointment);
         return savedAppointment;
     }
+    @Override
+    public Appointment CreateIrregular(CreateAppointmentDTO createAppointmentDto) throws Exception {
+
+        Appointment appointment = new Appointment();
+        LocalDateTime startTime = LocalDateTime.parse(createAppointmentDto.startTime, formatter);
+        appointment.setStartTime(startTime);
+        LocalDateTime endTime = LocalDateTime.parse(createAppointmentDto.endTime, formatter);
+        appointment.setEndTime(endTime);
+
+        if (appointment.getId() != null) {
+            throw new Exception("ID must be null for a new entity.");
+        }
+        Appointment savedAppointment = appointmentRepository.save(appointment);
+        return savedAppointment;
+    }
+
     @Override
     public List<Appointment> GetAll() throws Exception {
         List<Appointment> allAppointments = new ArrayList<>();

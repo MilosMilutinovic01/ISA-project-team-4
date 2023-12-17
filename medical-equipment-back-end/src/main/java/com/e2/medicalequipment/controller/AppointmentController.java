@@ -34,6 +34,20 @@ public class AppointmentController {
         }
     }
 
+    @PostMapping(value = "/registerIrregular", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public ResponseEntity<Appointment> registerIrregularAppointment(@RequestBody CreateAppointmentDTO appointmentDTO) {
+        Appointment savedAppointment = null;
+        try {
+            System.out.println("Thread id: " + Thread.currentThread().getId());
+            savedAppointment = appointmentService.CreateIrregular(appointmentDTO);
+            return new ResponseEntity<Appointment>(savedAppointment, HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Appointment>(savedAppointment, HttpStatus.CONFLICT);
+        }
+    }
+
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<Appointment>> getAll(){
