@@ -9,6 +9,9 @@ import { CompanyAdministrator } from 'src/app/shared/model/company-administrator
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dialog.component';
+import { Item } from 'src/app/shared/model/item.model';
+import { Appointment } from 'src/app/shared/model/appointment.model';
 
 @Component({
   selector: 'app-company-profile',
@@ -26,11 +29,41 @@ export class CompanyProfileComponent {
     averageRating: NaN,
   };
 
+  // appointment: Appointment = {
+  //   ccid: NaN,
+  //   startTime: '',
+  //   endTime: '',
+  //   companyAdministrator: { id:NaN,
+  //     name: '',
+  //     address: { id: NaN, street: '', city: '', country: '' },
+  //     email: '',
+  //     password: '',
+  //     lastname: '',
+  //     city: '',
+  //     country: '',
+  //     phoneNumber: '',
+  //     companyId: NaN },
+  //   customer: { id:NaN,
+  //     name: '',
+  //     lastname: '',
+  //     username: '',
+  //     address: { id: NaN, street: '', city: '', country: '' },
+  //     phoneNumber: '',
+  //     profession: '',
+  //     penaltyPoints: NaN,
+  //     password: '',
+  //     category: ''},
+    
+  // };
+
   user: User | undefined;
   otherAdministrators: CompanyAdministrator[] = [];
   filteredEquipmentTrackings: EquipmentTracking[] = [];
   equipmentTracking: EquipmentTracking[] = [];
   selectedOption: string = 'empty';
+
+  equipmentCount: number = 0;
+  items: Item[] = [];
 
   searchForm = new FormGroup({
     name: new FormControl(''),
@@ -148,4 +181,41 @@ export class CompanyProfileComponent {
       },
     });
   }
+
+  addToCart(id: number): void {
+    const dialogRef = this.dialog
+      .open(AddToCartDialogComponent, {
+        width: '45%',
+        height: '35%',
+        data: { count: this.equipmentCount },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if(result){
+          const item : Item = {
+            count: result || '',
+            customerId: this.authService.getCurrentUserId() || 0
+          };
+  
+          const selectedEquipment = this.filteredEquipmentTrackings.find(e => e.id === id)?.equipment;
+          item.equipment = selectedEquipment;
+          console.log("ITEM: ", item);
+  
+          this.service.createItem(item).subscribe({
+            next: (result) => {
+              console.log("RES: ",result);
+              this.items.push(result);
+            },
+            error: () => {
+              console.log(console.error);
+            },
+          });
+        }
+      });
+
+    }
+    
+    showCart():void{
+      
+    }
 }

@@ -21,6 +21,9 @@ import { AdministratorRegistrationComponent } from './administrator-registration
 import { MatDialogModule } from '@angular/material/dialog';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialog.component';
+import { CartComponent } from './cart/cart.component';
+
 @NgModule({
   declarations: [
     CustomerProfileComponent,
@@ -35,7 +38,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     EquipmentViewComponent,
     CompanyCalendarComponent,
     AdministratorRegistrationComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    AddToCartDialogComponent,
+    CartComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +72,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AdministratorRegistrationComponent,
     MatDialogModule,
     ChangePasswordComponent,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AddToCartDialogComponent, 
+    CartComponent
   ]
 })
 export class StakeholderModule {}

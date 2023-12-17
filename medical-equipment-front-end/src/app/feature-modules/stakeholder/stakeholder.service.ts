@@ -10,6 +10,7 @@ import { Equipment } from 'src/app/shared/model/equipment.model';
 import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model';
 import { SystemAdministrator } from 'src/app/shared/model/system-administrator.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { Item } from 'src/app/shared/model/item.model';
 
 @Injectable({
   providedIn: 'root',
@@ -135,4 +136,7 @@ export class StakeholderService {
        environment.apiHost + 'systemAdministrators/changePassword', admin);
    }
 
-}
+  createItem(item: Item): Observable<Item>{
+    return this.http.post<Item>(environment.apiHost + 'items/create', item);
+  }
+ }

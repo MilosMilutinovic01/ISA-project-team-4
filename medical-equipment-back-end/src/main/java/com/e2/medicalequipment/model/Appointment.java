@@ -20,30 +20,18 @@ public class Appointment {
     @Column(name = "endTime")
     private LocalDateTime endTime;
 
-    @Column(name = "companyAdministratorId")
-    private Long companyAdministratorId;
-
-    @Column(name = "customerId")
-    private Long customerId;
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_administrator_id", referencedColumnName = "company_administrator_id")
+    private CompanyAdministrator companyAdministrator;
 
     public Appointment() {
 
     }
-
-    public Appointment(CreateAppointmentDTO appointmentDTO) {
-        this.startTime = LocalDateTime.parse(appointmentDTO.startTime);
-        this.endTime = LocalDateTime.parse(appointmentDTO.endTime);
-        this.companyAdministratorId = appointmentDTO.companyAdministratorId;
-        this.customerId = appointmentDTO.customerId;
-    }
-
-    public Appointment(Long id, LocalDateTime startTime, LocalDateTime endTime, Long companyAdministratorId, Long customerId) {
+    public Appointment(Long id, LocalDateTime start, LocalDateTime end, CompanyAdministrator companyAdministrator) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.companyAdministratorId = companyAdministratorId;
-        this.customerId = customerId;
+        this.companyAdministrator = companyAdministrator;
     }
 
     public Long getId() {
@@ -70,11 +58,11 @@ public class Appointment {
         this.endTime = endTime;
     }
 
-    public Long getcompanyAdministratorId() { return companyAdministratorId; }
+    public CompanyAdministrator getCompanyAdministrator() {
+        return companyAdministrator;
+    }
 
-    public void setcompanyAdministratorId(Long companyAdministratorId) { this.companyAdministratorId = companyAdministratorId; }
-
-    public Long getCustomerId() { return customerId; }
-
-    public void setCustomerId(Long customerId) { this.customerId = customerId; }
+    public void setCompanyAdministrator(CompanyAdministrator companyAdministrator) {
+        this.companyAdministrator = companyAdministrator;
+    }
 }
