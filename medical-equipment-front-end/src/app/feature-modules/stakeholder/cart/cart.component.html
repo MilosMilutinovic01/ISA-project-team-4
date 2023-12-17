@@ -33,22 +33,27 @@
           <button mat-button matStepperPrevious>Back</button>
           <button mat-button matStepperNext>Next</button>
           <h1>Predefined appointments</h1>
+          <div class="appointment-info">
+            <p class="info-message">
+              Dates highlighted in green have available appointments.
+            </p>
+          </div>
           <div class="calendar">
             <dx-calendar
-              timeZone="Europe/London"
-              currentView="month"
-              [value]="selectedDate"
-              [firstDayOfWeek]="1"
-              [height]="700"
-              [width]="1000"
-              (click)="openDialog()"
-              ><dxo-editing
-                [allowAdding]="false"
-                [allowUpdating]="false"
-                [allowDeleting]="false"
-              ></dxo-editing>
-              <dxi-resource fieldExpr="aid"></dxi-resource>
-            </dx-calendar>
+          class="calendar"
+          timeZone="Europe/London"
+          id="calendar-container"
+          currentView="month"
+          [firstDayOfWeek]="1"
+          [height]="700"
+          [width]="1000"
+          [value]="calendar_value"
+          (onValueChanged)="calendar_valueChanged($event)"
+        >
+          <div *dxTemplate="let data of 'cell'">
+            <span [ngClass]="getCellCssClass(data)">{{ data.text }}</span>
+          </div>
+        </dx-calendar>
           </div>
         <button class="bottom-right-button" mat-button (click)="chooseIrregular()">
           Choose irregular appointment
@@ -58,22 +63,27 @@
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
         <h1>Irregular appointments</h1>
+        <div class="appointment-info">
+          <p class="info-message">
+            Dates highlighted in green have available appointments.
+          </p>
+        </div>
         <div class="calendar">
           <dx-calendar
-            timeZone="Europe/London"
-            currentView="month"
-            [value]="selectedDate"
-            [firstDayOfWeek]="1"
-            [height]="700"
-            [width]="1000"
-            (click)="openDialog()"
-            ><dxo-editing
-              [allowAdding]="false"
-              [allowUpdating]="false"
-              [allowDeleting]="false"
-            ></dxo-editing>
-            <dxi-resource fieldExpr="aid"></dxi-resource>
-          </dx-calendar>
+          class="calendar"
+          timeZone="Europe/London"
+          id="calendar-container"
+          currentView="month"
+          [firstDayOfWeek]="1"
+          [height]="700"
+          [width]="1000"
+          [value]="calendar_value"
+          (onValueChanged)="calendar_valueChanged($event)"
+        >
+          <div *dxTemplate="let data of 'cell'">
+            <span [ngClass]="getCellCssClass(data)">{{ data.text }}</span>
+          </div>
+        </dx-calendar>
         </div>
       <button class="bottom-right-button" mat-button (click)="choosePredefined()">
         Back predefined appointmens
