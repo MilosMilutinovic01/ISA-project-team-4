@@ -7,5 +7,6 @@ export interface Item {
     appointment?: Appointment;
     equipment?: Equipment;
     customerId: number;
+    companyId: number;
   }
   

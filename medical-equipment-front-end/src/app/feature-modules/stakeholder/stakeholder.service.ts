@@ -139,4 +139,8 @@ export class StakeholderService {
   createItem(item: Item): Observable<Item>{
     return this.http.post<Item>(environment.apiHost + 'items/create', item);
   }
+
+  getItemsByCustomerId(id: string): Observable<Item[]>{
+    return this.http.get<Item[]>(environment.apiHost + 'items/' + id);
+  }
  }

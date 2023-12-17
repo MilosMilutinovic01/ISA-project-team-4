@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { StakeholderService } from '../stakeholder.service';
+import { Appointment } from 'src/app/shared/model/appointment.model';
 
 @Component({
   selector: 'app-company-calendar',
@@ -6,6 +8,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./company-calendar.component.css']
 })
 export class CompanyCalendarComponent {
+
+  constructor(
+    private service: StakeholderService
+  ) {}
+
+
+
+  
 
   appointmentsData: any[] = [
     {

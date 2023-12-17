@@ -4,7 +4,7 @@ import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
 import {
   MatButton,
   MatButtonModule,
-  MatIconButton,
+  MatIconButton
 } from '@angular/material/button';
 import {
   MatFormField,
@@ -21,7 +21,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatOptionModule } from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
-
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 @NgModule({
@@ -41,7 +41,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatDialogModule,
     MatRadioModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatStepperModule
   ],
   exports: [
     MatToolbar,
@@ -60,7 +61,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatDialogModule,
     MatRadioModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatStepperModule
   ],
 })
 export class MaterialModule {}

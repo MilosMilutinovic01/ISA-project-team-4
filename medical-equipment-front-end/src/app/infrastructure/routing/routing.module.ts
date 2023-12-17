@@ -43,6 +43,7 @@ const routes: Routes = [
   { path: 'companyCalendar', component: CompanyCalendarComponent },
   { path: 'changePassword', component: ChangePasswordComponent },
   { path: 'cart', component: CartComponent },
+  { path: 'cart/:id', component: CartComponent },
 ];
 
 @NgModule({

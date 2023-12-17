@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/items", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin
@@ -29,6 +31,20 @@ public class ItemController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Item>(savedItem, HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public ResponseEntity<List<Item>> getAllByCustomerId(@PathVariable String id){
+        List<Item> items = null;
+        try {
+            items = itemService.GetAllByCustomerId(id);
+            return new ResponseEntity<List<Item>>(items, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Item>>(items, HttpStatus.CONFLICT);
         }
     }
 }

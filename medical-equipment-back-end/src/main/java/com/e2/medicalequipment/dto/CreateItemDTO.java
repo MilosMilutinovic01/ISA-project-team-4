@@ -8,6 +8,8 @@ public class CreateItemDTO {
     public Equipment equipment;
     public long customerId;
 
+    public long companyId;
+
     /*public ItemDTO(Long id, int count, Appointment appointment, Equipment equipment) {
         this.id = id;
         this.count = count;

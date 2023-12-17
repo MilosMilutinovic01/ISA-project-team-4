@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CompanyProfileComponent } from '../company-profile/company-profile.component';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-to-cart-dialog',
@@ -12,8 +12,11 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class AddToCartDialogComponent {
 
   countForm = new FormGroup({
-    count : new FormControl('')
-  })
+    count: new FormControl(1, [
+      Validators.min(1),
+      Validators.max(this.data.availableCount),
+    ]),
+  });
 
   constructor(public dialogRef: MatDialogRef<CompanyProfileComponent>,
     private router:Router,
@@ -22,7 +25,11 @@ export class AddToCartDialogComponent {
   ok() : void{
     this.data.count = this.countForm.value.count;
     console.log(this.data.count);
-    this.dialogRef.close(this.data.count);
+    if (this.countForm.valid) {
+      this.dialogRef.close(this.data.count);
+      alert('Added to cart!');
+    }
+    else alert('Must enter valid number!');
   }
 
   onCancel() : void{
