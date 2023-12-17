@@ -12,31 +12,9 @@
     <div class="label">Average rating:</div>
     <div class="value">{{ company.averageRating }}</div>
   </div>
-  <br />
+</div>
 
-  <div>
-    <div class="title">
-      Equipment in stock:
-    </div>
-    <div class="card-container" *ngFor="let e of filteredEquipmentTrackings">
-      <mat-card class="card">
-        <div class="title-container">
-        <div class="type-title">{{ e.equipment.type }}</div>
-        <div class="type-title">{{ e.count }} available in {{ e.company.name }}</div>
-      </div>
-        <mat-card-title class="title-container">
-          <p>{{ e.equipment.name }}</p>
-        </mat-card-title>
-        <mat-card-content class="card-content">
-          <div class="card-number">{{ e.equipment.description }}</div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
-
-  <br/>
-  <br/>
-
+  <!-- <div>
   <div>
     <div class="title">
       Other administrators in company:
@@ -57,7 +35,57 @@
   <br/>
   <br/>
   
+  <button mat-icon-button (click)="addCompanyAdministrator()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div> -->
 
-<button class="bottom-right-button" mat-icon-button (click)="editProfile()">
+<!-- <button class="bottom-right-button" mat-icon-button (click)="editProfile()">
   <mat-icon>edit</mat-icon>
-</button>
+</button> -->
+<div class="equipment-view">
+  <h1 class="title">Equipment</h1>
+  <form class="search-form" [formGroup]="searchForm">
+    <div class="search-container">
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Seach by equipment name:</mat-label>
+      <input matInput placeholder="Name" formControlName="name" />
+    </mat-form-field>
+      <button mat-fab class="form-button" (click)="search()">
+        <mat-icon>search</mat-icon>
+      </button>
+      <button mat-fab class="form-button" (click)="refresh()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+    <div class="search-container">
+      <mat-chip-listbox>
+        <mat-chip-option (click)="selectChip('LABORATORY')" class="option-view">Laboratory</mat-chip-option>
+        <mat-chip-option (click)="selectChip('DIAGNOSTICS')" class="option-view">Diagnostics</mat-chip-option>
+        <mat-chip-option (click)="selectChip('DENTAL')" class="option-view">Dental</mat-chip-option>
+        <mat-chip-option  (click)="selectChip('SURGICAL')" class="option-view">Surgical</mat-chip-option>
+      </mat-chip-listbox>
+    </div>
+  </form>
+  <div class="card-container" *ngFor="let e of filteredEquipmentTrackings">
+    <mat-card class="card-equipment">
+      <div class="title-container">
+      <div class="type-title">{{ e.equipment.type }}</div>
+      <div class="type-title">{{ e.count }} available</div>
+    </div>
+      <mat-card-title class="title-container">
+        <p>{{ e.equipment.name }}</p>
+        <p>{{ e.equipment.price }} RSD</p>
+      </mat-card-title>
+      <mat-card-content class="title-container">
+        <p>{{ e.equipment.description }}</p>
+        <button class="add-button" (click)="addToCart(e.id || 0, e.count)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <button class="bottom-right-button" mat-icon-button (click)="showCart()">
+    <mat-icon>shopping_cart</mat-icon>
+  </button>
+</div>

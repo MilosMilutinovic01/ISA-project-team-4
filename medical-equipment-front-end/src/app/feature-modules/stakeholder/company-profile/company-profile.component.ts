@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StakeholderService } from '../stakeholder.service';
 import { Company } from '../../../shared/model/company.model';
 import { Address } from '../../../shared/model/address.model';
@@ -7,6 +7,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model';
 import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dialog.component';
+import { Item } from 'src/app/shared/model/item.model';
+import { Appointment } from 'src/app/shared/model/appointment.model';
 
 @Component({
   selector: 'app-company-profile',
@@ -14,6 +18,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
   styleUrls: ['./company-profile.component.css'],
 })
 export class CompanyProfileComponent {
+  id: string = '';
   company: Company = {
     id: NaN,
     name: '',
@@ -24,42 +29,85 @@ export class CompanyProfileComponent {
     averageRating: NaN,
   };
 
+  // appointment: Appointment = {
+  //   ccid: NaN,
+  //   startTime: '',
+  //   endTime: '',
+  //   companyAdministrator: { id:NaN,
+  //     name: '',
+  //     address: { id: NaN, street: '', city: '', country: '' },
+  //     email: '',
+  //     password: '',
+  //     lastname: '',
+  //     city: '',
+  //     country: '',
+  //     phoneNumber: '',
+  //     companyId: NaN },
+  //   customer: { id:NaN,
+  //     name: '',
+  //     lastname: '',
+  //     username: '',
+  //     address: { id: NaN, street: '', city: '', country: '' },
+  //     phoneNumber: '',
+  //     profession: '',
+  //     penaltyPoints: NaN,
+  //     password: '',
+  //     category: ''},
+    
+  // };
+
   otherAdministrators: CompanyAdministrator[] = [];
-  equipmentTrackings: EquipmentTracking[] = [];
   filteredEquipmentTrackings: EquipmentTracking[] = [];
+  equipmentTracking: EquipmentTracking[] = [];
+  selectedOption: string = 'empty';
+
+  equipmentCount: number = 0;
+  items: Item[] = [];
+
+  searchForm = new FormGroup({
+    name: new FormControl(''),
+  });
+
 
   constructor(
     private service: StakeholderService,
     private dialog: MatDialog,
     private router: Router,
+    private authService: AuthService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-   // this.getCompany();
-    this.getAllEquipmentTrackings();
-    this.getAllCompanyAdministrators();
+    this.route.params.subscribe((params) => {
+      this.id = params['id'];
+      
+      this.getCompany();
+      this.getAllEquipmentTrackings();
+      this.getAllCompanyAdministrators();
+    });
   }
 
-  // getCompany(): void {
-  //   this.service.getCompanyProfile().subscribe({
-  //     next: (result) => {
-  //       this.company = result;
-  //       console.log(this.company);
-  //     },
-  //     error: () => {
-  //       console.log(console.error);
-  //     },
-  //   });
-  // }
+  getCompany(): void {
+    this.service.getCompanyProfile(this.id).subscribe({
+      next: (result) => {
+        this.company = result;
+      },
+      error: () => {
+        console.log(console.error);
+      },
+    });
+  }
 
   editProfile(): void {
     this.router.navigate(['/editCompanyProfile']);
   }
 
+
+
   getAllEquipmentTrackings(): void {
     this.service.getAllEquipmentTrackings().subscribe({
       next: (result) => {
-        this.equipmentTrackings = result;
+        this.equipmentTracking = result;
         this.sort();
       },
       error: () => {
@@ -68,28 +116,97 @@ export class CompanyProfileComponent {
     });
   }
 
+  selectChip(type: string): void {
+    this.selectedOption = type;
+    const name = this.searchForm.value.name || 'empty';
+
+    this.service.searchEquipment(name, this.selectedOption).subscribe({
+      next: (result: EquipmentTracking[]) => {
+        this.equipmentTracking = result;
+        this.sort();
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+  }
+
+  search(): void {
+    const name = this.searchForm.value.name || 'empty';
+
+    this.service.searchEquipment(name, this.selectedOption).subscribe({
+      next: (result: EquipmentTracking[]) => {
+        this.equipmentTracking = result;
+        this.sort();
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+  }
+
   sort(): void {
-    for (let el of this.equipmentTrackings) {
+    for (let el of this.equipmentTracking) {
       if (el.company.id === this.company.id && el.count > 0) {
         this.filteredEquipmentTrackings.push(el);
       }
     }
   }
 
+  refresh(): void {
+    this.equipmentTracking = [];
+    this.searchForm.setValue({ name: '' });
+    this.selectedOption = 'empty';
+  }
+
   getAllCompanyAdministrators(): void {
     this.service.getAllCompanyAdministrators().subscribe({
       next: (result) => {
-        console.log(result);
         for (let a of result) {
           if (a.companyId === this.company.id && a.id !== -1) {
             this.otherAdministrators.push(a);
           }
         }
-        console.log(this.otherAdministrators);
       },
       error: () => {
         console.log(console.error);
       },
     });
   }
+
+  addToCart(id: number, availableCount: number): void {
+    const dialogRef = this.dialog
+      .open(AddToCartDialogComponent, {
+        width: '45%',
+        height: '35%',
+        data: { count: this.equipmentCount, availableCount },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if(result){
+          const item : Item = {
+            count: result || '',
+            customerId: this.authService.getCurrentUserId() || 0,
+            companyId: this.company.id || 0
+          };
+  
+          const selectedEquipment = this.filteredEquipmentTrackings.find(e => e.id === id)?.equipment;
+          item.equipment = selectedEquipment;
+  
+          this.service.createItem(item).subscribe({
+            next: (result) => {
+              this.items.push(result);
+            },
+            error: () => {
+              console.log(console.error);
+            },
+          });
+        }
+      });
+
+    }
+    
+    showCart():void{
+      this.router.navigate(['/cart', this.company.id ]);
+    }
 }

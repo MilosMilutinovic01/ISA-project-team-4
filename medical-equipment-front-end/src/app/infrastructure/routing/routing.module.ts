@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'companyRegistration', component: CompanyRegistrationComponent },
   { path: 'companiesView', component: CompaniesViewComponent },
   { path: 'administratorRegistration/:type',component: AdministratorRegistrationComponent,},
-  { path: 'companyProfile', component: CompanyProfileComponent },
+  { path: 'companyProfile/:id', component: CompanyProfileComponent },
   { path: 'editCompanyProfile', component: EditCompanyProfileComponent },
   {
     path: 'companyAdministratorProfile',

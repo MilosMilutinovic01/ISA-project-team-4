@@ -18,9 +18,9 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    @Override
+    /*@Override
     public Appointment Create(CreateAppointmentDTO createAppointmentDto) throws Exception {
-        Appointment appointment = new Appointment(createAppointmentDto);
+        /*Appointment appointment = new Appointment(createAppointmentDto);
         LocalDateTime startTime = LocalDateTime.parse(createAppointmentDto.startTime, formatter);
         appointment.setStartTime(startTime);
         LocalDateTime endTime = LocalDateTime.parse(createAppointmentDto.endTime, formatter);
@@ -31,7 +31,7 @@ public class AppointmentServiceImpl implements AppointmentService{
         }
         Appointment savedAppointment = appointmentRepository.save(appointment);
         return savedAppointment;
-    }
+    }*/
 
     @Override
     public List<Appointment> GetAll() throws Exception {
