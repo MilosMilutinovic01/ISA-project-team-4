@@ -66,7 +66,7 @@ export class EditCustomerProfileComponent implements OnInit {
           this.profile = result;
           this.editProfileForm.patchValue({
             name: result.name,
-            lastname: result.name,
+            lastname: result.lastname,
             street: result.address.street,
             city: result.address.city,
             country: result.address.country,

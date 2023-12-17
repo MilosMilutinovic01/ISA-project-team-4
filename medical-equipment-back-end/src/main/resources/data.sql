@@ -45,7 +45,6 @@ VALUES (true, -5);
 INSERT INTO stakeholders.addresses(
     id, city, country, street)
 VALUES (-5, 'Novi Sad', 'Srbija', 'Cara Dusana 12');
-
 INSERT INTO stakeholders.companies(
     average_rating, end_time, start_time, address_id, id, description, name)
 VALUES (4,'14:30','08:30', -5, -1, 'Neki opiss', 'MEDLAB');
@@ -100,4 +99,31 @@ VALUES (-5, 240, -3, -4);
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
 VALUES (-6, 100, -2, -3);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, company_administrator_id)
+VALUES (-1, '2023-12-29T17:00:00.000Z', '2023-12-29T16:30:00.000Z', -2);
+
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, company_administrator_id)
+VALUES (-2, '2023-12-29T19:00:00.000Z', '2023-12-29T18:30:00.000Z', -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, company_administrator_id)
+VALUES (-3, '2023-12-30T13:00:00.000Z', '2023-12-30T12:30:00.000Z', -2);
+
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, company_administrator_id)
+VALUES (-4, '2023-12-30T11:00:00.000Z', '2023-12-30T10:30:00.000Z', -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, company_administrator_id)
+VALUES (-5, '2023-12-27T09:00:00.000Z', '2023-12-27T08:30:00.000Z', -2);
+
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, company_administrator_id)
+VALUES (-6, '2023-12-26T10:00:00.000Z', '2023-12-26T09:30:00.000Z', -2);
 

@@ -50,26 +50,30 @@ export class EditCompanyAdministratorProfileComponent {
   }
 
   getCompanyAdministratorProfile(): void {
-    this.service.getCompanyAdministratorProfile(this.authService.getCurrentUserId().toString()).subscribe({
-      next: (result: CompanyAdministrator) => {
-        this.profile = result;
-        console.log('ID PROFILA ');
-        console.log(this.profile.id);
-        this.editProfileForm.patchValue({
-          name: result.name,
-          street: result.address.street,
-          city: result.address.city,
-          country: result.address.country,
-          email: result.username,
-          password: result.password,
-          lastname: result.lastname,
-          phoneNumber: result.phoneNumber,
-        });
-      },
-      error: () => {
-        console.log(console.error());
-      },
-    });
+    this.service
+      .getCompanyAdministratorProfile(
+        this.authService.getCurrentUserId().toString()
+      )
+      .subscribe({
+        next: (result: CompanyAdministrator) => {
+          this.profile = result;
+          console.log('ID PROFILA ');
+          console.log(this.profile.id);
+          this.editProfileForm.patchValue({
+            name: result.name,
+            street: result.address.street,
+            city: result.address.city,
+            country: result.address.country,
+            email: result.username,
+            password: result.password,
+            lastname: result.lastname,
+            phoneNumber: result.phoneNumber,
+          });
+        },
+        error: () => {
+          console.log(console.error());
+        },
+      });
   }
 
   saveChanges(): void {

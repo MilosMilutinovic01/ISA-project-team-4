@@ -52,6 +52,7 @@ public class CompanyController {
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+
     public ResponseEntity<List<Company>> getAll(){
         List<Company> companies = null;
         try {
@@ -96,8 +97,7 @@ public class CompanyController {
     @GetMapping(value = "/profile/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<UpdateCompanyDTO> getCompany (@PathVariable String id) throws Exception {
-        CompanyAdministrator admin = companyAdministratorService.Get(id);
-        Company company = companyService.Get(admin.getCompanyId().toString());
+        Company company = companyService.Get(id);
         if (company == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -106,6 +106,7 @@ public class CompanyController {
 
     @PutMapping(value = "/profile/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public ResponseEntity<Company> updateCompany(@RequestBody UpdateCompanyDTO companyDTO) {
         Company company = null;
         try {

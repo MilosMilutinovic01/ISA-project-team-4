@@ -10,10 +10,10 @@ import { EditCompanyProfileComponent } from './edit-company-profile/edit-company
 import { CompanyAdministratorProfileComponent } from './company-administrator-profile/company-administrator-profile.component';
 import { CompaniesViewComponent } from './companies-view/companies-view.component';
 import { FilterCompaniesDialogComponent } from './filter-companies-dialog/filter-companies-dialog.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import { EditCompanyAdministratorProfileComponent } from './edit-company-administrator-profile/edit-company-administrator-profile.component'
-import { EquipmentViewComponent } from './equipment-view/equipment-view.component'
-import {MatChip, MatChipsModule} from '@angular/material/chips';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { EditCompanyAdministratorProfileComponent } from './edit-company-administrator-profile/edit-company-administrator-profile.component';
+import { EquipmentViewComponent } from './equipment-view/equipment-view.component';
+import { MatChip, MatChipsModule } from '@angular/material/chips';
 import { CompanyCalendarComponent } from './company-calendar/company-calendar.component';
 import { DxCalendarModule } from 'devextreme-angular';
 import { DxSchedulerModule, DxTemplateModule } from 'devextreme-angular';
@@ -21,6 +21,16 @@ import { AdministratorRegistrationComponent } from './administrator-registration
 import { MatDialogModule } from '@angular/material/dialog';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AppointmentRegistrationComponent } from './appointment-registration/appointment-registration.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialog.component';
+import { CartComponent } from './cart/cart.component';
+import { SelectAppointmentDialogComponent } from './select-appointment-dialog/select-appointment-dialog.component';
 @NgModule({
   declarations: [
     CustomerProfileComponent,
@@ -35,7 +45,16 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     EquipmentViewComponent,
     CompanyCalendarComponent,
     AdministratorRegistrationComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    AppointmentRegistrationComponent,
+    AddToCartDialogComponent,
+    CartComponent,
+    AddToCartDialogComponent,
+    CartComponent,
+    CompanyCalendarComponent,
+    AdministratorRegistrationComponent,
+    ChangePasswordComponent,
+    SelectAppointmentDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -47,8 +66,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     DxCalendarModule,
     DxSchedulerModule,
     MatDialogModule,
-    FontAwesomeModule
-
+    FontAwesomeModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
   ],
   exports: [
     CustomerProfileComponent,
@@ -61,13 +85,17 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    AddToCartDialogComponent,
+    CartComponent,
     CompanyCalendarComponent,
     DxCalendarModule,
     DxSchedulerModule,
     AdministratorRegistrationComponent,
     MatDialogModule,
     ChangePasswordComponent,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AddToCartDialogComponent, 
+    CartComponent
   ]
 })
 export class StakeholderModule {}

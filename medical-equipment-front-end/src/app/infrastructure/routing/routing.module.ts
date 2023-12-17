@@ -14,6 +14,7 @@ import { CompanyAdministratorProfileComponent } from 'src/app/feature-modules/st
 import { EditCompanyAdministratorProfileComponent } from 'src/app/feature-modules/stakeholder/edit-company-administrator-profile/edit-company-administrator-profile.component';
 import { LoginComponent } from '../auth/login/login.component';
 import { VerificationComponent } from '../auth/verification/verification.component';
+import { CartComponent } from 'src/app/feature-modules/stakeholder/cart/cart.component';
 import { CompanyCalendarComponent } from 'src/app/feature-modules/stakeholder/company-calendar/company-calendar.component';
 import { AdministratorRegistrationComponent } from 'src/app/feature-modules/stakeholder/administrator-registration/administrator-registration.component';
 import { ChangePasswordComponent } from 'src/app/feature-modules/stakeholder/change-password/change-password.component';
@@ -25,8 +26,11 @@ const routes: Routes = [
   { path: 'editCustomerProfile', component: EditCustomerProfileComponent },
   { path: 'companyRegistration', component: CompanyRegistrationComponent },
   { path: 'companiesView', component: CompaniesViewComponent },
-  { path: 'administratorRegistration/:type',component: AdministratorRegistrationComponent,},
-  { path: 'companyProfile', component: CompanyProfileComponent },
+  { path: 'companyProfile/:id', component: CompanyProfileComponent },
+  {
+    path: 'administratorRegistration/:type',
+    component: AdministratorRegistrationComponent,
+  },
   { path: 'editCompanyProfile', component: EditCompanyProfileComponent },
   {
     path: 'companyAdministratorProfile',
@@ -39,6 +43,7 @@ const routes: Routes = [
   { path: 'equipment', component: EquipmentViewComponent },
   { path: '', component: HomeComponent },
   { path: 'api/auth/verify/:id', component: VerificationComponent },
+  { path: 'cart/:id', component: CartComponent },
   { path: 'companyCalendar', component: CompanyCalendarComponent },
   { path: 'changePassword', component: ChangePasswordComponent },
 ];
