@@ -13,10 +13,10 @@ public class Appointment {
     private Long id;
 
     @Column(name = "startTime")
-    private LocalDateTime start;
+    private LocalDateTime startTime;
 
     @Column(name = "endTime")
-    private LocalDateTime end;
+    private LocalDateTime endTime;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "company_administrator_id", referencedColumnName = "company_administrator_id")
@@ -32,8 +32,8 @@ public class Appointment {
 
     public Appointment(Long id, LocalDateTime start, LocalDateTime end, CompanyAdministrator companyAdministrator, Customer customer) {
         this.id = id;
-        this.start = start;
-        this.end = end;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.companyAdministrator = companyAdministrator;
         this.customer = customer;
     }
@@ -46,20 +46,20 @@ public class Appointment {
         this.id = id;
     }
 
-    public LocalDateTime getStart() {
-        return start;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
-    public void setStart(LocalDateTime start) {
-        this.start = start;
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 
-    public LocalDateTime getEnd() {
-        return end;
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     public CompanyAdministrator getCompanyAdministrator() {
