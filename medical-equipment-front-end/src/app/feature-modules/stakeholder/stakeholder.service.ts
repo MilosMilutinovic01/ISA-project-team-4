@@ -12,6 +12,7 @@ import { CreateItem, Item } from 'src/app/shared/model/item.model';
 import { SystemAdministrator } from 'src/app/shared/model/system-administrator.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { Appointment } from 'src/app/shared/model/appointment.model';
+import { UpdateItem } from 'src/app/shared/model/update-item.model';
 
 @Injectable({
   providedIn: 'root',
@@ -145,11 +146,14 @@ export class StakeholderService {
     );
   }
 
-  createItem(item: CreateItem): Observable<CreateItem>{
-    return this.http.post<CreateItem>(environment.apiHost + 'items/create', item);
+  createItem(item: CreateItem): Observable<CreateItem> {
+    return this.http.post<CreateItem>(
+      environment.apiHost + 'items/create',
+      item
+    );
   }
 
-  getItemsByCustomerId(id: string): Observable<Item[]>{
+  getItemsByCustomerId(id: string): Observable<Item[]> {
     return this.http.get<Item[]>(environment.apiHost + 'items/' + id);
   }
 
@@ -160,14 +164,20 @@ export class StakeholderService {
   }
 
   getSystemAdministrator(id: number): Observable<SystemAdministrator> {
-    return this.http.get<SystemAdministrator>(environment.apiHost + 'systemAdministrators/' + id);
+    return this.http.get<SystemAdministrator>(
+      environment.apiHost + 'systemAdministrators/' + id
+    );
   }
 
-  updateSystemAdministrator(admin: SystemAdministrator): Observable<SystemAdministrator> {
+  updateSystemAdministrator(
+    admin: SystemAdministrator
+  ): Observable<SystemAdministrator> {
     console.log(admin);
     return this.http.put<SystemAdministrator>(
-       environment.apiHost + 'systemAdministrators/changePassword', admin);
-   }
+      environment.apiHost + 'systemAdministrators/changePassword',
+      admin
+    );
+  }
 
   getAppointments(): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(environment.apiHost + 'appointments/');
@@ -182,8 +192,13 @@ export class StakeholderService {
   }
 
   getAllAppointments(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(
-      environment.apiHost + 'appointments/'
+    return this.http.get<Appointment[]>(environment.apiHost + 'appointments/');
+  }
+
+  reserveAppointment(items: UpdateItem[]): Observable<boolean> {
+    return this.http.post<boolean>(
+      environment.apiHost + 'items/reserve',
+      items
     );
   }
 }

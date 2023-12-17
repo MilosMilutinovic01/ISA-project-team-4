@@ -11,6 +11,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { DxCalendarModule } from 'devextreme-angular';
 import { Company } from 'src/app/shared/model/company.model';
 import { SelectIrregularAppointmentDialogComponent } from '../select-irregular-appointment-dialog/select-irregular-appointment-dialog.component';
+import { UpdateItem } from 'src/app/shared/model/update-item.model';
 
 @Component({
   selector: 'app-cart',
@@ -71,7 +72,8 @@ export class CartComponent {
   selectedDate = new Date(Date.now());
   calendar_value: Date = new Date();
   calendar_value_irregular: Date = new Date();
-  selected_appointment: Date = new Date();
+  selected_appointment: Appointment | undefined;
+  isSelected: boolean = false;
 
   calendar_valueChanged(e: any) {
     const previousValue = e.previousValue;
@@ -201,7 +203,8 @@ export class CartComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.selectedAppointment = result.selectedAppointment;
+        this.selected_appointment = result.selectedAppointment;
+        this.isSelected = true;
       }
     });
   }
@@ -287,5 +290,41 @@ export class CartComponent {
     return this.allowedDates.some((allowedDate) =>
       this.isSameDate(date, allowedDate)
     );
+  }
+
+  finish() {
+    // Create an array of UpdateItem objects
+    const updateItems: UpdateItem[] = [];
+
+    for (let i = 0; i < this.items.length; i++) {
+      this.items[i].appointment = this.selected_appointment;
+
+      const updateItem: UpdateItem = {
+        Id: this.items[i].id || 0,
+        Count: this.items[i].count,
+        AppointmentId: this.items[i].appointment?.id || 0,
+        CompanyId: this.items[i].company.id || 0,
+        CustomerId: this.items[i].customer.id || 0,
+        EquipmentId: this.items[i].equipment?.id || 0,
+      };
+
+      updateItems.push(updateItem);
+
+      console.log('item ', i, ': ', this.items[i]);
+    }
+
+    console.log("UPDATE: ", updateItems);
+    this.service.reserveAppointment(updateItems).subscribe({
+      next: (result: boolean) => {
+        if (result === true) {
+          console.log('Update successful');
+        } else {
+          console.log('Update failed');
+        }
+      },
+      error: (error) => {
+        console.log('Error during update:', error);
+      },
+    });
   }
 }

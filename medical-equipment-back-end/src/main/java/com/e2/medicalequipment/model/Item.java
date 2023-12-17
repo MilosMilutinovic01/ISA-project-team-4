@@ -47,6 +47,28 @@ public class Item {
         this.count = itemDto.count;
     }
 
+    public Item(Item item) {
+        this.id = item.id;
+        this.count = item.count;
+
+        if (item.appointment != null) {
+            this.appointment = new Appointment(item.appointment);
+        }
+
+        if (item.equipment != null) {
+            this.equipment = new Equipment(item.equipment);
+        }
+
+        if (item.customer != null) {
+            this.customer = new Customer(item.customer);
+        }
+
+        if (item.company != null) {
+            this.company = new Company(item.company);
+        }
+    }
+
+
     public Long getId() {
         return id;
     }
