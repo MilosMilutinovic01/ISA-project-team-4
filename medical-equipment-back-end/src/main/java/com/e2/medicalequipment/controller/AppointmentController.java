@@ -23,6 +23,7 @@ public class AppointmentController {
    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public ResponseEntity<Appointment> registerAppointment(@RequestBody CreateAppointmentDTO appointmentDTO) {
+        System.out.println("\n\nCreate appointment");
         Appointment savedAppointment = null;
         try {
             System.out.println("Thread id: " + Thread.currentThread().getId());

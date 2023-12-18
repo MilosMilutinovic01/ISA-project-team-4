@@ -42,6 +42,7 @@ public class AppointmentServiceImpl implements AppointmentService{
         Appointment savedAppointment = appointmentRepository.save(appointment);
         return savedAppointment;
     }
+
     @Override
     public Appointment CreateIrregular(CreateAppointmentDTO createAppointmentDto) throws Exception {
 

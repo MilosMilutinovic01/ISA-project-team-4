@@ -10,4 +10,6 @@ import java.util.Set;
 public interface EquipmentTrackingService {
     List<EquipmentTrackingDTO> GetAll() throws Exception;
     List<EquipmentTrackingDTO> GetWanted(String searchName,String type) throws Exception;
+    EquipmentTracking Update(EquipmentTrackingDTO equipmentTrackingDTO) throws Exception;
+    EquipmentTracking Get(String id) throws Exception;
 }

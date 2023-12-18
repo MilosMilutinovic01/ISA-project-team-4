@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface EquipmentService {
     List<EquipmentDTO> GetAll() throws Exception;
-
+    Equipment Create(EquipmentDTO equipmentDTO) throws Exception;
     public Equipment Get(Long id);
 }
 

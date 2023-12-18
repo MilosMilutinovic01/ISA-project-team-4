@@ -30,8 +30,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialog.component';
 import { CartComponent } from './cart/cart.component';
+import { EquipmentRegistrationComponent } from './equipment-registration/equipment-registration.component';
+import { EditEquipmentTrackingComponent } from './edit-equipment-tracking/edit-equipment-tracking.component';
 import { SelectAppointmentDialogComponent } from './select-appointment-dialog/select-appointment-dialog.component';
 import { SelectIrregularAppointmentDialogComponent } from './select-irregular-appointment-dialog/select-irregular-appointment-dialog.component';
+
 @NgModule({
   declarations: [
     CustomerProfileComponent,
@@ -44,14 +47,11 @@ import { SelectIrregularAppointmentDialogComponent } from './select-irregular-ap
     CompanyAdministratorProfileComponent,
     EditCompanyAdministratorProfileComponent,
     EquipmentViewComponent,
-    CompanyCalendarComponent,
-    AdministratorRegistrationComponent,
-    ChangePasswordComponent,
     AppointmentRegistrationComponent,
     AddToCartDialogComponent,
     CartComponent,
-    AddToCartDialogComponent,
-    CartComponent,
+    EquipmentRegistrationComponent,
+    EditEquipmentTrackingComponent,
     CompanyCalendarComponent,
     AdministratorRegistrationComponent,
     ChangePasswordComponent,

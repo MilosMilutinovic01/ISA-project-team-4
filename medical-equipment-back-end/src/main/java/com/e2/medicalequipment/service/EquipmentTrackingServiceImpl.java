@@ -41,4 +41,20 @@ public class EquipmentTrackingServiceImpl implements EquipmentTrackingService {
                     .filter(e -> type.equals("empty") || e.equipment.type.toString().equals(type))
                     .collect(Collectors.toList());
     }
+    public EquipmentTracking Get(String id) {
+        return equipmentTrackingRepository.findById(Long.valueOf(id)).get();
+    }
+    public EquipmentTracking Update(EquipmentTrackingDTO dto) throws Exception{
+        EquipmentTracking equipmentTracking = new EquipmentTracking(dto);
+        Equipment equipment = new Equipment(dto.equipment);
+        Company company = new Company(dto.company);
+        if ((equipmentTracking.getId() == null) || (equipment.getId() == null) || (company.getId() == null)){
+            throw new Exception("ID must not be null for updating entity.");
+        }
+        equipmentTracking.setCompany(company);
+        equipmentTracking.setEquipment(equipment);
+        equipmentTracking.setCount(dto.count);
+        EquipmentTracking savedEquipmentTracking = equipmentTrackingRepository.save(equipmentTracking);
+        return savedEquipmentTracking;
+    }
 }

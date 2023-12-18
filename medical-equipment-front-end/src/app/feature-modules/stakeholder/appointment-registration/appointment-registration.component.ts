@@ -104,7 +104,7 @@ export class AppointmentRegistrationComponent {
     };
 
     console.log('Appointment ')
-    console.log(appointment)
+   // console.log(appointment)
 
     if (this.appointmentForm.valid) {
       this.service.registerAppointment(appointment).subscribe(
@@ -118,5 +118,32 @@ export class AppointmentRegistrationComponent {
 
       this.dialogRef.close(appointment);
     }
+  }
+    
+  getCompanyAdministratorProfile(): CompanyAdministrator {
+    let companyAdministrator: CompanyAdministrator = {
+      id: NaN,
+      name: '',
+      address: { id: NaN, street:'', city:'',country:''},
+      username: '',
+      password: '',
+      lastname: '',
+      city: '',
+      country: '',
+      phoneNumber: '',
+      companyId: NaN
+    };
+
+    this.service.getCompanyAdministratorProfile(this.authService.getCurrentUserId().toString()).subscribe({
+      next: (result: CompanyAdministrator) => {
+        this.sa = result;
+        console.log("CompanyAdmin this.profile:");
+        console.log(this.sa);
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+    return companyAdministrator;
   }
 }

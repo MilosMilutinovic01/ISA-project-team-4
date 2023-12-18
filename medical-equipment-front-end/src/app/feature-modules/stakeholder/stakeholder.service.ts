@@ -190,7 +190,19 @@ export class StakeholderService {
   registerIrregularAppointment(appointment: Appointment): Observable<Appointment> {
     return this.http.post<Appointment>(environment.apiHost + 'appointments/registerIrregular', appointment);
   }
+  
+  registerNewEquipment(equipment: Equipment): Observable<Equipment> {
+    return this.http.post<Equipment>(environment.apiHost + 'equipment/register', equipment);
+  }
 
+  getEquipmentTracking(id: string): Observable<EquipmentTracking> {
+    return this.http.get<EquipmentTracking>(environment.apiHost + 'equipmentTracking/'+ id);
+  }
+
+  editEquipmentTracking(equipmentTracking: EquipmentTracking): Observable<EquipmentTracking> {
+    return this.http.put<EquipmentTracking>(environment.apiHost + 'equipmentTracking/edit', equipmentTracking);
+  }
+  
   getAllAppointments(): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(environment.apiHost + 'appointments/');
   }
@@ -212,5 +224,5 @@ export class StakeholderService {
     return this.http.get<CustomerProfile>(
       environment.apiHost + 'items/byAppointment/' + id
     );
-  }
  }
+}
