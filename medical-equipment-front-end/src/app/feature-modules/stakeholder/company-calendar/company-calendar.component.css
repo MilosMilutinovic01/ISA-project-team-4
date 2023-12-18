@@ -1,0 +1,28 @@
+.company-schedule{
+    padding: 50px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    align-items: center;
+}
+
+.header{
+    font-size: 30px;
+    font-weight: 400;  
+}
+
+::ng-deep .dx-scheduler-cell-sizes-horizontal {
+    width: 20px !important;
+    border: 1px solid;
+    border-color:black;
+    border-radius: 3px;
+}
+
+
+::ng-deep .dx-scheduler {
+    border: 1px solid;
+    border-color:black;
+    border-radius: 3px;
+}

@@ -2,6 +2,7 @@ INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-1, 'Kralj
 INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-2, 'Vlasenica', 'BIH', 'Karadjordjeva 17b');
 INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-3, 'Bijeljina', 'BIH', 'ulica1');
 INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-4, 'Novi Sad', 'Srbija', 'ulica2');
+INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-8, 'Beograd', 'Srbija', 'ulica3');
 
 INSERT INTO stakeholders.users(
 	id, enabled, lastname, name, password, phone_number, role, username, address_id)
@@ -19,6 +20,10 @@ INSERT INTO stakeholders.users(
     id, enabled, lastname, name, password, phone_number, role, username, address_id)
 VALUES (-4, true, 'Company', 'Verica', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 1, 'verica@gmail.com', -4);
 
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-5, true, 'System', 'Marija', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504909001, 0, 'marija@gmail.com', -8);
+
 INSERT INTO stakeholders.customers(
     category, penalty_points, profession, customer_id)
 VALUES (0, 0, 'student', -1);
@@ -33,6 +38,9 @@ INSERT INTO stakeholders.company_administrators(
     company_id, company_administrator_id)
 VALUES (-3, -4);
 
+INSERT INTO stakeholders.system_administrators(
+    has_logged_before, system_administrator_id)
+VALUES (true, -5);
 
 INSERT INTO stakeholders.addresses(
     id, city, country, street)
@@ -91,3 +99,39 @@ VALUES (-5, 240, -3, -4);
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
 VALUES (-6, 100, -2, -3);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, company_administrator_id)
+VALUES (-1, '2023-12-29T13:00:00.000Z', '2023-12-29T12:30:00.000Z', -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, company_administrator_id)
+VALUES (-2, '2023-12-29T11:00:00.000Z', '2023-12-29T10:30:00.000Z', -2);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id)
+VALUES (-1, 2, -1, -1, -1, -1);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id)
+VALUES (-2, 3, -2, -1, -1, -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, company_administrator_id)
+VALUES (-3, '2023-12-30T13:00:00.000Z', '2023-12-30T12:30:00.000Z', -2);
+
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, company_administrator_id)
+VALUES (-4, '2023-12-30T11:00:00.000Z', '2023-12-30T10:30:00.000Z', -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, company_administrator_id)
+VALUES (-5, '2023-12-27T12:00:00.000Z', '2023-12-27T11:30:00.000Z', -2);
+
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, company_administrator_id)
+VALUES (-6, '2023-12-26T10:00:00.000Z', '2023-12-26T09:30:00.000Z', -2);
+
+

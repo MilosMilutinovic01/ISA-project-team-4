@@ -41,5 +41,8 @@ public class EquipmentServiceImpl implements EquipmentService {
         Equipment savedEquipment = equipmentRepository.save(equipment);
         return savedEquipment;
     }
+    public Equipment Get(Long id) {
+        return equipmentRepository.findById(id).orElse(null);
+    }
 }
 

@@ -37,6 +37,18 @@
     padding: 10px;
   }
 
+  
+.calendar-button {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+}
+
 .title{
     text-align: center;
     font-size: 100;
@@ -54,26 +66,25 @@
   }
   
   .card-container {
-      justify-content: center;
-      margin: 0 auto;
-      flex-direction: column;
-    }
-    .title-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    
-    .card-equipment {
-      flex: auto;
-      justify-content: center;
-      height: 25%;
-      width: 75%;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-      margin: 3vh 0vw 3vh 15vw;
-      padding: 20px;
-    }
-
+    justify-content: center;
+    margin: 0 auto;
+    flex-direction: column;
+  }
+  .title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .card-equipment {
+    flex: auto;
+    justify-content: center;
+    height: 25%;
+    width: 75%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin: 3vh 0vw 3vh 15vw;
+    padding: 20px;
+  }
     .category-title {
       background-color: #ccc; 
       padding: 10px; 

@@ -15,26 +15,12 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
   styleUrls: ['./appointment-registration.component.css']
 })
 export class AppointmentRegistrationComponent {
-  user: User | undefined;
-  
-  companyAdministrator: CompanyAdministrator = {
-    id: NaN,
-    name: '',
-    address: { id: NaN, street:'', city:'',country:''},
-    email: '',
-    password: '',
-    lastname: '',
-    city: '',
-    country: '',
-    phoneNumber: '',
-    companyId: NaN
-  };
-
+  user: any;
   administrators: CompanyAdministrator[] = [
     {
       name: 'Jovan',
       address: { street: '123 Main St', city: 'City', country: 'Country' },
-      email: 'jovan@example.com',
+      username: 'jovan@example.com',
       lastname: 'Lukic',
       city: 'City',
       country: 'Country',
@@ -44,7 +30,7 @@ export class AppointmentRegistrationComponent {
     {
       name: 'Milica',
       address: { street: '123 Main St', city: 'City', country: 'Country' },
-      email: 'john.doe@example.com',
+      username: 'john.doe@example.com',
       lastname: 'Savic',
       city: 'City',
       country: 'Country',
@@ -54,6 +40,7 @@ export class AppointmentRegistrationComponent {
   ];
 
   selectedAdmin: CompanyAdministrator = {} as CompanyAdministrator;
+  sa: any;
   minDate = new Date();
   
   appointmentForm = new FormGroup({
@@ -68,6 +55,20 @@ export class AppointmentRegistrationComponent {
     private authService: AuthService,
     private dialogRef: MatDialogRef<AppointmentRegistrationComponent>
   ) {}
+
+  ngOnInit(): void {
+    this.service.getCompanyAdministratorProfile(this.authService.getCurrentUserId().toString()).subscribe({
+      next: (result: CompanyAdministrator) => {
+        this.sa = result;
+        console.log("CompanyAdmin this.profile:");
+        console.log(this.sa);
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+
+  }
   
   dateFilter = (date: Date | null): boolean => {
     const today = new Date();
@@ -99,7 +100,7 @@ export class AppointmentRegistrationComponent {
     const appointment: Appointment = {
       startTime: startDateInput.toString(),
       endTime: endDate.toString(),
-      companyAdministrator: this.getCompanyAdministratorProfile(),
+      companyAdministrator: this.sa,
     };
 
     console.log('Appointment ')
@@ -124,7 +125,7 @@ export class AppointmentRegistrationComponent {
       id: NaN,
       name: '',
       address: { id: NaN, street:'', city:'',country:''},
-      email: '',
+      username: '',
       password: '',
       lastname: '',
       city: '',
@@ -135,9 +136,9 @@ export class AppointmentRegistrationComponent {
 
     this.service.getCompanyAdministratorProfile(this.authService.getCurrentUserId().toString()).subscribe({
       next: (result: CompanyAdministrator) => {
-        this.companyAdministrator = result;
+        this.sa = result;
         console.log("CompanyAdmin this.profile:");
-        console.log(this.companyAdministrator);
+        console.log(this.sa);
       },
       error: () => {
         console.log(console.error());

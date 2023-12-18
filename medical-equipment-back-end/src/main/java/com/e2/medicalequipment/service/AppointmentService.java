@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface AppointmentService {
     Appointment Create(CreateAppointmentDTO appointmentDTO) throws Exception;
+    Appointment CreateIrregular(CreateAppointmentDTO appointmentDTO) throws Exception;
     List<Appointment> GetAll() throws Exception;
+    List<Appointment> GetByCompanyId(Long companyId) throws Exception;
 }

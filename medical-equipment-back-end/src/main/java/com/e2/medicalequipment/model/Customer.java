@@ -63,6 +63,14 @@ public class Customer extends User{
         this.category = updateCustomerDTO.category;
     }
 
+    public Customer(Customer customer) {
+        super(customer);
+        this.profession = customer.profession;
+        this.penaltyPoints = customer.penaltyPoints;
+        this.category = customer.category;
+        this.verificationToken = customer.verificationToken;
+    }
+
     public String getProfession() {
         return profession;
     }

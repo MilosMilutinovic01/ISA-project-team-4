@@ -29,7 +29,7 @@ public class CompanyAdministrator extends User{
                 phoneNumber,
                 password,
                 role,
-                enabled);
+                true);
         this.companyId = companyId;
     }
 
@@ -37,10 +37,12 @@ public class CompanyAdministrator extends User{
         super(null,
                 companyAdministratorDTO.name,
                 companyAdministratorDTO.lastname,
-                companyAdministratorDTO.email,
+                companyAdministratorDTO.username,
                 companyAdministratorDTO.address,
                 companyAdministratorDTO.phoneNumber,
-                companyAdministratorDTO.password);
+                companyAdministratorDTO.password,
+                Role.COMPANY_ADMINISTRATOR,
+                true);
         this.companyId = companyAdministratorDTO.companyId;
     }
 
@@ -48,12 +50,18 @@ public class CompanyAdministrator extends User{
         super(companyAdministratorDTO.id,
                 companyAdministratorDTO.name,
                 companyAdministratorDTO.lastname,
-                companyAdministratorDTO.email,
+                companyAdministratorDTO.username,
                 companyAdministratorDTO.address,
                 companyAdministratorDTO.phoneNumber,
-                companyAdministratorDTO.password);
+                companyAdministratorDTO.password,
+                Role.COMPANY_ADMINISTRATOR,
+                true);
         this.companyId = companyAdministratorDTO.companyId;
 
+    }
+
+    public CompanyAdministrator(CompanyAdministrator companyAdministrator) {
+        this.companyId = companyAdministrator.companyId;
     }
 
     public Long getCompanyId() {

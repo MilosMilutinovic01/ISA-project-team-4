@@ -4,7 +4,6 @@ import com.e2.medicalequipment.dto.CreateAddressDTO;
 import com.e2.medicalequipment.dto.UpdateAddressDTO;
 import jakarta.persistence.*;
 
-import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
 
 @Entity
 @Table(schema = "stakeholders", name = "addresses")

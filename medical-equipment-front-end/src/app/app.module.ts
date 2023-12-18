@@ -13,6 +13,7 @@ import { StakeholderModule } from './feature-modules/stakeholder/stakeholder.mod
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
 
+
 @NgModule({
   declarations: [AppComponent, LoginComponent],
   imports: [

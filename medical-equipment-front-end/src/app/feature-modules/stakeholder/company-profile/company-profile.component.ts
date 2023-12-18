@@ -4,13 +4,12 @@ import { StakeholderService } from '../stakeholder.service';
 import { Company } from '../../../shared/model/company.model';
 import { Address } from '../../../shared/model/address.model';
 import { MatDialog } from '@angular/material/dialog';
-import { CompanyAdministartorRegistrationComponent } from '../company-administartor-registration/company-administartor-registration.component';
 import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model';
 import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dialog.component';
-import { Item } from 'src/app/shared/model/item.model';
+import { CreateItem, Item } from 'src/app/shared/model/item.model';
 import { Appointment } from 'src/app/shared/model/appointment.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AppointmentRegistrationComponent } from '../appointment-registration/appointment-registration.component';
@@ -36,32 +35,6 @@ export class CompanyProfileComponent {
   };
 
   user: User | undefined;
-  // appointment: Appointment = {
-  //   ccid: NaN,
-  //   startTime: '',
-  //   endTime: '',
-  //   companyAdministrator: { id:NaN,
-  //     name: '',
-  //     address: { id: NaN, street: '', city: '', country: '' },
-  //     email: '',
-  //     password: '',
-  //     lastname: '',
-  //     city: '',
-  //     country: '',
-  //     phoneNumber: '',
-  //     companyId: NaN },
-  //   customer: { id:NaN,
-  //     name: '',
-  //     lastname: '',
-  //     username: '',
-  //     address: { id: NaN, street: '', city: '', country: '' },
-  //     phoneNumber: '',
-  //     profession: '',
-  //     penaltyPoints: NaN,
-  //     password: '',
-  //     category: ''},
-    
-  // };
 
   otherAdministrators: CompanyAdministrator[] = [];
   filteredEquipmentTrackings: EquipmentTracking[] = [];
@@ -74,7 +47,7 @@ export class CompanyProfileComponent {
     id:NaN,
     name: '',
     address: { id: NaN, street: '', city: '', country: '' },
-    email: '',
+    username: '',
     password: '',
     lastname: '',
     city: '',
@@ -83,7 +56,6 @@ export class CompanyProfileComponent {
     companyId: NaN 
   }
   equipmentCount: number = 0;
-  items: Item[] = [];
   selectedEquipmentTracking: EquipmentTracking = {
     id: NaN,
     count: 0,
@@ -104,6 +76,7 @@ export class CompanyProfileComponent {
       price: 0
     }
   }
+  items: CreateItem[] = [];
 
   searchForm = new FormGroup({
     name: new FormControl(''),
@@ -159,19 +132,7 @@ export class CompanyProfileComponent {
     this.router.navigate(['/editCompanyProfile']);
   }
 
-  addCompanyAdministrator(): void {
-    const dialogRef = this.dialog
-      .open(CompanyAdministartorRegistrationComponent, {
-        width: '50%',
-        height: '100%',
-        data: { compId: this.company.id },
-      })
-      .afterClosed()
-      .subscribe((result) => {
-        this.otherAdministrators = [];
-        this.getAllCompanyAdministrators();
-      });
-  }
+
 
   getAllEquipmentTrackings(): void {
     console.log('getAllEquipmentTrackings')
@@ -277,6 +238,21 @@ export class CompanyProfileComponent {
       }); 
   }
 
+
+  // registerAppointment(): void {
+  //   this.service.registerAppointment().subscribe({
+  //     next: (result: Appointment) => {
+  //       //this.equipmentTracking = result;
+  //       this.sort();
+  //     },
+  //     error: () => {
+  //       console.log(console.error());
+  //     },
+  //   });
+  // } 
+
+
+
   addToCart(id: number, availableCount: number): void {
     const dialogRef = this.dialog
       .open(AddToCartDialogComponent, {
@@ -287,18 +263,19 @@ export class CompanyProfileComponent {
       .afterClosed()
       .subscribe((result) => {
         if(result){
-          const item : Item = {
+          const item : CreateItem = {
             count: result || '',
-            customerId: this.authService.getCurrentUserId() || 0
+            customerId: this.authService.getCurrentUserId() || 0,
+            companyId: this.company.id || 0
           };
-  
-          const selectedEquipment = this.filteredEquipmentTrackings.find(e => e.id === id)?.equipment;
+
+          const selectedEquipment = this.filteredEquipmentTrackings.find(
+            (e) => e.id === id
+          )?.equipment;
           item.equipment = selectedEquipment;
-          console.log("ITEM: ", item);
   
           this.service.createItem(item).subscribe({
             next: (result) => {
-              console.log("RES: ",result);
               this.items.push(result);
             },
             error: () => {
@@ -307,10 +284,6 @@ export class CompanyProfileComponent {
           });
         }
       });
-    }
-    
-    showCart():void{
-      this.router.navigate(['/cart']);
     }
 
     registerNewEquipment(): void {
@@ -367,4 +340,12 @@ export class CompanyProfileComponent {
       });
       return equipmentTracking;
     }
+
+  showCart():void{
+    this.router.navigate(['/cart', this.company.id ]);
+  }
+
+  showCalendar(): void {
+    this.router.navigate(['/companyCalendar']);
+  }
 }

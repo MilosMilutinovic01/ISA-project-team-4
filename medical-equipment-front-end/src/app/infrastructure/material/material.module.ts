@@ -4,7 +4,7 @@ import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
 import {
   MatButton,
   MatButtonModule,
-  MatIconButton
+  MatIconButton,
 } from '@angular/material/button';
 import {
   MatFormField,
@@ -19,6 +19,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatOptionModule } from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
 import {MatStepperModule} from '@angular/material/stepper';
 
 
@@ -38,6 +40,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatSnackBarModule,
     MatDialogModule,
     MatRadioModule,
+    MatOptionModule,
+    MatSelectModule,
     MatStepperModule
   ],
   exports: [
@@ -56,7 +60,11 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatGridListModule,
     MatDialogModule,
     MatRadioModule,
-    MatStepperModule
+    MatOptionModule,
+    MatSelectModule,
+    MatStepperModule,
+    MatOptionModule,
+    MatSelectModule,
   ],
 })
 export class MaterialModule {}

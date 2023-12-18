@@ -6,7 +6,7 @@ import com.e2.medicalequipment.model.CompanyAdministrator;
 public class UpdateCompanyAdministratorDTO {
     public Long id;
     public String password;
-    public String email;
+    public String username;
 
     public Address address;
 
@@ -21,8 +21,9 @@ public class UpdateCompanyAdministratorDTO {
     }
 
     public UpdateCompanyAdministratorDTO(CompanyAdministrator companyAdministrator) {
+        this.id=companyAdministrator.getId();
         this.password = companyAdministrator.getPassword();
-        this.email = companyAdministrator.getUsername();
+        this.username = companyAdministrator.getUsername();
         this.address = companyAdministrator.getAddress();
         this.name = companyAdministrator.getName();
         this.lastname = companyAdministrator.getLastname();
