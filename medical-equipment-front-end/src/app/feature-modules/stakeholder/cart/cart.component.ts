@@ -136,12 +136,16 @@ export class CartComponent {
     this.service.getItemsByCustomerId(this.authService.getCurrentUserId().toString()).subscribe({
       next: (result) => {
         this.items = result.filter(
-          i => i.company.id === Number(this.companyId)
+          i => i.company.id === Number(this.companyId) 
         );
 
-          for (let i of this.items) {
-            this.totalPrice += i.count * Number(i.equipment?.price);
-          }
+        this.items = this.items.filter(
+          i => i.appointment === null
+        );
+
+        for (let i of this.items) {
+          this.totalPrice += i.count * Number(i.equipment?.price);
+        }
         },
         error: () => {
           console.log(console.error);
