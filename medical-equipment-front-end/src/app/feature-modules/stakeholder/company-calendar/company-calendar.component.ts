@@ -14,8 +14,8 @@ import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
 export class CompanyCalendarComponent {
 
   companyAdmin: any
-  nonAvailable: Appointment[] = [];
-  appointments: Appointment[] = [];
+  appointments: any[] = [];
+  myDictionary: { [key: string]: any } = {};
   appointmentsData: any[] = [];
   constructor(
     private service: StakeholderService,
@@ -30,7 +30,7 @@ export class CompanyCalendarComponent {
     this.service.getCompanyAdministratorProfile(this.authService.getCurrentUserId().toString()).subscribe({
       next: (result: CompanyAdministrator) => {
         this.companyAdmin = result;
-        this.getAllAppointments()
+        this.getScheduledAppointments()
       },
       error: () => {
         console.log(console.error());
@@ -38,22 +38,14 @@ export class CompanyCalendarComponent {
     });
   }
 
-  getAllAppointments(): void {
-    this.service.getAppointmentsByCompanyId(this.companyAdmin.companyId).subscribe({
+  getScheduledAppointments(): void {
+    this.service.getScheduledAppointmentsByCompanyId(this.companyAdmin.companyId).subscribe({
       next: (result: Appointment[]) => {
         this.appointments = result;
         result.forEach(appointment => {
-          var convertedDate = new Date(
-            parseFloat(appointment.startTime[0]),
-            parseFloat(appointment.startTime[1]) - 1,
-            parseFloat(appointment.startTime[2]),
-            parseFloat(appointment.startTime[3]),
-            parseFloat(appointment.startTime[4])
-          );
-          console.log(convertedDate.toISOString())
           this.getCustomer(appointment)
         });
-        //this.showAppointments()
+        this.getFreeAppointments()
       },
       error: () => {
         console.log(console.error());
@@ -63,11 +55,8 @@ export class CompanyCalendarComponent {
 
   getCustomer(appointment: any){
     this.service.getCustomerByAppointmentId(appointment.id).subscribe({
-      next: (result: any) => {
-        if(result !== null){
-          //this.nonAvailable.push(appointment)
-        }
-        this.showAppointments()
+      next: (result: CustomerProfile) => {
+        this.myDictionary[appointment.id] = result.name + ' ' + result.lastname
       },
       error: () => {
         console.log(console.error());
@@ -75,11 +64,25 @@ export class CompanyCalendarComponent {
     });
   }
 
-  showAppointments() {
-    console.log(this.nonAvailable)
+  getFreeAppointments(): void {
+    this.service.getFreeAppointmentsByCompanyId(this.companyAdmin.companyId).subscribe({
+      next: (result: any[]) => {
+        result.forEach(appointment => {
+          this.appointments.push(appointment)
+          this.myDictionary[appointment.id] = 'Slobodan termin'
+        });
+        this.showScheduledAppointments()
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+  }
+
+  showScheduledAppointments() {
     this.appointmentsData = this.appointments.map(appointment => ({
       id: appointment.id,
-      text: 'TERMIN ZA PREUZIMANJE',
+      text: this.myDictionary[appointment.id],
       startDate: new Date(
         parseFloat(appointment.startTime[0]),
         parseFloat(appointment.startTime[1]) - 1,
@@ -94,7 +97,7 @@ export class CompanyCalendarComponent {
         parseFloat(appointment.endTime[3]) + 1,
         parseFloat(appointment.endTime[4])
       ).toISOString(),
-      color: '#ffd3b6'
+      color: this.myDictionary[appointment.id] === 'Slobodan termin' ? '#4caf50' : '#FF6961'
     }));
 
   }

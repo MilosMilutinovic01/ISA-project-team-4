@@ -3,8 +3,10 @@ package com.e2.medicalequipment.service;
 import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import com.e2.medicalequipment.model.Appointment;
 import com.e2.medicalequipment.model.CompanyAdministrator;
+import com.e2.medicalequipment.model.Item;
 import com.e2.medicalequipment.repository.AppointmentRepository;
 import com.e2.medicalequipment.repository.CompanyAdministratorRepository;
+import com.e2.medicalequipment.repository.ItemRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,8 @@ public class AppointmentServiceImpl implements AppointmentService{
     private AppointmentRepository appointmentRepository;
     @Autowired
     private CompanyAdministratorRepository companyAdministratorRepository;
+    @Autowired
+    private ItemRepository itemRepository;
 
     @Override
     public Appointment Create(CreateAppointmentDTO createAppointmentDto) throws Exception {
@@ -67,15 +71,24 @@ public class AppointmentServiceImpl implements AppointmentService{
         }
         return allAppointments;
     }
-
     @Override
-    public List<Appointment> GetByCompanyId(Long companyId) throws Exception {
-        List<Appointment> allAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAll()) {
-            if(a.getCompanyAdministrator().getCompanyId() == companyId){
-                allAppointments.add(a);
+    public List<Appointment> GetFreeByCompanyId(Long companyId) throws Exception{
+        List<Appointment> freeAppointments = new ArrayList<>();
+        for(Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
+            if (itemRepository.findAllByAppointmentId(a.getId().toString()).isEmpty()) {
+                freeAppointments.add(a);
             }
         }
-        return allAppointments;
+        return freeAppointments;
+    }
+    @Override
+    public List<Appointment> GetScheduledByCompanyId(Long companyId) throws Exception{
+        List<Appointment> scheduledAppointments = new ArrayList<>();
+        for(Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
+            if (!itemRepository.findAllByAppointmentId(a.getId().toString()).isEmpty()) {
+                scheduledAppointments.add(a);
+            }
+        }
+        return scheduledAppointments;
     }
 }

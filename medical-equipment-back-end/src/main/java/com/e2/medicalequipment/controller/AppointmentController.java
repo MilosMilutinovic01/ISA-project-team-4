@@ -62,13 +62,27 @@ public class AppointmentController {
         }
     }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/free/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
-    public ResponseEntity<List<Appointment>> getByCompanyId(@PathVariable String id){
+    public ResponseEntity<List<Appointment>> getFreeAppointmentsByCompanyId(@PathVariable String id){
         List<Appointment> appointments = null;
         try {
-            appointments = appointmentService.GetByCompanyId(Long.parseLong(id));
+            appointments = appointmentService.GetFreeByCompanyId(Long.parseLong(id));
+            return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(value = "/scheduled/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
+    public ResponseEntity<List<Appointment>> getScheduledAppointmentsByCompanyId(@PathVariable String id){
+        List<Appointment> appointments = null;
+        try {
+            appointments = appointmentService.GetScheduledByCompanyId(Long.parseLong(id));
             return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

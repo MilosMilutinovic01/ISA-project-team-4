@@ -214,9 +214,15 @@ export class StakeholderService {
     );
   }
 
-  getAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
+  getFreeAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(
-      environment.apiHost + 'appointments/' + id
+      environment.apiHost + 'appointments/free/' + id
+    );
+  }
+
+  getScheduledAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(
+      environment.apiHost + 'appointments/scheduled/' + id
     );
   }
 
