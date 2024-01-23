@@ -1,4 +1,8 @@
-<mat-stepper [linear]="false" #stepper>
+<mat-stepper
+  [linear]="false"
+  #stepper
+  (selectionChange)="onStepperSelectionChange($event)"
+>
   <mat-step [stepControl]="firstFormGroup" label="Your shopping cart">
     <div>
       <div class="card-container" *ngFor="let i of this.items">
@@ -16,30 +20,27 @@
             <!-- <button class="add-button" (click)="addToCart(e.id || 0, e.count)">
                   <mat-icon>add</mat-icon>
                 </button> -->
-              </mat-card-content>
-            </mat-card>
-          </div>
-          <div class="total-price" *ngIf="this.items.length !== 0">
-            <p>Total price: {{ this.totalPrice }}</p>
-          </div>
-          <div class="total-price" *ngIf="this.items.length === 0">
-            <p>Your cart is empty</p>
-          </div>
-            <button mat-button matStepperNext (click)="choosePredefined()">Next</button>
-        </div>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup" label="Select reservation date">
-        <div *ngIf="!isIrregular">
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext (click)="finish()" *ngIf="isSelected" >Finish</button>
-          <h1>Predefined appointments</h1>
-          <div class="appointment-info">
-            <p class="info-message">
-              Dates highlighted in green have available appointments.
-            </p>
-          </div>
-          <div class="calendar">
-            <dx-calendar
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="total-price" *ngIf="this.items.length !== 0">
+        <p>Total price: {{ this.totalPrice }}</p>
+      </div>
+      <div class="total-price" *ngIf="this.items.length === 0">
+        <p>Your cart is empty</p>
+      </div>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" label="Select reservation date">
+    <div *ngIf="!isIrregular" (click)="choosePredefined()">
+      <h1 class="header">Predefined appointments</h1>
+      <div class="appointment-info">
+        <p class="info-message">
+          Dates highlighted in green have available appointments.
+        </p>
+      </div>
+      <div class="calendar">
+        <dx-calendar
           class="calendar"
           timeZone="Europe/London"
           id="calendar-container"
@@ -54,22 +55,33 @@
             <span [ngClass]="getCellCssClass(data)">{{ data.text }}</span>
           </div>
         </dx-calendar>
-          </div>
-        <button class="bottom-right-button" mat-button (click)="chooseIrregular()">
-          Choose irregular appointment
-        </button>
       </div>
-      <div *ngIf="isIrregular">
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="finishIrregularReservation()">Finish reservation</button>
-        <h1>Irregular appointments</h1>
-        <div class="appointment-info">
-          <p class="info-message">
-            Dates highlighted in green have available appointments.
-          </p>
-        </div>
-        <div class="calendar">
-          <dx-calendar
+      <button
+        mat-button
+        matStepperNext
+        (click)="finish()"
+        *ngIf="isSelected"
+        class="finish-button"
+      >
+        Finish reservation
+      </button>
+      <button
+        class="bottom-right-button"
+        mat-button
+        (click)="chooseIrregular()"
+      >
+        Choose irregular appointment
+      </button>
+    </div>
+    <div *ngIf="isIrregular">
+      <h1 class="header">Irregular appointments</h1>
+      <div class="appointment-info">
+        <p class="info-message">
+          Dates highlighted in green have available appointments.
+        </p>
+      </div>
+      <div class="calendar">
+        <dx-calendar
           class="calendar"
           timeZone="Europe/London"
           id="calendar-container2"
@@ -86,13 +98,20 @@
         </dx-calendar>
       </div>
       <button
-      class="bottom-right-button"
-      mat-button
-      (click)="choosePredefined()"
-    >
-      Back to predefined appointmens
-    </button>
+        mat-button
+        (click)="finishIrregularReservation()"
+        *ngIf="isSelectedIrregular"
+        class="finish-button"
+      >
+        Finish reservation
+      </button>
+      <button
+        class="bottom-right-button"
+        mat-button
+        (click)="choosePredefined()"
+      >
+        Back to predefined appointments
+      </button>
     </div>
-    
   </mat-step>
 </mat-stepper>

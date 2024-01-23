@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Validators, FormBuilder } from '@angular/forms';
 import { StakeholderService } from '../stakeholder.service';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Item } from 'src/app/shared/model/item.model';
 import { SelectAppointmentDialogComponent } from '../select-appointment-dialog/select-appointment-dialog.component';
 import { Appointment } from 'src/app/shared/model/appointment.model';
@@ -12,6 +12,7 @@ import { DxCalendarModule } from 'devextreme-angular';
 import { Company } from 'src/app/shared/model/company.model';
 import { SelectIrregularAppointmentDialogComponent } from '../select-irregular-appointment-dialog/select-irregular-appointment-dialog.component';
 import { UpdateItem } from 'src/app/shared/model/update-item.model';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-cart',
@@ -19,10 +20,10 @@ import { UpdateItem } from 'src/app/shared/model/update-item.model';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent {
-  items : Item[] = [];
-  totalPrice : number = 0;
+  items: Item[] = [];
+  totalPrice: number = 0;
   isIrregular: boolean = false;
-  companyId : string = '';
+  companyId: string = '';
   company: Company = {
     id: NaN,
     name: '',
@@ -32,8 +33,8 @@ export class CartComponent {
     endTime: '',
     averageRating: NaN,
   };
-  predefinedAppointments : Appointment[] = [];
-  irregularAppointments : Appointment[] = [];
+  predefinedAppointments: Appointment[] = [];
+  irregularAppointments: Appointment[] = [];
   selectedAppointment: Appointment = {
     id: NaN,
     startTime: '',
@@ -52,28 +53,29 @@ export class CartComponent {
     },
   };
 
-  selectedIrregularAppointment: Appointment = {
-    id: NaN,
-    startTime: '',
-    endTime: '',
-    companyAdministrator: {
-      id: NaN,
-      name: '',
-      address: { id: NaN, street: '', city: '', country: '' },
-      username: '',
-      password: '',
-      lastname: '',
-      city: '',
-      country: '',
-      phoneNumber: '',
-      companyId: NaN,
-    },
-  };
+  // selectedIrregularAppointment: Appointment = {
+  //   id: NaN,
+  //   startTime: '',
+  //   endTime: '',
+  //   companyAdministrator: {
+  //     id: NaN,
+  //     name: '',
+  //     address: { id: NaN, street: '', city: '', country: '' },
+  //     username: '',
+  //     password: '',
+  //     lastname: '',
+  //     city: '',
+  //     country: '',
+  //     phoneNumber: '',
+  //     companyId: NaN,
+  //   },
+  // };
   selectedDate = new Date(Date.now());
   calendar_value: Date = new Date();
   calendar_value_irregular: Date = new Date();
   selected_appointment: Appointment | undefined;
   isSelected: boolean = false;
+  isSelectedIrregular: boolean = false;
 
   calendar_valueChanged(e: any) {
     const previousValue = e.previousValue;
@@ -101,51 +103,56 @@ export class CartComponent {
     private service: StakeholderService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.companyId = params["id"];
+      this.companyId = params['id'];
       this.getItems();
       this.getCompany();
     });
   }
 
-  getPredefinedDates(): void{
+  getPredefinedDates(): void {
     this.allowedDates = [];
     this.getAppointments();
   }
 
-  getIrregularDates(): void{
+  getIrregularDates(): void {
     this.allowedDates = [];
     let startDate = new Date();
-    let endDate = new Date(startDate.getFullYear(),
-                          startDate.getMonth() + 1,
-                          startDate.getDate());
+    let endDate = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth() + 1,
+      startDate.getDate()
+    );
 
     while (startDate <= endDate) {
-      this.allowedDates.push(new Date (startDate));
-      startDate = new Date(startDate.getFullYear(),
-                            startDate.getMonth(),
-                            startDate.getDate() + 1)
+      this.allowedDates.push(new Date(startDate));
+      startDate = new Date(
+        startDate.getFullYear(),
+        startDate.getMonth(),
+        startDate.getDate() + 1
+      );
     }
   }
 
-  getItems(): void{
-    this.service.getItemsByCustomerId(this.authService.getCurrentUserId().toString()).subscribe({
-      next: (result) => {
-        this.items = result.filter(
-          i => i.company.id === Number(this.companyId) 
-        );
+  getItems(): void {
+    this.service
+      .getItemsByCustomerId(this.authService.getCurrentUserId().toString())
+      .subscribe({
+        next: (result) => {
+          this.items = result.filter(
+            (i) => i.company.id === Number(this.companyId)
+          );
 
-        this.items = this.items.filter(
-          i => i.appointment === null
-        );
+          this.items = this.items.filter((i) => i.appointment === null);
 
-        for (let i of this.items) {
-          this.totalPrice += i.count * Number(i.equipment?.price);
-        }
+          for (let i of this.items) {
+            this.totalPrice += i.count * Number(i.equipment?.price);
+          }
         },
         error: () => {
           console.log(console.error);
@@ -209,63 +216,115 @@ export class CartComponent {
       if (result) {
         this.selected_appointment = result.selectedAppointment;
         this.isSelected = true;
+        this.isSelectedIrregular = false;
       }
     });
   }
 
   openIrregularAppointmentsDialog(): void {
     const selectedDayOfMonth = this.calendar_value_irregular.getDate();
-    const dialogRef = this.dialog.open(SelectIrregularAppointmentDialogComponent, {
-      data: { 
-        predefinedAppointments: this.predefinedAppointments,
-        startTime : this.company.startTime,
-        endTime: this.company.endTime,
-        selectedDayOfMonth: selectedDayOfMonth },
-    });
+    const dialogRef = this.dialog.open(
+      SelectIrregularAppointmentDialogComponent,
+      {
+        data: {
+          predefinedAppointments: this.predefinedAppointments,
+          startTime: this.company.startTime,
+          endTime: this.company.endTime,
+          selectedDayOfMonth: selectedDayOfMonth,
+        },
+      }
+    );
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const month = this.calendar_value_irregular.getMonth() + 1;
-        const start = new Date(this.calendar_value_irregular.getFullYear(),
-                        month,
-                        this.calendar_value_irregular.getDate(),
-                        Number(result.selectedDate.split(" - ")[0].split(":")[0]),
-                        Number(result.selectedDate.split(" - ")[0].split(":")[1]));
+        const start = new Date(
+          this.calendar_value_irregular.getFullYear(),
+          month,
+          this.calendar_value_irregular.getDate(),
+          Number(result.selectedDate.split(' - ')[0].split(':')[0]),
+          Number(result.selectedDate.split(' - ')[0].split(':')[1])
+        );
 
-        const end = new Date(this.calendar_value_irregular.getFullYear(),
-                        month,
-                        this.calendar_value_irregular.getDate(),
-                        Number(result.selectedDate.split(" - ")[1].split(":")[0]),
-                        Number(result.selectedDate.split(" - ")[1].split(":")[1]));
+        const end = new Date(
+          this.calendar_value_irregular.getFullYear(),
+          month,
+          this.calendar_value_irregular.getDate(),
+          Number(result.selectedDate.split(' - ')[1].split(':')[0]),
+          Number(result.selectedDate.split(' - ')[1].split(':')[1])
+        );
 
-        this.selectedIrregularAppointment.startTime = start.toString();
-        this.selectedIrregularAppointment.endTime = end.toString();
+        this.selectedAppointment.startTime = start.toString();
+        this.selectedAppointment.endTime = end.toString();
+        this.isSelected = false;
+        this.isSelectedIrregular = true;
       }
     });
   }
 
-  finishIrregularReservation():void{
-    if(this.selectedIrregularAppointment.startTime && this.selectedIrregularAppointment.endTime){
-      this.service.registerIrregularAppointment(this.selectedIrregularAppointment).subscribe(
+  finishIrregularReservation(): void {
+    if (
+      this.selectedAppointment.startTime &&
+      this.selectedAppointment.endTime
+    ) {
+      this.createIrregular();
+    }
+  }
+
+  createIrregular(): void {
+    this.service
+      .registerIrregularAppointment(this.selectedAppointment)
+      .subscribe(
         (response) => {
-          console.log('Registration successful:', response);
+          this.selectedAppointment = response;
+          console.log('Registration successful:', this.selectedAppointment);
+          this.updateItemsInCart(this.selectedAppointment);
         },
         (error) => {
           console.error('Registration failed:', error);
         }
       );
-    }
   }
 
-  chooseIrregular() : void{
+  updateItemsInCart(appointment: Appointment) {
+    const updateItems: UpdateItem[] = [];
+    console.log('APPOINTMENT TO UPDATE: ', appointment);
+
+    for (let i = 0; i < this.items.length; i++) {
+      this.items[i].appointment = appointment;
+
+      const updateItem: UpdateItem = {
+        Id: this.items[i].id || 0,
+        Count: this.items[i].count,
+        AppointmentId: this.items[i].appointment?.id || 0,
+        CompanyId: this.items[i].company.id || 0,
+        CustomerId: this.items[i].customer.id || 0,
+        EquipmentId: this.items[i].equipment?.id || 0,
+      };
+
+      updateItems.push(updateItem);
+    }
+
+    this.updateItems(updateItems);
+  }
+
+  chooseIrregular(): void {
     //if(!this.selectedAppointment){
-      
-      this.isIrregular = true;
-      this.getIrregularDates();
+
+    this.isIrregular = true;
+    this.getIrregularDates();
     //}
     // else{
     //   alert('Appointment already selected!');
     // }
+  }
+
+  onStepperSelectionChange(event: StepperSelectionEvent): void {
+    const selectedStep = event.selectedIndex;
+
+    if (selectedStep === 1) {
+      this.choosePredefined();
+    }
   }
 
   choosePredefined(): void {
@@ -299,6 +358,7 @@ export class CartComponent {
   finish() {
     // Create an array of UpdateItem objects
     const updateItems: UpdateItem[] = [];
+    console.log('APPOINTMENT TO UPDATE: ', this.selectedAppointment);
 
     for (let i = 0; i < this.items.length; i++) {
       this.items[i].appointment = this.selected_appointment;
@@ -313,17 +373,18 @@ export class CartComponent {
       };
 
       updateItems.push(updateItem);
-
-      console.log('item ', i, ': ', this.items[i]);
     }
+    this.updateItems(updateItems);
+  }
 
-    console.log("UPDATE: ", updateItems);
-    this.service.reserveAppointment(updateItems).subscribe({
+  updateItems(items: UpdateItem[]): void {
+    this.service.reserveAppointment(items).subscribe({
       next: (result: boolean) => {
         if (result === true) {
-          console.log('Update successful');
+          alert('Succesfully finished reservation!');
+          this.router.navigate(['/companyProfile/', this.companyId]);
         } else {
-          console.log('Update failed');
+          alert('Failed to finish reservationc!');
         }
       },
       error: (error) => {
