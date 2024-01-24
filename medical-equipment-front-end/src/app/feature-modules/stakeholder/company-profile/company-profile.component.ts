@@ -134,8 +134,6 @@ export class CompanyProfileComponent {
     this.router.navigate(['/editCompanyProfile']);
   }
 
-
-
   getAllEquipmentTrackings(): void {
     console.log('getAllEquipmentTrackings')
     this.service.getAllEquipmentTrackings().subscribe({
@@ -179,6 +177,7 @@ export class CompanyProfileComponent {
   }
 
   sort(): void {
+    this.filteredEquipmentTrackings = [];
     for (let el of this.equipmentTracking) {
       if (el.company.id === this.company.id && el.count > 0) {
         this.filteredEquipmentTrackings.push(el);
