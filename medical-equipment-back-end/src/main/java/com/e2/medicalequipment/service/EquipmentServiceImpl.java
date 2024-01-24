@@ -41,6 +41,17 @@ public class EquipmentServiceImpl implements EquipmentService {
         Equipment savedEquipment = equipmentRepository.save(equipment);
         return savedEquipment;
     }
+    @Override
+    public List<EquipmentDTO> GetWanted(String searchName,String type) throws Exception {
+        List<EquipmentDTO> allEquipment = new ArrayList<>();
+        for(Equipment e : equipmentRepository.findAll()) {
+            allEquipment.add(new EquipmentDTO(e));
+        }
+        return allEquipment.stream()
+                .filter(e -> searchName.equals("empty") || e.name.toLowerCase().contains(searchName.toLowerCase()))
+                .filter(e -> type.equals("empty") || e.type.toString().equals(type))
+                .collect(Collectors.toList());
+    }
     public Equipment Get(Long id) {
         return equipmentRepository.findById(id).orElse(null);
     }

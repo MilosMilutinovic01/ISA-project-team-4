@@ -11,6 +11,7 @@ public interface EquipmentService {
     List<EquipmentDTO> GetAll() throws Exception;
     Equipment Create(EquipmentDTO equipmentDTO) throws Exception;
     public Equipment Get(Long id);
+    public List<EquipmentDTO> GetWanted(String searchName,String type) throws Exception;
 }
 
 
