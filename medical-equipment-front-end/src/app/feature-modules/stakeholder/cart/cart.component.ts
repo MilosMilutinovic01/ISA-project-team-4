@@ -33,6 +33,7 @@ export class CartComponent {
     endTime: '',
     averageRating: NaN,
   };
+  reservedAppointments: Appointment[] = [];
   predefinedAppointments: Appointment[] = [];
   irregularAppointments: Appointment[] = [];
   selectedAppointment: Appointment = {
@@ -112,6 +113,7 @@ export class CartComponent {
       this.companyId = params['id'];
       this.getItems();
       this.getCompany();
+      this.getReservedAppointments();
     });
   }
 
@@ -161,7 +163,7 @@ export class CartComponent {
   }
 
   getAppointments(): void {
-    this.service.getAppointments().subscribe({
+    this.service.getAvailableAppointmentsByCompanyId(this.companyId).subscribe({
       next: (result) => {
         this.predefinedAppointments = result;
 
@@ -221,6 +223,17 @@ export class CartComponent {
     });
   }
 
+  getReservedAppointments(): void {
+    this.service.getReservedAppointmentsByCompanyId(this.companyId).subscribe({
+      next: (result) => {
+        this.reservedAppointments = result;
+      },
+      error: () => {
+        console.log(console.error);
+      },
+    });
+  }
+
   openIrregularAppointmentsDialog(): void {
     const selectedDayOfMonth = this.calendar_value_irregular.getDate();
     const dialogRef = this.dialog.open(
@@ -228,6 +241,7 @@ export class CartComponent {
       {
         data: {
           predefinedAppointments: this.predefinedAppointments,
+          reservedAppointments: this.reservedAppointments,
           startTime: this.company.startTime,
           endTime: this.company.endTime,
           selectedDayOfMonth: selectedDayOfMonth,

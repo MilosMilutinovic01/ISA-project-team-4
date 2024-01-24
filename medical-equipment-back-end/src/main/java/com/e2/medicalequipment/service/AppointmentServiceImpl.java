@@ -3,8 +3,10 @@ package com.e2.medicalequipment.service;
 import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import com.e2.medicalequipment.model.Appointment;
 import com.e2.medicalequipment.model.CompanyAdministrator;
+import com.e2.medicalequipment.model.Item;
 import com.e2.medicalequipment.repository.AppointmentRepository;
 import com.e2.medicalequipment.repository.CompanyAdministratorRepository;
+import com.e2.medicalequipment.repository.ItemRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService{
@@ -24,6 +27,8 @@ public class AppointmentServiceImpl implements AppointmentService{
     private AppointmentRepository appointmentRepository;
     @Autowired
     private CompanyAdministratorRepository companyAdministratorRepository;
+    @Autowired
+    private ItemRepository itemRepository;
 
     @Override
     public Appointment Create(CreateAppointmentDTO createAppointmentDto) throws Exception {
@@ -77,5 +82,57 @@ public class AppointmentServiceImpl implements AppointmentService{
             }
         }
         return allAppointments;
+    }
+
+    @Override
+    public List<Appointment> GetAvailableByCompanyId(Long companyId) throws Exception {
+        List<Appointment> companyAppointments = new ArrayList<>();
+        List<Appointment> availableAppointments = new ArrayList<>();
+        for(Appointment a : appointmentRepository.findAll()) {
+            if(a.getCompanyAdministrator().getCompanyId() == companyId){
+                companyAppointments.add(a);
+            }
+        }
+
+
+        boolean isAvailable;
+        for(Appointment a : companyAppointments) {
+            isAvailable = true;
+            for(Item i : itemRepository.findAllByCompanyId(String.valueOf(companyId))){
+                if(i.getAppointment() != null) {
+                    if (i.getAppointment().getId() == a.getId()) {
+                        isAvailable = false;
+                        break;
+                    }
+                }
+            }
+            if(isAvailable) {
+                availableAppointments.add(a);
+            }
+        }
+        return availableAppointments;
+    }
+
+    @Override
+    public List<Appointment> GetReservedByCompanyId(Long companyId) throws Exception {
+        List<Appointment> companyAppointments = new ArrayList<>();
+        List<Appointment> reservedAppointments = new ArrayList<>();
+        for(Appointment a : appointmentRepository.findAll()) {
+            if(a.getCompanyAdministrator().getCompanyId() == companyId){
+                companyAppointments.add(a);
+            }
+        }
+
+        for(Item i : itemRepository.findAllByCompanyId(String.valueOf(companyId))){
+            for(Appointment a : companyAppointments) {
+                if (i.getAppointment() != null) {
+                    if (i.getAppointment().getId() == a.getId()) {
+                        reservedAppointments.add(a);
+                        break;
+                    }
+                }
+            }
+        }
+        return reservedAppointments;
     }
 }

@@ -75,4 +75,32 @@ public class AppointmentController {
             return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.CONFLICT);
         }
     }
+
+    @GetMapping(value = "/available/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public ResponseEntity<List<Appointment>> getAvailableByCompanyId(@PathVariable String id){
+        List<Appointment> appointments = null;
+        try {
+            appointments = appointmentService.GetAvailableByCompanyId(Long.parseLong(id));
+            return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(value = "/reserved/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public ResponseEntity<List<Appointment>> getReservedByCompanyId(@PathVariable String id){
+        List<Appointment> appointments = null;
+        try {
+            appointments = appointmentService.GetReservedByCompanyId(Long.parseLong(id));
+            return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.CONFLICT);
+        }
+    }
 }

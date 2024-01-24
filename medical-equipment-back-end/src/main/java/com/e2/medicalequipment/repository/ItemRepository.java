@@ -15,5 +15,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Query("SELECT i FROM Item i WHERE i.appointment.id = :appointment_id")
     List<Item> findAllByAppointmentId(@Param("appointment_id") String appointmentId);
+
+    @Query("SELECT i FROM Item i WHERE i.company.id = :company_id")
+    List<Item> findAllByCompanyId(@Param("company_id") String companyId);
     Item findById(long id);
 }

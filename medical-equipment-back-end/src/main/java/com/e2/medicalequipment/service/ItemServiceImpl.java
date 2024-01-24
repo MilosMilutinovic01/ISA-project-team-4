@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class ItemServiceImpl implements ItemService{
@@ -28,6 +29,8 @@ public class ItemServiceImpl implements ItemService{
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+    @Autowired
+    private CompanyAdministratorRepository companyAdministratorRepository;
     @Override
     public Item Create(CreateItemDTO itemDto) throws Exception {
         Item item = new Item(itemDto);
@@ -65,7 +68,14 @@ public class ItemServiceImpl implements ItemService{
     }
     public Item Update(UpdateItemDTO newItem) throws Exception{
         Item item = itemRepository.findById(newItem.Id);
-        item.setAppointment(appointmentRepository.findById(newItem.AppointmentId));
+        Appointment appointment = appointmentRepository.findById(newItem.AppointmentId);
+
+        List<CompanyAdministrator> companyAdministrators = companyAdministratorRepository.findAllByCompanyId(String.valueOf(newItem.CompanyId));
+        Random rand = new Random();
+        CompanyAdministrator randomAdmin = companyAdministrators.get(rand.nextInt(companyAdministrators.size()));
+        appointment.setCompanyAdministrator(randomAdmin);
+
+        item.setAppointment(appointment);
         if ((item.getId() == null)){
             throw new Exception("ID must not be null for updating entity.");
         }

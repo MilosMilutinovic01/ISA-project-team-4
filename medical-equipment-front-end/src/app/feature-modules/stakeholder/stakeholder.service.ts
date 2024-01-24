@@ -179,30 +179,44 @@ export class StakeholderService {
     );
   }
 
-  getAppointments(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(environment.apiHost + 'appointments/');
-  }
-
   registerAppointment(appointment: Appointment): Observable<Appointment> {
-    return this.http.post<Appointment>(environment.apiHost + 'appointments/register', appointment);
+    return this.http.post<Appointment>(
+      environment.apiHost + 'appointments/register',
+      appointment
+    );
   }
 
-  registerIrregularAppointment(appointment: Appointment): Observable<Appointment> {
-    return this.http.post<Appointment>(environment.apiHost + 'appointments/registerIrregular', appointment);
+  registerIrregularAppointment(
+    appointment: Appointment
+  ): Observable<Appointment> {
+    return this.http.post<Appointment>(
+      environment.apiHost + 'appointments/registerIrregular',
+      appointment
+    );
   }
-  
+
   registerNewEquipment(equipment: Equipment): Observable<Equipment> {
-    return this.http.post<Equipment>(environment.apiHost + 'equipment/register', equipment);
+    return this.http.post<Equipment>(
+      environment.apiHost + 'equipment/register',
+      equipment
+    );
   }
 
   getEquipmentTracking(id: string): Observable<EquipmentTracking> {
-    return this.http.get<EquipmentTracking>(environment.apiHost + 'equipmentTracking/'+ id);
+    return this.http.get<EquipmentTracking>(
+      environment.apiHost + 'equipmentTracking/' + id
+    );
   }
 
-  editEquipmentTracking(equipmentTracking: EquipmentTracking): Observable<EquipmentTracking> {
-    return this.http.put<EquipmentTracking>(environment.apiHost + 'equipmentTracking/edit', equipmentTracking);
+  editEquipmentTracking(
+    equipmentTracking: EquipmentTracking
+  ): Observable<EquipmentTracking> {
+    return this.http.put<EquipmentTracking>(
+      environment.apiHost + 'equipmentTracking/edit',
+      equipmentTracking
+    );
   }
-  
+
   getAllAppointments(): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(environment.apiHost + 'appointments/');
   }
@@ -220,9 +234,21 @@ export class StakeholderService {
     );
   }
 
-  getCustomerByAppointmentId(id: string): Observable<CustomerProfile>{
+  getAvailableAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(
+      environment.apiHost + 'appointments/available/' + id
+    );
+  }
+
+  getReservedAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(
+      environment.apiHost + 'appointments/reserved/' + id
+    );
+  }
+
+  getCustomerByAppointmentId(id: string): Observable<CustomerProfile> {
     return this.http.get<CustomerProfile>(
       environment.apiHost + 'items/byAppointment/' + id
     );
- }
+  }
 }

@@ -43,8 +43,8 @@ export class CompanyProfileComponent {
   appointments: Appointment[] = [];
   displayedColumns: string[] = ['startTime', 'endTime', 'customerId'];
   newStartDate: string = '';
-  companyAdministrator: CompanyAdministrator = { 
-    id:NaN,
+  companyAdministrator: CompanyAdministrator = {
+    id: NaN,
     name: '',
     address: { id: NaN, street: '', city: '', country: '' },
     username: '',
@@ -53,8 +53,8 @@ export class CompanyProfileComponent {
     city: '',
     country: '',
     phoneNumber: '',
-    companyId: NaN 
-  }
+    companyId: NaN,
+  };
   equipmentCount: number = 0;
   selectedEquipmentTracking: EquipmentTracking = {
     id: NaN,
@@ -66,16 +66,16 @@ export class CompanyProfileComponent {
       startTime: '',
       endTime: '',
       description: '',
-      averageRating: NaN
+      averageRating: NaN,
     },
     equipment: {
       id: NaN,
       name: '',
       description: '',
       type: EquipmentType.DENTAL,
-      price: 0
-    }
-  }
+      price: 0,
+    },
+  };
   items: CreateItem[] = [];
 
   searchForm = new FormGroup({
@@ -93,17 +93,17 @@ export class CompanyProfileComponent {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
-    this.authService.user$.subscribe((user) => {
-      this.user = user;
-    });
-    this.getCompany();
-    this.getAllEquipmentTrackings();
-    this.getAllCompanyAdministrators();
-    this.getAllAppointments();
-    this.getCompanyAdministratorProfile();
+      this.authService.user$.subscribe((user) => {
+        this.user = user;
+      });
+      this.getCompany();
+      this.getAllEquipmentTrackings();
+      this.getAllCompanyAdministrators();
+      this.getAllAppointments();
+      this.getCompanyAdministratorProfile();
     });
   }
-  
+
   getCompany(): void {
     this.service.getCompanyProfile(this.id).subscribe({
       next: (result) => {
@@ -116,26 +116,26 @@ export class CompanyProfileComponent {
   }
 
   getCompanyAdministratorProfile(): void {
-    this.service.getCompanyAdministratorProfile((this.user?.id!).toString()).subscribe({
-      next: (result) => {
-        console.log('Company administrator:')
-        console.log(result)
-        this.companyAdministrator = result;
-      },
-      error: () => {
-        console.log(console.error);
-      },
-    });
+    this.service
+      .getCompanyAdministratorProfile(this.user?.id!.toString() || '')
+      .subscribe({
+        next: (result) => {
+          console.log('Company administrator:');
+          console.log(result);
+          this.companyAdministrator = result;
+        },
+        error: () => {
+          console.log(console.error);
+        },
+      });
   }
 
   editProfile(): void {
     this.router.navigate(['/editCompanyProfile']);
   }
 
-
-
   getAllEquipmentTrackings(): void {
-    console.log('getAllEquipmentTrackings')
+    console.log('getAllEquipmentTrackings');
     this.service.getAllEquipmentTrackings().subscribe({
       next: (result) => {
         this.equipmentTracking = result;
@@ -206,7 +206,7 @@ export class CompanyProfileComponent {
   }
 
   getAllAppointments(): void {
-    this.service.getAppointments().subscribe({
+    this.service.getAllAppointments().subscribe({
       next: (result) => {
         this.appointments = result;
       },
@@ -215,13 +215,23 @@ export class CompanyProfileComponent {
       },
     });
   }
-  
+
   parseAndFormatDate(dateString: string): string {
-    this.newStartDate = dateString[2] + '.' + dateString[1] + '.' + dateString[0]+ '.' + ' ' + dateString[3] + ':' + dateString[4];
-    if(dateString[4].toString() === "0"){
+    this.newStartDate =
+      dateString[2] +
+      '.' +
+      dateString[1] +
+      '.' +
+      dateString[0] +
+      '.' +
+      ' ' +
+      dateString[3] +
+      ':' +
+      dateString[4];
+    if (dateString[4].toString() === '0') {
       this.newStartDate += '0';
     }
-   return this.newStartDate || '';
+    return this.newStartDate || '';
   }
 
   registerNewAppointment(): void {
@@ -229,15 +239,14 @@ export class CompanyProfileComponent {
       .open(AppointmentRegistrationComponent, {
         width: '35%',
         height: '75%',
-        data: { company: this.company}
+        data: { company: this.company },
       })
       .afterClosed()
       .subscribe((result) => {
         this.appointments = [];
         this.getAllAppointments();
-      }); 
+      });
   }
-
 
   // registerAppointment(): void {
   //   this.service.registerAppointment().subscribe({
@@ -249,9 +258,7 @@ export class CompanyProfileComponent {
   //       console.log(console.error());
   //     },
   //   });
-  // } 
-
-
+  // }
 
   addToCart(id: number, availableCount: number): void {
     const dialogRef = this.dialog
@@ -262,18 +269,18 @@ export class CompanyProfileComponent {
       })
       .afterClosed()
       .subscribe((result) => {
-        if(result){
-          const item : CreateItem = {
+        if (result) {
+          const item: CreateItem = {
             count: result || '',
             customerId: this.authService.getCurrentUserId() || 0,
-            companyId: this.company.id || 0
+            companyId: this.company.id || 0,
           };
 
           const selectedEquipment = this.filteredEquipmentTrackings.find(
             (e) => e.id === id
           )?.equipment;
           item.equipment = selectedEquipment;
-  
+
           this.service.createItem(item).subscribe({
             next: (result) => {
               this.items.push(result);
@@ -284,10 +291,10 @@ export class CompanyProfileComponent {
           });
         }
       });
-    }
+  }
 
-    registerNewEquipment(): void {
-      const dialogRef = this.dialog
+  registerNewEquipment(): void {
+    const dialogRef = this.dialog
       .open(EquipmentRegistrationComponent, {
         width: '37%',
         height: '66%',
@@ -298,27 +305,29 @@ export class CompanyProfileComponent {
         this.equipmentTracking = [];
         this.getAllEquipmentTrackings;
       });
-    }
-    
-    deleteEquipmentTracking(e: any): void {
-      console.log('delete')
-      console.log(e)
-      this.filteredEquipmentTrackings.forEach(element => {
-        if(element.id === e.id){
-          this.filteredEquipmentTrackings.splice(e.id, 1)
-        }
-      });
-    }
+  }
 
-    editEquipmentTracking(equipmentTracking: any): void {
-      console.log('edit')
-      console.log(equipmentTracking)
-      const dialogRef = this.dialog
+  deleteEquipmentTracking(e: any): void {
+    console.log('delete');
+    console.log(e);
+    this.filteredEquipmentTrackings.forEach((element) => {
+      if (element.id === e.id) {
+        this.filteredEquipmentTrackings.splice(e.id, 1);
+      }
+    });
+  }
+
+  editEquipmentTracking(equipmentTracking: any): void {
+    console.log('edit');
+    console.log(equipmentTracking);
+    const dialogRef = this.dialog
       .open(EditEquipmentTrackingComponent, {
         width: '39%',
         height: '72%',
-        data: { compId: this.company.id,
-                selectedEquipmentTracking: equipmentTracking },
+        data: {
+          compId: this.company.id,
+          selectedEquipmentTracking: equipmentTracking,
+        },
       })
       .afterClosed()
       .subscribe((result) => {
@@ -326,23 +335,23 @@ export class CompanyProfileComponent {
         this.getAllEquipmentTrackings;
         this.sort();
       });
-    }
+  }
 
-    getEquipmentTracking(id: number) : EquipmentTracking {
-      let equipmentTracking: any;
-      this.service.getEquipmentTracking(id.toString()).subscribe({
-        next: (result: EquipmentTracking) => {
-          equipmentTracking = result;
-        },
-        error: () => {
-          console.log(console.error());
-        },
-      });
-      return equipmentTracking;
-    }
+  getEquipmentTracking(id: number): EquipmentTracking {
+    let equipmentTracking: any;
+    this.service.getEquipmentTracking(id.toString()).subscribe({
+      next: (result: EquipmentTracking) => {
+        equipmentTracking = result;
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+    return equipmentTracking;
+  }
 
-  showCart():void{
-    this.router.navigate(['/cart', this.company.id ]);
+  showCart(): void {
+    this.router.navigate(['/cart', this.company.id]);
   }
 
   showCalendar(): void {

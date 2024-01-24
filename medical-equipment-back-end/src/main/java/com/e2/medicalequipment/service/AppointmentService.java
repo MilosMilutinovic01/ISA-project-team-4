@@ -10,4 +10,6 @@ public interface AppointmentService {
     Appointment CreateIrregular(CreateAppointmentDTO appointmentDTO) throws Exception;
     List<Appointment> GetAll() throws Exception;
     List<Appointment> GetByCompanyId(Long companyId) throws Exception;
+    List<Appointment> GetAvailableByCompanyId(Long companyId) throws Exception;
+    List<Appointment> GetReservedByCompanyId(Long companyId) throws Exception;
 }
