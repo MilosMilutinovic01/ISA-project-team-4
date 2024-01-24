@@ -1,44 +1,54 @@
 .card-container {
-    justify-content: center;
-    margin: 0 auto;
-    flex-direction: column;
-  }
-  .title-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .card-equipment {
-    flex: auto;
-    justify-content: center;
-    height: 25%;
-    width: 75%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    margin: 3vh 0vw 3vh 15vw;
-    padding: 20px;
-  }
+  justify-content: center;
+  margin: 0 auto;
+  flex-direction: column;
+}
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .card-container:hover {
-    transform: scale(1.01);
-  }
+.card-equipment {
+  flex: auto;
+  justify-content: center;
+  height: 25%;
+  width: 75%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  margin: 3vh 0vw 3vh 15vw;
+  padding: 20px;
+}
 
-  .total-price{
-    font-weight: 500;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-  }
+.card-container:hover {
+  transform: scale(1.01);
+}
 
-  .bottom-right-button{
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #3498db;
-    color: white !important;
-    border: none;
-    padding: 12px;
-  }
+.total-price {
+  font-weight: 500;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.bottom-right-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #3498db;
+  color: white !important;
+  border: none;
+  padding: 12px;
+}
+
+.finish-button {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  background-color: rgb(78, 161, 58);
+  color: white !important;
+  border: none;
+  padding: 12px;
+}
 .calendar {
   margin: auto;
 }
@@ -66,4 +76,12 @@ p {
 
 .info-message {
   color: #008000;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 40px;
+  padding-bottom: 50px;
 }

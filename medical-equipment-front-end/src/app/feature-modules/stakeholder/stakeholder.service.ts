@@ -22,7 +22,7 @@ export class StakeholderService {
   getIsRegister = this.isRegister.asObservable();
   private refreshNavbarSource = new BehaviorSubject<boolean>(false);
   refreshNavbar$ = this.refreshNavbarSource.asObservable();
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   setIsRegister(isRegister: boolean) {
     this.isRegister.next(isRegister);
@@ -99,7 +99,10 @@ export class StakeholderService {
     return this.http.get<Equipment[]>(environment.apiHost + 'equipment/');
   }
 
-  searchEquipmentTracking(name: string, type: string): Observable<EquipmentTracking[]> {
+  searchEquipmentTracking(
+    name: string,
+    type: string
+  ): Observable<EquipmentTracking[]> {
     return this.http.get<EquipmentTracking[]>(
       environment.apiHost + 'equipmentTracking/search/' + name + '/' + type
     );
@@ -119,14 +122,14 @@ export class StakeholderService {
   ): Observable<Company[]> {
     return this.http.get<Company[]>(
       environment.apiHost +
-      'companies/search/' +
-      name +
-      '/' +
-      street +
-      '/' +
-      city +
-      '/' +
-      country
+        'companies/search/' +
+        name +
+        '/' +
+        street +
+        '/' +
+        city +
+        '/' +
+        country
     );
   }
 
@@ -185,28 +188,42 @@ export class StakeholderService {
     );
   }
 
-  getAppointments(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(environment.apiHost + 'appointments/');
-  }
-
   registerAppointment(appointment: Appointment): Observable<Appointment> {
-    return this.http.post<Appointment>(environment.apiHost + 'appointments/register', appointment);
+    return this.http.post<Appointment>(
+      environment.apiHost + 'appointments/register',
+      appointment
+    );
   }
 
-  registerIrregularAppointment(appointment: Appointment): Observable<Appointment> {
-    return this.http.post<Appointment>(environment.apiHost + 'appointments/registerIrregular', appointment);
+  registerIrregularAppointment(
+    appointment: Appointment
+  ): Observable<Appointment> {
+    return this.http.post<Appointment>(
+      environment.apiHost + 'appointments/registerIrregular',
+      appointment
+    );
   }
 
   registerNewEquipment(equipment: Equipment): Observable<Equipment> {
-    return this.http.post<Equipment>(environment.apiHost + 'equipment/register', equipment);
+    return this.http.post<Equipment>(
+      environment.apiHost + 'equipment/register',
+      equipment
+    );
   }
 
   getEquipmentTracking(id: string): Observable<EquipmentTracking> {
-    return this.http.get<EquipmentTracking>(environment.apiHost + 'equipmentTracking/' + id);
+    return this.http.get<EquipmentTracking>(
+      environment.apiHost + 'equipmentTracking/' + id
+    );
   }
 
-  editEquipmentTracking(equipmentTracking: EquipmentTracking): Observable<EquipmentTracking> {
-    return this.http.put<EquipmentTracking>(environment.apiHost + 'equipmentTracking/edit', equipmentTracking);
+  editEquipmentTracking(
+    equipmentTracking: EquipmentTracking
+  ): Observable<EquipmentTracking> {
+    return this.http.put<EquipmentTracking>(
+      environment.apiHost + 'equipmentTracking/edit',
+      equipmentTracking
+    );
   }
 
   getAllAppointments(): Observable<Appointment[]> {
@@ -226,6 +243,16 @@ export class StakeholderService {
     );
   }
 
+  // getAvailableAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
+  //   return this.http.get<Appointment[]>(
+  //     environment.apiHost + 'appointments/available/' + id
+  //   );
+  // }
+
+  // getReservedAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
+  //   return this.http.get<Appointment[]>(
+  //     environment.apiHost + 'appointments/reserved/' + id
+
   getScheduledAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(
       environment.apiHost + 'appointments/scheduled/' + id
@@ -239,6 +266,8 @@ export class StakeholderService {
   }
 
   getEquipmentTrackingByEquipment(id: string): Observable<EquipmentTracking> {
-    return this.http.get<EquipmentTracking>(environment.apiHost + 'equipmentTracking/equipment/' + id);
+    return this.http.get<EquipmentTracking>(
+      environment.apiHost + 'equipmentTracking/equipment/' + id
+    );
   }
 }

@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService{
@@ -91,4 +92,56 @@ public class AppointmentServiceImpl implements AppointmentService{
         }
         return scheduledAppointments;
     }
+/*
+    @Override
+    public List<Appointment> GetAvailableByCompanyId(Long companyId) throws Exception {
+        List<Appointment> companyAppointments = new ArrayList<>();
+        List<Appointment> availableAppointments = new ArrayList<>();
+        for(Appointment a : appointmentRepository.findAll()) {
+            if(a.getCompanyAdministrator().getCompanyId() == companyId){
+                companyAppointments.add(a);
+            }
+        }
+
+
+        boolean isAvailable;
+        for(Appointment a : companyAppointments) {
+            isAvailable = true;
+            for(Item i : itemRepository.findAllByCompanyId(String.valueOf(companyId))){
+                if(i.getAppointment() != null) {
+                    if (i.getAppointment().getId() == a.getId()) {
+                        isAvailable = false;
+                        break;
+                    }
+                }
+            }
+            if(isAvailable) {
+                availableAppointments.add(a);
+            }
+        }
+        return availableAppointments;
+    }
+
+    @Override
+    public List<Appointment> GetReservedByCompanyId(Long companyId) throws Exception {
+        List<Appointment> companyAppointments = new ArrayList<>();
+        List<Appointment> reservedAppointments = new ArrayList<>();
+        for(Appointment a : appointmentRepository.findAll()) {
+            if(a.getCompanyAdministrator().getCompanyId() == companyId){
+                companyAppointments.add(a);
+            }
+        }
+
+        for(Item i : itemRepository.findAllByCompanyId(String.valueOf(companyId))){
+            for(Appointment a : companyAppointments) {
+                if (i.getAppointment() != null) {
+                    if (i.getAppointment().getId() == a.getId()) {
+                        reservedAppointments.add(a);
+                        break;
+                    }
+                }
+            }
+        }
+        return reservedAppointments;
+    }*/
 }

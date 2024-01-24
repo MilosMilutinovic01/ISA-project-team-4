@@ -5,6 +5,7 @@
   width: 20rem;
   padding: 1rem;
   overflow: hidden;
+  max-height: 70%;
 }
 
 .dialog-title {
@@ -15,6 +16,9 @@
 .dialog-content {
   margin: auto;
   width: max-content;
+  max-height: 25rem;
+  overflow-y: auto;
+  margin-bottom: 1rem;
 }
 
 .dialog-actions {

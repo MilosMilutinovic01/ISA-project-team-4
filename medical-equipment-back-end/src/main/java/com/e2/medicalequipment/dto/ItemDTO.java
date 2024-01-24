@@ -8,6 +8,5 @@ public class ItemDTO {
     public int count;
     public Equipment equipment;
     public UpdateCustomerDTO customer;
-
     public Company company;
 }
