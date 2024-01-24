@@ -96,7 +96,7 @@ export class CompanyProfileComponent {
     this.authService.user$.subscribe((user) => {
       this.user = user;
     });
-    //this.getCompany();
+    this.getCompany();
     this.getAllEquipmentTrackings();
     this.getAllCompanyAdministrators();
     this.getAllAppointments();
@@ -106,8 +106,8 @@ export class CompanyProfileComponent {
     });
   }
   
-  getCompany(companyId: number): void {
-    this.service.getCompanyProfile(companyId.toString()).subscribe({
+  getCompany(): void {
+    this.service.getCompanyProfile(this.id).subscribe({
       next: (result) => {
         this.company = result;
       },
@@ -123,7 +123,6 @@ export class CompanyProfileComponent {
         console.log('Company administrator:')
         console.log(result)
         this.companyAdministrator = result;
-        this.getCompany(this.companyAdministrator.companyId);
       },
       error: () => {
         console.log(console.error);
