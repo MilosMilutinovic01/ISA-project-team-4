@@ -22,7 +22,7 @@ export class StakeholderService {
   getIsRegister = this.isRegister.asObservable();
   private refreshNavbarSource = new BehaviorSubject<boolean>(false);
   refreshNavbar$ = this.refreshNavbarSource.asObservable();
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   setIsRegister(isRegister: boolean) {
     this.isRegister.next(isRegister);
@@ -99,9 +99,15 @@ export class StakeholderService {
     return this.http.get<Equipment[]>(environment.apiHost + 'equipment/');
   }
 
-  searchEquipment(name: string, type: string): Observable<EquipmentTracking[]> {
+  searchEquipmentTracking(name: string, type: string): Observable<EquipmentTracking[]> {
     return this.http.get<EquipmentTracking[]>(
       environment.apiHost + 'equipmentTracking/search/' + name + '/' + type
+    );
+  }
+
+  searchEquipment(name: string, type: string): Observable<Equipment[]> {
+    return this.http.get<Equipment[]>(
+      environment.apiHost + 'equipment/search/' + name + '/' + type
     );
   }
 
@@ -113,14 +119,14 @@ export class StakeholderService {
   ): Observable<Company[]> {
     return this.http.get<Company[]>(
       environment.apiHost +
-        'companies/search/' +
-        name +
-        '/' +
-        street +
-        '/' +
-        city +
-        '/' +
-        country
+      'companies/search/' +
+      name +
+      '/' +
+      street +
+      '/' +
+      city +
+      '/' +
+      country
     );
   }
 
@@ -190,19 +196,19 @@ export class StakeholderService {
   registerIrregularAppointment(appointment: Appointment): Observable<Appointment> {
     return this.http.post<Appointment>(environment.apiHost + 'appointments/registerIrregular', appointment);
   }
-  
+
   registerNewEquipment(equipment: Equipment): Observable<Equipment> {
     return this.http.post<Equipment>(environment.apiHost + 'equipment/register', equipment);
   }
 
   getEquipmentTracking(id: string): Observable<EquipmentTracking> {
-    return this.http.get<EquipmentTracking>(environment.apiHost + 'equipmentTracking/'+ id);
+    return this.http.get<EquipmentTracking>(environment.apiHost + 'equipmentTracking/' + id);
   }
 
   editEquipmentTracking(equipmentTracking: EquipmentTracking): Observable<EquipmentTracking> {
     return this.http.put<EquipmentTracking>(environment.apiHost + 'equipmentTracking/edit', equipmentTracking);
   }
-  
+
   getAllAppointments(): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(environment.apiHost + 'appointments/');
   }
@@ -226,9 +232,13 @@ export class StakeholderService {
     );
   }
 
-  getCustomerByAppointmentId(id: string): Observable<CustomerProfile>{
+  getCustomerByAppointmentId(id: string): Observable<CustomerProfile> {
     return this.http.get<CustomerProfile>(
       environment.apiHost + 'items/byAppointment/' + id
     );
- }
+  }
+
+  getEquipmentTrackingByEquipment(id: string): Observable<EquipmentTracking> {
+    return this.http.get<EquipmentTracking>(environment.apiHost + 'equipmentTracking/equipment/' + id);
+  }
 }

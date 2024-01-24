@@ -12,4 +12,5 @@ public interface EquipmentTrackingService {
     List<EquipmentTrackingDTO> GetWanted(String searchName,String type) throws Exception;
     EquipmentTracking Update(EquipmentTrackingDTO equipmentTrackingDTO) throws Exception;
     EquipmentTracking Get(String id) throws Exception;
+    List<EquipmentTrackingDTO>  GetByEquipmentId(String id) throws Exception;
 }

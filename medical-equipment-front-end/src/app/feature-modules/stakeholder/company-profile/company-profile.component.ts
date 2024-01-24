@@ -96,16 +96,18 @@ export class CompanyProfileComponent {
     this.authService.user$.subscribe((user) => {
       this.user = user;
     });
-    this.getCompany();
+    //this.getCompany();
     this.getAllEquipmentTrackings();
     this.getAllCompanyAdministrators();
     this.getAllAppointments();
-    this.getCompanyAdministratorProfile();
+    if(this.user?.role === 'COMPANY_ADMINISTRATOR'){
+      this.getCompanyAdministratorProfile();
+    }
     });
   }
   
-  getCompany(): void {
-    this.service.getCompanyProfile(this.id).subscribe({
+  getCompany(companyId: number): void {
+    this.service.getCompanyProfile(companyId.toString()).subscribe({
       next: (result) => {
         this.company = result;
       },
@@ -121,6 +123,7 @@ export class CompanyProfileComponent {
         console.log('Company administrator:')
         console.log(result)
         this.companyAdministrator = result;
+        this.getCompany(this.companyAdministrator.companyId);
       },
       error: () => {
         console.log(console.error);
@@ -151,7 +154,7 @@ export class CompanyProfileComponent {
     this.selectedOption = type;
     const name = this.searchForm.value.name || 'empty';
 
-    this.service.searchEquipment(name, this.selectedOption).subscribe({
+    this.service.searchEquipmentTracking(name, this.selectedOption).subscribe({
       next: (result: EquipmentTracking[]) => {
         this.equipmentTracking = result;
         this.sort();
@@ -165,7 +168,7 @@ export class CompanyProfileComponent {
   search(): void {
     const name = this.searchForm.value.name || 'empty';
 
-    this.service.searchEquipment(name, this.selectedOption).subscribe({
+    this.service.searchEquipmentTracking(name, this.selectedOption).subscribe({
       next: (result: EquipmentTracking[]) => {
         this.equipmentTracking = result;
         this.sort();
