@@ -189,6 +189,7 @@ export class CompanyProfileComponent {
     this.equipmentTracking = [];
     this.searchForm.setValue({ name: '' });
     this.selectedOption = 'empty';
+    this.getAllEquipmentTrackings();
   }
 
   getAllCompanyAdministrators(): void {
