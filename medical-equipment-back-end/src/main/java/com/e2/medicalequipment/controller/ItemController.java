@@ -1,17 +1,11 @@
 package com.e2.medicalequipment.controller;
 
-import com.e2.medicalequipment.dto.CreateAppointmentDTO;
-import com.e2.medicalequipment.dto.CreateCompanyDTO;
-import com.e2.medicalequipment.dto.CreateItemDTO;
-import com.e2.medicalequipment.dto.UpdateItemDTO;
+import com.e2.medicalequipment.dto.*;
 import com.e2.medicalequipment.model.Appointment;
 import com.e2.medicalequipment.model.Company;
 import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.model.Item;
-import com.e2.medicalequipment.service.EquipmentService;
-import com.e2.medicalequipment.service.ItemService;
-import com.e2.medicalequipment.service.QRCodeService;
-import com.e2.medicalequipment.service.UserService;
+import com.e2.medicalequipment.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,6 +30,12 @@ public class ItemController {
 
     @Autowired
     private EquipmentService equipmentService;
+
+    @Autowired
+    private CompanyService companyService;
+
+    @Autowired
+    private EquipmentTrackingService equipmentTrackingService;
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('CUSTOMER')")
@@ -84,10 +84,30 @@ public class ItemController {
             long userId = 0;
             int price = 0;
             for (UpdateItemDTO item : items) {
-                userId = item.CustomerId;
-                price += equipmentService.Get(item.EquipmentId).getPrice() * item.Count;
-                itemService.Update(item);
+                try {
+                    EquipmentTrackingDTO dto = new EquipmentTrackingDTO(equipmentTrackingService.FindByCompanyAndEquipment(item.CompanyId,item.EquipmentId));
+                    dto.count -= item.Count;
+                    equipmentTrackingService.Update(dto);
+                    userId = item.CustomerId;
+                    price += equipmentService.Get(item.EquipmentId).getPrice() * item.Count;
+
+                    UpdateItemDTO updatedItem = new UpdateItemDTO();
+                    updatedItem.CompanyId = item.CompanyId;
+                    updatedItem.EquipmentId = item.EquipmentId;
+                    updatedItem.Count = item.Count;
+                    updatedItem.CustomerId = item.CustomerId;
+                    updatedItem.AppointmentId = item.AppointmentId;
+                    updatedItem.Id = item.Id;
+
+                    itemService.Update(updatedItem);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw e;  // rethrow the exception
+                }
             }
+            //
+            //dto.id =
+            //equipmentTrackingService.Update()
             String message = "Ukupna cena: " + price;
             qrCodeService.sendQRCode("Your cart", userService.getUserById(userId).getUsername(), message);
             return true;

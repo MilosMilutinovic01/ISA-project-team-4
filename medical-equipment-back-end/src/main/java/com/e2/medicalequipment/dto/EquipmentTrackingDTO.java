@@ -15,6 +15,9 @@ public class EquipmentTrackingDTO {
     public UpdateCompanyDTO company;
     public EquipmentDTO equipment;
 
+    public EquipmentTrackingDTO() {
+    }
+
     public EquipmentTrackingDTO(EquipmentTracking equipmentTracking) {
         EquipmentDTO equipment = new EquipmentDTO(equipmentTracking.getEquipment());
         UpdateCompanyDTO companyDTO = new UpdateCompanyDTO(equipmentTracking.getCompany());

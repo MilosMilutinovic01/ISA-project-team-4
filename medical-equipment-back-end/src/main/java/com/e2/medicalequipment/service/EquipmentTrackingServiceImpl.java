@@ -42,6 +42,13 @@ public class EquipmentTrackingServiceImpl implements EquipmentTrackingService {
                     .filter(e -> type.equals("empty") || e.equipment.type.toString().equals(type))
                     .collect(Collectors.toList());
     }
+
+    @Override
+    public EquipmentTracking FindByCompanyAndEquipment(long companyId, long equipmentId) throws Exception {
+        List<EquipmentTrackingDTO> result = new ArrayList<>();
+        return equipmentTrackingRepository.findByCompanyAndEquipmentId(companyId, equipmentId);
+    }
+
     public EquipmentTracking Get(String id) {
         return equipmentTrackingRepository.findById(Long.valueOf(id)).get();
     }
