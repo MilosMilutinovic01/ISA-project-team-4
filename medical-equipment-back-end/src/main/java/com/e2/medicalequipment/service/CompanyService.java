@@ -18,6 +18,9 @@ public interface CompanyService {
 
     List<Company> Filter(String rate,
                          List<Company> companies) throws Exception;
+    List<Company> SortByRate(boolean descending, List<Company> companies) throws Exception;
+    List<Company> SortByName(boolean descending, List<Company> companies) throws Exception;
+    List<Company> SortByCity(boolean descending, List<Company> companies) throws Exception;
 
     Company Get(String id) throws Exception;
     Company Update(UpdateCompanyDTO companyDTO) throws Exception;

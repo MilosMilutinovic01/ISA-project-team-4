@@ -140,6 +140,36 @@ export class StakeholderService {
     );
   }
 
+  sortCompaniesByRate(
+    isAscending: string,
+    companies: Company[]
+  ): Observable<Company[]> {
+    return this.http.put<Company[]>(
+      environment.apiHost + 'companies/sort/rate/' + isAscending,
+      companies
+    );
+  }
+
+  sortCompaniesByName(
+    isAscending: string,
+    companies: Company[]
+  ): Observable<Company[]> {
+    return this.http.put<Company[]>(
+      environment.apiHost + 'companies/sort/name/' + isAscending,
+      companies
+    );
+  }
+
+  sortCompaniesByCity(
+    isAscending: string,
+    companies: Company[]
+  ): Observable<Company[]> {
+    return this.http.put<Company[]>(
+      environment.apiHost + 'companies/sort/city/' + isAscending,
+      companies
+    );
+  }
+
   editCompanyAdministratorProfile(
     profile: UpdateCompanyAdministrator
   ): Observable<UpdateCompanyAdministrator> {
