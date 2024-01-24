@@ -41,6 +41,13 @@ public class EquipmentTrackingController {
         List<EquipmentTrackingDTO> trackings = equipmentTrackingService.GetWanted(name,type);
         return new ResponseEntity<List<EquipmentTrackingDTO>>(trackings, HttpStatus.OK);
     }
+    @GetMapping(value = "/equipment/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<EquipmentTrackingDTO>> getByEquipment(@PathVariable String id) throws Exception {
+
+        List<EquipmentTrackingDTO> trackings = equipmentTrackingService.GetByEquipmentId(id);
+        return new ResponseEntity<List<EquipmentTrackingDTO>>(trackings, HttpStatus.OK);
+    }
     @PutMapping(value = "/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")

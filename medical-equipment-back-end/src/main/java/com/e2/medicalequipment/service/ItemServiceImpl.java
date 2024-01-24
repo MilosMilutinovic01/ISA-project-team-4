@@ -57,12 +57,15 @@ public class ItemServiceImpl implements ItemService{
     public List<Item> GetAllByCustomerId(String customerId) throws Exception {
         return itemRepository.findAllByCustomerId(customerId);
     }
-
     @Override
     public Customer GetCustomerByAppointmentId(String appointmentId) throws Exception {
         List<Item> items = itemRepository.findAllByAppointmentId(appointmentId);
+        if (items.isEmpty()) {
+            throw new Exception("No items found for the given appointment ID.");
+        }
         return items.get(0).getCustomer();
     }
+
     public Item Get(Long id) throws Exception{
         return this.itemRepository.findById(id).get();
     }

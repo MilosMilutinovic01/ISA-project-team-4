@@ -163,7 +163,7 @@ export class CartComponent {
   }
 
   getAppointments(): void {
-    this.service.getAvailableAppointmentsByCompanyId(this.companyId).subscribe({
+    this.service.getFreeAppointmentsByCompanyId(this.companyId).subscribe({
       next: (result) => {
         this.predefinedAppointments = result;
 
@@ -224,7 +224,7 @@ export class CartComponent {
   }
 
   getReservedAppointments(): void {
-    this.service.getReservedAppointmentsByCompanyId(this.companyId).subscribe({
+    this.service.getScheduledAppointmentsByCompanyId(this.companyId).subscribe({
       next: (result) => {
         this.reservedAppointments = result;
       },

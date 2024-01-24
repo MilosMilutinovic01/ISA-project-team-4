@@ -72,18 +72,27 @@ public class AppointmentServiceImpl implements AppointmentService{
         }
         return allAppointments;
     }
-
     @Override
-    public List<Appointment> GetByCompanyId(Long companyId) throws Exception {
-        List<Appointment> allAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAll()) {
-            if(a.getCompanyAdministrator().getCompanyId() == companyId){
-                allAppointments.add(a);
+    public List<Appointment> GetFreeByCompanyId(Long companyId) throws Exception{
+        List<Appointment> freeAppointments = new ArrayList<>();
+        for(Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
+            if (itemRepository.findAllByAppointmentId(a.getId().toString()).isEmpty()) {
+                freeAppointments.add(a);
             }
         }
-        return allAppointments;
+        return freeAppointments;
     }
-
+    @Override
+    public List<Appointment> GetScheduledByCompanyId(Long companyId) throws Exception{
+        List<Appointment> scheduledAppointments = new ArrayList<>();
+        for(Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
+            if (!itemRepository.findAllByAppointmentId(a.getId().toString()).isEmpty()) {
+                scheduledAppointments.add(a);
+            }
+        }
+        return scheduledAppointments;
+    }
+/*
     @Override
     public List<Appointment> GetAvailableByCompanyId(Long companyId) throws Exception {
         List<Appointment> companyAppointments = new ArrayList<>();
@@ -134,5 +143,5 @@ public class AppointmentServiceImpl implements AppointmentService{
             }
         }
         return reservedAppointments;
-    }
+    }*/
 }

@@ -100,7 +100,9 @@ export class CompanyProfileComponent {
       this.getAllEquipmentTrackings();
       this.getAllCompanyAdministrators();
       this.getAllAppointments();
-      this.getCompanyAdministratorProfile();
+      if (this.user?.role === 'COMPANY_ADMINISTRATOR') {
+        this.getCompanyAdministratorProfile();
+      }
     });
   }
 
@@ -151,7 +153,7 @@ export class CompanyProfileComponent {
     this.selectedOption = type;
     const name = this.searchForm.value.name || 'empty';
 
-    this.service.searchEquipment(name, this.selectedOption).subscribe({
+    this.service.searchEquipmentTracking(name, this.selectedOption).subscribe({
       next: (result: EquipmentTracking[]) => {
         this.equipmentTracking = result;
         this.sort();
@@ -165,7 +167,7 @@ export class CompanyProfileComponent {
   search(): void {
     const name = this.searchForm.value.name || 'empty';
 
-    this.service.searchEquipment(name, this.selectedOption).subscribe({
+    this.service.searchEquipmentTracking(name, this.selectedOption).subscribe({
       next: (result: EquipmentTracking[]) => {
         this.equipmentTracking = result;
         this.sort();
@@ -177,6 +179,7 @@ export class CompanyProfileComponent {
   }
 
   sort(): void {
+    this.filteredEquipmentTrackings = [];
     for (let el of this.equipmentTracking) {
       if (el.company.id === this.company.id && el.count > 0) {
         this.filteredEquipmentTrackings.push(el);

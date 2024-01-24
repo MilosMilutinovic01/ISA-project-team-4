@@ -5,6 +5,7 @@ import com.e2.medicalequipment.dto.EquipmentTrackingDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyDTO;
 import com.e2.medicalequipment.model.*;
 import com.e2.medicalequipment.repository.CompanyRepository;
+import com.e2.medicalequipment.repository.EquipmentRepository;
 import com.e2.medicalequipment.repository.EquipmentTrackingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,5 +57,13 @@ public class EquipmentTrackingServiceImpl implements EquipmentTrackingService {
         equipmentTracking.setCount(dto.count);
         EquipmentTracking savedEquipmentTracking = equipmentTrackingRepository.save(equipmentTracking);
         return savedEquipmentTracking;
+    }
+    @Override
+    public List<EquipmentTrackingDTO> GetByEquipmentId(String equipmentId) throws Exception {
+        List<EquipmentTrackingDTO> result = new ArrayList<>();
+        for(EquipmentTracking e : equipmentTrackingRepository.findAllByEquipmentId(equipmentId)){
+            result.add( new EquipmentTrackingDTO(e));
+        }
+        return result;
     }
 }

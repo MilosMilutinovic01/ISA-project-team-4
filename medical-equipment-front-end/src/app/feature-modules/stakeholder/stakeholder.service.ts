@@ -99,9 +99,18 @@ export class StakeholderService {
     return this.http.get<Equipment[]>(environment.apiHost + 'equipment/');
   }
 
-  searchEquipment(name: string, type: string): Observable<EquipmentTracking[]> {
+  searchEquipmentTracking(
+    name: string,
+    type: string
+  ): Observable<EquipmentTracking[]> {
     return this.http.get<EquipmentTracking[]>(
       environment.apiHost + 'equipmentTracking/search/' + name + '/' + type
+    );
+  }
+
+  searchEquipment(name: string, type: string): Observable<Equipment[]> {
+    return this.http.get<Equipment[]>(
+      environment.apiHost + 'equipment/search/' + name + '/' + type
     );
   }
 
@@ -228,27 +237,37 @@ export class StakeholderService {
     );
   }
 
-  getAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
+  getFreeAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(
-      environment.apiHost + 'appointments/' + id
+      environment.apiHost + 'appointments/free/' + id
     );
   }
 
-  getAvailableAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(
-      environment.apiHost + 'appointments/available/' + id
-    );
-  }
+  // getAvailableAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
+  //   return this.http.get<Appointment[]>(
+  //     environment.apiHost + 'appointments/available/' + id
+  //   );
+  // }
 
-  getReservedAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
+  // getReservedAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
+  //   return this.http.get<Appointment[]>(
+  //     environment.apiHost + 'appointments/reserved/' + id
+
+  getScheduledAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(
-      environment.apiHost + 'appointments/reserved/' + id
+      environment.apiHost + 'appointments/scheduled/' + id
     );
   }
 
   getCustomerByAppointmentId(id: string): Observable<CustomerProfile> {
     return this.http.get<CustomerProfile>(
       environment.apiHost + 'items/byAppointment/' + id
+    );
+  }
+
+  getEquipmentTrackingByEquipment(id: string): Observable<EquipmentTracking> {
+    return this.http.get<EquipmentTracking>(
+      environment.apiHost + 'equipmentTracking/equipment/' + id
     );
   }
 }
