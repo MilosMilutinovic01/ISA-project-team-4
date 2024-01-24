@@ -14,16 +14,17 @@ import java.io.IOException;
 
 @Service
 public class QRCodeServiceImpl implements QRCodeService{
-    private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/static/img/QRCode.png";
+    private static int counter = 0;
+    private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/static/img/";
 
     @Autowired
     private JavaMailSender javaMailSender;
     @Override
     public String sendQRCode(String subject, String mail, String message) {
         try {
-            QRCodeGenerator.generateQRCodeImage(message, 250, 250, QR_CODE_IMAGE_PATH);
-
-            sendEmailWithQRCode(subject, mail, QR_CODE_IMAGE_PATH);
+            counter++;
+            QRCodeGenerator.generateQRCodeImage(message, 250, 250, QR_CODE_IMAGE_PATH + counter + ".png");
+            sendEmailWithQRCode(subject, mail, QR_CODE_IMAGE_PATH + counter + ".png");
         } catch (WriterException | IOException | MessagingException e) {
             e.printStackTrace();
         }

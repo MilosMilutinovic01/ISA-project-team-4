@@ -83,12 +83,15 @@ public class ItemController {
         public boolean reserve (@RequestBody List < UpdateItemDTO > items) throws Exception {
             long userId = 0;
             int price = 0;
+            long appointmentId = 0;
+            String message = "Broj rezervacije:" + items.get(0).AppointmentId + "\nRezervisana oprema:\n";
             for (UpdateItemDTO item : items) {
                 userId = item.CustomerId;
                 price += equipmentService.Get(item.EquipmentId).getPrice() * item.Count;
+                message += equipmentService.Get(item.EquipmentId).getName()+"\n";
                 itemService.Update(item);
             }
-            String message = "Ukupna cena: " + price;
+            message += "Ukupna cena: " + price;
             qrCodeService.sendQRCode("Your cart", userService.getUserById(userId).getUsername(), message);
             return true;
         }

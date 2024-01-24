@@ -29,6 +29,9 @@
     "devextreme": "23.2.3",
     "devextreme-angular": "23.2.3",
     "font-awesome": "^4.7.0",
+    "ng2-qrcode-reader": "0.0.1",
+    "ngx-qrcode-reader": "0.0.2",
+    "ngx-scanner": "0.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
