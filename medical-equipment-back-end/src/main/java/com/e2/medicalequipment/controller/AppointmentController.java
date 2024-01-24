@@ -64,7 +64,6 @@ public class AppointmentController {
 
     @GetMapping(value = "/free/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public ResponseEntity<List<Appointment>> getFreeAppointmentsByCompanyId(@PathVariable String id){
         List<Appointment> appointments = null;
         try {
@@ -78,7 +77,6 @@ public class AppointmentController {
 
     @GetMapping(value = "/scheduled/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public ResponseEntity<List<Appointment>> getScheduledAppointmentsByCompanyId(@PathVariable String id){
         List<Appointment> appointments = null;
         try {
@@ -90,7 +88,7 @@ public class AppointmentController {
         }
     }
 
-    @GetMapping(value = "/available/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  /*  @GetMapping(value = "/available/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasAuthority('CUSTOMER')")
     public ResponseEntity<List<Appointment>> getAvailableByCompanyId(@PathVariable String id){
@@ -117,4 +115,6 @@ public class AppointmentController {
             return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.CONFLICT);
         }
     }
+    */
+
 }

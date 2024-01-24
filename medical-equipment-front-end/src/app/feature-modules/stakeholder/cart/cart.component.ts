@@ -251,7 +251,7 @@ export class CartComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const month = this.calendar_value_irregular.getMonth() + 1;
+        const month = this.calendar_value_irregular.getMonth();
         const start = new Date(
           this.calendar_value_irregular.getFullYear(),
           month,
@@ -323,14 +323,8 @@ export class CartComponent {
   }
 
   chooseIrregular(): void {
-    //if(!this.selectedAppointment){
-
     this.isIrregular = true;
     this.getIrregularDates();
-    //}
-    // else{
-    //   alert('Appointment already selected!');
-    // }
   }
 
   onStepperSelectionChange(event: StepperSelectionEvent): void {
