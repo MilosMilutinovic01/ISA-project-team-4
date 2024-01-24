@@ -46,14 +46,13 @@ public class CompanyAdministratorController {
     @ResponseBody
     @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public ResponseEntity<CompanyAdministrator> getCompanyAdministrator(@PathVariable String id) throws Exception {
-        System.out.println("ID: "+ id);
-        CompanyAdministrator customer = null;
+        CompanyAdministrator companyAdministrator = null;
         try {
-            customer = companyAdministratorService.Get(id);
-            return new ResponseEntity<CompanyAdministrator>(customer, HttpStatus.OK);
+            companyAdministrator = companyAdministratorService.Get(id);
+            return new ResponseEntity<CompanyAdministrator>(companyAdministrator, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<CompanyAdministrator>(customer, HttpStatus.CONFLICT);
+            return new ResponseEntity<CompanyAdministrator>(companyAdministrator, HttpStatus.CONFLICT);
         }    }
 
     @PutMapping(value = "/profile/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
