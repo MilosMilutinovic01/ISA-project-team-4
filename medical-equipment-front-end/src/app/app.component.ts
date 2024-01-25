@@ -1,3 +1,4 @@
+import 'leaflet-routing-machine';
 import { Component } from '@angular/core';
 import { AuthService } from './infrastructure/auth/auth.service';
 
