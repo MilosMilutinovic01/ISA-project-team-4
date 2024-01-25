@@ -1,0 +1,6 @@
+<input type="file" (change)="onFileSelected($event)" #fileInput>
+
+<div *ngIf="selectedFile">
+  <p>Selected File: {{ selectedFile.name }}</p>
+  <p>File Size: {{ selectedFile.size }} bytes</p>
+</div>

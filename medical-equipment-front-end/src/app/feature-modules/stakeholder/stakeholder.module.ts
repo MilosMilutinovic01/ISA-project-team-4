@@ -34,6 +34,7 @@ import { EquipmentRegistrationComponent } from './equipment-registration/equipme
 import { EditEquipmentTrackingComponent } from './edit-equipment-tracking/edit-equipment-tracking.component';
 import { SelectAppointmentDialogComponent } from './select-appointment-dialog/select-appointment-dialog.component';
 import { SelectIrregularAppointmentDialogComponent } from './select-irregular-appointment-dialog/select-irregular-appointment-dialog.component';
+import { EquipmentPickupQrComponent } from './equipment-pickup-qr/equipment-pickup-qr.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { SelectIrregularAppointmentDialogComponent } from './select-irregular-ap
     ChangePasswordComponent,
     SelectAppointmentDialogComponent,
     SelectIrregularAppointmentDialogComponent,
+    EquipmentPickupQrComponent,
   ],
   imports: [
     CommonModule,
@@ -74,7 +76,7 @@ import { SelectIrregularAppointmentDialogComponent } from './select-irregular-ap
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatInputModule,
+    MatInputModule
   ],
   exports: [
     CustomerProfileComponent,

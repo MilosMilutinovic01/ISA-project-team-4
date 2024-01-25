@@ -270,4 +270,8 @@ export class StakeholderService {
       environment.apiHost + 'equipmentTracking/equipment/' + id
     );
   }
+
+  getQRString(filepath: string): Observable<string> {
+    return this.http.get(environment.apiHost + 'appointments/qr/' + filepath, { responseType: 'text' });
+  }
 }

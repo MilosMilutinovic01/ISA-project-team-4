@@ -4,6 +4,7 @@ import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import com.e2.medicalequipment.model.Appointment;
 import com.e2.medicalequipment.model.Item;
 import com.e2.medicalequipment.service.AppointmentService;
+import com.e2.medicalequipment.service.QRCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +21,8 @@ public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
+    @Autowired
+    private QRCodeService qrCodeService;
    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public ResponseEntity<Appointment> registerAppointment(@RequestBody CreateAppointmentDTO appointmentDTO) {
@@ -116,5 +119,18 @@ public class AppointmentController {
         }
     }
     */
+
+    @GetMapping(value = "/qr/{filePath}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<String> getQRText(@PathVariable String filePath){
+        String result = null;
+        try {
+            result = qrCodeService.readQRCode(filePath);
+            return new ResponseEntity<String>(result,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>(result,HttpStatus.CONFLICT);
+        }
+    }
 
 }
