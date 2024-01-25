@@ -10,6 +10,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -80,5 +82,35 @@ public class CompanyServiceImpl implements CompanyService {
         List<Company> filteredCompanies = companies.stream()
                 .filter(c -> c.getAverageRating() >= (rating-1) && c.getAverageRating() <= rating).collect(Collectors.toList());
         return filteredCompanies;
+    }
+
+    @Override
+    public List<Company> SortByRate(boolean descending, List<Company> companies) throws Exception {
+        Comparator<Company> comparator = Comparator.comparing(company -> company.getAverageRating());
+        if (descending) {
+            comparator = comparator.reversed();
+        }
+        Collections.sort(companies, comparator);
+        return companies;
+    }
+
+    @Override
+    public List<Company> SortByName(boolean descending, List<Company> companies) throws Exception {
+        Comparator<Company> comparator = Comparator.comparing(company -> company.getName());
+        if (descending) {
+            comparator = comparator.reversed();
+        }
+        Collections.sort(companies, comparator);
+        return companies;
+    }
+
+    @Override
+    public List<Company> SortByCity(boolean descending, List<Company> companies) throws Exception {
+        Comparator<Company> comparator = Comparator.comparing(company -> company.getAddress().getCity());
+        if (descending) {
+            comparator = comparator.reversed();
+        }
+        Collections.sort(companies, comparator);
+        return companies;
     }
 }

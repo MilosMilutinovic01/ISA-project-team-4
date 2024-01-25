@@ -92,6 +92,18 @@ public class AppointmentServiceImpl implements AppointmentService{
         }
         return scheduledAppointments;
     }
+
+    @Override
+    public List<Appointment> GetScheduledByCustomerId(Long customerId) throws Exception{
+        List<Appointment> scheduledAppointments = new ArrayList<>();
+        for (Item item : itemRepository.findAllByCustomerId(String.valueOf(customerId))){
+            Appointment a = item.getAppointment();
+            if(!scheduledAppointments.contains(a)) {
+                scheduledAppointments.add(a);
+            }
+        }
+        return scheduledAppointments;
+    }
 /*
     @Override
     public List<Appointment> GetAvailableByCompanyId(Long companyId) throws Exception {

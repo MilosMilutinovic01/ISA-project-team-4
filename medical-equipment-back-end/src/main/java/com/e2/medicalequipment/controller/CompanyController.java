@@ -94,6 +94,63 @@ public class CompanyController {
         }
     }
 
+    @PutMapping(value = "/sort/rate/{isAscending}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<Company>> sortCompaniesByRate(@PathVariable String isAscending,
+                                                         @RequestBody List<Company> companies) {
+        List<Company> sortedCompanies = null;
+        try {
+            if(isAscending.equals("1")) {
+                sortedCompanies = companyService.SortByRate(false, companies);
+            }
+            if(isAscending.equals("-1")) {
+                sortedCompanies = companyService.SortByRate(true, companies);
+            }
+            return new ResponseEntity<List<Company>>(sortedCompanies, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Company>>(sortedCompanies, HttpStatus.CONFLICT);
+        }
+    }
+
+    @PutMapping(value = "/sort/name/{isAscending}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<Company>> sortCompaniesByName(@PathVariable String isAscending,
+                                                             @RequestBody List<Company> companies) {
+        List<Company> sortedCompanies = null;
+        try {
+            if(isAscending.equals("1")) {
+                sortedCompanies = companyService.SortByName(false, companies);
+            }
+            if(isAscending.equals("-1")) {
+                sortedCompanies = companyService.SortByName(true, companies);
+            }
+            return new ResponseEntity<List<Company>>(sortedCompanies, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Company>>(sortedCompanies, HttpStatus.CONFLICT);
+        }
+    }
+
+    @PutMapping(value = "/sort/city/{isAscending}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<Company>> sortCompaniesByCity(@PathVariable String isAscending,
+                                                             @RequestBody List<Company> companies) {
+        List<Company> sortedCompanies = null;
+        try {
+            if(isAscending.equals("1")) {
+                sortedCompanies = companyService.SortByCity(false, companies);
+            }
+            if(isAscending.equals("-1")) {
+                sortedCompanies = companyService.SortByCity(true, companies);
+            }
+            return new ResponseEntity<List<Company>>(sortedCompanies, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Company>>(sortedCompanies, HttpStatus.CONFLICT);
+        }
+    }
+
     @GetMapping(value = "/profile/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<UpdateCompanyDTO> getCompany (@PathVariable String id) throws Exception {

@@ -64,6 +64,20 @@ public class ItemController {
         }
     }
 
+    @GetMapping(value = "/appointment/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public ResponseEntity<List<Item>> getAllByAppointmentId(@PathVariable String id){
+        List<Item> items = null;
+        try {
+            items = itemService.GetAllByAppointmentId(id);
+            return new ResponseEntity<List<Item>>(items, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Item>>(items, HttpStatus.CONFLICT);
+        }
+    }
+
     @GetMapping(value = "byAppointment/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")

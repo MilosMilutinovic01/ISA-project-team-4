@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { StakeholderService } from '../stakeholder.service';
 import { Router } from '@angular/router';
 import { Company } from 'src/app/shared/model/company.model';
@@ -15,6 +15,13 @@ export class CompaniesViewComponent implements OnInit {
   companies: Company[] = [];
   rate: string = '';
   filterLabel: string = '';
+  nameAsc: string = 'nameAsc';
+  nameDesc: string = 'nameDesc';
+  rateAsc: string = 'rateAsc';
+  rateDesc: string = 'rateDesc';
+  cityAsc: string = 'cityAsc';
+  cityDesc: string = 'cityDesc';
+  selected: string = '';
 
   searchForm = new FormGroup({
     name: new FormControl(''),
@@ -45,7 +52,7 @@ export class CompaniesViewComponent implements OnInit {
     });
   }
 
-  showCompany(id : number): void{
+  showCompany(id: number): void {
     this.router.navigate(['/companyProfile/', id]);
   }
 
@@ -56,6 +63,99 @@ export class CompaniesViewComponent implements OnInit {
     const country = this.searchForm.value.country || 'empty';
 
     this.service.searchCompanies(name, street, city, country).subscribe({
+      next: (result: Company[]) => {
+        this.companies = result;
+        console.log(result);
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+  }
+
+  onSelected(): void {
+    if (this.selected === 'nameAsc') {
+      this.sortNameAsc();
+    }
+    if (this.selected === 'nameDesc') {
+      this.sortNameDesc();
+    }
+    if (this.selected === 'cityAsc') {
+      this.sortCityAsc();
+    }
+    if (this.selected === 'cityDesc') {
+      this.sortCityDesc();
+    }
+    if (this.selected === 'rateAsc') {
+      this.sortRateAsc();
+    }
+    if (this.selected === 'rateDesc') {
+      this.sortRateDesc();
+    }
+  }
+
+  sortNameAsc(): void {
+    this.service.sortCompaniesByName('1', this.companies).subscribe({
+      next: (result: Company[]) => {
+        this.companies = result;
+        console.log(result);
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+  }
+
+  sortNameDesc(): void {
+    this.service.sortCompaniesByName('-1', this.companies).subscribe({
+      next: (result: Company[]) => {
+        this.companies = result;
+        console.log(result);
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+  }
+
+  sortCityAsc(): void {
+    this.service.sortCompaniesByCity('1', this.companies).subscribe({
+      next: (result: Company[]) => {
+        this.companies = result;
+        console.log(result);
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+  }
+
+  sortCityDesc(): void {
+    this.service.sortCompaniesByCity('-1', this.companies).subscribe({
+      next: (result: Company[]) => {
+        this.companies = result;
+        console.log(result);
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+  }
+
+  sortRateAsc(): void {
+    this.service.sortCompaniesByRate('1', this.companies).subscribe({
+      next: (result: Company[]) => {
+        this.companies = result;
+        console.log(result);
+      },
+      error: () => {
+        console.log(console.error());
+      },
+    });
+  }
+
+  sortRateDesc(): void {
+    this.service.sortCompaniesByRate('-1', this.companies).subscribe({
       next: (result: Company[]) => {
         this.companies = result;
         console.log(result);
@@ -123,5 +223,6 @@ export class CompaniesViewComponent implements OnInit {
     this.getCompanies();
     this.filterLabel = '';
     this.searchForm.setValue({ name: '', street: '', city: '', country: '' });
+    this.selected = '';
   }
 }

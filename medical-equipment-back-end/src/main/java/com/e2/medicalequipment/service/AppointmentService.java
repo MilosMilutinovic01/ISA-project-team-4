@@ -17,4 +17,6 @@ public interface AppointmentService {
     List<Appointment> GetFreeByCompanyId(Long companyId) throws Exception;
     List<Appointment> GetScheduledByCompanyId(Long companyId) throws Exception;
 
+    List<Appointment> GetScheduledByCustomerId(Long customerId) throws Exception;
+
 }

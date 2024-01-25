@@ -34,6 +34,7 @@ import { EquipmentRegistrationComponent } from './equipment-registration/equipme
 import { EditEquipmentTrackingComponent } from './edit-equipment-tracking/edit-equipment-tracking.component';
 import { SelectAppointmentDialogComponent } from './select-appointment-dialog/select-appointment-dialog.component';
 import { SelectIrregularAppointmentDialogComponent } from './select-irregular-appointment-dialog/select-irregular-appointment-dialog.component';
+import { CustomerScheduledAppointmentsComponent } from './customer-scheduled-appointments/customer-scheduled-appointments.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { SelectIrregularAppointmentDialogComponent } from './select-irregular-ap
     ChangePasswordComponent,
     SelectAppointmentDialogComponent,
     SelectIrregularAppointmentDialogComponent,
+    CustomerScheduledAppointmentsComponent,
   ],
   imports: [
     CommonModule,
@@ -96,9 +98,10 @@ import { SelectIrregularAppointmentDialogComponent } from './select-irregular-ap
     MatDialogModule,
     ChangePasswordComponent,
     FontAwesomeModule,
-    AddToCartDialogComponent, 
+    AddToCartDialogComponent,
     CartComponent,
-    SelectIrregularAppointmentDialogComponent
-  ]
+    SelectIrregularAppointmentDialogComponent,
+    CustomerScheduledAppointmentsComponent,
+  ],
 })
 export class StakeholderModule {}
