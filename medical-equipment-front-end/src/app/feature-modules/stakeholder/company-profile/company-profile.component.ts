@@ -278,6 +278,7 @@ export class CompanyProfileComponent {
             count: result || '',
             customerId: this.authService.getCurrentUserId() || 0,
             companyId: this.company.id || 0,
+            pickedUp: false
           };
 
           const selectedEquipment = this.filteredEquipmentTrackings.find(

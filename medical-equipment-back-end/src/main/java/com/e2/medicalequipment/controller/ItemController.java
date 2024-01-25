@@ -64,7 +64,7 @@ public class ItemController {
         }
     }
 
-    @GetMapping(value = "byAppointment/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "customerByAppointment/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public ResponseEntity<Customer>  getCustomerByAppointmentId(@PathVariable String id) {

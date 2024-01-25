@@ -132,4 +132,28 @@ public class AppointmentController {
         }
     }
 
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<Appointment> getById(@PathVariable String id){
+        Appointment appointment = null;
+        try {
+            appointment = appointmentService.GetById(Long.parseLong(id));
+            return new ResponseEntity<Appointment>(appointment, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Appointment>(appointment, HttpStatus.CONFLICT);
+        }
+    }
+    @GetMapping(value = "/checkReservation/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<Boolean> checkReservation(@PathVariable String id){
+        Boolean result = false;
+        try {
+            result = appointmentService.CheckReservation(Long.parseLong(id));
+            return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Boolean>(result, HttpStatus.CONFLICT);
+        }
+    }
 }

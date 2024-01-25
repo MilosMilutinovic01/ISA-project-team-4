@@ -3,6 +3,7 @@ package com.e2.medicalequipment.service;
 import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import com.e2.medicalequipment.model.Appointment;
 import com.e2.medicalequipment.model.CompanyAdministrator;
+import com.e2.medicalequipment.model.Equipment;
 import com.e2.medicalequipment.model.Item;
 import com.e2.medicalequipment.repository.AppointmentRepository;
 import com.e2.medicalequipment.repository.CompanyAdministratorRepository;
@@ -86,8 +87,12 @@ public class AppointmentServiceImpl implements AppointmentService{
     public List<Appointment> GetScheduledByCompanyId(Long companyId) throws Exception{
         List<Appointment> scheduledAppointments = new ArrayList<>();
         for(Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
-            if (!itemRepository.findAllByAppointmentId(a.getId().toString()).isEmpty()) {
-                scheduledAppointments.add(a);
+            List<Item> items = itemRepository.findAllByAppointmentId(a.getId().toString());
+            if (!items.isEmpty()) {
+                boolean allItemsNotPickedUp = items.stream().allMatch(item -> !item.isPickedUp());
+                if(allItemsNotPickedUp){
+                    scheduledAppointments.add(a);
+                }
             }
         }
         return scheduledAppointments;
@@ -144,4 +149,23 @@ public class AppointmentServiceImpl implements AppointmentService{
         }
         return reservedAppointments;
     }*/
+
+    public Appointment GetById(Long id) {
+        return appointmentRepository.findById(id).orElse(null);
+    }
+
+    public boolean CheckReservation(Long id) {
+        Appointment appointment = appointmentRepository.findById(id).orElse(null);
+        List<Appointment> scheduledAppointments = new ArrayList<>();
+        for(Appointment a : appointmentRepository.findAll()) {
+            List<Item> items = itemRepository.findAllByAppointmentId(a.getId().toString());
+            if (!items.isEmpty()) {
+                boolean allItemsNotPickedUp = items.stream().allMatch(item -> !item.isPickedUp());
+                if(allItemsNotPickedUp){
+                    scheduledAppointments.add(a);
+                }
+            }
+        }
+        return scheduledAppointments.contains(appointment);
+    }
 }
