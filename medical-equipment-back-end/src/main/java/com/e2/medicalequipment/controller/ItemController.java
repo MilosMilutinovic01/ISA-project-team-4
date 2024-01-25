@@ -84,7 +84,7 @@ public class ItemController {
             long userId = 0;
             int price = 0;
             long appointmentId = 0;
-            String message = "Broj rezervacije:" + items.get(0).AppointmentId + "\n\nRezervisana oprema:\n";
+            String message = "Broj rezervacije : " + items.get(0).AppointmentId + "\n\nRezervisana oprema :\n";
             for (UpdateItemDTO item : items) {
                 try {
                     EquipmentTrackingDTO dto = new EquipmentTrackingDTO(equipmentTrackingService.FindByCompanyAndEquipment(item.CompanyId,item.EquipmentId));
@@ -100,14 +100,14 @@ public class ItemController {
                     updatedItem.CustomerId = item.CustomerId;
                     updatedItem.AppointmentId = item.AppointmentId;
                     updatedItem.Id = item.Id;
-                    message += equipmentService.Get(item.EquipmentId).getName()+"\n";
+                    message += equipmentService.Get(item.EquipmentId).getName()+ " - " + item.Count + " kom\n";
                     itemService.Update(updatedItem);
                 } catch (Exception e) {
                     e.printStackTrace();
                     throw e;  // rethrow the exception
                 }
             }
-            message += "\nUkupna cena:" + price + "\n";
+            message += "\nUkupna cena : " + price + " RSD\n";
             //
             //dto.id =
             //equipmentTrackingService.Update()

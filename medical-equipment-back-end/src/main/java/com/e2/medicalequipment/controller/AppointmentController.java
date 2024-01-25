@@ -119,13 +119,12 @@ public class AppointmentController {
         }
     }
     */
-
-    @GetMapping(value = "/qr/{filePath}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/dataFromQR/{fileName}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<String> getQRText(@PathVariable String filePath){
+    public ResponseEntity<String> getAppointmentDataFromQRCode(@PathVariable String fileName){
         String result = null;
         try {
-            result = qrCodeService.readQRCode(filePath);
+            result = qrCodeService.readQRCode(fileName);
             return new ResponseEntity<String>(result,HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

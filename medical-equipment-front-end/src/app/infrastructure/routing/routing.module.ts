@@ -47,7 +47,7 @@ const routes: Routes = [
   { path: 'cart/:id', component: CartComponent },
   { path: 'companyCalendar', component: CompanyCalendarComponent },
   { path: 'changePassword', component: ChangePasswordComponent },
-  { path: 'equipmentPickupQR', component: EquipmentPickupQrComponent },
+  { path: 'equipmentDeliverQR', component: EquipmentPickupQrComponent },
 ];
 
 

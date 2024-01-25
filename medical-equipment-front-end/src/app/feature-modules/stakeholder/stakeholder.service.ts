@@ -271,7 +271,7 @@ export class StakeholderService {
     );
   }
 
-  getQRString(filepath: string): Observable<string> {
-    return this.http.get(environment.apiHost + 'appointments/qr/' + filepath, { responseType: 'text' });
+  getAppointmentDataFromQRCode(filepath: string): Observable<string> {
+    return this.http.get(environment.apiHost + 'appointments/dataFromQR/' + filepath, { responseType: 'text' });
   }
 }

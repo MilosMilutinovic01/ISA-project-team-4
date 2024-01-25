@@ -49,9 +49,9 @@ public class QRCodeServiceImpl implements QRCodeService{
     }
 
     @Override
-    public String readQRCode(String filepath) {
+    public String readQRCode(String filename) {
         try {
-            String result = QRCodeReader.readQRCode(QR_CODE_IMAGE_PATH + filepath);
+            String result = QRCodeReader.readQRCode(QR_CODE_IMAGE_PATH + filename);
             return result;
         } catch (IOException e) {
             e.printStackTrace();

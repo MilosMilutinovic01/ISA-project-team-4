@@ -1,6 +1,12 @@
-<input type="file" (change)="onFileSelected($event)" #fileInput>
-
-<div *ngIf="selectedFile">
-  <p>Selected File: {{ selectedFile.name }}</p>
-  <p>File Size: {{ selectedFile.size }} bytes</p>
+<div class="qr-upload">
+    <label>Upload QR code:</label>
+    <input type="file" (change)="onFileSelected($event)" #fileInput />
+    <mat-card *ngIf="selectedFile" class="card">
+        <mat-card-title>
+          <p class="card-title">Reservation information:</p>
+        </mat-card-title>
+        <mat-card-content class="card-content">
+            <div [innerHTML]="reservationInformation"></div>
+        </mat-card-content>
+      </mat-card>
 </div>

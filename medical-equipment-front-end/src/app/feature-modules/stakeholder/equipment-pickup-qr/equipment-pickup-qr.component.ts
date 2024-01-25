@@ -10,7 +10,7 @@ import { StakeholderService } from '../stakeholder.service';
 
 export class EquipmentPickupQrComponent {
   selectedFile: File | null = null;
-  textt: String|undefined;
+  reservationInformation: String|undefined;
 
   constructor(private service: StakeholderService) {}
 
@@ -21,10 +21,10 @@ export class EquipmentPickupQrComponent {
       this.selectedFile = fileInput.files[0];
       console.log(this.selectedFile?.name);
       if (this.selectedFile?.name) {
-        this.service.getQRString(this.selectedFile.name).subscribe(
+        this.service.getAppointmentDataFromQRCode(this.selectedFile.name).subscribe(
           (result: String) => {
-            this.textt = result;
-            console.log(this.textt);
+            this.reservationInformation = result.replace(/\n/g, "<br>");
+            console.log(this.reservationInformation);
           },
           (error) => {
             console.error(error);
