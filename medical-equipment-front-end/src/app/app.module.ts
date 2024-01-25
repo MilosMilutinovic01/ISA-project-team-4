@@ -12,10 +12,11 @@ import { MaterialModule } from './infrastructure/material/material.module';
 import { StakeholderModule } from './feature-modules/stakeholder/stakeholder.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
+import { MapComponent } from './shared/map/map.component';
 
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, LoginComponent, MapComponent],
   imports: [
     BrowserModule,
     LayoutModule,

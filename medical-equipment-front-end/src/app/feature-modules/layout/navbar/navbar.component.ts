@@ -34,8 +34,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.authService.user$.subscribe((user) => {
       this.user = user;
-      if (this.user.role === 'SYSTEM_ADMINISTRATOR'){
-        this.isFirstLogin()
+      if (this.user.role === 'SYSTEM_ADMINISTRATOR') {
+        this.isFirstLogin();
       }
     });
   }
@@ -83,28 +83,28 @@ export class NavbarComponent implements OnInit {
   companyAdministratorProfile(): void {
     this.router.navigate(['/companyAdministratorProfile']);
   }
-  
-  isFirstLogin(){
+
+  isFirstLogin() {
     if (this.user) {
-      this.service
-        .getSystemAdministrator(this.user.id)
-        .subscribe({
-          next: (result: SystemAdministrator) => {
-            if (!result.hasLoggedBefore) {
-              this.router.navigate(['/changePassword'])
-              this.systemAdminEnabled = false
-            }
-            else{
-              this.systemAdminEnabled = true
-            }
-          },
-          error: (error) => {
-            console.error('Error getting system administrator:', error);
-          },
-        });
+      this.service.getSystemAdministrator(this.user.id).subscribe({
+        next: (result: SystemAdministrator) => {
+          if (!result.hasLoggedBefore) {
+            this.router.navigate(['/changePassword']);
+            this.systemAdminEnabled = false;
+          } else {
+            this.systemAdminEnabled = true;
+          }
+        },
+        error: (error) => {
+          console.error('Error getting system administrator:', error);
+        },
+      });
     } else {
       console.warn('User is undefined. Cannot check first login status.');
     }
   }
-  
+
+  map(): void {
+    this.router.navigate(['/map']);
+  }
 }

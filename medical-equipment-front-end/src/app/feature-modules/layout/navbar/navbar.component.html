@@ -52,6 +52,15 @@
             Company Administrator Profile
           </button>
         </div> -->
+        <div>
+          <button
+            class="navbar-button"
+            (click)="map()"
+            *ngIf="user && user.role === 'CUSTOMER'"
+          >
+            Map
+          </button>
+        </div>
         <div class="dropdown">
           <button class="dropbtn">{{ user?.username }}</button>
 

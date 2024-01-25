@@ -96,9 +96,9 @@ import { SelectIrregularAppointmentDialogComponent } from './select-irregular-ap
     MatDialogModule,
     ChangePasswordComponent,
     FontAwesomeModule,
-    AddToCartDialogComponent, 
+    AddToCartDialogComponent,
     CartComponent,
-    SelectIrregularAppointmentDialogComponent
-  ]
+    SelectIrregularAppointmentDialogComponent,
+  ],
 })
 export class StakeholderModule {}
