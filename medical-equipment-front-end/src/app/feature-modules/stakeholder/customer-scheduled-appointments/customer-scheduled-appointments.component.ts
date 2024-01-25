@@ -112,7 +112,18 @@ export class CustomerScheduledAppointmentsComponent {
     });
   }
 
-  cancelReservation(): void {
-    console.log('not disabled');
+  cancelReservation(id: number): void {
+    this.service.cancelReservation(id.toString()).subscribe({
+      next: (result) => {
+        if (result === true) {
+          alert(
+            'Succesfully cancelled reservation! You got one penalty point!'
+          );
+        } else alert('Error occured!');
+      },
+      error: () => {
+        console.log(console.error);
+      },
+    });
   }
 }

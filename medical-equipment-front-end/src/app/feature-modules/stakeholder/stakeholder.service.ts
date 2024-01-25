@@ -228,6 +228,7 @@ export class StakeholderService {
   }
 
   registerAppointment(appointment: Appointment): Observable<Appointment> {
+    console.log('BOZE AJ PLS: ', appointment);
     return this.http.post<Appointment>(
       environment.apiHost + 'appointments/register',
       appointment
@@ -305,6 +306,14 @@ export class StakeholderService {
   getEquipmentTrackingByEquipment(id: string): Observable<EquipmentTracking> {
     return this.http.get<EquipmentTracking>(
       environment.apiHost + 'equipmentTracking/equipment/' + id
+    );
+  }
+
+  cancelReservation(id: string): Observable<boolean> {
+    return this.http.post<boolean>(
+      environment.apiHost + 'items/cancelReservation',
+      id,
+      { headers: { 'Content-Type': 'application/json' } }
     );
   }
 }

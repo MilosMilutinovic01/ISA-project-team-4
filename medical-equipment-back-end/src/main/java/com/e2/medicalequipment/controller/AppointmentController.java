@@ -42,6 +42,7 @@ public class AppointmentController {
         try {
             System.out.println("Thread id: " + Thread.currentThread().getId());
             savedAppointment = appointmentService.CreateIrregular(appointmentDTO);
+            savedAppointment.setIsPredefined(false);
             return new ResponseEntity<Appointment>(savedAppointment, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();

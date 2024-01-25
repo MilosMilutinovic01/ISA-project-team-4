@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService{
@@ -38,14 +35,28 @@ public class AppointmentServiceImpl implements AppointmentService{
         appointment.setStartTime(startTime);
         LocalDateTime endTime = LocalDateTime.parse(createAppointmentDto.endTime, formatter);
         appointment.setEndTime(endTime);
+        appointment.setIsPredefined(createAppointmentDto.isPredefined);
         CompanyAdministrator ca = companyAdministratorRepository.findById(createAppointmentDto.companyAdministrator.id).orElseThrow(() -> new EntityNotFoundException("Company admin not found"));
         appointment.setCompanyAdministrator(ca);
+
 
         if (appointment.getId() != null) {
             throw new Exception("ID must be null for a new entity.");
         }
         Appointment savedAppointment = appointmentRepository.save(appointment);
         return savedAppointment;
+    }
+
+    @Override
+    public boolean Delete(Long id) throws Exception {
+        try{
+            appointmentRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -103,6 +114,11 @@ public class AppointmentServiceImpl implements AppointmentService{
             }
         }
         return scheduledAppointments;
+    }
+
+    @Override
+    public Appointment FindById(Long id) throws Exception {
+        return appointmentRepository.findAppointmentById(id);
     }
 /*
     @Override

@@ -57,6 +57,11 @@ public class UserServiceImpl implements UserService{
         return usersRepository.save(existingUser);
     }
 
+    @Override
+    public void changePenaltyPoints(Integer points, Long userId) {
+        usersRepository.changePenaltyPoints(userId, points);
+    }
+
     public UserTokenState login(JwtAuthenticationRequest loginDto) {
 
         Optional<User> userOpt = usersRepository.findByUsername(loginDto.getUsername());

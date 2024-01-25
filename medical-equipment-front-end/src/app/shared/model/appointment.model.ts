@@ -5,6 +5,7 @@ export interface Appointment {
   id?: number;
   startTime: string;
   endTime: string;
+  isPredefined: boolean;
   companyAdministrator: CompanyAdministrator;
 }
 

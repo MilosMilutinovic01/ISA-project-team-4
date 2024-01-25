@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 public class CreateAppointmentDTO {
     public String startTime;
     public String endTime;
+    public boolean isPredefined;
     public  UpdateCompanyAdministratorDTO companyAdministrator;
 
     public CreateAppointmentDTO() {

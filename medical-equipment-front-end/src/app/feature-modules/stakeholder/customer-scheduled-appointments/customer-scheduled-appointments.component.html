@@ -35,7 +35,7 @@
           <button
             class="add-button"
             [disabled]="this.isDisabledMap[a.id]"
-            (click)="cancelReservation()"
+            (click)="cancelReservation(a.id)"
           >
             Cancel
           </button>

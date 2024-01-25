@@ -1,10 +1,7 @@
 package com.e2.medicalequipment.controller;
 
 import com.e2.medicalequipment.dto.*;
-import com.e2.medicalequipment.model.Appointment;
-import com.e2.medicalequipment.model.Company;
-import com.e2.medicalequipment.model.Customer;
-import com.e2.medicalequipment.model.Item;
+import com.e2.medicalequipment.model.*;
 import com.e2.medicalequipment.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/items", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,6 +35,9 @@ public class ItemController {
 
     @Autowired
     private EquipmentTrackingService equipmentTrackingService;
+
+    @Autowired
+    private AppointmentService appointmentService;
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('CUSTOMER')")
@@ -116,14 +118,38 @@ public class ItemController {
                     itemService.Update(updatedItem);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    throw e;  // rethrow the exception
+                    throw e;
                 }
             }
-            //
-            //dto.id =
-            //equipmentTrackingService.Update()
             String message = "Ukupna cena: " + price;
             qrCodeService.sendQRCode("Your cart", userService.getUserById(userId).getUsername(), message);
             return true;
         }
+
+    @PostMapping(value = "/cancelReservation", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public boolean cancel(@RequestBody String id) throws Exception {
+        try{
+            Appointment a = appointmentService.FindById(Long.parseLong(id));
+            Long userId = 0L;
+            if(a.getIsPredefined() == false)
+                appointmentService.Delete(a.getId());
+            List<Item> items = new ArrayList<>();
+            items = itemService.GetAllByAppointmentId(id);
+            for(Item i: items){
+                userId = i.getCustomer().getId();
+                EquipmentTracking et = equipmentTrackingService.FindByCompanyAndEquipment(i.getCompany().getId(),i.getEquipment().getId());
+                EquipmentTrackingDTO etdto = new EquipmentTrackingDTO(et);
+                etdto.count += i.getCount();
+                equipmentTrackingService.Update(etdto);
+                itemService.Delete(i.getId());
+            }
+            userService.changePenaltyPoints(1,userId);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return true;
     }
+}

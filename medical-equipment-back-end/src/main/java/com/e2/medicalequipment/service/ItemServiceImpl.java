@@ -54,6 +54,12 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
+    public boolean Delete(Long id) throws Exception {
+        itemRepository.deleteById(id);
+        return true;
+    }
+
+    @Override
     public List<Item> GetAllByCustomerId(String customerId) throws Exception {
         return itemRepository.findAllByCustomerId(customerId);
     }
@@ -77,7 +83,7 @@ public class ItemServiceImpl implements ItemService{
     }
     public Item Update(UpdateItemDTO newItem) throws Exception{
         Item item = itemRepository.findById(newItem.Id);
-        Appointment appointment = appointmentRepository.findById(newItem.AppointmentId);
+        Appointment appointment = appointmentRepository.findAppointmentById(newItem.AppointmentId);
 
         List<CompanyAdministrator> companyAdministrators = companyAdministratorRepository.findAllByCompanyId(String.valueOf(newItem.CompanyId));
         Random rand = new Random();
