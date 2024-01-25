@@ -1,0 +1,46 @@
+<div>
+  <div class="page-title-container">
+    <h1 class="header">Your scheduled appointments</h1>
+    <button
+      class="tooltip"
+      mat-icon-button
+      matTooltip="You can cancel reservations no later than 24 hours before the scheduled
+    time"
+    >
+      <mat-icon>help</mat-icon>
+    </button>
+  </div>
+  <div class="card-container">
+    <mat-card class="card-content" *ngFor="let a of this.appointments">
+      <div class="title-container">
+        <div>
+          {{ appointmentItemsMap[a.id][0].company.name }}
+        </div>
+      </div>
+      <mat-card-title class="title-container">
+        <p>{{ a.startTime[2] }}.{{ a.startTime[1] }}.{{ a.startTime[0] }}</p>
+        <p>
+          {{ a.startTime[3] }}:{{ a.startTime[4] }} - {{ a.endTime[3] }}:{{
+            a.endTime[4]
+          }}
+        </p>
+      </mat-card-title>
+      <mat-card-content *ngIf="a.id">
+        <div class="items">
+          <div>
+            <div *ngFor="let i of appointmentItemsMap[a.id]">
+              <p>- {{ i.equipment?.name }} : {{ i.count }} komada</p>
+            </div>
+          </div>
+          <button
+            class="add-button"
+            [disabled]="this.isDisabledMap[a.id]"
+            (click)="cancelReservation()"
+          >
+            Cancel
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

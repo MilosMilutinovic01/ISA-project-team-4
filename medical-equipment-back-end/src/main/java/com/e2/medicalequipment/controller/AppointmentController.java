@@ -88,6 +88,19 @@ public class AppointmentController {
         }
     }
 
+    @GetMapping(value = "/scheduledCustomer/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<Appointment>> getScheduledAppointmentsByCustomerId(@PathVariable String id){
+        List<Appointment> appointments = null;
+        try {
+            appointments = appointmentService.GetScheduledByCustomerId(Long.parseLong(id));
+            return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.CONFLICT);
+        }
+    }
+
   /*  @GetMapping(value = "/available/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasAuthority('CUSTOMER')")

@@ -66,8 +66,14 @@ public class ItemServiceImpl implements ItemService{
         return items.get(0).getCustomer();
     }
 
+    @Override
     public Item Get(Long id) throws Exception{
         return this.itemRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Item> GetAllByAppointmentId(String id) throws Exception{
+        return this.itemRepository.findAllByAppointmentId(id);
     }
     public Item Update(UpdateItemDTO newItem) throws Exception{
         Item item = itemRepository.findById(newItem.Id);

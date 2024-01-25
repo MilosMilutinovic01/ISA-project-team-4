@@ -70,6 +70,13 @@
             >
               Profile
             </button>
+            <button
+              *ngIf="user && user.role === 'CUSTOMER'"
+              class="navbar-button"
+              (click)="openScheduledAppointments()"
+            >
+              Scheduled appointments
+            </button>
             <button class="navbar-button" (click)="logout()">Logout</button>
           </div>
 

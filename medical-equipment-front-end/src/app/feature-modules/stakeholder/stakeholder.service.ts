@@ -11,7 +11,10 @@ import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model'
 import { CreateItem, Item } from 'src/app/shared/model/item.model';
 import { SystemAdministrator } from 'src/app/shared/model/system-administrator.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
-import { Appointment } from 'src/app/shared/model/appointment.model';
+import {
+  Appointment,
+  ShowAppointment,
+} from 'src/app/shared/model/appointment.model';
 import { UpdateItem } from 'src/app/shared/model/update-item.model';
 
 @Injectable({
@@ -196,6 +199,12 @@ export class StakeholderService {
     return this.http.get<Item[]>(environment.apiHost + 'items/' + id);
   }
 
+  getItemsByAppointmentId(id: string): Observable<Item[]> {
+    return this.http.get<Item[]>(
+      environment.apiHost + 'items/appointment/' + id
+    );
+  }
+
   getAllCompanyAdministrators(): Observable<CompanyAdministrator[]> {
     return this.http.get<CompanyAdministrator[]>(
       environment.apiHost + 'companyAdministrators/'
@@ -273,19 +282,17 @@ export class StakeholderService {
     );
   }
 
-  // getAvailableAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
-  //   return this.http.get<Appointment[]>(
-  //     environment.apiHost + 'appointments/available/' + id
-  //   );
-  // }
-
-  // getReservedAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
-  //   return this.http.get<Appointment[]>(
-  //     environment.apiHost + 'appointments/reserved/' + id
-
   getScheduledAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(
       environment.apiHost + 'appointments/scheduled/' + id
+    );
+  }
+
+  getScheduledAppointmentsByCustomerId(
+    id: string
+  ): Observable<ShowAppointment[]> {
+    return this.http.get<ShowAppointment[]>(
+      environment.apiHost + 'appointments/scheduledCustomer/' + id
     );
   }
 
