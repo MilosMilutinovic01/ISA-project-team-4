@@ -2,6 +2,7 @@ package com.e2.medicalequipment.controller;
 
 import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import com.e2.medicalequipment.model.Appointment;
+import com.e2.medicalequipment.model.Company;
 import com.e2.medicalequipment.model.Item;
 import com.e2.medicalequipment.service.AppointmentService;
 import com.e2.medicalequipment.service.QRCodeService;
@@ -105,13 +106,12 @@ public class AppointmentController {
         }
     }
 
-  /*  @GetMapping(value = "/available/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/pickedUpCustomer/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    @PreAuthorize("hasAuthority('CUSTOMER')")
-    public ResponseEntity<List<Appointment>> getAvailableByCompanyId(@PathVariable String id){
+    public ResponseEntity<List<Appointment>> getPickedUpAppointmentsByCustomerId(@PathVariable String id){
         List<Appointment> appointments = null;
         try {
-            appointments = appointmentService.GetAvailableByCompanyId(Long.parseLong(id));
+            appointments = appointmentService.GetPickedUpByCustomerId(Long.parseLong(id));
             return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,20 +119,7 @@ public class AppointmentController {
         }
     }
 
-    @GetMapping(value = "/reserved/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    @PreAuthorize("hasAuthority('CUSTOMER')")
-    public ResponseEntity<List<Appointment>> getReservedByCompanyId(@PathVariable String id){
-        List<Appointment> appointments = null;
-        try {
-            appointments = appointmentService.GetReservedByCompanyId(Long.parseLong(id));
-            return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.CONFLICT);
-        }
-    }
-    */
+
     @GetMapping(value = "/dataFromQR/{fileName}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<String> getAppointmentDataFromQRCode(@PathVariable String fileName){
@@ -168,6 +155,25 @@ public class AppointmentController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Boolean>(result, HttpStatus.CONFLICT);
+        }
+    }
+
+    @PutMapping(value = "/sort/date/{isAscending}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<Appointment>> sortCompaniesByRate(@PathVariable String isAscending,
+                                                             @RequestBody List<Appointment> appointments) {
+        List<Appointment> sortedAppointments = null;
+        try {
+            if(isAscending.equals("1")) {
+                sortedAppointments = appointmentService.SortByDate(false, appointments);
+            }
+            if(isAscending.equals("-1")) {
+                sortedAppointments = appointmentService.SortByDate(true, appointments);
+            }
+            return new ResponseEntity<List<Appointment>>(sortedAppointments, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<Appointment>>(sortedAppointments, HttpStatus.CONFLICT);
         }
     }
 }

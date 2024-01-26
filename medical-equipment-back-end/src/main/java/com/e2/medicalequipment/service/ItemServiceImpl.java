@@ -97,10 +97,7 @@ public class ItemServiceImpl implements ItemService{
         Item savedItem = itemRepository.save(item);
         return savedItem;
     }
-    @Override
-    public List<Item> GetAllByAppointmentId(String appointmentId) throws Exception {
-        return itemRepository.findAllByAppointmentId(appointmentId);
-    }
+
     public Item pickUp(Item item) throws Exception{
         item.setPickedUp(true);
         if ((item.getId() == null)){

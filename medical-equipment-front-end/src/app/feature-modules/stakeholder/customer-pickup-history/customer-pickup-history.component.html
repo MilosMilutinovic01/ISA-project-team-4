@@ -1,12 +1,24 @@
 <div>
   <div class="page-title-container">
-    <h1 class="header">Your scheduled appointments</h1>
+    <h1 class="header">Your pick up history</h1>
     <button
       class="tooltip"
       mat-icon-button
-      matTooltip="If you cancel reservation after 24h you will get 2 penalty points. If you cancel before 24h you will get 1 penalty point."
+      matTooltip="This page shows all reservations of items you succesfully picked up!"
     >
       <mat-icon>help</mat-icon>
+    </button>
+  </div>
+  <div class="sort-container">
+    <mat-form-field appearance="outline" class="sort">
+      <mat-label>Sort by:</mat-label>
+      <mat-select [(value)]="selected" (selectionChange)="onSelected()">
+        <mat-option [value]="dateAsc">Date ascending</mat-option>
+        <mat-option [value]="dateDesc">Date descending</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-fab class="search-button" (click)="refresh()">
+      <mat-icon>refresh</mat-icon>
     </button>
   </div>
   <div class="card-container">
@@ -31,13 +43,6 @@
               <p>- {{ i.equipment?.name }} : {{ i.count }} komada</p>
             </div>
           </div>
-          <button
-            class="add-button"
-            [disabled]="this.isDisabledMap[a.id]"
-            (click)="cancelReservation(a.id)"
-          >
-            Cancel
-          </button>
         </div>
       </mat-card-content>
     </mat-card>

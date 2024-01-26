@@ -1,10 +1,7 @@
 package com.e2.medicalequipment.service;
 
 import com.e2.medicalequipment.dto.CreateAppointmentDTO;
-import com.e2.medicalequipment.model.Appointment;
-import com.e2.medicalequipment.model.CompanyAdministrator;
-import com.e2.medicalequipment.model.Equipment;
-import com.e2.medicalequipment.model.Item;
+import com.e2.medicalequipment.model.*;
 import com.e2.medicalequipment.repository.AppointmentRepository;
 import com.e2.medicalequipment.repository.CompanyAdministratorRepository;
 import com.e2.medicalequipment.repository.ItemRepository;
@@ -124,61 +121,22 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
+    public List<Appointment> GetPickedUpByCustomerId(Long customerId) throws Exception{
+        List<Appointment> finishedAppointments = new ArrayList<>();
+        for (Item item : itemRepository.findAllByCustomerId(String.valueOf(customerId))){
+            Appointment a = item.getAppointment();
+            if(!finishedAppointments.contains(a) && item.isPickedUp()) {
+                finishedAppointments.add(a);
+            }
+        }
+        return finishedAppointments;
+    }
+
+    @Override
     public Appointment FindById(Long id) throws Exception {
         return appointmentRepository.findAppointmentById(id);
     }
-/*
-    @Override
-    public List<Appointment> GetAvailableByCompanyId(Long companyId) throws Exception {
-        List<Appointment> companyAppointments = new ArrayList<>();
-        List<Appointment> availableAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAll()) {
-            if(a.getCompanyAdministrator().getCompanyId() == companyId){
-                companyAppointments.add(a);
-            }
-        }
 
-
-        boolean isAvailable;
-        for(Appointment a : companyAppointments) {
-            isAvailable = true;
-            for(Item i : itemRepository.findAllByCompanyId(String.valueOf(companyId))){
-                if(i.getAppointment() != null) {
-                    if (i.getAppointment().getId() == a.getId()) {
-                        isAvailable = false;
-                        break;
-                    }
-                }
-            }
-            if(isAvailable) {
-                availableAppointments.add(a);
-            }
-        }
-        return availableAppointments;
-    }
-
-    @Override
-    public List<Appointment> GetReservedByCompanyId(Long companyId) throws Exception {
-        List<Appointment> companyAppointments = new ArrayList<>();
-        List<Appointment> reservedAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAll()) {
-            if(a.getCompanyAdministrator().getCompanyId() == companyId){
-                companyAppointments.add(a);
-            }
-        }
-
-        for(Item i : itemRepository.findAllByCompanyId(String.valueOf(companyId))){
-            for(Appointment a : companyAppointments) {
-                if (i.getAppointment() != null) {
-                    if (i.getAppointment().getId() == a.getId()) {
-                        reservedAppointments.add(a);
-                        break;
-                    }
-                }
-            }
-        }
-        return reservedAppointments;
-    }*/
 
     public Appointment GetById(Long id) {
         return appointmentRepository.findById(id).orElse(null);
@@ -192,4 +150,15 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
         return isAvailable;
     }
+
+    @Override
+    public List<Appointment> SortByDate(boolean descending, List<Appointment> appointments) throws Exception {
+        Comparator<Appointment> comparator = Comparator.comparing(appointment -> appointment.getStartTime());
+        if (descending) {
+            comparator = comparator.reversed();
+        }
+        Collections.sort(appointments, comparator);
+        return appointments;
+    }
+
 }
