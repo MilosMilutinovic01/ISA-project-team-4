@@ -4,13 +4,11 @@ import { Appointment } from 'src/app/shared/model/appointment.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-equipment-pickup-qr',
   templateUrl: './equipment-pickup-qr.component.html',
-  styleUrls: ['./equipment-pickup-qr.component.css']
+  styleUrls: ['./equipment-pickup-qr.component.css'],
 })
-
 export class EquipmentPickupQrComponent {
   selectedFile: File | null = null;
   reservationInformation: String | undefined;
@@ -20,7 +18,11 @@ export class EquipmentPickupQrComponent {
   canPickUp: boolean = true;
   user: any;
 
-  constructor(private service: StakeholderService, private authService: AuthService, public router: Router) { }
+  constructor(
+    private service: StakeholderService,
+    private authService: AuthService,
+    public router: Router
+  ) {}
 
   ngOnInit(): void {
     this.authService.user$.subscribe((user) => {
@@ -35,16 +37,19 @@ export class EquipmentPickupQrComponent {
       this.selectedFile = fileInput.files[0];
       console.log(this.selectedFile?.name);
       if (this.selectedFile?.name) {
-        this.service.getAppointmentDataFromQRCode(this.selectedFile.name).subscribe(
-          (result: String) => {
-            this.appointmentId = result.split('\n')[0].split(' ')[3]
-            this.reservationInformation = result.replace(/\n/g, "<br>");
-            this.getAppointment()
-          },
-          (error) => {
-            console.error(error);
-          }
-        );
+        this.service
+          .getAppointmentDataFromQRCode(this.selectedFile.name)
+          .subscribe(
+            (result: String) => {
+              console.log('QR: ', result);
+              this.appointmentId = result.split('\n')[0].split(' ')[3];
+              this.reservationInformation = result.replace(/\n/g, '<br>');
+              this.getAppointment();
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
       }
     } else {
       this.selectedFile = null;
@@ -55,7 +60,7 @@ export class EquipmentPickupQrComponent {
     this.service.getAppointment(this.appointmentId).subscribe(
       (result: Appointment) => {
         this.appointment = result;
-        this.isReservationAvailable()
+        this.isReservationAvailable();
       },
       (error) => {
         console.error(error);
@@ -67,21 +72,23 @@ export class EquipmentPickupQrComponent {
     this.service.isReservationAvailable(this.appointmentId).subscribe(
       (result: boolean) => {
         if (!result) {
-          this.message = '<br>QR code has already been processed.'
-          this.canPickUp = false
-        }
-        else {
+          this.message = '<br>QR code has already been processed.';
+          this.canPickUp = false;
+        } else {
           const currentTime = new Date();
           const [year, month, day, hour, minute] = this.appointment.endTime;
           const endTime = new Date(year, month - 1, day, hour, minute);
           if (endTime < currentTime) {
-            this.message = '<br>Reservation has expired on ' + endTime.toDateString()
-            this.canPickUp = false
-            this.processExpiredReservation()
-          }
-          else if (this.appointment.companyAdministrator.id !== this.user.id) {
-            this.message = '<br>This reservation is assigned to another administrator'
-            this.canPickUp = false
+            this.message =
+              '<br>Reservation has expired on ' + endTime.toDateString();
+            this.canPickUp = false;
+            this.processExpiredReservation();
+          } else if (
+            this.appointment.companyAdministrator.id !== this.user.id
+          ) {
+            this.message =
+              '<br>This reservation is assigned to another administrator';
+            this.canPickUp = false;
           }
         }
       },
@@ -111,7 +118,8 @@ export class EquipmentPickupQrComponent {
     this.service.processExpiredReservation(this.appointment.id).subscribe({
       next: (result: boolean) => {
         if (result === true) {
-          this.message += "<br>Customer received 2 penalty points, and the equipment count has been updated."
+          this.message +=
+            '<br>Customer received 2 penalty points, and the equipment count has been updated.';
         } else {
           alert('Failed to process expired reservation!');
         }
@@ -121,5 +129,4 @@ export class EquipmentPickupQrComponent {
       },
     });
   }
-
 }

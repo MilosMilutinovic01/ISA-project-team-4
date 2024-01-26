@@ -16,7 +16,6 @@ import { Item } from 'src/app/shared/model/item.model';
 })
 export class CustomerScheduledAppointmentsComponent {
   appointments: ShowAppointment[] = [];
-  user: User | undefined;
   appointmentItemsMap: { [id: number]: Item[] } = {};
   isDisabledMap: { [id: number]: boolean } = {};
   totalPriceMap: { [id: number]: number } = {};

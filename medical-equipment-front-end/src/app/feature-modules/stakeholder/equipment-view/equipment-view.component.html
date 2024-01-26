@@ -14,12 +14,32 @@
         </button>
       </div>
     </div>
-      <mat-chip-listbox class="filter-container">
-        <mat-chip-option (click)="selectChip('LABORATORY')" class="option-view" [selected]= "selectedOption == 'LABORATORY'" >Laboratory</mat-chip-option>
-        <mat-chip-option (click)="selectChip('DIAGNOSTICS')" class="option-view" [selected]= "selectedOption == 'DIAGNOSTICS'">Diagnostics</mat-chip-option>
-        <mat-chip-option (click)="selectChip('DENTAL')" class="option-view" [selected]= "selectedOption == 'DENTAL'">Dental</mat-chip-option>
-        <mat-chip-option (click)="selectChip('SURGICAL')" class="option-view" [selected]= "selectedOption == 'SURGICAL'">Surgical</mat-chip-option>
-      </mat-chip-listbox>
+    <mat-chip-listbox class="filter-container">
+      <mat-chip-option
+        (click)="selectChip('LABORATORY')"
+        class="option-view"
+        [selected]="selectedOption == 'LABORATORY'"
+        >Laboratory</mat-chip-option
+      >
+      <mat-chip-option
+        (click)="selectChip('DIAGNOSTICS')"
+        class="option-view"
+        [selected]="selectedOption == 'DIAGNOSTICS'"
+        >Diagnostics</mat-chip-option
+      >
+      <mat-chip-option
+        (click)="selectChip('DENTAL')"
+        class="option-view"
+        [selected]="selectedOption == 'DENTAL'"
+        >Dental</mat-chip-option
+      >
+      <mat-chip-option
+        (click)="selectChip('SURGICAL')"
+        class="option-view"
+        [selected]="selectedOption == 'SURGICAL'"
+        >Surgical</mat-chip-option
+      >
+    </mat-chip-listbox>
   </form>
   <div class="card-container" *ngFor="let e of equipment">
     <mat-card class="card">
@@ -30,7 +50,9 @@
       </mat-card-title>
       <mat-card-content class="card-content">
         <div class="card-description">{{ e.description }}</div>
-        <div  class="companies" *ngFor="let et of equipmentTracking[e.id]"> {{ et.count }} available in {{et.company.name}}</div>
+        <div class="companies" *ngFor="let et of equipmentTracking[e.id]">
+          {{ et.count }} available in {{ et.company.name }}
+        </div>
       </mat-card-content>
     </mat-card>
   </div>

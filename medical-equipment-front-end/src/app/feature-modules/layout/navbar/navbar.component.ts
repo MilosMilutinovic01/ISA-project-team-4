@@ -115,4 +115,8 @@ export class NavbarComponent implements OnInit {
   openPickUpHistory(): void {
     this.router.navigate(['/customerPickUp/']);
   }
+
+  openQrCodes(): void {
+    this.router.navigate(['/customerQrCodes/']);
+  }
 }

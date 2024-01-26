@@ -21,6 +21,7 @@ import { ChangePasswordComponent } from 'src/app/feature-modules/stakeholder/cha
 import { CustomerScheduledAppointmentsComponent } from 'src/app/feature-modules/stakeholder/customer-scheduled-appointments/customer-scheduled-appointments.component';
 import { EquipmentPickupQrComponent } from 'src/app/feature-modules/stakeholder/equipment-pickup-qr/equipment-pickup-qr.component';
 import { CustomerPickupHistoryComponent } from 'src/app/feature-modules/stakeholder/customer-pickup-history/customer-pickup-history.component';
+import { CustomerQrCodesComponent } from 'src/app/feature-modules/stakeholder/customer-qr-codes/customer-qr-codes.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -55,6 +56,7 @@ const routes: Routes = [
   },
   { path: 'equipmentDeliverQR', component: EquipmentPickupQrComponent },
   { path: 'customerPickUp', component: CustomerPickupHistoryComponent },
+  { path: 'customerQrCodes', component: CustomerQrCodesComponent },
 ];
 
 @NgModule({

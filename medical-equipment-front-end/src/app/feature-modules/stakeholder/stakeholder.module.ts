@@ -37,6 +37,7 @@ import { SelectIrregularAppointmentDialogComponent } from './select-irregular-ap
 import { CustomerScheduledAppointmentsComponent } from './customer-scheduled-appointments/customer-scheduled-appointments.component';
 import { EquipmentPickupQrComponent } from './equipment-pickup-qr/equipment-pickup-qr.component';
 import { CustomerPickupHistoryComponent } from './customer-pickup-history/customer-pickup-history.component';
+import { CustomerQrCodesComponent } from './customer-qr-codes/customer-qr-codes.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { CustomerPickupHistoryComponent } from './customer-pickup-history/custom
     CustomerScheduledAppointmentsComponent,
     EquipmentPickupQrComponent,
     CustomerPickupHistoryComponent,
+    CustomerQrCodesComponent,
   ],
   imports: [
     CommonModule,
@@ -107,6 +109,7 @@ import { CustomerPickupHistoryComponent } from './customer-pickup-history/custom
     SelectIrregularAppointmentDialogComponent,
     CustomerScheduledAppointmentsComponent,
     CustomerPickupHistoryComponent,
+    CustomerQrCodesComponent,
   ],
 })
 export class StakeholderModule {}

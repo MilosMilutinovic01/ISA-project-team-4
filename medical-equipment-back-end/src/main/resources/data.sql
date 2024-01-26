@@ -98,24 +98,24 @@ VALUES (-5, 240, -3, -4);
 
 INSERT INTO stakeholders.appointments(
     id, end_time, start_time, is_predefined, company_administrator_id)
-VALUES (-1, '2024-01-27T13:00:00.000Z', '2024-01-27T12:30:00.000Z', true, -2);
+VALUES (-1, '2024-02-03T10:00:00.000Z', '2024-02-03T09:30:00.000Z', true, -2);
 
 INSERT INTO stakeholders.appointments(
     id, end_time, start_time, is_predefined, company_administrator_id)
-VALUES (-2, '2024-01-29T11:00:00.000Z', '2024-01-29T10:30:00.000Z', true, -2);
+VALUES (-2, '2024-02-05T11:00:00.000Z', '2024-02-05T10:30:00.000Z', true, -2);
 
 INSERT INTO stakeholders.appointments(
     id, end_time, start_time, is_predefined, company_administrator_id)
-VALUES (-3, '2024-01-30T13:00:00.000Z', '2024-01-30T12:30:00.000Z', true, -2);
+VALUES (-3, '2024-02-05T13:00:00.000Z', '2024-02-05T12:30:00.000Z', true, -2);
 
 
 INSERT INTO stakeholders.appointments(
     id, end_time, start_time, is_predefined, company_administrator_id)
-VALUES (-4, '2024-01-30T11:00:00.000Z', '2024-01-30T10:30:00.000Z', true, -2);
+VALUES (-4, '2024-02-06T11:00:00.000Z', '2024-02-06T10:30:00.000Z', true, -2);
 
 INSERT INTO stakeholders.appointments(
     id, end_time, start_time, is_predefined, company_administrator_id)
-VALUES (-5, '2024-01-27T12:00:00.000Z', '2024-01-27T11:30:00.000Z', true, -2);
+VALUES (-5, '2024-02-07T12:00:00.000Z', '2024-02-07T11:30:00.000Z', true, -2);
 
 
 INSERT INTO stakeholders.appointments(
@@ -124,37 +124,47 @@ VALUES (-6, '2024-01-26T12:00:00.000Z', '2024-01-26T11:30:00.000Z', true, -2);
 
 INSERT INTO stakeholders.appointments(
     id, end_time, start_time, is_predefined, company_administrator_id)
-VALUES (-7, '2024-02-01T12:00:00.000Z', '2024-02-01T11:30:00.000Z', true, -2);
+VALUES (-7, '2024-01-25T14:00:00.000Z', '2024-01-25T13:30:00.000Z', true, -2);
 
 INSERT INTO stakeholders.appointments(
     id, end_time, start_time, is_predefined, company_administrator_id)
-VALUES (-8, '2024-02-01T11:00:00.000Z', '2024-02-01T10:30:00.000Z', true, -2);
+VALUES (-8, '2024-01-24T11:00:00.000Z', '2024-01-24T10:30:00.000Z', true, -2);
 
 INSERT INTO stakeholders.appointments(
     id, end_time, start_time, is_predefined, company_administrator_id)
-VALUES (-9, '2024-01-24T11:00:00.000Z', '2024-01-24T10:30:00.000Z', true, -2);
+VALUES (-9, '2024-01-23T11:00:00.000Z', '2024-01-23T10:30:00.000Z', true, -2);
+
 
 INSERT INTO stakeholders.items(
     id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
-VALUES (-1, 2, -1, -1, -1, -1, FALSE, FALSE);
+VALUES (-1, 1, -9, -1, -1, -1, TRUE, TRUE);
 
 INSERT INTO stakeholders.items(
     id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
-VALUES (-2, 3, -2, -1, -1, -2, FALSE, FALSE);
+VALUES (-2, 10, -8, -1, -1, -4, FALSE, TRUE);
 
 INSERT INTO stakeholders.items(
-    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up)
-VALUES (-3, 20, -6, -1, -1, -1, TRUE);
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-3, 100, -8, -1, -1, -1, FALSE, TRUE);
 
 INSERT INTO stakeholders.items(
-    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up)
-VALUES (-4, 10, -6, -1, -1, -2, TRUE);
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-4, 5, -7, -1, -1, -4, TRUE, TRUE);
 
 INSERT INTO stakeholders.items(
-    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up)
-VALUES (-5, 35, -8, -1, -1, -2, FALSE);
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-5, 15, -6, -1, -1, -4, TRUE, TRUE);
 
 INSERT INTO stakeholders.items(
-    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up)
-VALUES (-6, 1, -9, -1, -1, -2, TRUE);
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-6, 15, -6, -1, -1, -1, TRUE, TRUE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-7, 2, -1, -1, -1, -2, FALSE, FALSE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-8, 20, -4, -1, -1, -2, FALSE, FALSE);
+
 

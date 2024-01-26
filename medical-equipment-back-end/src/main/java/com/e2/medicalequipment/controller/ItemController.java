@@ -134,7 +134,7 @@ public class ItemController {
             //
             //dto.id =
             //equipmentTrackingService.Update()
-            qrCodeService.sendQRCode("Your cart", userService.getUserById(userId).getUsername(), message);
+            qrCodeService.sendQRCode("Your cart", userService.getUserById(userId).getUsername(), message, items.get(0).AppointmentId);
             return true;
         }
 

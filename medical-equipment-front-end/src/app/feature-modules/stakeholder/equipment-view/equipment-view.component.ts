@@ -31,7 +31,7 @@ export class EquipmentViewComponent implements OnInit {
     this.service.getEquipment().subscribe({
       next: (result: any[]) => {
         this.equipment = result;
-        this.getEquipmentTracking()
+        this.getEquipmentTracking();
       },
       error: () => {
         console.log(console.error());
@@ -40,7 +40,7 @@ export class EquipmentViewComponent implements OnInit {
   }
 
   getEquipmentTracking(): void {
-    this.equipment.forEach(e => {
+    this.equipment.forEach((e) => {
       this.service.getEquipmentTrackingByEquipment(e.id).subscribe({
         next: (result: any) => {
           this.equipmentTracking[e.id] = result;
@@ -59,7 +59,7 @@ export class EquipmentViewComponent implements OnInit {
       next: (result: any[]) => {
         this.equipment = result;
         this.equipmentTracking = {};
-        this.getEquipmentTracking()
+        this.getEquipmentTracking();
       },
       error: () => {
         console.log(console.error());
@@ -73,7 +73,7 @@ export class EquipmentViewComponent implements OnInit {
       next: (result: any[]) => {
         this.equipment = result;
         this.equipmentTracking = {};
-        this.getEquipmentTracking()
+        this.getEquipmentTracking();
       },
       error: () => {
         console.log(console.error());
