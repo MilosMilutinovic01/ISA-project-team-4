@@ -279,7 +279,15 @@ export class StakeholderService {
     return this.http.get<Appointment>(environment.apiHost + 'appointments/' + id);
   }
 
-  isReservationComplete(id: string): Observable<boolean> {
+  isReservationAvailable(id: string): Observable<boolean> {
     return this.http.get<boolean>(environment.apiHost + 'appointments/checkReservation/' + id);
+  }
+
+  completeReservation(id: string): Observable<boolean> {
+    return this.http.post<boolean>(environment.apiHost + 'items/pickUp', id);
+  }
+
+  processExpiredReservation(id: string): Observable<boolean> {
+    return this.http.post<boolean>(environment.apiHost + 'items/processExpired', id);
   }
 }

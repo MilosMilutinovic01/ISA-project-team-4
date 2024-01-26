@@ -7,8 +7,8 @@
         </mat-card-title>
         <mat-card-content class="card-content">
             <div [innerHTML]="reservationInformation"></div>
-            <div>{{message}}</div>
-            <div *ngIf="canPickUp"><button>Complete reservation</button></div>
+            <div [innerHTML]="message"></div>
+            <div *ngIf="canPickUp"><button (click)="completeReservation()">Complete reservation</button></div>
         </mat-card-content>
       </mat-card>
 </div>

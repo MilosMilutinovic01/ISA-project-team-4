@@ -32,10 +32,13 @@ public class ItemController {
     private EquipmentService equipmentService;
 
     @Autowired
-    private CompanyService companyService;
+    private CustomerService customerService;
 
     @Autowired
     private EquipmentTrackingService equipmentTrackingService;
+
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('CUSTOMER')")
@@ -100,6 +103,7 @@ public class ItemController {
                     updatedItem.CustomerId = item.CustomerId;
                     updatedItem.AppointmentId = item.AppointmentId;
                     updatedItem.Id = item.Id;
+                    updatedItem.PickedUp = item.PickedUp;
                     message += equipmentService.Get(item.EquipmentId).getName()+ " - " + item.Count + " kom\n";
                     itemService.Update(updatedItem);
                 } catch (Exception e) {
@@ -114,4 +118,45 @@ public class ItemController {
             qrCodeService.sendQRCode("Your cart", userService.getUserById(userId).getUsername(), message);
             return true;
         }
+
+    @PostMapping(value = "/pickUp", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
+    public boolean pickUp (@RequestBody String appointmentId) throws Exception {
+        long userId = 0;
+        List<Item> items = itemService.GetAllByAppointmentId(appointmentId);
+        String message = "Broj rezervacije : " + appointmentId + "\n\nRezervisana oprema :\n";
+        for (Item item : items) {
+            try {
+                userId = item.getCustomer().getId();
+                itemService.pickUp(item);
+                message += equipmentService.Get(item.getEquipment().getId()).getName()+ " - " + item.getCount() + " kom\n";
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw e;  // rethrow the exception
+            }
+        }
+        message += "\n\nUspesno preuzeta oprema!";
+        emailService.sendNotificaitionAsync(userService.getUserById(userId).getUsername(), "Potvrda o uspesno preuzetoj opremi", "<html>" + message.replace("\n", "<br/>") + "</html>");
+        return true;
     }
+
+    @PostMapping(value = "/processExpired", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
+    public boolean processExpired (@RequestBody String appointmentId) throws Exception {
+        long userId = 0;
+        List<Item> items = itemService.GetAllByAppointmentId(appointmentId);
+        for (Item item : items) {
+            try {
+                EquipmentTrackingDTO dto = new EquipmentTrackingDTO(equipmentTrackingService.FindByCompanyAndEquipment(item.getCompany().getId(),item.getEquipment().getId()));
+                dto.count += item.getCount();
+                equipmentTrackingService.Update(dto);
+                userId = item.getCustomer().getId();
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw e;  // rethrow the exception
+            }
+        }
+        customerService.GivePenaltyPoints(userId);
+        return true;
+    }
+}

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { StakeholderService } from '../stakeholder.service';
 import { Appointment } from 'src/app/shared/model/appointment.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class EquipmentPickupQrComponent {
   canPickUp: boolean = true;
   user: any;
 
-  constructor(private service: StakeholderService, private authService: AuthService) { }
+  constructor(private service: StakeholderService, private authService: AuthService,public router: Router) { }
 
   ngOnInit(): void {
     this.authService.user$.subscribe((user) => {
@@ -60,15 +61,16 @@ getAppointment(): void {
       const [year, month, day, hour, minute] = this.appointment.endTime;
       const endTime = new Date(year, month - 1, day, hour, minute);
       if(endTime < currentTime){
-        this.message = 'Reservation has expired on ' + endTime.toDateString()
+        this.message = '<br>Reservation has expired on ' + endTime.toDateString()
         this.canPickUp = false
+        this.processExpiredReservation()
       }
       else if(this.appointment.companyAdministrator.id !== this.user.id){
-        this.message = 'This reservation is assigned to another administrator'
+        this.message = '<br>This reservation is assigned to another administrator'
         this.canPickUp = false
       }
       else{
-        this.isReservationComplete()
+        this.isReservationAvailable()
       }
     },
     (error) => {
@@ -77,15 +79,49 @@ getAppointment(): void {
   );
 }
 
-isReservationComplete(): void {
-  this.service.isReservationComplete(this.appointmentId).subscribe(
+isReservationAvailable(): void {
+  this.service.isReservationAvailable(this.appointmentId).subscribe(
     (result: boolean) => {
-      console.log(result)
+      if(!result){
+        this.message = '<br>Items have already been picked up for this reservation'
+        this.canPickUp = false
+      }
     },
     (error) => {
       console.error(error);
     }
   );
+}
+
+completeReservation(): void {
+  this.service.completeReservation(this.appointment.id).subscribe({
+    next: (result: boolean) => {
+      if (result === true) {
+        alert('Succesfully delivered equipment!');
+        this.router.navigate(['/']);
+      } else {
+        alert('Failed to deliver equipment!');
+      }
+    },
+    error: (error) => {
+      console.log('Error:', error);
+    },
+  });
+}
+
+processExpiredReservation(): void {
+  this.service.processExpiredReservation(this.appointment.id).subscribe({
+    next: (result: boolean) => {
+      if (result === true) {
+        this.message += "<br>Customer received 2 penalty points, and the equipment count has been updated."
+      } else {
+        alert('Failed to process expired reservation!');
+      }
+    },
+    error: (error) => {
+      console.log('Error:', error);
+    },
+  });
 }
 
 }

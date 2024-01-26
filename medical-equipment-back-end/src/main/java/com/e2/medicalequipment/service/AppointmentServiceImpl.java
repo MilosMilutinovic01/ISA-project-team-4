@@ -20,7 +20,7 @@ import java.util.Locale;
 import java.util.Random;
 
 @Service
-public class AppointmentServiceImpl implements AppointmentService{
+public class AppointmentServiceImpl implements AppointmentService {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzzz)", Locale.ENGLISH);
 
 
@@ -68,29 +68,31 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Override
     public List<Appointment> GetAll() throws Exception {
         List<Appointment> allAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAll()) {
+        for (Appointment a : appointmentRepository.findAll()) {
             allAppointments.add(a);
         }
         return allAppointments;
     }
+
     @Override
-    public List<Appointment> GetFreeByCompanyId(Long companyId) throws Exception{
+    public List<Appointment> GetFreeByCompanyId(Long companyId) throws Exception {
         List<Appointment> freeAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
+        for (Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
             if (itemRepository.findAllByAppointmentId(a.getId().toString()).isEmpty()) {
                 freeAppointments.add(a);
             }
         }
         return freeAppointments;
     }
+
     @Override
-    public List<Appointment> GetScheduledByCompanyId(Long companyId) throws Exception{
+    public List<Appointment> GetScheduledByCompanyId(Long companyId) throws Exception {
         List<Appointment> scheduledAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
+        for (Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
             List<Item> items = itemRepository.findAllByAppointmentId(a.getId().toString());
             if (!items.isEmpty()) {
                 boolean allItemsNotPickedUp = items.stream().allMatch(item -> !item.isPickedUp());
-                if(allItemsNotPickedUp){
+                if (allItemsNotPickedUp) {
                     scheduledAppointments.add(a);
                 }
             }
@@ -155,17 +157,11 @@ public class AppointmentServiceImpl implements AppointmentService{
     }
 
     public boolean CheckReservation(Long id) {
-        Appointment appointment = appointmentRepository.findById(id).orElse(null);
-        List<Appointment> scheduledAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAll()) {
-            List<Item> items = itemRepository.findAllByAppointmentId(a.getId().toString());
-            if (!items.isEmpty()) {
-                boolean allItemsNotPickedUp = items.stream().allMatch(item -> !item.isPickedUp());
-                if(allItemsNotPickedUp){
-                    scheduledAppointments.add(a);
-                }
-            }
+        List<Item> items = itemRepository.findAllByAppointmentId(id.toString());
+        Boolean isAvailable = false;
+        if (!items.isEmpty()) {
+            isAvailable =  items.stream().allMatch(item -> !item.isPickedUp());
         }
-        return scheduledAppointments.contains(appointment);
+        return isAvailable;
     }
 }
