@@ -141,12 +141,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment GetById(Long id) {
         return appointmentRepository.findById(id).orElse(null);
     }
-
     public boolean CheckReservation(Long id) {
         List<Item> items = itemRepository.findAllByAppointmentId(id.toString());
         Boolean isAvailable = false;
         if (!items.isEmpty()) {
-            isAvailable =  items.stream().allMatch(item -> !item.isPickedUp());
+           isAvailable = items.stream().allMatch(item -> !item.isPickedUp() && !item.isQrCodeProcessed());
         }
         return isAvailable;
     }

@@ -135,12 +135,12 @@ INSERT INTO stakeholders.appointments(
 VALUES (-9, '2024-01-24T11:00:00.000Z', '2024-01-24T10:30:00.000Z', true, -2);
 
 INSERT INTO stakeholders.items(
-    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up)
-VALUES (-1, 2, -1, -1, -1, -1, FALSE);
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-1, 2, -1, -1, -1, -1, FALSE, FALSE);
 
 INSERT INTO stakeholders.items(
-    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up)
-VALUES (-2, 3, -2, -1, -1, -2, FALSE);
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-2, 3, -2, -1, -1, -2, FALSE, FALSE);
 
 INSERT INTO stakeholders.items(
     id, count, appointment_id, company_id, customer_id, equipment_id, picked_up)

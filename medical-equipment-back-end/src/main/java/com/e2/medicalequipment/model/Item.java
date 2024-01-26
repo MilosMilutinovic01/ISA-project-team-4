@@ -33,17 +33,22 @@ public class Item {
     @Column(name = "picked_up")
     private boolean pickedUp;
 
+    @Column(name = "qr_code_processed")
+    private boolean qrCodeProcessed;
+
     public Item() {
 
     }
 
-    public Item(Long id, int count, Appointment appointment, Equipment equipment, Customer customer, Company company) {
+    public Item(Long id, int count, Appointment appointment, Equipment equipment, Customer customer, Company company, boolean pickedUp, boolean qrCodeProcessed) {
         this.id = id;
         this.count = count;
         this.appointment = appointment;
         this.equipment = equipment;
         this.customer = customer;
         this.company = company;
+        this.pickedUp = pickedUp;
+        this.qrCodeProcessed = qrCodeProcessed;
     }
 
     public Item(CreateItemDTO itemDto){
@@ -54,6 +59,7 @@ public class Item {
         this.id = item.id;
         this.count = item.count;
         this.pickedUp = item.pickedUp;
+        this.qrCodeProcessed = item.qrCodeProcessed;
 
         if (item.appointment != null) {
             this.appointment = new Appointment(item.appointment);
@@ -127,5 +133,13 @@ public class Item {
 
     public void setPickedUp(boolean pickedUp) {
         this.pickedUp = pickedUp;
+    }
+
+    public boolean isQrCodeProcessed() {
+        return qrCodeProcessed;
+    }
+
+    public void setQrCodeProcessed(boolean qrCodeProcessed) {
+        this.qrCodeProcessed = qrCodeProcessed;
     }
 }

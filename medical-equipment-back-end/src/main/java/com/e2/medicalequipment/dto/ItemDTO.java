@@ -10,4 +10,5 @@ public class ItemDTO {
     public UpdateCustomerDTO customer;
     public Company company;
     public boolean pickedUp;
+    public boolean qrCodeProcessed;
 }

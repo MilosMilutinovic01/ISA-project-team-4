@@ -11,6 +11,7 @@ export interface CreateItem {
   customerId: number;
   companyId: number;
   pickedUp: boolean;
+  qrCodeProcessed: boolean;
 }
 
 export interface Item {
@@ -21,4 +22,5 @@ export interface Item {
   customer: CustomerProfile;
   company: Company;
   pickedUp: boolean;
+  qrCodeProcessed: boolean;
 }

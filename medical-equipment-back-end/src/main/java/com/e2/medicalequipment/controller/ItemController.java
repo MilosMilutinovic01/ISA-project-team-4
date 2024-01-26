@@ -175,7 +175,7 @@ public class ItemController {
         for (Item item : items) {
             try {
                 userId = item.getCustomer().getId();
-                itemService.pickUp(item);
+                itemService.Process(item,true);
                 message += equipmentService.Get(item.getEquipment().getId()).getName()+ " - " + item.getCount() + " kom\n";
             } catch (Exception e) {
                 e.printStackTrace();
@@ -186,7 +186,6 @@ public class ItemController {
         emailService.sendNotificaitionAsync(userService.getUserById(userId).getUsername(), "Potvrda o uspesno preuzetoj opremi", "<html>" + message.replace("\n", "<br/>") + "</html>");
         return true;
     }
-
     @PostMapping(value = "/processExpired", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public boolean processExpired (@RequestBody String appointmentId) throws Exception {
@@ -198,6 +197,7 @@ public class ItemController {
                 dto.count += item.getCount();
                 equipmentTrackingService.Update(dto);
                 userId = item.getCustomer().getId();
+                itemService.Process(item,false);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw e;  // rethrow the exception

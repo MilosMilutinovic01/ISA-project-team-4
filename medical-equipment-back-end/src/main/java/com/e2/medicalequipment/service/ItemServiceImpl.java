@@ -97,9 +97,9 @@ public class ItemServiceImpl implements ItemService{
         Item savedItem = itemRepository.save(item);
         return savedItem;
     }
-
-    public Item pickUp(Item item) throws Exception{
-        item.setPickedUp(true);
+    public Item Process(Item item,Boolean pickedUp) throws Exception{
+        item.setPickedUp(pickedUp);
+        item.setQrCodeProcessed(true);
         if ((item.getId() == null)){
             throw new Exception("ID must not be null for updating entity.");
         }
