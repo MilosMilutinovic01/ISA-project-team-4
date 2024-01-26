@@ -3,6 +3,7 @@ package com.e2.medicalequipment.service;
 import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import com.e2.medicalequipment.model.Appointment;
 import com.e2.medicalequipment.model.CompanyAdministrator;
+import com.e2.medicalequipment.model.Equipment;
 import com.e2.medicalequipment.model.Item;
 import com.e2.medicalequipment.repository.AppointmentRepository;
 import com.e2.medicalequipment.repository.CompanyAdministratorRepository;
@@ -19,7 +20,7 @@ import java.util.Locale;
 import java.util.Random;
 
 @Service
-public class AppointmentServiceImpl implements AppointmentService{
+public class AppointmentServiceImpl implements AppointmentService {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzzz)", Locale.ENGLISH);
 
 
@@ -67,27 +68,33 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Override
     public List<Appointment> GetAll() throws Exception {
         List<Appointment> allAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAll()) {
+        for (Appointment a : appointmentRepository.findAll()) {
             allAppointments.add(a);
         }
         return allAppointments;
     }
+
     @Override
-    public List<Appointment> GetFreeByCompanyId(Long companyId) throws Exception{
+    public List<Appointment> GetFreeByCompanyId(Long companyId) throws Exception {
         List<Appointment> freeAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
+        for (Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
             if (itemRepository.findAllByAppointmentId(a.getId().toString()).isEmpty()) {
                 freeAppointments.add(a);
             }
         }
         return freeAppointments;
     }
+
     @Override
-    public List<Appointment> GetScheduledByCompanyId(Long companyId) throws Exception{
+    public List<Appointment> GetScheduledByCompanyId(Long companyId) throws Exception {
         List<Appointment> scheduledAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
-            if (!itemRepository.findAllByAppointmentId(a.getId().toString()).isEmpty()) {
-                scheduledAppointments.add(a);
+        for (Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
+            List<Item> items = itemRepository.findAllByAppointmentId(a.getId().toString());
+            if (!items.isEmpty()) {
+                boolean allItemsNotPickedUp = items.stream().allMatch(item -> !item.isPickedUp());
+                if (allItemsNotPickedUp) {
+                    scheduledAppointments.add(a);
+                }
             }
         }
         return scheduledAppointments;
@@ -144,4 +151,17 @@ public class AppointmentServiceImpl implements AppointmentService{
         }
         return reservedAppointments;
     }*/
+
+    public Appointment GetById(Long id) {
+        return appointmentRepository.findById(id).orElse(null);
+    }
+
+    public boolean CheckReservation(Long id) {
+        List<Item> items = itemRepository.findAllByAppointmentId(id.toString());
+        Boolean isAvailable = false;
+        if (!items.isEmpty()) {
+            isAvailable =  items.stream().allMatch(item -> !item.isPickedUp());
+        }
+        return isAvailable;
+    }
 }

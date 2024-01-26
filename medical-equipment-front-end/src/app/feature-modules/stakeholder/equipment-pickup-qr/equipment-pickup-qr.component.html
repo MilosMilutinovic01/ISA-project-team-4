@@ -1,0 +1,14 @@
+<div class="qr-upload">
+    <label>Upload QR code:</label>
+    <input type="file" (change)="onFileSelected($event)" #fileInput />
+    <mat-card *ngIf="selectedFile" class="card">
+        <mat-card-title>
+          <p class="card-title">Reservation information:</p>
+        </mat-card-title>
+        <mat-card-content class="card-content">
+            <div [innerHTML]="reservationInformation"></div>
+            <div [innerHTML]="message"></div>
+            <div *ngIf="canPickUp"><button (click)="completeReservation()">Complete reservation</button></div>
+        </mat-card-content>
+      </mat-card>
+</div>

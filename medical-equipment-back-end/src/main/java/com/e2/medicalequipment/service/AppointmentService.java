@@ -16,5 +16,7 @@ public interface AppointmentService {
 */
     List<Appointment> GetFreeByCompanyId(Long companyId) throws Exception;
     List<Appointment> GetScheduledByCompanyId(Long companyId) throws Exception;
+    Appointment GetById(Long id) throws Exception;
+    boolean CheckReservation(Long id) throws Exception;
 
 }

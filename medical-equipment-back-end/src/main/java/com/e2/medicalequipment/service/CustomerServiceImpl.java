@@ -78,4 +78,15 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer findByVerificationToken(String token) throws Exception {
         return customerRepository.findByVerificationToken(token);
     }
+
+    @Override
+    public Customer GivePenaltyPoints(Long id) throws Exception {
+        Customer customer = this.customerRepository.findById(id).get();
+        customer.setPenaltyPoints(2L);
+        if (customer.getId() == null) {
+            throw new Exception("ID must not be null for updating entity.");
+        }
+        Customer savedCustomer = customerRepository.save(customer);
+        return savedCustomer;
+    }
 }

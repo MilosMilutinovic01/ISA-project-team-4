@@ -106,5 +106,9 @@ export class NavbarComponent implements OnInit {
       console.warn('User is undefined. Cannot check first login status.');
     }
   }
+
+  deliverEquipmentWithQR(): void {
+    this.router.navigate(['/equipmentDeliverQR/']);
+  }
   
 }

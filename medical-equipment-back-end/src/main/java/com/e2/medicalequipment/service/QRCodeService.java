@@ -4,4 +4,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface QRCodeService {
     String sendQRCode(String subject, String mail, String message);
+    String readQRCode(String filepath);
 }

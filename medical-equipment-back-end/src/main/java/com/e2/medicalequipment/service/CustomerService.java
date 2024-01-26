@@ -10,4 +10,5 @@ public interface CustomerService {
     Customer Update(UpdateCustomerDTO customerDTO) throws Exception;
     Customer Get(String id) throws Exception;
     Customer findByVerificationToken(String id) throws Exception;
+    Customer GivePenaltyPoints(Long id) throws Exception;
 }

@@ -1,6 +1,8 @@
 package com.e2.medicalequipment.service;
 
 import com.e2.medicalequipment.QRCode.QRCodeGenerator;
+import com.e2.medicalequipment.QRCode.QRCodeReader;
+import com.google.zxing.NotFoundException;
 import com.google.zxing.WriterException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -14,16 +16,17 @@ import java.io.IOException;
 
 @Service
 public class QRCodeServiceImpl implements QRCodeService{
-    private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/static/img/QRCode.png";
+    private static int counter = 0;
+    private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/static/img/";
 
     @Autowired
     private JavaMailSender javaMailSender;
     @Override
     public String sendQRCode(String subject, String mail, String message) {
         try {
-            QRCodeGenerator.generateQRCodeImage(message, 250, 250, QR_CODE_IMAGE_PATH);
-
-            sendEmailWithQRCode(subject, mail, QR_CODE_IMAGE_PATH);
+            counter++;
+            QRCodeGenerator.generateQRCodeImage(message, 250, 250, QR_CODE_IMAGE_PATH + counter + ".png");
+            sendEmailWithQRCode(subject, mail, QR_CODE_IMAGE_PATH + counter + ".png");
         } catch (WriterException | IOException | MessagingException e) {
             e.printStackTrace();
         }
@@ -43,5 +46,22 @@ public class QRCodeServiceImpl implements QRCodeService{
         helper.addInline("qrCodeImage", new java.io.File(qrCodeImagePath));
 
         javaMailSender.send(message);
+    }
+
+    @Override
+    public String readQRCode(String filename) {
+        try {
+            String result = QRCodeReader.readQRCode(QR_CODE_IMAGE_PATH + filename);
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error reading QR code: IOException";
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+            return "Error reading QR code: NotFoundException";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error reading QR code: " + e.getMessage();
+        }
     }
 }

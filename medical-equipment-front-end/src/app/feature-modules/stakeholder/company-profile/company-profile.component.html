@@ -88,10 +88,10 @@
       </div>
       <div class="search-container">
         <mat-chip-listbox>
-          <mat-chip-option (click)="selectChip('LABORATORY')" class="option-view">Laboratory</mat-chip-option>
-          <mat-chip-option (click)="selectChip('DIAGNOSTICS')" class="option-view">Diagnostics</mat-chip-option>
-          <mat-chip-option (click)="selectChip('DENTAL')" class="option-view">Dental</mat-chip-option>
-          <mat-chip-option  (click)="selectChip('SURGICAL')" class="option-view">Surgical</mat-chip-option>
+          <mat-chip-option (click)="selectChip('LABORATORY')" class="option-view" [selected]= "selectedOption == 'LABORATORY'">Laboratory</mat-chip-option>
+          <mat-chip-option (click)="selectChip('DIAGNOSTICS')" class="option-view" [selected]= "selectedOption == 'DIAGNOSTICS'">Diagnostics</mat-chip-option>
+          <mat-chip-option (click)="selectChip('DENTAL')" class="option-view" [selected]= "selectedOption == 'DENTAL'">Dental</mat-chip-option>
+          <mat-chip-option  (click)="selectChip('SURGICAL')" class="option-view" [selected]= "selectedOption == 'SURGICAL'">Surgical</mat-chip-option>
         </mat-chip-listbox>
       </div>
     </form>

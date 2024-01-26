@@ -30,6 +30,9 @@ public class Item {
     @JoinColumn(name = "company_id")
     private Company company;
 
+    @Column(name = "picked_up")
+    private boolean pickedUp;
+
     public Item() {
 
     }
@@ -50,6 +53,7 @@ public class Item {
     public Item(Item item) {
         this.id = item.id;
         this.count = item.count;
+        this.pickedUp = item.pickedUp;
 
         if (item.appointment != null) {
             this.appointment = new Appointment(item.appointment);
@@ -117,4 +121,11 @@ public class Item {
         this.company = company;
     }
 
+    public boolean isPickedUp() {
+        return pickedUp;
+    }
+
+    public void setPickedUp(boolean pickedUp) {
+        this.pickedUp = pickedUp;
+    }
 }
