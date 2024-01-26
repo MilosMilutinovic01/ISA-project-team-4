@@ -26,6 +26,5 @@ public interface AppointmentService {
     Appointment FindById(Long id) throws Exception;
 
     List<Appointment> GetPickedUpByCustomerId(Long customerId) throws Exception;
-    List<Appointment> SortByDate(boolean descending, List<Appointment> appointments) throws Exception;
 
 }

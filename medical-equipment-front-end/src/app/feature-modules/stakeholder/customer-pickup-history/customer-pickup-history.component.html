@@ -42,6 +42,9 @@
             <div *ngFor="let i of appointmentItemsMap[a.id]">
               <p>- {{ i.equipment?.name }} : {{ i.count }} komada</p>
             </div>
+            <div class="total-price">
+              <p>Total price: {{ totalPriceMap[a.id] }} RSD</p>
+            </div>
           </div>
         </div>
       </mat-card-content>

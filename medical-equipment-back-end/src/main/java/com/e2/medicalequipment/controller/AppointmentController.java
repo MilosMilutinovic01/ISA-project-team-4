@@ -158,22 +158,5 @@ public class AppointmentController {
         }
     }
 
-    @PutMapping(value = "/sort/date/{isAscending}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public ResponseEntity<List<Appointment>> sortCompaniesByRate(@PathVariable String isAscending,
-                                                             @RequestBody List<Appointment> appointments) {
-        List<Appointment> sortedAppointments = null;
-        try {
-            if(isAscending.equals("1")) {
-                sortedAppointments = appointmentService.SortByDate(false, appointments);
-            }
-            if(isAscending.equals("-1")) {
-                sortedAppointments = appointmentService.SortByDate(true, appointments);
-            }
-            return new ResponseEntity<List<Appointment>>(sortedAppointments, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<List<Appointment>>(sortedAppointments, HttpStatus.CONFLICT);
-        }
-    }
+
 }

@@ -83,34 +83,4 @@ public class CompanyServiceImpl implements CompanyService {
                 .filter(c -> c.getAverageRating() >= (rating-1) && c.getAverageRating() <= rating).collect(Collectors.toList());
         return filteredCompanies;
     }
-
-    @Override
-    public List<Company> SortByRate(boolean descending, List<Company> companies) throws Exception {
-        Comparator<Company> comparator = Comparator.comparing(company -> company.getAverageRating());
-        if (descending) {
-            comparator = comparator.reversed();
-        }
-        Collections.sort(companies, comparator);
-        return companies;
-    }
-
-    @Override
-    public List<Company> SortByName(boolean descending, List<Company> companies) throws Exception {
-        Comparator<Company> comparator = Comparator.comparing(company -> company.getName());
-        if (descending) {
-            comparator = comparator.reversed();
-        }
-        Collections.sort(companies, comparator);
-        return companies;
-    }
-
-    @Override
-    public List<Company> SortByCity(boolean descending, List<Company> companies) throws Exception {
-        Comparator<Company> comparator = Comparator.comparing(company -> company.getAddress().getCity());
-        if (descending) {
-            comparator = comparator.reversed();
-        }
-        Collections.sort(companies, comparator);
-        return companies;
-    }
 }

@@ -19,6 +19,7 @@ export class CustomerScheduledAppointmentsComponent {
   user: User | undefined;
   appointmentItemsMap: { [id: number]: Item[] } = {};
   isDisabledMap: { [id: number]: boolean } = {};
+  totalPriceMap: { [id: number]: number } = {};
 
   constructor(
     public router: Router,
@@ -38,6 +39,7 @@ export class CustomerScheduledAppointmentsComponent {
       .subscribe({
         next: (result) => {
           this.appointments = result;
+          console.log('APP: ', result);
 
           // show only appointments that are in the future
           this.appointments = this.appointments.filter(
@@ -105,6 +107,13 @@ export class CustomerScheduledAppointmentsComponent {
     this.service.getItemsByAppointmentId(String(appointmentId)).subscribe({
       next: (result) => {
         this.appointmentItemsMap[appointmentId] = result;
+
+        let totalPrice = 0;
+        for (let i of result) {
+          totalPrice += i.count * Number(i.equipment?.price);
+        }
+
+        this.totalPriceMap[appointmentId] = totalPrice;
       },
       error: () => {
         console.log(console.error);

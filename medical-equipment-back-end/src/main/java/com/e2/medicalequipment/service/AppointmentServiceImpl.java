@@ -151,14 +151,6 @@ public class AppointmentServiceImpl implements AppointmentService {
         return isAvailable;
     }
 
-    @Override
-    public List<Appointment> SortByDate(boolean descending, List<Appointment> appointments) throws Exception {
-        Comparator<Appointment> comparator = Comparator.comparing(appointment -> appointment.getStartTime());
-        if (descending) {
-            comparator = comparator.reversed();
-        }
-        Collections.sort(appointments, comparator);
-        return appointments;
-    }
+
 
 }

@@ -305,16 +305,6 @@ export class StakeholderService {
     );
   }
 
-  sortAppointmentsByDate(
-    isAscending: string,
-    appointments: ShowAppointment[]
-  ): Observable<ShowAppointment[]> {
-    return this.http.put<ShowAppointment[]>(
-      environment.apiHost + 'companies/sort/date/' + isAscending,
-      appointments
-    );
-  }
-
   getCustomerByAppointmentId(id: string): Observable<CustomerProfile> {
     return this.http.get<CustomerProfile>(
       environment.apiHost + 'items/customerByAppointment/' + id

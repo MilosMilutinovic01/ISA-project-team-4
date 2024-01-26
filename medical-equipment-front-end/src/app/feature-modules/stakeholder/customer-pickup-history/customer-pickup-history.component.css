@@ -60,3 +60,9 @@
 .search-button {
   background-color: #3498db;
 }
+
+.total-price {
+  font-size: 19px;
+  font-weight: 500;
+  padding-top: 20px;
+}

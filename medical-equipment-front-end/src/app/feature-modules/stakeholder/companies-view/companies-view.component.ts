@@ -95,75 +95,33 @@ export class CompaniesViewComponent implements OnInit {
   }
 
   sortNameAsc(): void {
-    this.service.sortCompaniesByName('1', this.companies).subscribe({
-      next: (result: Company[]) => {
-        this.companies = result;
-        console.log(result);
-      },
-      error: () => {
-        console.log(console.error());
-      },
-    });
+    this.companies.sort((a, b) => a.name.localeCompare(b.name));
   }
 
   sortNameDesc(): void {
-    this.service.sortCompaniesByName('-1', this.companies).subscribe({
-      next: (result: Company[]) => {
-        this.companies = result;
-        console.log(result);
-      },
-      error: () => {
-        console.log(console.error());
-      },
-    });
+    this.companies.sort((a, b) => b.name.localeCompare(a.name));
   }
 
   sortCityAsc(): void {
-    this.service.sortCompaniesByCity('1', this.companies).subscribe({
-      next: (result: Company[]) => {
-        this.companies = result;
-        console.log(result);
-      },
-      error: () => {
-        console.log(console.error());
-      },
-    });
+    this.companies.sort((a, b) => a.address.city.localeCompare(b.name));
   }
 
   sortCityDesc(): void {
-    this.service.sortCompaniesByCity('-1', this.companies).subscribe({
-      next: (result: Company[]) => {
-        this.companies = result;
-        console.log(result);
-      },
-      error: () => {
-        console.log(console.error());
-      },
-    });
+    this.companies.sort((a, b) => b.address.city.localeCompare(a.name));
   }
 
   sortRateAsc(): void {
-    this.service.sortCompaniesByRate('1', this.companies).subscribe({
-      next: (result: Company[]) => {
-        this.companies = result;
-        console.log(result);
-      },
-      error: () => {
-        console.log(console.error());
-      },
-    });
+    this.companies.sort(
+      (a, b) =>
+        (a.averageRating?.valueOf() || 0) - (b.averageRating?.valueOf() || 0)
+    );
   }
 
   sortRateDesc(): void {
-    this.service.sortCompaniesByRate('-1', this.companies).subscribe({
-      next: (result: Company[]) => {
-        this.companies = result;
-        console.log(result);
-      },
-      error: () => {
-        console.log(console.error());
-      },
-    });
+    this.companies.sort(
+      (a, b) =>
+        (b.averageRating?.valueOf() || 0) - (a.averageRating?.valueOf() || 0)
+    );
   }
 
   openFilterDialog(): void {

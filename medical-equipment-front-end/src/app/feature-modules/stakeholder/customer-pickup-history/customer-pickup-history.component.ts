@@ -15,7 +15,7 @@ export class CustomerPickupHistoryComponent {
   appointments: ShowAppointment[] = [];
   user: User | undefined;
   appointmentItemsMap: { [id: number]: Item[] } = {};
-  isDisabledMap: { [id: number]: boolean } = {};
+  totalPriceMap: { [id: number]: number } = {};
 
   dateAsc: string = 'dateAsc';
   dateDesc: string = 'dateDesc';
@@ -68,6 +68,13 @@ export class CustomerPickupHistoryComponent {
     this.service.getItemsByAppointmentId(String(appointmentId)).subscribe({
       next: (result) => {
         this.appointmentItemsMap[appointmentId] = result;
+
+        let totalPrice = 0;
+        for (let i of result) {
+          totalPrice += i.count * Number(i.equipment?.price);
+        }
+
+        this.totalPriceMap[appointmentId] = totalPrice;
       },
       error: () => {
         console.log(console.error);
@@ -84,33 +91,45 @@ export class CustomerPickupHistoryComponent {
     }
   }
 
-  sortDateAsc(): void {
-    this.service.sortAppointmentsByDate('1', this.appointments).subscribe({
-      next: (result: ShowAppointment[]) => {
-        this.appointments = result;
-        console.log(result);
-        this.appointments.forEach((a) => {
-          this.getItems(a.id);
-        });
-      },
-      error: () => {
-        console.log(console.error());
-      },
+  sortDateDesc(): void {
+    this.appointments.sort((a, b) => {
+      const startTimeA = new Date(
+        parseInt(a.startTime[0]), // year
+        parseInt(a.startTime[1]) - 1, // month (months are zero-based in JavaScript Date)
+        parseInt(a.startTime[2]) // day
+      );
+
+      const startTimeB = new Date(
+        parseInt(b.startTime[0]), // year
+        parseInt(b.startTime[1]) - 1, // month (months are zero-based in JavaScript Date)
+        parseInt(b.startTime[2]) // day
+      );
+
+      // Compare the start times
+      return startTimeB.getTime() - startTimeA.getTime();
     });
   }
 
-  sortDateDesc(): void {
-    this.service.sortAppointmentsByDate('-1', this.appointments).subscribe({
-      next: (result: ShowAppointment[]) => {
-        this.appointments = result;
-        console.log(result);
-        this.appointments.forEach((a) => {
-          this.getItems(a.id);
-        });
-      },
-      error: () => {
-        console.log(console.error());
-      },
+  sortDateAsc(): void {
+    this.appointments.sort((a, b) => {
+      const startTimeA = new Date(
+        parseInt(a.startTime[0]), // year
+        parseInt(a.startTime[1]) - 1, // month (months are zero-based in JavaScript Date)
+        parseInt(a.startTime[2]), // day
+        parseInt(a.startTime[3]), // hour
+        parseInt(a.startTime[4]) // minute
+      );
+
+      const startTimeB = new Date(
+        parseInt(b.startTime[0]), // year
+        parseInt(b.startTime[1]) - 1, // month (months are zero-based in JavaScript Date)
+        parseInt(b.startTime[2]), // day
+        parseInt(b.startTime[3]), // hour
+        parseInt(b.startTime[4]) // minute
+      );
+
+      // Compare the start times
+      return startTimeA.getTime() - startTimeB.getTime();
     });
   }
 

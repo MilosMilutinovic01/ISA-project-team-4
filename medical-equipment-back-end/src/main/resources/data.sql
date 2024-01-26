@@ -98,7 +98,7 @@ VALUES (-5, 240, -3, -4);
 
 INSERT INTO stakeholders.appointments(
     id, end_time, start_time, is_predefined, company_administrator_id)
-VALUES (-1, '2024-01-29T13:00:00.000Z', '2024-01-29T12:30:00.000Z', true, -2);
+VALUES (-1, '2024-01-27T13:00:00.000Z', '2024-01-27T12:30:00.000Z', true, -2);
 
 INSERT INTO stakeholders.appointments(
     id, end_time, start_time, is_predefined, company_administrator_id)

@@ -67,3 +67,9 @@
 .add-button:disabled {
   background-color: rgb(220, 220, 220);
 }
+
+.total-price {
+  font-size: 19px;
+  font-weight: 500;
+  padding-top: 20px;
+}
