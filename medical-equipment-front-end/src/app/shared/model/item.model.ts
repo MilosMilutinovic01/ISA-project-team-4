@@ -10,6 +10,7 @@ export interface CreateItem {
   equipment?: Equipment;
   customerId: number;
   companyId: number;
+  pickedUp: boolean;
 }
 
 export interface Item {
@@ -19,4 +20,5 @@ export interface Item {
   equipment?: Equipment;
   customer: CustomerProfile;
   company: Company;
+  pickedUp: boolean;
 }

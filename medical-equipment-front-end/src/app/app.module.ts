@@ -14,6 +14,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
 
 
+
 @NgModule({
   declarations: [AppComponent, LoginComponent],
   imports: [
@@ -26,7 +27,7 @@ import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
     AuthModule,
     MaterialModule,
     StakeholderModule,
-    FontAwesomeModule,
+    FontAwesomeModule
   ],
   providers: [
     {

@@ -4,6 +4,7 @@ import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import com.e2.medicalequipment.model.Appointment;
 import com.e2.medicalequipment.model.Item;
 import com.e2.medicalequipment.service.AppointmentService;
+import com.e2.medicalequipment.service.QRCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +21,8 @@ public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
+    @Autowired
+    private QRCodeService qrCodeService;
    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public ResponseEntity<Appointment> registerAppointment(@RequestBody CreateAppointmentDTO appointmentDTO) {
@@ -130,5 +133,41 @@ public class AppointmentController {
         }
     }
     */
+    @GetMapping(value = "/dataFromQR/{fileName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<String> getAppointmentDataFromQRCode(@PathVariable String fileName){
+        String result = null;
+        try {
+            result = qrCodeService.readQRCode(fileName);
+            return new ResponseEntity<String>(result,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>(result,HttpStatus.CONFLICT);
+        }
+    }
 
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<Appointment> getById(@PathVariable String id){
+        Appointment appointment = null;
+        try {
+            appointment = appointmentService.GetById(Long.parseLong(id));
+            return new ResponseEntity<Appointment>(appointment, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Appointment>(appointment, HttpStatus.CONFLICT);
+        }
+    }
+    @GetMapping(value = "/checkReservation/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<Boolean> checkReservation(@PathVariable String id){
+        Boolean result = false;
+        try {
+            result = appointmentService.CheckReservation(Long.parseLong(id));
+            return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Boolean>(result, HttpStatus.CONFLICT);
+        }
+    }
 }

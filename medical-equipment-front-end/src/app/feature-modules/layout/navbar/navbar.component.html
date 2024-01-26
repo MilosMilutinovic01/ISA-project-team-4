@@ -10,6 +10,11 @@
             Company Profile
           </button>
         </div>
+        <div *ngIf="user && user.role === 'COMPANY_ADMINISTRATOR'">
+          <button class="navbar-button" (click)="deliverEquipmentWithQR()">
+            Deliver equipment with QR code
+          </button>
+        </div>
         <div>
           <button
             class="navbar-button"

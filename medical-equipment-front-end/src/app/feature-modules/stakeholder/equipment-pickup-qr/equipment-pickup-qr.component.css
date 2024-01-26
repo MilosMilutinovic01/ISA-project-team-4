@@ -1,0 +1,27 @@
+.qr-upload {
+  padding: 50px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+  align-items: center;
+}
+
+.card-title {
+  align-content: center;
+}
+
+.card-content {
+    font-size:16px;
+    font-weight:300;
+}
+  
+.card {
+  display: flex;
+  height: 25%;
+  width: 50%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  padding: 20px;
+}

@@ -299,7 +299,7 @@ export class StakeholderService {
 
   getCustomerByAppointmentId(id: string): Observable<CustomerProfile> {
     return this.http.get<CustomerProfile>(
-      environment.apiHost + 'items/byAppointment/' + id
+      environment.apiHost + 'items/customerByAppointment/' + id
     );
   }
 
@@ -314,6 +314,36 @@ export class StakeholderService {
       environment.apiHost + 'items/cancelReservation',
       id,
       { headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  getAppointmentDataFromQRCode(filepath: string): Observable<string> {
+    return this.http.get(
+      environment.apiHost + 'appointments/dataFromQR/' + filepath,
+      { responseType: 'text' }
+    );
+  }
+
+  getAppointment(id: string): Observable<Appointment> {
+    return this.http.get<Appointment>(
+      environment.apiHost + 'appointments/' + id
+    );
+  }
+
+  isReservationAvailable(id: string): Observable<boolean> {
+    return this.http.get<boolean>(
+      environment.apiHost + 'appointments/checkReservation/' + id
+    );
+  }
+
+  completeReservation(id: string): Observable<boolean> {
+    return this.http.post<boolean>(environment.apiHost + 'items/pickUp', id);
+  }
+
+  processExpiredReservation(id: string): Observable<boolean> {
+    return this.http.post<boolean>(
+      environment.apiHost + 'items/processExpired',
+      id
     );
   }
 }

@@ -18,4 +18,6 @@ public interface ItemService {
     Item Get(Long id) throws Exception;
     List<Item> GetAllByAppointmentId(String id) throws Exception;
     Item Update(UpdateItemDTO item) throws Exception;
+    List<Item> GetAllByAppointmentId(String appointmentId) throws Exception;
+    Item pickUp(Item item) throws Exception;
 }

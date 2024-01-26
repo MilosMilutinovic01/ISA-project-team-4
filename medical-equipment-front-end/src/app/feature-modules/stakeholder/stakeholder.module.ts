@@ -35,6 +35,7 @@ import { EditEquipmentTrackingComponent } from './edit-equipment-tracking/edit-e
 import { SelectAppointmentDialogComponent } from './select-appointment-dialog/select-appointment-dialog.component';
 import { SelectIrregularAppointmentDialogComponent } from './select-irregular-appointment-dialog/select-irregular-appointment-dialog.component';
 import { CustomerScheduledAppointmentsComponent } from './customer-scheduled-appointments/customer-scheduled-appointments.component';
+import { EquipmentPickupQrComponent } from './equipment-pickup-qr/equipment-pickup-qr.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { CustomerScheduledAppointmentsComponent } from './customer-scheduled-app
     SelectAppointmentDialogComponent,
     SelectIrregularAppointmentDialogComponent,
     CustomerScheduledAppointmentsComponent,
+    EquipmentPickupQrComponent,
   ],
   imports: [
     CommonModule,

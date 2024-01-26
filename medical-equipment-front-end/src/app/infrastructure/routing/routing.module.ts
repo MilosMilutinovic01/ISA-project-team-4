@@ -19,6 +19,7 @@ import { CompanyCalendarComponent } from 'src/app/feature-modules/stakeholder/co
 import { AdministratorRegistrationComponent } from 'src/app/feature-modules/stakeholder/administrator-registration/administrator-registration.component';
 import { ChangePasswordComponent } from 'src/app/feature-modules/stakeholder/change-password/change-password.component';
 import { CustomerScheduledAppointmentsComponent } from 'src/app/feature-modules/stakeholder/customer-scheduled-appointments/customer-scheduled-appointments.component';
+import { EquipmentPickupQrComponent } from 'src/app/feature-modules/stakeholder/equipment-pickup-qr/equipment-pickup-qr.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -51,6 +52,7 @@ const routes: Routes = [
     path: 'scheduledAppointments',
     component: CustomerScheduledAppointmentsComponent,
   },
+  { path: 'equipmentDeliverQR', component: EquipmentPickupQrComponent },
 ];
 
 @NgModule({

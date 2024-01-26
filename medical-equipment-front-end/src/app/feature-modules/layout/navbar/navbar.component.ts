@@ -107,4 +107,8 @@ export class NavbarComponent implements OnInit {
   openScheduledAppointments(): void {
     this.router.navigate(['/scheduledAppointments']);
   }
+
+  deliverEquipmentWithQR(): void {
+    this.router.navigate(['/equipmentDeliverQR/']);
+  }
 }
