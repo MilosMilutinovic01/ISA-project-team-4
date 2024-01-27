@@ -1,4 +1,5 @@
 import * as L from 'leaflet';
+import 'leaflet-routing-machine';
 import { Component, AfterViewInit } from '@angular/core';
 import { MapService } from './map.service';
 
@@ -35,23 +36,20 @@ export class MapComponent implements AfterViewInit {
 
   setRoute(): void {
     this.routeControl?.remove();
-    console.log('AJ LEBA TI PRVI:', this.routeControl);
-    var r = L.Routing.control({
+    console.log('TEST 1', L.Routing, L);
+    this.routeControl = L.Routing.control({
       waypoints: [
         L.latLng(45.250335, 19.803955),
-        // L.latLng(45.242092, 19.849171),
+        L.latLng(45.242092, 19.849171),
       ],
       router: L.routing.mapbox(
         'pk.eyJ1IjoibWlraWNhMzIxNCIsImEiOiJjbHJ0YnRwc3UwNHI0Mm9wYjFzMXd3cjI3In0.S5sABCyjR4nfULHWYV_X2w',
-        {
-          profile: 'mapbox/walking',
-        }
+        { profile: 'mapbox/walking' }
       ),
-    });
-    console.log('AJ LEBA TI:', this.routeControl);
-    r.addTo(this.map);
+    }).addTo(this.map);
+    console.log('TEST 2');
 
-    r.on('routesfound', function (e) {
+    this.routeControl.on('routesfound', function (e) {
       var routes = e.routes;
       var summary = routes[0].summary;
       alert(
