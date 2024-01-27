@@ -88,4 +88,15 @@ public class UserServiceImpl implements UserService{
 
         return tokenDTO;
     }
+
+    @Override
+    public void deleteAllPenaltyPoints(Integer points) {
+        try{
+
+            usersRepository.deleteAllPenaltyPoints(points);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

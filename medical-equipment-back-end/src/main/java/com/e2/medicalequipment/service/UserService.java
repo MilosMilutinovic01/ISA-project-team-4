@@ -14,5 +14,6 @@ public interface UserService {
     public User changeUserStatus(User user);
     public void changePenaltyPoints(Integer points, Long userId);
     public UserTokenState login(JwtAuthenticationRequest loginDto);
+    public void deleteAllPenaltyPoints(Integer points);
 
 }

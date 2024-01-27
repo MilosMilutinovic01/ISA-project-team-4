@@ -16,6 +16,7 @@ import { AppointmentRegistrationComponent } from '../appointment-registration/ap
 import { EquipmentRegistrationComponent } from '../equipment-registration/equipment-registration.component';
 import { EquipmentType } from 'src/app/shared/model/equipment.model';
 import { EditEquipmentTrackingComponent } from '../edit-equipment-tracking/edit-equipment-tracking.component';
+import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
 
 @Component({
   selector: 'app-company-profile',
@@ -33,6 +34,7 @@ export class CompanyProfileComponent {
     endTime: '',
     averageRating: NaN,
   };
+  addDisabled: boolean | undefined;
 
   user: User | undefined;
 
@@ -265,37 +267,70 @@ export class CompanyProfileComponent {
   // }
 
   addToCart(id: number, availableCount: number): void {
-    const dialogRef = this.dialog
-      .open(AddToCartDialogComponent, {
-        width: '45%',
-        height: '35%',
-        data: { count: this.equipmentCount, availableCount },
-      })
-      .afterClosed()
-      .subscribe((result) => {
-        if (result) {
-          const item: CreateItem = {
-            count: result || '',
-            customerId: this.authService.getCurrentUserId() || 0,
-            companyId: this.company.id || 0,
-            pickedUp: false
-          };
+    var profile: CustomerProfile = {
+      id: NaN,
+      name: '',
+      lastname: '',
+      username: '',
+      address: { street: '', city: '', country: '' },
+      phoneNumber: '',
+      profession: '',
+      penaltyPoints: NaN,
+      password: '',
+      category: '',
+    };
+    this.service
+      .getCustomerProfile(this.authService.getCurrentUserId().toString())
+      .subscribe({
+        next: (result: CustomerProfile) => {
+          profile = result;
 
-          const selectedEquipment = this.filteredEquipmentTrackings.find(
-            (e) => e.id === id
-          )?.equipment;
-          item.equipment = selectedEquipment;
-
-          this.service.createItem(item).subscribe({
-            next: (result) => {
-              this.items.push(result);
-            },
-            error: () => {
-              console.log(console.error);
-            },
-          });
-        }
+          if (result.penaltyPoints && result.penaltyPoints >= 3) {
+            alert(
+              'You cannot reserve because you have more than 3 penalty points!'
+            );
+            this.addDisabled = true;
+          } else {
+            this.addDisabled = false;
+          }
+        },
+        error: () => {
+          console.log(console.error());
+        },
       });
+    if (this.addDisabled == false) {
+      const dialogRef = this.dialog
+        .open(AddToCartDialogComponent, {
+          width: '45%',
+          height: '35%',
+          data: { count: this.equipmentCount, availableCount },
+        })
+        .afterClosed()
+        .subscribe((result) => {
+          if (result) {
+            const item: CreateItem = {
+              count: result || '',
+              customerId: this.authService.getCurrentUserId() || 0,
+              companyId: this.company.id || 0,
+              pickedUp: false,
+            };
+
+            const selectedEquipment = this.filteredEquipmentTrackings.find(
+              (e) => e.id === id
+            )?.equipment;
+            item.equipment = selectedEquipment;
+
+            this.service.createItem(item).subscribe({
+              next: (result) => {
+                this.items.push(result);
+              },
+              error: () => {
+                console.log(console.error);
+              },
+            });
+          }
+        });
+    }
   }
 
   registerNewEquipment(): void {

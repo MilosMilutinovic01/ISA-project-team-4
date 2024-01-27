@@ -16,4 +16,9 @@ public interface UserRepository  extends JpaRepository<User, Long> {
     @Transactional
     @Query("UPDATE Customer c SET c.penaltyPoints = c.penaltyPoints + :points WHERE c.id = :userId")
     void changePenaltyPoints(Long userId, Integer points);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Customer c SET c.penaltyPoints = :points")
+    void deleteAllPenaltyPoints(Integer points);
 }

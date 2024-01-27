@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -141,8 +142,10 @@ public class ItemController {
 
     @PostMapping(value = "/cancelReservation", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('CUSTOMER')")
-    public boolean cancel(@RequestBody String id) throws Exception {
+    public boolean cancel(@RequestBody Map<String, Object> requestBody) throws Exception {
         try{
+            String id = (String) requestBody.get("id");
+            Integer penalty = (Integer) requestBody.get("penalty");
             Appointment a = appointmentService.FindById(Long.parseLong(id));
             Long userId = 0L;
             if(a.getIsPredefined() == false)
@@ -157,7 +160,7 @@ public class ItemController {
                 equipmentTrackingService.Update(etdto);
                 itemService.Delete(i.getId());
             }
-            userService.changePenaltyPoints(1,userId);
+            userService.changePenaltyPoints(penalty,userId);
         }
         catch (Exception e) {
             e.printStackTrace();

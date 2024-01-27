@@ -327,10 +327,10 @@ export class StakeholderService {
     );
   }
 
-  cancelReservation(id: string): Observable<boolean> {
+  cancelReservation(id: string, penalty: number): Observable<boolean> {
     return this.http.post<boolean>(
       environment.apiHost + 'items/cancelReservation',
-      id,
+      { id: id, penalty: penalty },
       { headers: { 'Content-Type': 'application/json' } }
     );
   }
