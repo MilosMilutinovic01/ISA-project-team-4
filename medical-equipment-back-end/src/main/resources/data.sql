@@ -161,10 +161,10 @@ VALUES (-6, 15, -6, -1, -1, -1, TRUE, TRUE);
 
 INSERT INTO stakeholders.items(
     id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
-VALUES (-7, 2, -1, -1, -1, -2, FALSE, FALSE);
+VALUES (-7, 2, -1, -1, -1, -4, FALSE, FALSE);
 
 INSERT INTO stakeholders.items(
     id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
-VALUES (-8, 20, -4, -1, -1, -2, FALSE, FALSE);
+VALUES (-8, 20, -4, -1, -1, -4, FALSE, FALSE);
 
 
