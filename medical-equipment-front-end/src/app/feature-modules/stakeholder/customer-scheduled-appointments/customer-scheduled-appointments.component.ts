@@ -121,13 +121,20 @@ export class CustomerScheduledAppointmentsComponent {
   }
 
   cancelReservation(id: number): void {
-    this.service.cancelReservation(id.toString()).subscribe({
+    var penalty = 0;
+    if (this.isDisabledMap[id] === false) {
+      penalty = 1;
+      console.log('DODELIO JEDAN PENAL');
+    } else penalty = 2;
+    this.service.cancelReservation(id.toString(), penalty).subscribe({
       next: (result) => {
         if (result === true) {
-          alert(
-            'Succesfully cancelled reservation! You got one penalty point!'
-          );
+          if (penalty == 1)
+            alert('Succesfully cancelled! You got 1 penalty point!');
+          if (penalty == 2)
+            alert('Succesfully cancelled! You got 2 penalty points!');
         } else alert('Error occured!');
+        this.getCustomerReservations();
       },
       error: () => {
         console.log(console.error);

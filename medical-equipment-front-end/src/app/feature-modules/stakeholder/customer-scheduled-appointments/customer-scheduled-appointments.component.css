@@ -58,6 +58,7 @@
 
 .add-button:hover {
   background-color: rgb(52, 152, 219);
+  color: white;
 }
 
 .add-button:hover:disabled {
@@ -72,4 +73,13 @@
   font-size: 19px;
   font-weight: 500;
   padding-top: 20px;
+}
+
+.shorter {
+  border: 2px solid red;
+}
+
+.shorter:hover {
+  background-color: red;
+  color: white;
 }
