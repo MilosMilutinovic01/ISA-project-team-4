@@ -10,7 +10,7 @@ public class MonthlyTaskScheduler {
     @Autowired
     UserService userService;
 
-    @Scheduled(cron = "0 24 15 27 * ?")
+    @Scheduled(cron = "0 36 13 28 * ?")
     public void deleteData() {
         userService.deleteAllPenaltyPoints(0);
     }
