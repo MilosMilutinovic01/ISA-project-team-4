@@ -3,7 +3,6 @@ package com.e2.medicalequipment.dto;
 public class KafkaCoords {
     double lat;
     double lng;
-
     String user;
     public double getLat() {
         return lat;

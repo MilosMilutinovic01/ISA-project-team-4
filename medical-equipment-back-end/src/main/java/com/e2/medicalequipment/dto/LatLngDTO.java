@@ -1,10 +1,13 @@
 package com.e2.medicalequipment.dto;
 
-public class LatLng {
+public class LatLngDTO {
     double lat;
     double lng;
 
-    public LatLng(double lat, double lng) {
+    public LatLngDTO() {
+    }
+
+    public LatLngDTO(double lat, double lng) {
         this.lat = lat;
         this.lng = lng;
     }
