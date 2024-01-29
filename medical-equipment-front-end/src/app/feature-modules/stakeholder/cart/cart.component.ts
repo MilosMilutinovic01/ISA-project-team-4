@@ -27,7 +27,14 @@ export class CartComponent {
   company: Company = {
     id: NaN,
     name: '',
-    address: { id: NaN, street: '', city: '', country: '' },
+    address: {
+      id: NaN,
+      street: '',
+      city: '',
+      country: '',
+      lat: NaN,
+      lng: NaN,
+    },
     description: '',
     startTime: '',
     endTime: '',
@@ -43,7 +50,14 @@ export class CartComponent {
     companyAdministrator: {
       id: NaN,
       name: '',
-      address: { id: NaN, street: '', city: '', country: '' },
+      address: {
+        id: NaN,
+        street: '',
+        city: '',
+        country: '',
+        lat: NaN,
+        lng: NaN,
+      },
       username: '',
       password: '',
       lastname: '',

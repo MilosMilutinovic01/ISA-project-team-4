@@ -17,7 +17,14 @@ export class EditCompanyProfileComponent implements OnInit {
   profile: Company = {
     id: NaN,
     name: '',
-    address: { id: NaN, street: '', city: '', country: '' },
+    address: {
+      id: NaN,
+      street: '',
+      city: '',
+      country: '',
+      lat: NaN,
+      lng: NaN,
+    },
     startTime: '',
     endTime: '',
     description: '',
@@ -71,6 +78,8 @@ export class EditCompanyProfileComponent implements OnInit {
       street: this.editProfileForm.value.street || '',
       city: this.editProfileForm.value.city || '',
       country: this.editProfileForm.value.country || '',
+      lat: this.profile.address.lat,
+      lng: this.profile.address.lng,
     };
     const editProfile: Company = {
       id: this.profile.id,

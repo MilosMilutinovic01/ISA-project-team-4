@@ -51,6 +51,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     iconSize: [32, 32],
     iconAnchor: [16, 32],
   });
+  private markerGroup = L.layerGroup();
 
   constructor(
     private mapService: MapService,
@@ -115,7 +116,22 @@ export class MapComponent implements AfterViewInit, OnInit {
       }
     );
     tiles.addTo(this.map);
-    this.setRoute();
+
+    this.markers.forEach((marker) => marker.removeFrom(this.map));
+    this.markers = [];
+    let companyMarker = L.marker(this.companyCoords, {
+      icon: this.DefaultIcon,
+    }).addTo(this.map);
+  }
+
+  registerOnClick(): void {
+    this.map.on('click', (e: any) => {
+      const coord = e.latlng;
+      this.vanCoords.lat = coord.lat;
+      this.vanCoords.lng = coord.lng;
+      this.setRoute();
+      // const mp = new L.Marker(this.vanCoords).addTo(this.map);
+    });
   }
 
   setRoute(): void {
@@ -148,6 +164,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
+    L.Marker.prototype.options.icon = this.DefaultIcon;
     this.initMap();
   }
 

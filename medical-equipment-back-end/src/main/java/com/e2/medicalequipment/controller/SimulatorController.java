@@ -21,7 +21,7 @@ public class SimulatorController {
     SimulatorService simulatorService;
 
     @PostMapping(value = "/start")
-    @PreAuthorize("hasAuthority('CUSTOMER')")
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public Response StartSimulator(@RequestBody List<LatLngDTO> coordinates, @RequestParam("user") String forUser, @RequestParam("refreshRate") String refreshRate)
     {
         simulatorService.StartSimulator(coordinates,forUser,refreshRate);

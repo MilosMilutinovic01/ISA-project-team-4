@@ -14,7 +14,14 @@ export class CompanyAdministratorProfileComponent implements OnInit {
   profile: CompanyAdministrator = {
     id: NaN,
     name: '',
-    address: { id: NaN, street: '', city: '', country: '' },
+    address: {
+      id: NaN,
+      street: '',
+      city: '',
+      country: '',
+      lat: NaN,
+      lng: NaN,
+    },
     username: '',
     password: '',
     lastname: '',

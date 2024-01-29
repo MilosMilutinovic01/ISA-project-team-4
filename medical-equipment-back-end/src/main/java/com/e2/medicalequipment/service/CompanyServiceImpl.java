@@ -17,8 +17,6 @@ import java.util.stream.Collectors;
 public class CompanyServiceImpl implements CompanyService {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
-
-
     @Autowired
     private CompanyRepository companyRepository;
 

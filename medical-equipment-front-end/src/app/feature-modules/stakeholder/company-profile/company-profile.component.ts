@@ -27,7 +27,14 @@ export class CompanyProfileComponent {
   company: Company = {
     id: NaN,
     name: '',
-    address: { id: NaN, street: '', city: '', country: '' },
+    address: {
+      id: NaN,
+      street: '',
+      city: '',
+      country: '',
+      lat: NaN,
+      lng: NaN,
+    },
     description: '',
     startTime: '',
     endTime: '',
@@ -46,7 +53,14 @@ export class CompanyProfileComponent {
   companyAdministrator: CompanyAdministrator = {
     id: NaN,
     name: '',
-    address: { id: NaN, street: '', city: '', country: '' },
+    address: {
+      id: NaN,
+      street: '',
+      city: '',
+      country: '',
+      lat: NaN,
+      lng: NaN,
+    },
     username: '',
     password: '',
     lastname: '',
@@ -62,7 +76,14 @@ export class CompanyProfileComponent {
     company: {
       id: NaN,
       name: '',
-      address: { id: NaN, street: '', city: '', country: '' },
+      address: {
+        id: NaN,
+        street: '',
+        city: '',
+        country: '',
+        lat: NaN,
+        lng: NaN,
+      },
       startTime: '',
       endTime: '',
       description: '',

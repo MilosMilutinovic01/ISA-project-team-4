@@ -43,6 +43,8 @@ public class Address {
         this.street = dto.street;
         this.city = dto.city;
         this.country = dto.country;
+        this.latitude = dto.lat;
+        this.longitude = dto.lng;
     }
 
     public Address(UpdateAddressDTO dto) {
@@ -50,6 +52,8 @@ public class Address {
         this.street = dto.street;
         this.city = dto.city;
         this.country = dto.country;
+        this.latitude = dto.lat;
+        this.longitude = dto.lng;
     }
 
     public Long getId() {

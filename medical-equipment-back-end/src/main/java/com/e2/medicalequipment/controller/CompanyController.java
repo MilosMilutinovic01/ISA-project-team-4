@@ -45,7 +45,7 @@ public class CompanyController {
     }
 
     @GetMapping(value = "/coordinates/{companyId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('CUSTOMER')")
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public LatLngDTO getCoordinates(@PathVariable String companyId) {
         LatLngDTO coords;
         try {

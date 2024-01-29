@@ -12,24 +12,36 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 @Component({
   selector: 'app-appointment-registration',
   templateUrl: './appointment-registration.component.html',
-  styleUrls: ['./appointment-registration.component.css']
+  styleUrls: ['./appointment-registration.component.css'],
 })
 export class AppointmentRegistrationComponent {
   user: any;
   administrators: CompanyAdministrator[] = [
     {
       name: 'Jovan',
-      address: { street: '123 Main St', city: 'City', country: 'Country' },
+      address: {
+        street: '123 Main St',
+        city: 'City',
+        country: 'Country',
+        lat: NaN,
+        lng: NaN,
+      },
       username: 'jovan@example.com',
       lastname: 'Lukic',
       city: 'City',
       country: 'Country',
       phoneNumber: '123-456-7890',
-      companyId: - 1,
+      companyId: -1,
     },
     {
       name: 'Milica',
-      address: { street: '123 Main St', city: 'City', country: 'Country' },
+      address: {
+        street: '123 Main St',
+        city: 'City',
+        country: 'Country',
+        lat: NaN,
+        lng: NaN,
+      },
       username: 'john.doe@example.com',
       lastname: 'Savic',
       city: 'City',
@@ -42,12 +54,12 @@ export class AppointmentRegistrationComponent {
   selectedAdmin: CompanyAdministrator = {} as CompanyAdministrator;
   sa: any;
   minDate = new Date();
-  
+
   appointmentForm = new FormGroup({
     administrator: new FormControl('', [Validators.required]),
     startDate: new FormControl('', [Validators.required]),
     startTime: new FormControl('', [Validators.required]),
-    duration: new FormControl('30', [Validators.required]), 
+    duration: new FormControl('30', [Validators.required]),
   });
 
   constructor(
@@ -57,19 +69,22 @@ export class AppointmentRegistrationComponent {
   ) {}
 
   ngOnInit(): void {
-    this.service.getCompanyAdministratorProfile(this.authService.getCurrentUserId().toString()).subscribe({
-      next: (result: CompanyAdministrator) => {
-        this.sa = result;
-        console.log("CompanyAdmin this.profile:");
-        console.log(this.sa);
-      },
-      error: () => {
-        console.log(console.error());
-      },
-    });
-
+    this.service
+      .getCompanyAdministratorProfile(
+        this.authService.getCurrentUserId().toString()
+      )
+      .subscribe({
+        next: (result: CompanyAdministrator) => {
+          this.sa = result;
+          console.log('CompanyAdmin this.profile:');
+          console.log(this.sa);
+        },
+        error: () => {
+          console.log(console.error());
+        },
+      });
   }
-  
+
   dateFilter = (date: Date | null): boolean => {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Set hours to 0 for proper comparison
@@ -77,17 +92,21 @@ export class AppointmentRegistrationComponent {
   };
 
   registerAppointment(): void {
-    console.log(' APPOINTMENT : Start time')
-    console.log(this.appointmentForm.value.startTime)    
-    console.log(this.appointmentForm.value.administrator)    
-    console.log(this.appointmentForm.value.startDate)
-    console.log(this.appointmentForm.value.duration)
+    console.log(' APPOINTMENT : Start time');
+    console.log(this.appointmentForm.value.startTime);
+    console.log(this.appointmentForm.value.administrator);
+    console.log(this.appointmentForm.value.startDate);
+    console.log(this.appointmentForm.value.duration);
 
     const startDateInput = new Date(this.appointmentForm.value.startDate!);
-    console.log('startdate before ',startDateInput)
-    startDateInput.setHours(parseInt(this.appointmentForm.value.startTime!.slice(0,2)));
-    startDateInput.setMinutes(parseInt(this.appointmentForm.value.startTime!.slice(3,5)));
-    console.log('startdate after ',startDateInput)
+    console.log('startdate before ', startDateInput);
+    startDateInput.setHours(
+      parseInt(this.appointmentForm.value.startTime!.slice(0, 2))
+    );
+    startDateInput.setMinutes(
+      parseInt(this.appointmentForm.value.startTime!.slice(3, 5))
+    );
+    console.log('startdate after ', startDateInput);
     const endDate = new Date(startDateInput.getTime() + 30 * 60000);
 
     console.log('Start Date:', startDateInput);
@@ -103,8 +122,8 @@ export class AppointmentRegistrationComponent {
       companyAdministrator: this.sa,
     };
 
-    console.log('Appointment ')
-   // console.log(appointment)
+    console.log('Appointment ');
+    // console.log(appointment)
 
     if (this.appointmentForm.valid) {
       this.service.registerAppointment(appointment).subscribe(
@@ -119,31 +138,42 @@ export class AppointmentRegistrationComponent {
       this.dialogRef.close(appointment);
     }
   }
-    
+
   getCompanyAdministratorProfile(): CompanyAdministrator {
     let companyAdministrator: CompanyAdministrator = {
       id: NaN,
       name: '',
-      address: { id: NaN, street:'', city:'',country:''},
+      address: {
+        id: NaN,
+        street: '',
+        city: '',
+        country: '',
+        lat: NaN,
+        lng: NaN,
+      },
       username: '',
       password: '',
       lastname: '',
       city: '',
       country: '',
       phoneNumber: '',
-      companyId: NaN
+      companyId: NaN,
     };
 
-    this.service.getCompanyAdministratorProfile(this.authService.getCurrentUserId().toString()).subscribe({
-      next: (result: CompanyAdministrator) => {
-        this.sa = result;
-        console.log("CompanyAdmin this.profile:");
-        console.log(this.sa);
-      },
-      error: () => {
-        console.log(console.error());
-      },
-    });
+    this.service
+      .getCompanyAdministratorProfile(
+        this.authService.getCurrentUserId().toString()
+      )
+      .subscribe({
+        next: (result: CompanyAdministrator) => {
+          this.sa = result;
+          console.log('CompanyAdmin this.profile:');
+          console.log(this.sa);
+        },
+        error: () => {
+          console.log(console.error());
+        },
+      });
     return companyAdministrator;
   }
 }

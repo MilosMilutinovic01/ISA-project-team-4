@@ -58,18 +58,9 @@ public class SimulatorServiceImpl implements SimulatorService {
         try {
 
             ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c/kafka", "start_kafka.bat");
-
-
-
             Process process = processBuilder.start();
-
-
             int exitCode = process.waitFor();
-
             System.out.println("Kafka startup process exited with code: " + exitCode);
-
-
-
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
