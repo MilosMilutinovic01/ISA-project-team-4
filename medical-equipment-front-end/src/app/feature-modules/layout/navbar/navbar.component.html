@@ -68,6 +68,15 @@
         </div>
         <div>
           <button
+            *ngIf="user && user.role === 'COMPANY_ADMINISTRATOR'"
+            class="navbar-button"
+            (click)="map()"
+          >
+            Map
+          </button>
+        </div>
+        <div>
+          <button
             *ngIf="user && user.role === 'CUSTOMER'"
             class="navbar-button"
             (click)="openPickUpHistory()"

@@ -43,7 +43,6 @@ export class CompaniesViewComponent implements OnInit {
   getCompanies(): void {
     this.service.getCompanies().subscribe({
       next: (result: Company[]) => {
-        console.log(result);
         this.companies = result;
       },
       error: () => {
@@ -65,7 +64,6 @@ export class CompaniesViewComponent implements OnInit {
     this.service.searchCompanies(name, street, city, country).subscribe({
       next: (result: Company[]) => {
         this.companies = result;
-        console.log(result);
       },
       error: () => {
         console.log(console.error());
@@ -134,7 +132,6 @@ export class CompaniesViewComponent implements OnInit {
       .afterClosed()
       .subscribe((result) => {
         this.rate = result;
-        console.log(this.rate);
 
         if (result) {
           this.filterCompanies(this.rate);

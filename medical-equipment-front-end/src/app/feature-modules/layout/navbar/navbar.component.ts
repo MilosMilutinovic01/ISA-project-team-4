@@ -104,6 +104,10 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  map(): void {
+    this.router.navigate(['/map']);
+  }
+
   openScheduledAppointments(): void {
     this.router.navigate(['/scheduledAppointments']);
   }

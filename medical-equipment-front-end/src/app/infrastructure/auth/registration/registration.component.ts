@@ -55,6 +55,8 @@ export class RegistrationComponent {
       street: this.registrationForm.value.street || '',
       city: this.registrationForm.value.city || '',
       country: this.registrationForm.value.country || '',
+      lat: NaN,
+      lng: NaN,
     };
 
     const registration: Registration = {

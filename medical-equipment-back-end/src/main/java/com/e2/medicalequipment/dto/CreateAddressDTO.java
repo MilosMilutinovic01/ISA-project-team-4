@@ -4,4 +4,6 @@ public class CreateAddressDTO {
     public String street;
     public String city;
     public String country;
+    public double lat;
+    public double lng;
 }

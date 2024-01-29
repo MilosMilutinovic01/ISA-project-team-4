@@ -21,20 +21,30 @@ public class Address {
     @Column(name = "country")
     private String country;
 
+    @Column(name = "longitude")
+    private double longitude;
+
+    @Column(name = "latitude")
+    private double latitude;
+
     public Address(){
 
     }
-    public Address(Long id, String street, String city, String country) {
+    public Address(Long id, String street, String city, String country, double longitude, double latitude) {
         this.id = id;
         this.street = street;
         this.city = city;
         this.country = country;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     public Address(CreateAddressDTO dto) {
         this.street = dto.street;
         this.city = dto.city;
         this.country = dto.country;
+        this.latitude = dto.lat;
+        this.longitude = dto.lng;
     }
 
     public Address(UpdateAddressDTO dto) {
@@ -42,6 +52,8 @@ public class Address {
         this.street = dto.street;
         this.city = dto.city;
         this.country = dto.country;
+        this.latitude = dto.lat;
+        this.longitude = dto.lng;
     }
 
     public Long getId() {
@@ -74,6 +86,22 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     @Override
