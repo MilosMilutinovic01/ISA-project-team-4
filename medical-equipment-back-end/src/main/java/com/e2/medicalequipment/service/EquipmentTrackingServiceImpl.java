@@ -57,19 +57,24 @@ public class EquipmentTrackingServiceImpl implements EquipmentTrackingService {
         return equipmentTrackingRepository.findById(Long.valueOf(id)).get();
     }
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-    public EquipmentTracking Update(EquipmentTrackingDTO dto) throws Exception{
+    public EquipmentTracking Update(EquipmentTrackingDTO dto){
+            EquipmentTracking equipmentTrackingToUpdate = equipmentTrackingRepository.findOneById(dto.id);
+            equipmentTrackingToUpdate.setEquipment(new Equipment(dto.equipment));
+            equipmentTrackingToUpdate.setCompany(new Company(dto.company));
+            equipmentTrackingToUpdate.setCount(dto.count);
 
-        EquipmentTracking equipmentTrackingToUpdate = equipmentTrackingRepository.findOneById(dto.id);
-        equipmentTrackingToUpdate.setEquipment(new Equipment(dto.equipment));
-        equipmentTrackingToUpdate.setCompany(new Company(dto.company));
-        equipmentTrackingToUpdate.setCount(dto.count);
+            if (equipmentTrackingToUpdate.getId() == null) {
+                throw new IllegalArgumentException("ID must not be null for updating entity.");
+            }
 
-        if ((equipmentTrackingToUpdate.getId() == null)){
-            throw new Exception("ID must not be null for updating entity.");
-        }
+            EquipmentTracking savedEquipmentTracking = equipmentTrackingRepository.save(equipmentTrackingToUpdate);
+            return savedEquipmentTracking;
+    }
 
-        EquipmentTracking savedEquipmentTracking = equipmentTrackingRepository.save(equipmentTrackingToUpdate);
-        return savedEquipmentTracking;
+    @Transactional(readOnly = false)
+    public EquipmentTracking findOneById(long id) {
+        EquipmentTracking e = equipmentTrackingRepository.findOneById(id);
+        return e;
     }
     @Override
     public List<EquipmentTrackingDTO> GetByEquipmentId(String equipmentId) throws Exception {
