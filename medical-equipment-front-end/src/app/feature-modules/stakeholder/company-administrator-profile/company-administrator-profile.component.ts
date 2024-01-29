@@ -49,8 +49,6 @@ export class CompanyAdministratorProfileComponent implements OnInit {
       .subscribe({
         next: (result: CompanyAdministrator) => {
           this.profile = result;
-          console.log('CompanyAdmin this.profile:');
-          console.log(this.profile);
         },
         error: () => {
           console.log(console.error());

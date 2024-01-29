@@ -49,11 +49,6 @@ export class CompanyRegistrationComponent {
         .then((result) => {
           this.companyCoords.lat = result[0].lat;
           this.companyCoords.lng = result[0].lon;
-          console.log(
-            'REZULTAT PRETGRAGE ADRESE: ',
-            this.companyCoords.lat,
-            this.companyCoords.lng
-          );
           resolve(this.companyCoords);
         })
         .catch((error) => {
