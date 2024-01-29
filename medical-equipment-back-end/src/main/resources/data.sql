@@ -2,7 +2,9 @@ INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-1, 'Kralj
 INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-2, 'Vlasenica', 'BIH', 'Karadjordjeva 17b');
 INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-3, 'Bijeljina', 'BIH', 'ulica1');
 INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-4, 'Novi Sad', 'Srbija', 'ulica2');
-INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-8, 'Beograd', 'Srbija', 'ulica3');
+INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-5, 'Beograd', 'Srbija', 'ulica3');
+INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-6, 'Beograd', 'Srbija', 'ulica4');
+INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-7, 'Beograd', 'Srbija', 'ulica5');
 
 INSERT INTO stakeholders.users(
 	id, enabled, lastname, name, password, phone_number, role, username, address_id)
@@ -22,7 +24,16 @@ VALUES (-4, true, 'Company', 'Verica', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gch
 
 INSERT INTO stakeholders.users(
     id, enabled, lastname, name, password, phone_number, role, username, address_id)
-VALUES (-5, true, 'System', 'Marija', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504909001, 0, 'marija@gmail.com', -8);
+VALUES (-5, true, 'Company', 'Minja', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504909001, 1, 'minja@gmail.com', -5);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-6, true, 'Company', 'Milica', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 1, 'milica@gmail.com', -6);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-7, true, 'System', 'Marija', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504909001, 0, 'marija@gmail.com', -7);
+
 
 INSERT INTO stakeholders.customers(
     category, penalty_points, profession, customer_id)
@@ -38,30 +49,37 @@ INSERT INTO stakeholders.company_administrators(
     company_id, company_administrator_id)
 VALUES (-3, -4);
 
+INSERT INTO stakeholders.company_administrators(
+    company_id, company_administrator_id)
+VALUES (-1, -5);
+INSERT INTO stakeholders.company_administrators(
+    company_id, company_administrator_id)
+VALUES (-1, -6);
+
 INSERT INTO stakeholders.system_administrators(
     has_logged_before, system_administrator_id)
-VALUES (true, -5);
+VALUES (true, -7);
 
 INSERT INTO stakeholders.addresses(
     id, city, country, street)
-VALUES (-5, 'Novi Sad', 'Srbija', 'Cara Dusana 12');
+VALUES (-8, 'Novi Sad', 'Srbija', 'Cara Dusana 12');
 INSERT INTO stakeholders.companies(
     average_rating, end_time, start_time, address_id, id, description, name)
-VALUES (4,'14:30','08:30', -5, -1, 'Neki opiss', 'MEDLAB');
+VALUES (4,'14:30','08:30', -8, -1, 'Neki opiss', 'MEDLAB');
 
 INSERT INTO stakeholders.addresses(
     id, city, country, street)
-VALUES (-6, 'Novi Sad', 'Srbija', 'Fruskogorska 12');
+VALUES (-9, 'Novi Sad', 'Srbija', 'Fruskogorska 12');
 INSERT INTO stakeholders.companies(
     average_rating, end_time, start_time, address_id, id, description, name)
-VALUES (3,'17:30','07:30', -6, -2, 'Neki opiss', 'MEDICINSKA OPREMA NS');
+VALUES (3,'17:30','07:30', -9, -2, 'Neki opiss', 'MEDICINSKA OPREMA NS');
 
 INSERT INTO stakeholders.addresses(
     id, city, country, street)
-VALUES (-7, 'Novi Sad', 'Srbija', 'Cara Dusana 12');
+VALUES (-10, 'Novi Sad', 'Srbija', 'Cara Dusana 12');
 INSERT INTO stakeholders.companies(
     average_rating, end_time, start_time, address_id, id, description, name)
-VALUES (5,'14:30','08:30', -7, -3, 'Neki opiss', 'OPREMA021');
+VALUES (5,'14:30','08:30', -10, -3, 'Neki opiss', 'OPREMA021');
 
 INSERT INTO stakeholders.equipment(
     id, description, name, price, type)
