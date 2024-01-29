@@ -1,0 +1,45 @@
+<div>
+  <div class="page-title-container">
+    <h1 class="header">QR codes of your reservations</h1>
+  </div>
+  <div class="filter-container">
+    <mat-chip-listbox>
+      <mat-chip-option
+        (click)="selectChip('New')"
+        class="option-view"
+        [selected]="selectedOption == 'New'"
+        >New</mat-chip-option
+      >
+      <mat-chip-option
+        (click)="selectChip('Processed')"
+        class="option-view"
+        [selected]="selectedOption == 'Processed'"
+        >Processed</mat-chip-option
+      >
+      <mat-chip-option
+        (click)="selectChip('Rejected')"
+        class="option-view"
+        [selected]="selectedOption == 'Rejected'"
+        >Rejected</mat-chip-option
+      >
+    </mat-chip-listbox>
+    <button mat-mini-fab class="search-button" (click)="refresh()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+  <div class="qr" *ngFor="let a of this.appointmentsDisplay">
+    <img
+      src="/assets/img/{{ a.id }}.png"
+      alt="qrCode"
+      width="400"
+      height="400"
+    />
+    <div>
+      <p class="qr-name">
+        Reservation: {{ a.startTime[2] }}.{{ a.startTime[1] }}.{{
+          a.startTime[0]
+        }}
+      </p>
+    </div>
+  </div>
+</div>

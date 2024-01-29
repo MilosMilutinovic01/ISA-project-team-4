@@ -107,4 +107,20 @@ export class NavbarComponent implements OnInit {
   map(): void {
     this.router.navigate(['/map']);
   }
+
+  openScheduledAppointments(): void {
+    this.router.navigate(['/scheduledAppointments']);
+  }
+
+  deliverEquipmentWithQR(): void {
+    this.router.navigate(['/equipmentDeliverQR/']);
+  }
+
+  openPickUpHistory(): void {
+    this.router.navigate(['/customerPickUp/']);
+  }
+
+  openQrCodes(): void {
+    this.router.navigate(['/customerQrCodes/']);
+  }
 }

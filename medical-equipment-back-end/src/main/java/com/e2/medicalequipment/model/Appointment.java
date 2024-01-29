@@ -29,6 +29,9 @@ public class Appointment {
     @Column(name = "endTime")
     private LocalDateTime endTime;
 
+    @Column(name = "isPredefined")
+    private boolean isPredefined;
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "company_administrator_id", referencedColumnName = "company_administrator_id")
     private CompanyAdministrator companyAdministrator;
@@ -71,10 +74,11 @@ public class Appointment {
     }*/
 
 
-    public Appointment(Long id, LocalDateTime start, LocalDateTime end, CompanyAdministrator companyAdministrator) {
+    public Appointment(Long id, LocalDateTime start, LocalDateTime end,boolean isPredefined, CompanyAdministrator companyAdministrator) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.isPredefined = isPredefined;
         this.companyAdministrator = companyAdministrator;
     }
 
@@ -82,7 +86,7 @@ public class Appointment {
         this.id = appointment.id;
         this.startTime = appointment.startTime;
         this.endTime = appointment.endTime;
-
+        this.isPredefined = appointment.isPredefined;
         // Copying company administrator
         if (appointment.companyAdministrator != null) {
             this.companyAdministrator = new CompanyAdministrator(appointment.companyAdministrator);
@@ -111,6 +115,14 @@ public class Appointment {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    public boolean getIsPredefined() {
+        return isPredefined;
+    }
+
+    public void setIsPredefined(boolean isPredefined) {
+        this.isPredefined = isPredefined;
     }
 
     public CompanyAdministrator getCompanyAdministrator() {

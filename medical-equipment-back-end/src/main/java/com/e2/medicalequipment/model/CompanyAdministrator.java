@@ -2,12 +2,16 @@ package com.e2.medicalequipment.model;
 
 import com.e2.medicalequipment.dto.CompanyAdministratorDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyAdministratorDTO;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 
 @Entity
 @Table(schema = "stakeholders", name = "companyAdministrators")
 @PrimaryKeyJoinColumn(name = "company_administrator_id")
-public class CompanyAdministrator extends User{
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
+public class CompanyAdministrator extends User implements Serializable {
 
     @Column(name = "company_id")
     private Long companyId;

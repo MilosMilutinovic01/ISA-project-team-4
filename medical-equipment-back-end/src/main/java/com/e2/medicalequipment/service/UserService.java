@@ -12,6 +12,8 @@ public interface UserService {
     public User getUserById(Long id);
     public Optional<User> findByUsername(String username);
     public User changeUserStatus(User user);
+    public void changePenaltyPoints(Integer points, Long userId);
     public UserTokenState login(JwtAuthenticationRequest loginDto);
+    public void deleteAllPenaltyPoints(Integer points);
 
 }

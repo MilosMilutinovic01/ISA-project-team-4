@@ -1,51 +1,75 @@
 <div>
-    <form class="search-form" [formGroup]="searchForm">
-        <div>
-            <mat-form-field class="form-field" appearance="outline">
-                <mat-label>Name:</mat-label>
-                <input matInput placeholder="Name" formControlName="name">
-            </mat-form-field>
+  <form class="search-form" [formGroup]="searchForm">
+    <div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Name:</mat-label>
+        <input matInput placeholder="Name" formControlName="name" />
+      </mat-form-field>
 
-            <mat-form-field class="form-field" appearance="outline">
-                <mat-label>Street:</mat-label>
-                <input matInput placeholder="Street" formControlName="street">
-            </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Street:</mat-label>
+        <input matInput placeholder="Street" formControlName="street" />
+      </mat-form-field>
 
-            <mat-form-field class="form-field" appearance="outline">
-                <mat-label>City:</mat-label>
-                <input matInput placeholder="City" formControlName="city">
-            </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>City:</mat-label>
+        <input matInput placeholder="City" formControlName="city" />
+      </mat-form-field>
 
-            <mat-form-field class="form-field" appearance="outline">
-                <mat-label>Country:</mat-label>
-                <input matInput placeholder="Country" formControlName="country">
-            </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Country:</mat-label>
+        <input matInput placeholder="Country" formControlName="country" />
+      </mat-form-field>
 
-            <button mat-fab class="search-button" (click)="search()">
-                <mat-icon>search</mat-icon>
-            </button>
-            <button mat-fab class="search-button" (click)="refresh()">
-                <mat-icon>refresh</mat-icon>
-            </button>
+      <button mat-fab class="search-button" (click)="search()">
+        <mat-icon>search</mat-icon>
+      </button>
+      <button mat-fab class="search-button" (click)="refresh()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+    <div class="filter-container">
+      <mat-form-field appearance="outline" class="sort">
+        <mat-label>Sort by:</mat-label>
+        <mat-select [(value)]="selected" (selectionChange)="onSelected()">
+          <mat-option [value]="nameAsc">Name ascending</mat-option>
+          <mat-option [value]="nameDesc">Name descending</mat-option>
+          <mat-option [value]="cityAsc">City ascending</mat-option>
+          <mat-option [value]="cityDesc">City descending</mat-option>
+          <mat-option [value]="rateAsc">Rating ascending</mat-option>
+          <mat-option [value]="rateDesc">Rating descending</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        class="filter-button"
+        (click)="openFilterDialog()"
+      >
+        Open filter
+      </button>
+      <p class="filterLabel">{{ this.filterLabel }}</p>
+      <button mat-mini-fab class="filter-refresh-button" (click)="refresh()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+  </form>
+
+  <div
+    class="card-container"
+    *ngFor="let c of companies"
+    (click)="showCompany(c.id || 0)"
+  >
+    <div class="card">
+      <div class="card-content">
+        <div class="card-details">
+          <h1 class="card-title">{{ c.name }}</h1>
+          <div class="card-number">Rating: {{ c.averageRating }}</div>
         </div>
-        <div class="filter-container">
-            <button mat-raised-button class="filter-button" (click)="openFilterDialog()">Filter</button>
-            <p class="filterLabel">{{this.filterLabel}}</p>
-            <button mat-mini-fab class="filter-refresh-button" (click)="refresh()">
-                <mat-icon>refresh</mat-icon>
-            </button>
-        </div>
-    </form>
-
-    <div class="card-container" *ngFor="let c of companies" (click)="showCompany(c.id || 0)">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-details">
-                <h1 class="card-title">{{c.name}}</h1>
-                <div class="card-number">Rating: {{c.averageRating}}</div>
-            </div>
-            <span class="card-subtitle">{{c.address.street}}, {{c.address.city}}, {{c.address.country}}</span>
-          </div>
-        </div>
+        <span class="card-subtitle"
+          >{{ c.address.street }}, {{ c.address.city }},
+          {{ c.address.country }}</span
+        >
       </div>
+    </div>
+  </div>
 </div>

@@ -6,7 +6,9 @@
   <div class="profile-info">
     <div class="label">Address:</div>
     <div class="value">
-      {{ company.address.street }},{{ company.address.city }},{{company.address.country}}
+      {{ company.address.street }},{{ company.address.city }},{{
+        company.address.country
+      }}
     </div>
   </div>
   <div class="profile-info">
@@ -66,98 +68,160 @@
     <mat-icon>edit</mat-icon>
   </button> -->
 
-  <div class="equipment-view">
-    <div class="title">
-    <h1 >Equipment</h1>
-      <button class="new-equipment-button" *ngIf="user?.role === 'COMPANY_ADMINISTRATOR' " mat-mini-fab (click)="registerNewEquipment()">
-        <mat-icon>add</mat-icon>
-      </button>
-    </div>
-    <form class="search-form" [formGroup]="searchForm">
-      <div class="search-container">
+<div class="equipment-view">
+  <div class="title">
+    <h1>Equipment</h1>
+    <button
+      class="new-equipment-button"
+      *ngIf="user?.role === 'COMPANY_ADMINISTRATOR'"
+      mat-mini-fab
+      (click)="registerNewEquipment()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <form class="search-form" [formGroup]="searchForm">
+    <div class="search-container">
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Seach by equipment name:</mat-label>
         <input matInput placeholder="Name" formControlName="name" />
       </mat-form-field>
-        <button mat-fab class="form-button" (click)="search()">
-          <mat-icon>search</mat-icon>
-        </button>
-        <button mat-fab class="form-button" (click)="refresh()">
-          <mat-icon>refresh</mat-icon>
-        </button>
-      </div>
-      <div class="search-container">
-        <mat-chip-listbox>
-          <mat-chip-option (click)="selectChip('LABORATORY')" class="option-view">Laboratory</mat-chip-option>
-          <mat-chip-option (click)="selectChip('DIAGNOSTICS')" class="option-view">Diagnostics</mat-chip-option>
-          <mat-chip-option (click)="selectChip('DENTAL')" class="option-view">Dental</mat-chip-option>
-          <mat-chip-option  (click)="selectChip('SURGICAL')" class="option-view">Surgical</mat-chip-option>
-        </mat-chip-listbox>
-      </div>
-    </form>
-    <div class="card-container" *ngFor="let e of filteredEquipmentTrackings">
-      <mat-card class="card-equipment">
-        <div class="title-container">
+      <button mat-fab class="form-button" (click)="search()">
+        <mat-icon>search</mat-icon>
+      </button>
+      <button mat-fab class="form-button" (click)="refresh()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+    <div class="search-container">
+      <mat-chip-listbox>
+        <mat-chip-option
+          (click)="selectChip('LABORATORY')"
+          class="option-view"
+          [selected]="selectedOption == 'LABORATORY'"
+          >Laboratory</mat-chip-option
+        >
+        <mat-chip-option
+          (click)="selectChip('DIAGNOSTICS')"
+          class="option-view"
+          [selected]="selectedOption == 'DIAGNOSTICS'"
+          >Diagnostics</mat-chip-option
+        >
+        <mat-chip-option
+          (click)="selectChip('DENTAL')"
+          class="option-view"
+          [selected]="selectedOption == 'DENTAL'"
+          >Dental</mat-chip-option
+        >
+        <mat-chip-option
+          (click)="selectChip('SURGICAL')"
+          class="option-view"
+          [selected]="selectedOption == 'SURGICAL'"
+          >Surgical</mat-chip-option
+        >
+      </mat-chip-listbox>
+    </div>
+  </form>
+  <div class="card-container" *ngFor="let e of filteredEquipmentTrackings">
+    <mat-card class="card-equipment">
+      <div class="title-container">
         <div class="type-title">{{ e.equipment.type }}</div>
         <div class="type-title">{{ e.count }} available</div>
       </div>
-        <mat-card-title class="title-container">
-          <p>{{ e.equipment.name }}</p>
-          <p>{{ e.equipment.price }} RSD</p>
-        </mat-card-title>
-        <mat-card-content class="title-container">
-          <p>{{ e.equipment.description }}</p>
-          <div class="modify-buttons">
-            <button class="add-button" *ngIf="user?.role === 'CUSTOMER'" (click)="addToCart(e.id || 0, e.count)">
-              <mat-icon>add</mat-icon>
-            </button>
-            <button mat-button class="delete-button" *ngIf="user?.role === 'COMPANY_ADMINISTRATOR'" (click)="deleteEquipmentTracking(e)">
-              <mat-icon>delete</mat-icon>
-            </button>
-            <button mat-button class="edit-button" *ngIf="0" (click)="editEquipmentTracking(e)">
-              <mat-icon>edit</mat-icon>
-            </button>
-          </div>          
-        </mat-card-content>
-      </mat-card>
-    </div>
+      <mat-card-title class="title-container">
+        <p>{{ e.equipment.name }}</p>
+        <p>{{ e.equipment.price }} RSD</p>
+      </mat-card-title>
+      <mat-card-content class="title-container">
+        <p>{{ e.equipment.description }}</p>
+        <div class="modify-buttons">
+          <button
+            class="add-button"
+            *ngIf="user?.role === 'CUSTOMER'"
+            (click)="addToCart(e.id || 0, e.count)"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            mat-button
+            class="delete-button"
+            *ngIf="user?.role === 'COMPANY_ADMINISTRATOR'"
+            (click)="deleteEquipmentTracking(e)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            mat-button
+            class="edit-button"
+            *ngIf="0"
+            (click)="editEquipmentTracking(e)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
-  <div  *ngIf="user?.role === 'COMPANY_ADMINISTRATOR'"class="appointments-container">
-    <div class="table-title">
-      Appointments
-      <button *ngIf="user?.role === 'COMPANY_ADMINISTRATOR' " mat-mini-fab (click)="registerNewAppointment()">
-        <mat-icon>add</mat-icon>
-      </button>
-    </div>
-
-    <div class="appointments-container">
-      <div class="table-container">
-        <table mat-table [dataSource]="appointments" class="mat-elevation-z8">
-          <ng-container matColumnDef="startTime">
-            <th mat-header-cell *matHeaderCellDef> Start Time </th>
-            <td mat-cell *matCellDef="let element"> {{ parseAndFormatDate(element.startTime) }} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="endTime">
-            <th mat-header-cell *matHeaderCellDef> End Time </th>
-            <td mat-cell *matCellDef="let element"> {{ parseAndFormatDate(element.endTime) }} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="customerId">
-            <th mat-header-cell *matHeaderCellDef> Reservation status </th>
-            <td mat-cell *matCellDef="let element"> {{ element.customerId ? 'Reserved' : 'Not Reserved' }} </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      </div>
-    </div>
+</div>
+<div
+  *ngIf="user?.role === 'COMPANY_ADMINISTRATOR'"
+  class="appointments-container"
+>
+  <div class="table-title">
+    Appointments
+    <button
+      *ngIf="user?.role === 'COMPANY_ADMINISTRATOR'"
+      mat-mini-fab
+      (click)="registerNewAppointment()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
 
-  <button class="bottom-right-button" *ngIf="user?.role === 'CUSTOMER'" mat-icon-button (click)="showCart()">
-    <mat-icon>shopping_cart</mat-icon>
-  </button>
-  <button *ngIf="user?.role === 'COMPANY_ADMINISTRATOR'"  mat-fab class='calendar-button' (click)="showCalendar()">
-    <mat-icon>calendar_today</mat-icon>
-  </button>
+  <div class="appointments-container">
+    <div class="table-container">
+      <table mat-table [dataSource]="appointments" class="mat-elevation-z8">
+        <ng-container matColumnDef="startTime">
+          <th mat-header-cell *matHeaderCellDef>Start Time</th>
+          <td mat-cell *matCellDef="let element">
+            {{ parseAndFormatDate(element.startTime) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="endTime">
+          <th mat-header-cell *matHeaderCellDef>End Time</th>
+          <td mat-cell *matCellDef="let element">
+            {{ parseAndFormatDate(element.endTime) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="customerId">
+          <th mat-header-cell *matHeaderCellDef>Reservation status</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.customerId ? "Reserved" : "Not Reserved" }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<button
+  class="bottom-right-button"
+  *ngIf="user?.role === 'CUSTOMER'"
+  mat-icon-button
+  (click)="showCart()"
+>
+  <mat-icon>shopping_cart</mat-icon>
+</button>
+<button
+  *ngIf="user?.role === 'COMPANY_ADMINISTRATOR'"
+  mat-fab
+  class="calendar-button"
+  (click)="showCalendar()"
+>
+  <mat-icon>calendar_today</mat-icon>
+</button>

@@ -9,4 +9,6 @@ public class UpdateItemDTO {
     public long CompanyId;
     public long CustomerId;
     public long EquipmentId;
+    public boolean PickedUp;
+    public boolean QrCodeProcessed;
 }

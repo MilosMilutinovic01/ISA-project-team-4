@@ -119,6 +119,7 @@ export class AppointmentRegistrationComponent {
     const appointment: Appointment = {
       startTime: startDateInput.toString(),
       endTime: endDate.toString(),
+      isPredefined: true,
       companyAdministrator: this.sa,
     };
 

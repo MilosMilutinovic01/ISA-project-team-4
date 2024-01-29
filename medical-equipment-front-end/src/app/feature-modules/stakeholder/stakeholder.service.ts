@@ -11,7 +11,10 @@ import { EquipmentTracking } from 'src/app/shared/model/equipmentTracking.model'
 import { CreateItem, Item } from 'src/app/shared/model/item.model';
 import { SystemAdministrator } from 'src/app/shared/model/system-administrator.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
-import { Appointment } from 'src/app/shared/model/appointment.model';
+import {
+  Appointment,
+  ShowAppointment,
+} from 'src/app/shared/model/appointment.model';
 import { UpdateItem } from 'src/app/shared/model/update-item.model';
 
 @Injectable({
@@ -140,6 +143,36 @@ export class StakeholderService {
     );
   }
 
+  sortCompaniesByRate(
+    isAscending: string,
+    companies: Company[]
+  ): Observable<Company[]> {
+    return this.http.put<Company[]>(
+      environment.apiHost + 'companies/sort/rate/' + isAscending,
+      companies
+    );
+  }
+
+  sortCompaniesByName(
+    isAscending: string,
+    companies: Company[]
+  ): Observable<Company[]> {
+    return this.http.put<Company[]>(
+      environment.apiHost + 'companies/sort/name/' + isAscending,
+      companies
+    );
+  }
+
+  sortCompaniesByCity(
+    isAscending: string,
+    companies: Company[]
+  ): Observable<Company[]> {
+    return this.http.put<Company[]>(
+      environment.apiHost + 'companies/sort/city/' + isAscending,
+      companies
+    );
+  }
+
   editCompanyAdministratorProfile(
     profile: UpdateCompanyAdministrator
   ): Observable<UpdateCompanyAdministrator> {
@@ -166,6 +199,12 @@ export class StakeholderService {
     return this.http.get<Item[]>(environment.apiHost + 'items/' + id);
   }
 
+  getItemsByAppointmentId(id: string): Observable<Item[]> {
+    return this.http.get<Item[]>(
+      environment.apiHost + 'items/appointment/' + id
+    );
+  }
+
   getAllCompanyAdministrators(): Observable<CompanyAdministrator[]> {
     return this.http.get<CompanyAdministrator[]>(
       environment.apiHost + 'companyAdministrators/'
@@ -189,6 +228,7 @@ export class StakeholderService {
   }
 
   registerAppointment(appointment: Appointment): Observable<Appointment> {
+    console.log('BOZE AJ PLS: ', appointment);
     return this.http.post<Appointment>(
       environment.apiHost + 'appointments/register',
       appointment
@@ -243,31 +283,75 @@ export class StakeholderService {
     );
   }
 
-  // getAvailableAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
-  //   return this.http.get<Appointment[]>(
-  //     environment.apiHost + 'appointments/available/' + id
-  //   );
-  // }
-
-  // getReservedAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
-  //   return this.http.get<Appointment[]>(
-  //     environment.apiHost + 'appointments/reserved/' + id
-
   getScheduledAppointmentsByCompanyId(id: string): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(
       environment.apiHost + 'appointments/scheduled/' + id
     );
   }
 
+  getScheduledAppointmentsByCustomerId(
+    id: string
+  ): Observable<ShowAppointment[]> {
+    return this.http.get<ShowAppointment[]>(
+      environment.apiHost + 'appointments/scheduledCustomer/' + id
+    );
+  }
+
+  getPickedUpAppointmentsByCustomerId(
+    id: string
+  ): Observable<ShowAppointment[]> {
+    return this.http.get<ShowAppointment[]>(
+      environment.apiHost + 'appointments/pickedUpCustomer/' + id
+    );
+  }
+
   getCustomerByAppointmentId(id: string): Observable<CustomerProfile> {
     return this.http.get<CustomerProfile>(
-      environment.apiHost + 'items/byAppointment/' + id
+      environment.apiHost + 'items/customerByAppointment/' + id
     );
   }
 
   getEquipmentTrackingByEquipment(id: string): Observable<EquipmentTracking> {
     return this.http.get<EquipmentTracking>(
       environment.apiHost + 'equipmentTracking/equipment/' + id
+    );
+  }
+
+  cancelReservation(id: string, penalty: number): Observable<boolean> {
+    return this.http.post<boolean>(
+      environment.apiHost + 'items/cancelReservation',
+      { id: id, penalty: penalty },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  getAppointmentDataFromQRCode(filepath: string): Observable<string> {
+    return this.http.get(
+      environment.apiHost + 'appointments/dataFromQR/' + filepath,
+      { responseType: 'text' }
+    );
+  }
+
+  getAppointment(id: string): Observable<Appointment> {
+    return this.http.get<Appointment>(
+      environment.apiHost + 'appointments/' + id
+    );
+  }
+
+  isReservationAvailable(id: string): Observable<boolean> {
+    return this.http.get<boolean>(
+      environment.apiHost + 'appointments/checkReservation/' + id
+    );
+  }
+
+  completeReservation(id: string): Observable<boolean> {
+    return this.http.post<boolean>(environment.apiHost + 'items/pickUp', id);
+  }
+
+  processExpiredReservation(id: string): Observable<boolean> {
+    return this.http.post<boolean>(
+      environment.apiHost + 'items/processExpired',
+      id
     );
   }
 }

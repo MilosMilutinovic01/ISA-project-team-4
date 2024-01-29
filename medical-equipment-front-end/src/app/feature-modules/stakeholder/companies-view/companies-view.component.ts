@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { StakeholderService } from '../stakeholder.service';
 import { Router } from '@angular/router';
 import { Company } from 'src/app/shared/model/company.model';
@@ -15,6 +15,13 @@ export class CompaniesViewComponent implements OnInit {
   companies: Company[] = [];
   rate: string = '';
   filterLabel: string = '';
+  nameAsc: string = 'nameAsc';
+  nameDesc: string = 'nameDesc';
+  rateAsc: string = 'rateAsc';
+  rateDesc: string = 'rateDesc';
+  cityAsc: string = 'cityAsc';
+  cityDesc: string = 'cityDesc';
+  selected: string = '';
 
   searchForm = new FormGroup({
     name: new FormControl(''),
@@ -62,6 +69,57 @@ export class CompaniesViewComponent implements OnInit {
         console.log(console.error());
       },
     });
+  }
+
+  onSelected(): void {
+    if (this.selected === 'nameAsc') {
+      this.sortNameAsc();
+    }
+    if (this.selected === 'nameDesc') {
+      this.sortNameDesc();
+    }
+    if (this.selected === 'cityAsc') {
+      this.sortCityAsc();
+    }
+    if (this.selected === 'cityDesc') {
+      this.sortCityDesc();
+    }
+    if (this.selected === 'rateAsc') {
+      this.sortRateAsc();
+    }
+    if (this.selected === 'rateDesc') {
+      this.sortRateDesc();
+    }
+  }
+
+  sortNameAsc(): void {
+    this.companies.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  sortNameDesc(): void {
+    this.companies.sort((a, b) => b.name.localeCompare(a.name));
+  }
+
+  sortCityAsc(): void {
+    this.companies.sort((a, b) => a.address.city.localeCompare(b.name));
+  }
+
+  sortCityDesc(): void {
+    this.companies.sort((a, b) => b.address.city.localeCompare(a.name));
+  }
+
+  sortRateAsc(): void {
+    this.companies.sort(
+      (a, b) =>
+        (a.averageRating?.valueOf() || 0) - (b.averageRating?.valueOf() || 0)
+    );
+  }
+
+  sortRateDesc(): void {
+    this.companies.sort(
+      (a, b) =>
+        (b.averageRating?.valueOf() || 0) - (a.averageRating?.valueOf() || 0)
+    );
   }
 
   openFilterDialog(): void {
@@ -120,5 +178,6 @@ export class CompaniesViewComponent implements OnInit {
     this.getCompanies();
     this.filterLabel = '';
     this.searchForm.setValue({ name: '', street: '', city: '', country: '' });
+    this.selected = '';
   }
 }

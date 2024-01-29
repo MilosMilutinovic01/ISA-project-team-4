@@ -47,6 +47,7 @@ export class CartComponent {
     id: NaN,
     startTime: '',
     endTime: '',
+    isPredefined: false,
     companyAdministrator: {
       id: NaN,
       name: '',
@@ -300,6 +301,7 @@ export class CartComponent {
   }
 
   createIrregular(): void {
+    this.selectedAppointment.isPredefined = false;
     this.service
       .registerIrregularAppointment(this.selectedAppointment)
       .subscribe(

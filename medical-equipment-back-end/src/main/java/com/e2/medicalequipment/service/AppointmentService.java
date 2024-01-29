@@ -4,9 +4,11 @@ import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import com.e2.medicalequipment.model.Appointment;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AppointmentService {
     Appointment Create(CreateAppointmentDTO appointmentDTO) throws Exception;
+    boolean Delete(Long id) throws Exception;
     Appointment CreateIrregular(CreateAppointmentDTO appointmentDTO) throws Exception;
     List<Appointment> GetAll() throws Exception;
 /*
@@ -16,5 +18,13 @@ public interface AppointmentService {
 */
     List<Appointment> GetFreeByCompanyId(Long companyId) throws Exception;
     List<Appointment> GetScheduledByCompanyId(Long companyId) throws Exception;
+    Appointment GetById(Long id) throws Exception;
+    boolean CheckReservation(Long id) throws Exception;
+
+    List<Appointment> GetScheduledByCustomerId(Long customerId) throws Exception;
+
+    Appointment FindById(Long id) throws Exception;
+
+    List<Appointment> GetPickedUpByCustomerId(Long customerId) throws Exception;
 
 }

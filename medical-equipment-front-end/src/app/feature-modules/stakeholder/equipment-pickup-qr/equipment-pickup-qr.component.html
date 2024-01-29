@@ -1,0 +1,18 @@
+<div class="qr-upload">
+  <p class="header">Deliver equipment with QR Code:</p>
+  <div class="custom-file-input">
+    <input type="file" (change)="onFileSelected($event)" #fileInput />
+    <button class="upload-button" (click)="fileInput.click()">Upload file</button>
+  </div>
+  <mat-card *ngIf="selectedFile" class="card">
+    <mat-card-title>
+      <p class="card-title">Reservation information:</p>
+      <div class="separator"></div>
+    </mat-card-title>
+      <mat-card-content class="card-content">
+      <div [innerHTML]="reservationInformation"></div>
+      <div class="message" [innerHTML]="message"></div>
+      <div *ngIf="canPickUp"><button class="complete-button" (click)="completeReservation()">Complete reservation</button></div>
+    </mat-card-content>
+  </mat-card>
+</div>

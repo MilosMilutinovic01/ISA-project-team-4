@@ -54,6 +54,12 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
+    public boolean Delete(Long id) throws Exception {
+        itemRepository.deleteById(id);
+        return true;
+    }
+
+    @Override
     public List<Item> GetAllByCustomerId(String customerId) throws Exception {
         return itemRepository.findAllByCustomerId(customerId);
     }
@@ -66,12 +72,18 @@ public class ItemServiceImpl implements ItemService{
         return items.get(0).getCustomer();
     }
 
+    @Override
     public Item Get(Long id) throws Exception{
         return this.itemRepository.findById(id).get();
     }
+
+    @Override
+    public List<Item> GetAllByAppointmentId(String id) throws Exception{
+        return this.itemRepository.findAllByAppointmentId(id);
+    }
     public Item Update(UpdateItemDTO newItem) throws Exception{
         Item item = itemRepository.findById(newItem.Id);
-        Appointment appointment = appointmentRepository.findById(newItem.AppointmentId);
+        Appointment appointment = appointmentRepository.findAppointmentById(newItem.AppointmentId);
 
         List<CompanyAdministrator> companyAdministrators = companyAdministratorRepository.findAllByCompanyId(String.valueOf(newItem.CompanyId));
         Random rand = new Random();
@@ -79,6 +91,15 @@ public class ItemServiceImpl implements ItemService{
         appointment.setCompanyAdministrator(randomAdmin);
 
         item.setAppointment(appointment);
+        if ((item.getId() == null)){
+            throw new Exception("ID must not be null for updating entity.");
+        }
+        Item savedItem = itemRepository.save(item);
+        return savedItem;
+    }
+    public Item Process(Item item,Boolean pickedUp) throws Exception{
+        item.setPickedUp(pickedUp);
+        item.setQrCodeProcessed(true);
         if ((item.getId() == null)){
             throw new Exception("ID must not be null for updating entity.");
         }

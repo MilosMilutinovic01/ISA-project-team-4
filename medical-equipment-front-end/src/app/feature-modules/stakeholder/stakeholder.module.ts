@@ -34,6 +34,10 @@ import { EquipmentRegistrationComponent } from './equipment-registration/equipme
 import { EditEquipmentTrackingComponent } from './edit-equipment-tracking/edit-equipment-tracking.component';
 import { SelectAppointmentDialogComponent } from './select-appointment-dialog/select-appointment-dialog.component';
 import { SelectIrregularAppointmentDialogComponent } from './select-irregular-appointment-dialog/select-irregular-appointment-dialog.component';
+import { CustomerScheduledAppointmentsComponent } from './customer-scheduled-appointments/customer-scheduled-appointments.component';
+import { EquipmentPickupQrComponent } from './equipment-pickup-qr/equipment-pickup-qr.component';
+import { CustomerPickupHistoryComponent } from './customer-pickup-history/customer-pickup-history.component';
+import { CustomerQrCodesComponent } from './customer-qr-codes/customer-qr-codes.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +61,10 @@ import { SelectIrregularAppointmentDialogComponent } from './select-irregular-ap
     ChangePasswordComponent,
     SelectAppointmentDialogComponent,
     SelectIrregularAppointmentDialogComponent,
+    CustomerScheduledAppointmentsComponent,
+    EquipmentPickupQrComponent,
+    CustomerPickupHistoryComponent,
+    CustomerQrCodesComponent,
   ],
   imports: [
     CommonModule,
@@ -99,6 +107,9 @@ import { SelectIrregularAppointmentDialogComponent } from './select-irregular-ap
     AddToCartDialogComponent,
     CartComponent,
     SelectIrregularAppointmentDialogComponent,
+    CustomerScheduledAppointmentsComponent,
+    CustomerPickupHistoryComponent,
+    CustomerQrCodesComponent,
   ],
 })
 export class StakeholderModule {}

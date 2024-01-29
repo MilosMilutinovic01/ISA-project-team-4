@@ -10,6 +10,11 @@
             Company Profile
           </button>
         </div>
+        <div *ngIf="user && user.role === 'COMPANY_ADMINISTRATOR'">
+          <button class="navbar-button" (click)="deliverEquipmentWithQR()">
+            Deliver equipment with QR code
+          </button>
+        </div>
         <div>
           <button
             class="navbar-button"
@@ -54,11 +59,38 @@
         </div> -->
         <div>
           <button
+            *ngIf="user && user.role === 'CUSTOMER'"
+            class="navbar-button"
+            (click)="openScheduledAppointments()"
+          >
+            Scheduled appointments
+          </button>
+        </div>
+        <div>
+          <button
+            *ngIf="user && user.role === 'COMPANY_ADMINISTRATOR'"
             class="navbar-button"
             (click)="map()"
-            *ngIf="user && user.role === 'COMPANY_ADMINISTRATOR'"
           >
             Map
+          </button>
+        </div>
+        <div>
+          <button
+            *ngIf="user && user.role === 'CUSTOMER'"
+            class="navbar-button"
+            (click)="openPickUpHistory()"
+          >
+            Pick up history
+          </button>
+        </div>
+        <div>
+          <button
+            *ngIf="user && user.role === 'CUSTOMER'"
+            class="navbar-button"
+            (click)="openQrCodes()"
+          >
+            QR codes
           </button>
         </div>
         <div class="dropdown">

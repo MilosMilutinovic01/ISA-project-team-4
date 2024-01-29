@@ -17,14 +17,11 @@
           </mat-card-title>
           <mat-card-content class="title-container">
             <p>{{ i.equipment?.description }}</p>
-            <!-- <button class="add-button" (click)="addToCart(e.id || 0, e.count)">
-                  <mat-icon>add</mat-icon>
-                </button> -->
           </mat-card-content>
         </mat-card>
       </div>
       <div class="total-price" *ngIf="this.items.length !== 0">
-        <p>Total price: {{ this.totalPrice }}</p>
+        <p>Total price: {{ this.totalPrice }} RSD</p>
       </div>
       <div class="total-price" *ngIf="this.items.length === 0">
         <p>Your cart is empty</p>

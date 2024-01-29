@@ -9,4 +9,6 @@ public class ItemDTO {
     public Equipment equipment;
     public UpdateCustomerDTO customer;
     public Company company;
+    public boolean pickedUp;
+    public boolean qrCodeProcessed;
 }

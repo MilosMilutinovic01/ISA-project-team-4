@@ -19,6 +19,10 @@ import { CompanyCalendarComponent } from 'src/app/feature-modules/stakeholder/co
 import { AdministratorRegistrationComponent } from 'src/app/feature-modules/stakeholder/administrator-registration/administrator-registration.component';
 import { ChangePasswordComponent } from 'src/app/feature-modules/stakeholder/change-password/change-password.component';
 import { MapComponent } from 'src/app/shared/map/map.component';
+import { CustomerScheduledAppointmentsComponent } from 'src/app/feature-modules/stakeholder/customer-scheduled-appointments/customer-scheduled-appointments.component';
+import { EquipmentPickupQrComponent } from 'src/app/feature-modules/stakeholder/equipment-pickup-qr/equipment-pickup-qr.component';
+import { CustomerPickupHistoryComponent } from 'src/app/feature-modules/stakeholder/customer-pickup-history/customer-pickup-history.component';
+import { CustomerQrCodesComponent } from 'src/app/feature-modules/stakeholder/customer-qr-codes/customer-qr-codes.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -48,6 +52,13 @@ const routes: Routes = [
   { path: 'companyCalendar', component: CompanyCalendarComponent },
   { path: 'changePassword', component: ChangePasswordComponent },
   { path: 'map', component: MapComponent },
+  {
+    path: 'scheduledAppointments',
+    component: CustomerScheduledAppointmentsComponent,
+  },
+  { path: 'equipmentDeliverQR', component: EquipmentPickupQrComponent },
+  { path: 'customerPickUp', component: CustomerPickupHistoryComponent },
+  { path: 'customerQrCodes', component: CustomerQrCodesComponent },
 ];
 
 @NgModule({

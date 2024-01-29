@@ -1,9 +1,7 @@
 package com.e2.medicalequipment.service;
 
 import com.e2.medicalequipment.dto.CreateAppointmentDTO;
-import com.e2.medicalequipment.model.Appointment;
-import com.e2.medicalequipment.model.CompanyAdministrator;
-import com.e2.medicalequipment.model.Item;
+import com.e2.medicalequipment.model.*;
 import com.e2.medicalequipment.repository.AppointmentRepository;
 import com.e2.medicalequipment.repository.CompanyAdministratorRepository;
 import com.e2.medicalequipment.repository.ItemRepository;
@@ -13,13 +11,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 @Service
-public class AppointmentServiceImpl implements AppointmentService{
+public class AppointmentServiceImpl implements AppointmentService {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzzz)", Locale.ENGLISH);
 
 
@@ -38,14 +33,28 @@ public class AppointmentServiceImpl implements AppointmentService{
         appointment.setStartTime(startTime);
         LocalDateTime endTime = LocalDateTime.parse(createAppointmentDto.endTime, formatter);
         appointment.setEndTime(endTime);
+        appointment.setIsPredefined(createAppointmentDto.isPredefined);
         CompanyAdministrator ca = companyAdministratorRepository.findById(createAppointmentDto.companyAdministrator.id).orElseThrow(() -> new EntityNotFoundException("Company admin not found"));
         appointment.setCompanyAdministrator(ca);
+
 
         if (appointment.getId() != null) {
             throw new Exception("ID must be null for a new entity.");
         }
         Appointment savedAppointment = appointmentRepository.save(appointment);
         return savedAppointment;
+    }
+
+    @Override
+    public boolean Delete(Long id) throws Exception {
+        try{
+            appointmentRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -67,81 +76,80 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Override
     public List<Appointment> GetAll() throws Exception {
         List<Appointment> allAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAll()) {
+        for (Appointment a : appointmentRepository.findAll()) {
             allAppointments.add(a);
         }
         return allAppointments;
     }
+
     @Override
-    public List<Appointment> GetFreeByCompanyId(Long companyId) throws Exception{
+    public List<Appointment> GetFreeByCompanyId(Long companyId) throws Exception {
         List<Appointment> freeAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
+        for (Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
             if (itemRepository.findAllByAppointmentId(a.getId().toString()).isEmpty()) {
                 freeAppointments.add(a);
             }
         }
         return freeAppointments;
     }
+
     @Override
-    public List<Appointment> GetScheduledByCompanyId(Long companyId) throws Exception{
+    public List<Appointment> GetScheduledByCompanyId(Long companyId) throws Exception {
         List<Appointment> scheduledAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
-            if (!itemRepository.findAllByAppointmentId(a.getId().toString()).isEmpty()) {
+        for (Appointment a : appointmentRepository.findAllByCompanyId(companyId.toString())) {
+            List<Item> items = itemRepository.findAllByAppointmentId(a.getId().toString());
+            if (!items.isEmpty()) {
+                boolean allItemsNotPickedUp = items.stream().allMatch(item -> !item.isPickedUp());
+                if (allItemsNotPickedUp) {
+                    scheduledAppointments.add(a);
+                }
+            }
+        }
+        return scheduledAppointments;
+    }
+
+    @Override
+    public List<Appointment> GetScheduledByCustomerId(Long customerId) throws Exception{
+        List<Appointment> scheduledAppointments = new ArrayList<>();
+        for (Item item : itemRepository.findAllByCustomerId(String.valueOf(customerId))){
+            Appointment a = item.getAppointment();
+            if(!scheduledAppointments.contains(a)) {
                 scheduledAppointments.add(a);
             }
         }
         return scheduledAppointments;
     }
-/*
+
     @Override
-    public List<Appointment> GetAvailableByCompanyId(Long companyId) throws Exception {
-        List<Appointment> companyAppointments = new ArrayList<>();
-        List<Appointment> availableAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAll()) {
-            if(a.getCompanyAdministrator().getCompanyId() == companyId){
-                companyAppointments.add(a);
+    public List<Appointment> GetPickedUpByCustomerId(Long customerId) throws Exception{
+        List<Appointment> finishedAppointments = new ArrayList<>();
+        for (Item item : itemRepository.findAllByCustomerId(String.valueOf(customerId))){
+            Appointment a = item.getAppointment();
+            if(!finishedAppointments.contains(a) && item.isPickedUp()) {
+                finishedAppointments.add(a);
             }
         }
-
-
-        boolean isAvailable;
-        for(Appointment a : companyAppointments) {
-            isAvailable = true;
-            for(Item i : itemRepository.findAllByCompanyId(String.valueOf(companyId))){
-                if(i.getAppointment() != null) {
-                    if (i.getAppointment().getId() == a.getId()) {
-                        isAvailable = false;
-                        break;
-                    }
-                }
-            }
-            if(isAvailable) {
-                availableAppointments.add(a);
-            }
-        }
-        return availableAppointments;
+        return finishedAppointments;
     }
 
     @Override
-    public List<Appointment> GetReservedByCompanyId(Long companyId) throws Exception {
-        List<Appointment> companyAppointments = new ArrayList<>();
-        List<Appointment> reservedAppointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAll()) {
-            if(a.getCompanyAdministrator().getCompanyId() == companyId){
-                companyAppointments.add(a);
-            }
-        }
+    public Appointment FindById(Long id) throws Exception {
+        return appointmentRepository.findAppointmentById(id);
+    }
 
-        for(Item i : itemRepository.findAllByCompanyId(String.valueOf(companyId))){
-            for(Appointment a : companyAppointments) {
-                if (i.getAppointment() != null) {
-                    if (i.getAppointment().getId() == a.getId()) {
-                        reservedAppointments.add(a);
-                        break;
-                    }
-                }
-            }
+
+    public Appointment GetById(Long id) {
+        return appointmentRepository.findById(id).orElse(null);
+    }
+    public boolean CheckReservation(Long id) {
+        List<Item> items = itemRepository.findAllByAppointmentId(id.toString());
+        Boolean isAvailable = false;
+        if (!items.isEmpty()) {
+           isAvailable = items.stream().allMatch(item -> !item.isPickedUp() && !item.isQrCodeProcessed());
         }
-        return reservedAppointments;
-    }*/
+        return isAvailable;
+    }
+
+
+
 }

@@ -1,9 +1,17 @@
-import { CompanyAdministrator } from "./company-administrator.model";
-import { CustomerProfile } from "./customer-profile.model";
+import { CompanyAdministrator } from './company-administrator.model';
+import { CustomerProfile } from './customer-profile.model';
 
 export interface Appointment {
-    id?: number;
-    startTime: string;
-    endTime: string;
-    companyAdministrator: CompanyAdministrator;
-  }
+  id?: number;
+  startTime: string;
+  endTime: string;
+  isPredefined: boolean;
+  companyAdministrator: CompanyAdministrator;
+}
+
+export interface ShowAppointment {
+  id: number;
+  startTime: string;
+  endTime: string;
+  companyAdministrator: CompanyAdministrator;
+}

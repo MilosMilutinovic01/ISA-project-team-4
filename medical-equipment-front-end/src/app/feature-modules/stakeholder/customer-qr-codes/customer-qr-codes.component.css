@@ -1,0 +1,41 @@
+.page-title-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 40px;
+  padding-bottom: 20px;
+  padding-top: 30px;
+}
+
+.qr {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+.qr-name {
+  margin-top: 11rem;
+  font-weight: 500;
+  font-size: 19px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+}
+
+.option-view {
+  padding: 5px;
+}
+
+.search-button {
+  background-color: #3498db;
+  top: 5px;
+  margin-left: 10px;
+}

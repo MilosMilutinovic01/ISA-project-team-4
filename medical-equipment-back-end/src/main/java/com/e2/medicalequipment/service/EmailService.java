@@ -35,7 +35,7 @@ public class EmailService {
             helper.setTo(email);
             helper.setFrom(env.getProperty("spring.mail.username"));
             System.out.println(env.getProperty("spring.mail.username"));
-            helper.setSubject("Mejl za potvrdu registracije ISA-team-34");
+            helper.setSubject(title);
 
             // HTML content with basic styling
             /*String htmlContent = "<p>Dear <strong>" + customer.name + "</strong>,</p>\n" +
