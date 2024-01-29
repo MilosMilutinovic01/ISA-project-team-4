@@ -9,6 +9,9 @@ import com.e2.medicalequipment.repository.EquipmentRepository;
 import com.e2.medicalequipment.repository.EquipmentTrackingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,6 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class EquipmentTrackingServiceImpl implements EquipmentTrackingService {
 
     @Autowired
@@ -52,17 +56,19 @@ public class EquipmentTrackingServiceImpl implements EquipmentTrackingService {
     public EquipmentTracking Get(String id) {
         return equipmentTrackingRepository.findById(Long.valueOf(id)).get();
     }
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public EquipmentTracking Update(EquipmentTrackingDTO dto) throws Exception{
-        EquipmentTracking equipmentTracking = new EquipmentTracking(dto);
-        Equipment equipment = new Equipment(dto.equipment);
-        Company company = new Company(dto.company);
-        if ((equipmentTracking.getId() == null) || (equipment.getId() == null) || (company.getId() == null)){
+
+        EquipmentTracking equipmentTrackingToUpdate = equipmentTrackingRepository.findOneById(dto.id);
+        equipmentTrackingToUpdate.setEquipment(new Equipment(dto.equipment));
+        equipmentTrackingToUpdate.setCompany(new Company(dto.company));
+        equipmentTrackingToUpdate.setCount(dto.count);
+
+        if ((equipmentTrackingToUpdate.getId() == null)){
             throw new Exception("ID must not be null for updating entity.");
         }
-        equipmentTracking.setCompany(company);
-        equipmentTracking.setEquipment(equipment);
-        equipmentTracking.setCount(dto.count);
-        EquipmentTracking savedEquipmentTracking = equipmentTrackingRepository.save(equipmentTracking);
+
+        EquipmentTracking savedEquipmentTracking = equipmentTrackingRepository.save(equipmentTrackingToUpdate);
         return savedEquipmentTracking;
     }
     @Override
