@@ -12,4 +12,5 @@ import java.util.List;
 public interface CompanyAdministratorRepository extends JpaRepository<CompanyAdministrator, Long> {
     @Query("SELECT a FROM CompanyAdministrator a WHERE a.companyId = :company_id")
     List<CompanyAdministrator> findAllByCompanyId(@Param("company_id") String companyId);
+
 }

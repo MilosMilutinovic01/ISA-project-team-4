@@ -13,6 +13,7 @@ import { Company } from 'src/app/shared/model/company.model';
 import { SelectIrregularAppointmentDialogComponent } from '../select-irregular-appointment-dialog/select-irregular-appointment-dialog.component';
 import { UpdateItem } from 'src/app/shared/model/update-item.model';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { CompanyAdministrator } from 'src/app/shared/model/company-administrator.model';
 
 @Component({
   selector: 'app-cart',
@@ -33,7 +34,8 @@ export class CartComponent {
     endTime: '',
     averageRating: NaN,
   };
-  reservedAppointments: Appointment[] = [];
+  companyAdmins: CompanyAdministrator[] = [];
+  //reservedAppointments: Appointment[] = [];
   predefinedAppointments: Appointment[] = [];
   irregularAppointments: Appointment[] = [];
   selectedAppointment: Appointment = {
@@ -55,23 +57,6 @@ export class CartComponent {
     },
   };
 
-  // selectedIrregularAppointment: Appointment = {
-  //   id: NaN,
-  //   startTime: '',
-  //   endTime: '',
-  //   companyAdministrator: {
-  //     id: NaN,
-  //     name: '',
-  //     address: { id: NaN, street: '', city: '', country: '' },
-  //     username: '',
-  //     password: '',
-  //     lastname: '',
-  //     city: '',
-  //     country: '',
-  //     phoneNumber: '',
-  //     companyId: NaN,
-  //   },
-  // };
   selectedDate = new Date(Date.now());
   calendar_value: Date = new Date();
   calendar_value_irregular: Date = new Date();
@@ -114,7 +99,8 @@ export class CartComponent {
       this.companyId = params['id'];
       this.getItems();
       this.getCompany();
-      this.getReservedAppointments();
+      //this.getReservedAppointments();
+      this.getAdminsForCompany();
     });
   }
 
@@ -224,10 +210,21 @@ export class CartComponent {
     });
   }
 
-  getReservedAppointments(): void {
-    this.service.getScheduledAppointmentsByCompanyId(this.companyId).subscribe({
+  // getReservedAppointments(): void {
+  //   this.service.getScheduledAppointmentsByCompanyId(this.companyId).subscribe({
+  //     next: (result) => {
+  //       this.reservedAppointments = result;
+  //     },
+  //     error: () => {
+  //       console.log(console.error);
+  //     },
+  //   });
+  // }
+
+  getAdminsForCompany(): void {
+    this.service.getAdminsForCompany(this.companyId).subscribe({
       next: (result) => {
-        this.reservedAppointments = result;
+        this.companyAdmins = result;
       },
       error: () => {
         console.log(console.error);
@@ -242,7 +239,7 @@ export class CartComponent {
       {
         data: {
           predefinedAppointments: this.predefinedAppointments,
-          reservedAppointments: this.reservedAppointments,
+          //reservedAppointments: this.reservedAppointments,
           startTime: this.company.startTime,
           endTime: this.company.endTime,
           selectedDayOfMonth: selectedDayOfMonth,
@@ -269,10 +266,31 @@ export class CartComponent {
           Number(result.selectedDate.split(' - ')[1].split(':')[1])
         );
 
-        this.selectedAppointment.startTime = start.toString();
-        this.selectedAppointment.endTime = end.toString();
-        this.isSelected = false;
-        this.isSelectedIrregular = true;
+        this.service.getAdminsForAppointment(start.toString()).subscribe({
+          next: (result) => {
+            if (result === null) {
+              this.selectedAppointment.startTime = start.toString();
+              this.selectedAppointment.endTime = end.toString();
+              this.isSelected = false;
+              this.isSelectedIrregular = true;
+            } else {
+              if (result.length !== this.companyAdmins.length) {
+                this.selectedAppointment.startTime = start.toString();
+                this.selectedAppointment.endTime = end.toString();
+                this.isSelected = false;
+                this.isSelectedIrregular = true;
+              }
+              if (result.length === this.companyAdmins.length) {
+                alert(
+                  'There are no available company administrators for this appointment!'
+                );
+              }
+            }
+          },
+          error: () => {
+            console.log(console.error);
+          },
+        });
       }
     });
   }

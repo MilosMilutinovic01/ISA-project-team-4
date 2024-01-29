@@ -3,6 +3,7 @@ package com.e2.medicalequipment.controller;
 import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import com.e2.medicalequipment.model.Appointment;
 import com.e2.medicalequipment.model.Company;
+import com.e2.medicalequipment.model.CompanyAdministrator;
 import com.e2.medicalequipment.model.Item;
 import com.e2.medicalequipment.service.AppointmentService;
 import com.e2.medicalequipment.service.QRCodeService;
@@ -155,6 +156,20 @@ public class AppointmentController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Boolean>(result, HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(value = "/adminsAppointment/{startTime}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public ResponseEntity<List<CompanyAdministrator>> checkFreeAdmins(@PathVariable String startTime){
+        List<CompanyAdministrator> admins = null;
+        try {
+            admins = appointmentService.getFreeAdminsForAppointment(startTime);
+            return new ResponseEntity<List<CompanyAdministrator>>(admins, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<CompanyAdministrator>>(admins, HttpStatus.CONFLICT);
         }
     }
 

@@ -2,6 +2,7 @@ package com.e2.medicalequipment.service;
 
 import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import com.e2.medicalequipment.model.Appointment;
+import com.e2.medicalequipment.model.CompanyAdministrator;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,5 +27,5 @@ public interface AppointmentService {
     Appointment FindById(Long id) throws Exception;
 
     List<Appointment> GetPickedUpByCustomerId(Long customerId) throws Exception;
-
+    List<CompanyAdministrator> getFreeAdminsForAppointment(String startTime) throws Exception;
 }

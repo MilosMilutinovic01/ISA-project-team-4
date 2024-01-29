@@ -8,10 +8,10 @@ import com.e2.medicalequipment.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemServiceImpl implements ItemService{
@@ -81,13 +81,30 @@ public class ItemServiceImpl implements ItemService{
     public List<Item> GetAllByAppointmentId(String id) throws Exception{
         return this.itemRepository.findAllByAppointmentId(id);
     }
+
+    @Transactional
     public Item Update(UpdateItemDTO newItem) throws Exception{
         Item item = itemRepository.findById(newItem.Id);
         Appointment appointment = appointmentRepository.findAppointmentById(newItem.AppointmentId);
 
-        List<CompanyAdministrator> companyAdministrators = companyAdministratorRepository.findAllByCompanyId(String.valueOf(newItem.CompanyId));
+
+        // postavljanje admina
+        List<CompanyAdministrator> allAdmins = companyAdministratorRepository.findAllByCompanyId(String.valueOf(newItem.CompanyId));
+
+        List<CompanyAdministrator> unavailableAdmins = new ArrayList<>();
+        for(Appointment a : appointmentRepository.findAllByStartTime(appointment.getStartTime())){
+            if(a.getCompanyAdministrator() != null) {
+                unavailableAdmins.add(a.getCompanyAdministrator());
+            }
+        }
+        List<CompanyAdministrator> freeAdmins = allAdmins.stream()
+                .filter(ca -> unavailableAdmins.stream()
+                .noneMatch(unavailable -> Objects.equals(ca.getId(), unavailable.getId())))
+                .collect(Collectors.toList());
+
+
         Random rand = new Random();
-        CompanyAdministrator randomAdmin = companyAdministrators.get(rand.nextInt(companyAdministrators.size()));
+        CompanyAdministrator randomAdmin = freeAdmins.get(rand.nextInt(freeAdmins.size()));
         appointment.setCompanyAdministrator(randomAdmin);
 
         item.setAppointment(appointment);
