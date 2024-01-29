@@ -354,4 +354,28 @@ export class StakeholderService {
       id
     );
   }
+
+  // checkFreeAdminsForAppointment(
+  //   startTime: String,
+  //   admins: CompanyAdministrator[]
+  // ): Observable<boolean> {
+  //   return this.http.post<boolean>(
+  //     environment.apiHost + 'appointments/checkAdmins/' + startTime,
+  //     admins
+  //   );
+  // }
+
+  getAdminsForAppointment(
+    startTime: string
+  ): Observable<CompanyAdministrator[]> {
+    return this.http.get<CompanyAdministrator[]>(
+      environment.apiHost + 'appointments/adminsAppointment/' + startTime
+    );
+  }
+
+  getAdminsForCompany(id: string): Observable<CompanyAdministrator[]> {
+    return this.http.get<CompanyAdministrator[]>(
+      environment.apiHost + 'companyAdministrators/company/' + id
+    );
+  }
 }

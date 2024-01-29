@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CompanyProfileComponent } from '../company-profile/company-profile.component';
 import { Appointment } from 'src/app/shared/model/appointment.model';
 import { CartComponent } from '../cart/cart.component';
+import { StakeholderService } from '../stakeholder.service';
 
 @Component({
   selector: 'app-select-irregular-appointment-dialog',
@@ -19,7 +20,6 @@ export class SelectIrregularAppointmentDialogComponent {
   ) {
     let startStr = '2023-12-12T' + data.startTime + ':00.000Z';
     let startDate = new Date(startStr);
-    console.log('START: ', startDate);
     let endStr = '2023-12-12T' + data.endTime + ':00.000Z';
     let end = new Date(endStr);
     let endDate = new Date(
@@ -29,12 +29,9 @@ export class SelectIrregularAppointmentDialogComponent {
       startDate.getHours(),
       startDate.getMinutes() + 30
     );
-    console.log('PREDEFINED: ', data.predefinedAppointments);
-    console.log('RESERVED: ', data.reservedAppointments);
-    console.log(data.selectedDayOfMonth);
     while (endDate <= end) {
       let isPredefined: boolean = false;
-      let isReserved: boolean = false;
+      //let isReserved: boolean = false;
       for (let a of data.predefinedAppointments) {
         if (
           a.startTime[2] === data.selectedDayOfMonth &&
@@ -45,17 +42,19 @@ export class SelectIrregularAppointmentDialogComponent {
           break;
         }
       }
-      for (let a of data.reservedAppointments) {
-        if (
-          a.startTime[2] === data.selectedDayOfMonth &&
-          a.startTime[3] === startDate.getHours() &&
-          a.startTime[4] === startDate.getMinutes()
-        ) {
-          isReserved = true;
-          break;
-        }
-      }
-      if (!isPredefined && !isReserved) {
+      // for (let a of data.reservedAppointments) {
+      //   if (
+      //     a.startTime[2] === data.selectedDayOfMonth &&
+      //     a.startTime[3] === startDate.getHours() &&
+      //     a.startTime[4] === startDate.getMinutes()
+      //   ) {
+      //     isReserved = true;
+      //     break;
+      //   }
+      // }
+
+      //&& !isReserved
+      if (!isPredefined) {
         if (startDate.getMinutes() === 0)
           this.availableAppointments.push(
             new String(
@@ -106,7 +105,6 @@ export class SelectIrregularAppointmentDialogComponent {
         startDate.getMinutes() + 30
       );
     }
-    console.log(this.availableAppointments);
   }
 
   ok(selectedDate: String): void {

@@ -4,6 +4,7 @@ import com.e2.medicalequipment.dto.CompanyAdministratorDTO;
 import com.e2.medicalequipment.dto.EquipmentTrackingDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyAdministratorDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyDTO;
+import com.e2.medicalequipment.model.Appointment;
 import com.e2.medicalequipment.model.Company;
 import com.e2.medicalequipment.model.CompanyAdministrator;
 import com.e2.medicalequipment.model.Customer;
@@ -76,4 +77,18 @@ public class CompanyAdministratorController {
         List<CompanyAdministrator> administrators = companyAdministratorService.GetAll();
         return new ResponseEntity<List<CompanyAdministrator>>(administrators, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/company/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<CompanyAdministrator>> getAdminsForCompany(@PathVariable String id){
+        List<CompanyAdministrator> admins = null;
+        try {
+            admins = companyAdministratorService.GetAllByCompanyId(id);
+            return new ResponseEntity<List<CompanyAdministrator>>(admins, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<CompanyAdministrator>>(admins, HttpStatus.CONFLICT);
+        }
+    }
+
 }

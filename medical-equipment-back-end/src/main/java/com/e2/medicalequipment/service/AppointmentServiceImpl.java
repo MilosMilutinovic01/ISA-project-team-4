@@ -8,6 +8,7 @@ import com.e2.medicalequipment.repository.ItemRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -58,6 +59,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
+    @Transactional
     public Appointment CreateIrregular(CreateAppointmentDTO createAppointmentDto) throws Exception {
 
         Appointment appointment = new Appointment();
@@ -152,4 +154,20 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 
 
+    @Override
+    @Transactional
+    public List<CompanyAdministrator> getFreeAdminsForAppointment(String startTime) throws Exception {
+        List<CompanyAdministrator> admins = new ArrayList<>();
+        LocalDateTime start = LocalDateTime.parse(startTime, formatter);
+
+        if (appointmentRepository.findAllByStartTime(start) != null) {
+            for (Appointment a : appointmentRepository.findAllByStartTime(start)) {
+                admins.add(a.getCompanyAdministrator());
+            }
+            return admins;
+        }
+        else{
+            return null;
+        }
+    }
 }

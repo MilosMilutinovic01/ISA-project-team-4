@@ -62,4 +62,15 @@ public class CompanyAdministratorServiceImpl implements CompanyAdministratorServ
         return allAdmins;
     }
 
+    @Override
+    public List<CompanyAdministrator> GetAllByCompanyId(String companyId) throws Exception {
+        List<CompanyAdministrator> admins = new ArrayList<>();
+        for(CompanyAdministrator a : companyAdministratorRepository.findAllByCompanyId(companyId)) {
+            admins.add(a);
+        }
+        return admins;
+    }
+
+
+
 }
