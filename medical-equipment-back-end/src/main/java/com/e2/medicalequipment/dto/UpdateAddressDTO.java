@@ -7,6 +7,8 @@ public class UpdateAddressDTO{
     public String street;
     public String city;
     public String country;
+    public double lat;
+    public double lng;
     public UpdateAddressDTO() {
     }
     public UpdateAddressDTO(Address address) {
@@ -14,5 +16,7 @@ public class UpdateAddressDTO{
         this.street = address.getStreet();
         this.city = address.getCity();
         this.country = address.getCountry();
+        this.lat = address.getLatitude();
+        this.lng = address.getLongitude();
     }
 }

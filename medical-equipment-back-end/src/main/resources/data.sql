@@ -1,10 +1,11 @@
-INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-1, 'Kraljevo', 'Srbija', 'Ibarska 2');
-INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-2, 'Vlasenica', 'BIH', 'Karadjordjeva 17b');
-INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-3, 'Bijeljina', 'BIH', 'ulica1');
-INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-4, 'Novi Sad', 'Srbija', 'ulica2');
-INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-5, 'Beograd', 'Srbija', 'ulica3');
-INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-6, 'Beograd', 'Srbija', 'ulica4');
-INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-7, 'Beograd', 'Srbija', 'ulica5');
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-1, 'Kraljevo', 'Srbija', 'Ibarska 2', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-2, 'Vlasenica', 'BIH', 'Karadjordjeva 17b', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-3, 'Bijeljina', 'BIH', 'ulica1', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-4, 'Novi Sad', 'Srbija', 'ulica2', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-5, 'Beograd', 'Srbija', 'ulica3', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-6, 'Beograd', 'Srbija', 'ulica4', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-7, 'Beograd', 'Srbija', 'ulica5', 19.849171,45.242092);
+
 
 INSERT INTO stakeholders.users(
 	id, enabled, lastname, name, password, phone_number, role, username, address_id)
@@ -61,22 +62,23 @@ INSERT INTO stakeholders.system_administrators(
 VALUES (true, -7);
 
 INSERT INTO stakeholders.addresses(
-    id, city, country, street)
-VALUES (-8, 'Novi Sad', 'Srbija', 'Cara Dusana 12');
+
+    id, city, country, street, longitude, latitude)
+VALUES (-8, 'Novi Sad', 'Srbija', 'Cara Dusana 12', 19.849171,45.242092);
 INSERT INTO stakeholders.companies(
     average_rating, end_time, start_time, address_id, id, description, name)
 VALUES (4,'14:30','08:30', -8, -1, 'Neki opiss', 'MEDLAB');
 
 INSERT INTO stakeholders.addresses(
-    id, city, country, street)
-VALUES (-9, 'Novi Sad', 'Srbija', 'Fruskogorska 12');
+    id, city, country, street, longitude, latitude)
+VALUES (-9, 'Novi Sad', 'Srbija', 'Fruskogorska 12', 19.849171,45.242092);
 INSERT INTO stakeholders.companies(
     average_rating, end_time, start_time, address_id, id, description, name)
 VALUES (3,'17:30','07:30', -9, -2, 'Neki opiss', 'MEDICINSKA OPREMA NS');
 
 INSERT INTO stakeholders.addresses(
-    id, city, country, street)
-VALUES (-10, 'Novi Sad', 'Srbija', 'Cara Dusana 12');
+    id, city, country, street, longitude, latitude)
+VALUES (-10, 'Novi Sad', 'Srbija', 'Cara Dusana 12', 19.849171,45.242092);
 INSERT INTO stakeholders.companies(
     average_rating, end_time, start_time, address_id, id, description, name)
 VALUES (5,'14:30','08:30', -10, -3, 'Neki opiss', 'OPREMA021');

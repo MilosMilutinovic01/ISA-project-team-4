@@ -18,6 +18,7 @@ import { CartComponent } from 'src/app/feature-modules/stakeholder/cart/cart.com
 import { CompanyCalendarComponent } from 'src/app/feature-modules/stakeholder/company-calendar/company-calendar.component';
 import { AdministratorRegistrationComponent } from 'src/app/feature-modules/stakeholder/administrator-registration/administrator-registration.component';
 import { ChangePasswordComponent } from 'src/app/feature-modules/stakeholder/change-password/change-password.component';
+import { MapComponent } from 'src/app/shared/map/map.component';
 import { CustomerScheduledAppointmentsComponent } from 'src/app/feature-modules/stakeholder/customer-scheduled-appointments/customer-scheduled-appointments.component';
 import { EquipmentPickupQrComponent } from 'src/app/feature-modules/stakeholder/equipment-pickup-qr/equipment-pickup-qr.component';
 import { CustomerPickupHistoryComponent } from 'src/app/feature-modules/stakeholder/customer-pickup-history/customer-pickup-history.component';
@@ -50,6 +51,7 @@ const routes: Routes = [
   { path: 'cart/:id', component: CartComponent },
   { path: 'companyCalendar', component: CompanyCalendarComponent },
   { path: 'changePassword', component: ChangePasswordComponent },
+  { path: 'map', component: MapComponent },
   {
     path: 'scheduledAppointments',
     component: CustomerScheduledAppointmentsComponent,

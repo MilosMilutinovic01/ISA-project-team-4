@@ -17,7 +17,14 @@ export class EditCompanyAdministratorProfileComponent {
   profile: CompanyAdministrator = {
     id: NaN,
     name: '',
-    address: { id: NaN, street: '', city: '', country: '' },
+    address: {
+      id: NaN,
+      street: '',
+      city: '',
+      country: '',
+      lat: NaN,
+      lng: NaN,
+    },
     username: '',
     password: '',
     lastname: '',
@@ -82,6 +89,8 @@ export class EditCompanyAdministratorProfileComponent {
       street: this.editProfileForm.value.street || '',
       city: this.editProfileForm.value.city || '',
       country: this.editProfileForm.value.country || '',
+      lat: this.profile.address.lat,
+      lng: this.profile.address.lng,
     };
     console.log(this.profile.id);
     console.log(this.editProfileForm.value.password);

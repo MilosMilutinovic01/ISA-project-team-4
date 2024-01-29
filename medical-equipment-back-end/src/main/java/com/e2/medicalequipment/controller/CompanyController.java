@@ -1,12 +1,8 @@
 package com.e2.medicalequipment.controller;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
+import com.e2.medicalequipment.dto.LatLngDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyDTO;
-import com.e2.medicalequipment.dto.UpdateCustomerDTO;
 import com.e2.medicalequipment.model.Company;
-import com.e2.medicalequipment.model.CompanyAdministrator;
-import com.e2.medicalequipment.model.Customer;
-import com.e2.medicalequipment.model.User;
 import com.e2.medicalequipment.service.CompanyAdministratorService;
 import com.e2.medicalequipment.service.CompanyService;
 import com.e2.medicalequipment.dto.CreateCompanyDTO;
@@ -21,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -46,6 +41,20 @@ public class CompanyController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Company>(savedCompany, HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(value = "/coordinates/{companyId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
+    public LatLngDTO getCoordinates(@PathVariable String companyId) {
+        LatLngDTO coords;
+        try {
+            Company company = this.companyService.Get(companyId);
+            coords = new LatLngDTO(company.getAddress().getLatitude(),company.getAddress().getLongitude());
+            return coords;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

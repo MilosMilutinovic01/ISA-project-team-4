@@ -19,7 +19,13 @@ export class AppointmentRegistrationComponent {
   administrators: CompanyAdministrator[] = [
     {
       name: 'Jovan',
-      address: { street: '123 Main St', city: 'City', country: 'Country' },
+      address: {
+        street: '123 Main St',
+        city: 'City',
+        country: 'Country',
+        lat: NaN,
+        lng: NaN,
+      },
       username: 'jovan@example.com',
       lastname: 'Lukic',
       city: 'City',
@@ -29,7 +35,13 @@ export class AppointmentRegistrationComponent {
     },
     {
       name: 'Milica',
-      address: { street: '123 Main St', city: 'City', country: 'Country' },
+      address: {
+        street: '123 Main St',
+        city: 'City',
+        country: 'Country',
+        lat: NaN,
+        lng: NaN,
+      },
       username: 'john.doe@example.com',
       lastname: 'Savic',
       city: 'City',
@@ -132,7 +144,14 @@ export class AppointmentRegistrationComponent {
     let companyAdministrator: CompanyAdministrator = {
       id: NaN,
       name: '',
-      address: { id: NaN, street: '', city: '', country: '' },
+      address: {
+        id: NaN,
+        street: '',
+        city: '',
+        country: '',
+        lat: NaN,
+        lng: NaN,
+      },
       username: '',
       password: '',
       lastname: '',

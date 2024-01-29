@@ -14,7 +14,14 @@ export class CompanyAdministratorProfileComponent implements OnInit {
   profile: CompanyAdministrator = {
     id: NaN,
     name: '',
-    address: { id: NaN, street: '', city: '', country: '' },
+    address: {
+      id: NaN,
+      street: '',
+      city: '',
+      country: '',
+      lat: NaN,
+      lng: NaN,
+    },
     username: '',
     password: '',
     lastname: '',
@@ -42,8 +49,6 @@ export class CompanyAdministratorProfileComponent implements OnInit {
       .subscribe({
         next: (result: CompanyAdministrator) => {
           this.profile = result;
-          console.log('CompanyAdmin this.profile:');
-          console.log(this.profile);
         },
         error: () => {
           console.log(console.error());

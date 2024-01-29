@@ -28,7 +28,14 @@ export class CompanyProfileComponent {
   company: Company = {
     id: NaN,
     name: '',
-    address: { id: NaN, street: '', city: '', country: '' },
+    address: {
+      id: NaN,
+      street: '',
+      city: '',
+      country: '',
+      lat: NaN,
+      lng: NaN,
+    },
     description: '',
     startTime: '',
     endTime: '',
@@ -48,7 +55,14 @@ export class CompanyProfileComponent {
   companyAdministrator: CompanyAdministrator = {
     id: NaN,
     name: '',
-    address: { id: NaN, street: '', city: '', country: '' },
+    address: {
+      id: NaN,
+      street: '',
+      city: '',
+      country: '',
+      lat: NaN,
+      lng: NaN,
+    },
     username: '',
     password: '',
     lastname: '',
@@ -64,7 +78,14 @@ export class CompanyProfileComponent {
     company: {
       id: NaN,
       name: '',
-      address: { id: NaN, street: '', city: '', country: '' },
+      address: {
+        id: NaN,
+        street: '',
+        city: '',
+        country: '',
+        lat: NaN,
+        lng: NaN,
+      },
       startTime: '',
       endTime: '',
       description: '',
@@ -124,8 +145,6 @@ export class CompanyProfileComponent {
       .getCompanyAdministratorProfile(this.user?.id!.toString() || '')
       .subscribe({
         next: (result) => {
-          console.log('Company administrator:');
-          console.log(result);
           this.companyAdministrator = result;
         },
         error: () => {
@@ -139,7 +158,6 @@ export class CompanyProfileComponent {
   }
 
   getAllEquipmentTrackings(): void {
-    console.log('getAllEquipmentTrackings');
     this.service.getAllEquipmentTrackings().subscribe({
       next: (result) => {
         this.equipmentTracking = result;
@@ -272,7 +290,13 @@ export class CompanyProfileComponent {
       name: '',
       lastname: '',
       username: '',
-      address: { street: '', city: '', country: '' },
+      address: {
+        street: '',
+        city: '',
+        country: '',
+        lat: NaN,
+        lng: NaN,
+      },
       phoneNumber: '',
       profession: '',
       penaltyPoints: NaN,
@@ -349,8 +373,6 @@ export class CompanyProfileComponent {
   }
 
   deleteEquipmentTracking(e: any): void {
-    console.log('delete');
-    console.log(e);
     this.filteredEquipmentTrackings.forEach((element) => {
       if (element.id === e.id) {
         this.filteredEquipmentTrackings.splice(e.id, 1);
@@ -359,8 +381,6 @@ export class CompanyProfileComponent {
   }
 
   editEquipmentTracking(equipmentTracking: any): void {
-    console.log('edit');
-    console.log(equipmentTracking);
     const dialogRef = this.dialog
       .open(EditEquipmentTrackingComponent, {
         width: '39%',

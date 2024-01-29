@@ -22,7 +22,14 @@ export class EditCustomerProfileComponent implements OnInit {
     name: '',
     lastname: '',
     username: '',
-    address: { id: NaN, street: '', city: '', country: '' },
+    address: {
+      id: NaN,
+      street: '',
+      city: '',
+      country: '',
+      lat: NaN,
+      lng: NaN,
+    },
     phoneNumber: '',
     profession: '',
     penaltyPoints: NaN,
@@ -87,6 +94,8 @@ export class EditCustomerProfileComponent implements OnInit {
       street: this.editProfileForm.value.street || '',
       city: this.editProfileForm.value.city || '',
       country: this.editProfileForm.value.country || '',
+      lat: NaN,
+      lng: NaN,
     };
     const editProfile: CustomerProfile = {
       id: this.profile.id,

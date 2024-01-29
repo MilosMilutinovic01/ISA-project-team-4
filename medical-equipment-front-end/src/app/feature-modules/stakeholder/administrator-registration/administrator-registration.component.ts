@@ -19,14 +19,14 @@ import { SystemAdministrator } from 'src/app/shared/model/system-administrator.m
 @Component({
   selector: 'app-administrator-registration',
   templateUrl: './administrator-registration.component.html',
-  styleUrls: ['./administrator-registration.component.css']
+  styleUrls: ['./administrator-registration.component.css'],
 })
 export class AdministratorRegistrationComponent {
   constructor(
     private service: StakeholderService,
     public router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   companies: Company[] = [];
   adminType: string = '';
@@ -74,7 +74,7 @@ export class AdministratorRegistrationComponent {
       Validators.required,
       Validators.pattern(/^\d{10}$/),
     ]),
-    selectedCompany: new FormControl(null, Validators.required)
+    selectedCompany: new FormControl(null, Validators.required),
   });
 
   registerAdministrator(): void {
@@ -83,6 +83,8 @@ export class AdministratorRegistrationComponent {
         street: this.systemAdministratorForm.value.street || '',
         city: this.systemAdministratorForm.value.city || '',
         country: this.systemAdministratorForm.value.country || '',
+        lat: NaN,
+        lng: NaN,
       };
       const systemAdministrator: SystemAdministrator = {
         name: this.systemAdministratorForm.value.name || '',
@@ -92,7 +94,7 @@ export class AdministratorRegistrationComponent {
         country: this.systemAdministratorForm.value.country || '',
         username: this.systemAdministratorForm.value.email || '',
         phoneNumber: this.systemAdministratorForm.value.phoneNumber || '',
-        hasLoggedBefore: false 
+        hasLoggedBefore: false,
       };
       if (this.systemAdministratorForm.valid) {
         this.service.registerSystemAdministrator(systemAdministrator).subscribe(
@@ -104,7 +106,6 @@ export class AdministratorRegistrationComponent {
             console.error('Registration failed:', error);
           }
         );
-
       }
     }
 
@@ -113,6 +114,8 @@ export class AdministratorRegistrationComponent {
         street: this.companyAdministratorForm.value.street || '',
         city: this.companyAdministratorForm.value.city || '',
         country: this.companyAdministratorForm.value.country || '',
+        lat: NaN,
+        lng: NaN,
       };
 
       const companyAdministrator: CompanyAdministrator = {
@@ -123,23 +126,23 @@ export class AdministratorRegistrationComponent {
         country: this.companyAdministratorForm.value.country || '',
         username: this.companyAdministratorForm.value.email || '',
         phoneNumber: this.companyAdministratorForm.value.phoneNumber || '',
-        companyId: 0
+        companyId: 0,
       };
       if (this.companyAdministratorForm.valid) {
-        var company: any = this.companyAdministratorForm.value.selectedCompany
-        companyAdministrator.companyId = company.id
-        this.service.registerCompanyAdministrator(companyAdministrator).subscribe(
-          (response) => {
-            alert('Successfully created!');
-            this.router.navigate(['/']);
-          },
-          (error) => {
-            console.error('Registration failed:', error);
-          }
-        );
-
+        var company: any = this.companyAdministratorForm.value.selectedCompany;
+        companyAdministrator.companyId = company.id;
+        this.service
+          .registerCompanyAdministrator(companyAdministrator)
+          .subscribe(
+            (response) => {
+              alert('Successfully created!');
+              this.router.navigate(['/']);
+            },
+            (error) => {
+              console.error('Registration failed:', error);
+            }
+          );
       }
-
     }
   }
 }
