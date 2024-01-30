@@ -26,7 +26,7 @@ public class MonthlyTaskScheduler {
         userService.deleteAllPenaltyPoints(0);
     }
 
-    @Scheduled(cron = "0 53 15 * * ?")
+    @Scheduled(cron = "0 0 12 * * ?")
     public void sendMessageForDelivery() throws Exception {
         List<Contract> contracts = contractService.GetAll();
 
