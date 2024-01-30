@@ -202,4 +202,4 @@ INSERT INTO stakeholders.contracts(
 VALUES ('Poliklinika Galetic', 500, 31, -4,false);
 INSERT INTO stakeholders.contracts(
     hospital, count, date_in_month, equipment_id, cancelled_this_month)
-VALUES ('Poliklinika Pekic', 1000, 31, -2,false);
+VALUES ('Poliklinika Pekic', 1000, 30, -2,false);
