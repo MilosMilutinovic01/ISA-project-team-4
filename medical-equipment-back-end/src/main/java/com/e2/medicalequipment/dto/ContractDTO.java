@@ -1,5 +1,4 @@
 package com.e2.medicalequipment.dto;
-
 import com.e2.medicalequipment.model.Contract;
 import com.e2.medicalequipment.model.EquipmentTracking;
 
