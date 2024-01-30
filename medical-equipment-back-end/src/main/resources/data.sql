@@ -98,23 +98,23 @@ VALUES (-4, 'za intramuskularne injekcije', 'igla', 500, 0);
 
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
-VALUES (-1, 300, -1, -1);
+VALUES (-1, 3000, -1, -1);
 
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
-VALUES (-2, 250, -2, -2);
+VALUES (-2, 2500, -2, -2);
 
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
-VALUES (-3, 1000, -2, -3);
+VALUES (-3, 10000, -2, -3);
 
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
-VALUES (-4, 250, -1, -4);
+VALUES (-4, 2500, -1, -4);
 
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
-VALUES (-5, 240, -3, -4);
+VALUES (-5, 2400, -3, -4);
 
 INSERT INTO stakeholders.appointments(
     id, end_time, start_time, is_predefined, company_administrator_id)
@@ -188,3 +188,18 @@ INSERT INTO stakeholders.items(
 VALUES (-8, 20, -4, -1, -1, -4, FALSE, FALSE);
 
 
+INSERT INTO stakeholders.contracts(
+    hospital, count, date_in_month, equipment_id)
+VALUES ('New hospital', 500, 5, -1);
+INSERT INTO stakeholders.contracts(
+    hospital, count, date_in_month, equipment_id)
+VALUES ('Eurolab', 1000, 5, -3);
+INSERT INTO stakeholders.contracts(
+    hospital, count, date_in_month, equipment_id)
+VALUES ('HealthMedic', 50, 10, -2);
+INSERT INTO stakeholders.contracts(
+    hospital, count, date_in_month, equipment_id)
+VALUES ('Poliklinika Galetic', 500, 31, -4);
+INSERT INTO stakeholders.contracts(
+    hospital, count, date_in_month, equipment_id)
+VALUES ('Poliklinika Pekic', 1000, 31, -2);
