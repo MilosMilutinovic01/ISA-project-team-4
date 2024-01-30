@@ -39,11 +39,14 @@ public class ContractServiceImpl implements ContractService{
         return savedContract;
     }
     public Contract Update(ContractDTO contractDTO) throws Exception{
-        Contract contract = new Contract(contractDTO);
+        Contract contract = contractRepository.findByHospital(contractDTO.hospital);
         Contract savedContract = null;
         if(equipmentRepository.findByName(contractDTO.equipment) != null) {
             Equipment equipment = equipmentRepository.findByName(contractDTO.equipment);
             contract.setEquipment(equipment);
+            contract.setCount(contractDTO.count);
+            contract.setDateInMonth(contractDTO.dateInMonth);
+            contract.setCanceledThisMonth(contract.getCanceledThisMonth());
             savedContract = contractRepository.save(contract);
         }
         return savedContract;

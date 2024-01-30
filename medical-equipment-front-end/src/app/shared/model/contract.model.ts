@@ -4,7 +4,7 @@ export interface Contract {
   equipment: Equipment;
   count: number;
   dateInMonth: number;
-  cancelledThisMonth: boolean;
+  canceledThisMonth: boolean;
 }
 
 export interface ShowContract {

@@ -41,27 +41,30 @@ export class ContractListComponent {
     this.showContracts = [];
     this.currentDate = new Date();
     this.contracts.forEach((contract) => {
-      const showContractDate = new Date(this.currentDate.getFullYear(),  this.currentDate.getMonth(),contract.dateInMonth,12,0,0);
-      if (contract.dateInMonth < this.currentDate.getDate()) {
-        showContractDate.setMonth(this.currentDate.getMonth() + 1)
+      let showContractDate = new Date(this.currentDate.getFullYear(),  this.currentDate.getMonth(),contract.dateInMonth,12,0,0);
+      const isWithin24Hours = showContractDate.getTime() <= this.currentDate.getTime() + 24 * 60 * 60 * 1000;
+      const newDate = new Date(this.currentDate.getFullYear(),  this.currentDate.getMonth() + 1,contract.dateInMonth,12,0,0);
+      const isWithin24HoursNewDate = newDate.getTime() <= this.currentDate.getTime() + 24 * 60 * 60 * 1000;
+      if (contract.dateInMonth < this.currentDate.getDate() && !isWithin24HoursNewDate) {
+        showContractDate = newDate;
         this.updateCancellation(contract.hospital)
       }
-      const isWithin24Hours = showContractDate.getTime() <= this.currentDate.getTime() + 24 * 60 * 60 * 1000;
+      
       const showContract: ShowContract = {
         hospital: contract.hospital,
         equipment: contract.equipment.name,
         count: contract.count,
         date: showContractDate,
-        canCancel: isWithin24Hours && !contract.cancelledThisMonth,
+        canCancel: !contract.canceledThisMonth 
       };
       this.showContracts.push(showContract);
+      console.log(this.showContracts)
     });
   }
 
   cancel(hospital: String): void {
     this.service.updateCancellation(hospital,true).subscribe({
       next: (result) => {
-        
       },
       error: () => {
         console.log(console.error);
