@@ -8,6 +8,7 @@ import com.e2.medicalequipment.repository.ItemRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -15,9 +16,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
+@Transactional(readOnly = true)
 public class AppointmentServiceImpl implements AppointmentService {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzzz)", Locale.ENGLISH);
-
 
     @Autowired
     private AppointmentRepository appointmentRepository;
@@ -27,10 +28,16 @@ public class AppointmentServiceImpl implements AppointmentService {
     private ItemRepository itemRepository;
 
     @Override
-    public Appointment Create(CreateAppointmentDTO createAppointmentDto) throws Exception {
-
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    public Appointment Create(CreateAppointmentDTO createAppointmentDto)  {
         Appointment appointment = new Appointment();
-        LocalDateTime startTime = LocalDateTime.parse(createAppointmentDto.startTime, formatter);
+        LocalDateTime startTime = null;
+        try {
+            startTime = LocalDateTime.parse(createAppointmentDto.startTime, formatter);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         appointment.setStartTime(startTime);
         LocalDateTime endTime = LocalDateTime.parse(createAppointmentDto.endTime, formatter);
         appointment.setEndTime(endTime);
@@ -38,9 +45,8 @@ public class AppointmentServiceImpl implements AppointmentService {
         CompanyAdministrator ca = companyAdministratorRepository.findById(createAppointmentDto.companyAdministrator.id).orElseThrow(() -> new EntityNotFoundException("Company admin not found"));
         appointment.setCompanyAdministrator(ca);
 
-
         if (appointment.getId() != null) {
-            throw new Exception("ID must be null for a new entity.");
+            throw new IllegalArgumentException("ID must be null for a new entity.");
         }
         Appointment savedAppointment = appointmentRepository.save(appointment);
         return savedAppointment;

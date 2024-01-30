@@ -22,7 +22,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Optional;
 
-
 @RestController
 @RequestMapping(value = "/api/auth")
 public class AuthenticationController {
@@ -31,10 +30,6 @@ public class AuthenticationController {
 
     @Autowired
     private UserServiceImpl userService;
-
-    @Autowired
-    private EmailService emailService;
-
 
     @GetMapping("/verify/{id}")
     public Boolean verifyUser(@PathVariable String id) throws Exception {
@@ -47,30 +42,11 @@ public class AuthenticationController {
     @PostMapping("/customer/register")
     public ResponseEntity<Customer> addUser(@RequestBody CreateCustomerDTO customer, UriComponentsBuilder ucBuilder) throws Exception {
         Optional<User> existUser = this.userService.findByUsername(customer.username);
-
         if (existUser.isPresent()) {
             throw new RuntimeException("Username already exists");
         }
-
-        Customer savedCustomer  = this.customerService.Create(customer);
-
-        String verificationLink = "http://localhost:4200/api/auth/verify/id=" + savedCustomer.getVerificationToken();
-        String verificationMail = generateVerificationEmail(customer.name, verificationLink);
-
-        emailService.sendNotificaitionAsync(customer.username, "Mejl za potvrdu registracije ISA-team-34", verificationMail);
-        System.out.println("Email poslat valjda...");
-
+        Customer savedCustomer = this.customerService.Create(customer);
         return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
-    }
-
-    private String generateVerificationEmail(String name, String verificationLink) {
-        return String.format("<p>Dear <strong>" + name + "</strong>,</p>\n" +
-                "<p>Thank you for choosing ISA! We're excited to have you on board.</p>\n" +
-                "<p>Your registration is almost complete. Please click the following link to activate your account:</p>\n" +
-                "<p><a href=" + verificationLink + ">Activation Link</a></p>\n" +
-                "<p>If you have any questions, feel free to contact our support team.</p>\n" +
-                "<p>Best regards,<br/>The ISA Team</p>"
-, name, verificationLink);
     }
 
     @PostMapping(value = "login", consumes = "application/json")
