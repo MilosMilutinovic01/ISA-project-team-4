@@ -35,7 +35,9 @@ public class MonthlyTaskScheduler {
             int deliveryDay = contract.getDateInMonth();
 
             if (isTodayDeliveryDay(deliveryDay)) {
-                contractProducer.sendMessage("Dostava je zapoceta za bolnicu: " + contract.getHospital());
+                if(!contract.getCanceledThisMonth()) {
+                    contractProducer.sendMessage("Dostava je zapoceta za bolnicu: " + contract.getHospital());
+                }
             }
         }
     }
