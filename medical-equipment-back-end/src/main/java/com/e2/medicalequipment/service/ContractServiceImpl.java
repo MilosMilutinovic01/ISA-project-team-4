@@ -27,19 +27,25 @@ public class ContractServiceImpl implements ContractService{
     @Override
     public Contract Create(ContractDTO contractDTO) throws Exception {
         Contract contract = new Contract(contractDTO);
-        Equipment equipment = equipmentRepository.findByName(contractDTO.equipment).orElseThrow(() -> new EntityNotFoundException("Equipment not found"));
-        contract.setEquipment(equipment);
-        if (contractRepository.findByHospital(contract.getHospital()) != null) {
-            Update(contractDTO);
+        Contract savedContract = null;
+        if(equipmentRepository.findByName(contractDTO.equipment) != null) {
+            Equipment equipment = equipmentRepository.findByName(contractDTO.equipment);
+            contract.setEquipment(equipment);
+            if (contractRepository.findByHospital(contract.getHospital()) != null) {
+                Update(contractDTO);
+            }
+            savedContract = contractRepository.save(contract);
         }
-        Contract savedContract = contractRepository.save(contract);
         return savedContract;
     }
     public Contract Update(ContractDTO contractDTO) throws Exception{
         Contract contract = new Contract(contractDTO);
-        Equipment equipment = equipmentRepository.findByName(contractDTO.equipment).orElseThrow(() -> new EntityNotFoundException("Equipment not found"));
-        contract.setEquipment(equipment);
-        Contract savedContract = contractRepository.save(contract);
+        Contract savedContract = null;
+        if(equipmentRepository.findByName(contractDTO.equipment) != null) {
+            Equipment equipment = equipmentRepository.findByName(contractDTO.equipment);
+            contract.setEquipment(equipment);
+            savedContract = contractRepository.save(contract);
+        }
         return savedContract;
     }
     @Override

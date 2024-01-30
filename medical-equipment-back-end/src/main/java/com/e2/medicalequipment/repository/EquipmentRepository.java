@@ -13,5 +13,5 @@ import java.util.Optional;
 
 public interface EquipmentRepository  extends JpaRepository<Equipment, Long> {
     @Query("SELECT e FROM Equipment e WHERE e.name = :name")
-    Optional<Equipment> findByName(@Param("name") String equipmentName);
+    Equipment findByName(@Param("name") String equipmentName);
 }
