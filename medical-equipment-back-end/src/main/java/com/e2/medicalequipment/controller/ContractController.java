@@ -8,12 +8,15 @@ import com.e2.medicalequipment.model.Item;
 import com.e2.medicalequipment.service.CompanyAdministratorService;
 import com.e2.medicalequipment.service.CompanyService;
 import com.e2.medicalequipment.service.ContractService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import com.e2.medicalequipment.kafka.ContractProducer;
 
 import java.util.List;
 
@@ -24,6 +27,10 @@ import java.util.List;
 public class ContractController {
     @Autowired
     private ContractService contractService;
+
+    @Autowired
+    public ContractProducer contractProducer;
+
     @PostMapping(value = "/new", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Contract> newContract(@RequestBody ContractDTO contractDto) {
         Contract savedContract = null;
@@ -60,6 +67,12 @@ public class ContractController {
             e.printStackTrace();
             return new ResponseEntity<Contract>(savedContract, HttpStatus.CONFLICT);
         }
+    }
+
+    @PostMapping(value = "/send")
+    public String sendMessage(@RequestParam("message") String message) {
+        contractProducer.sendMessage(message);
+        return "Message sent: " + message;
     }
 }
 
