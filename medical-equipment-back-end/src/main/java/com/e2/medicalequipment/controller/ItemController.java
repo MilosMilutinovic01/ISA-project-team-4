@@ -85,7 +85,6 @@ public class ItemController {
         }
     }
 
-
     @GetMapping(value = "customerByAppointment/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
@@ -109,9 +108,6 @@ public class ItemController {
             String message = "Broj rezervacije : " + items.get(0).AppointmentId + "\n\nRezervisana oprema :\n";
             for (UpdateItemDTO item : items) {
                 try {
-                    EquipmentTrackingDTO dto = new EquipmentTrackingDTO(equipmentTrackingService.FindByCompanyAndEquipment(item.CompanyId,item.EquipmentId));
-                    dto.count -= item.Count;
-                    equipmentTrackingService.Update(dto);
                     userId = item.CustomerId;
                     price += equipmentService.Get(item.EquipmentId).getPrice() * item.Count;
 
@@ -154,10 +150,10 @@ public class ItemController {
             items = itemService.GetAllByAppointmentId(id);
             for(Item i: items){
                 userId = i.getCustomer().getId();
-                EquipmentTracking et = equipmentTrackingService.FindByCompanyAndEquipment(i.getCompany().getId(),i.getEquipment().getId());
+                /*EquipmentTracking et = equipmentTrackingService.FindByCompanyAndEquipment(i.getCompany().getId(),i.getEquipment().getId());
                 EquipmentTrackingDTO etdto = new EquipmentTrackingDTO(et);
                 etdto.count += i.getCount();
-                equipmentTrackingService.Update(etdto);
+                equipmentTrackingService.Update(etdto);*/
                 itemService.Delete(i.getId());
             }
             userService.changePenaltyPoints(penalty,userId);
@@ -177,6 +173,9 @@ public class ItemController {
         String message = "Broj rezervacije : " + appointmentId + "\n\nRezervisana oprema :\n";
         for (Item item : items) {
             try {
+                EquipmentTrackingDTO dto = new EquipmentTrackingDTO(equipmentTrackingService.FindByCompanyAndEquipment(item.getCompany().getId(),item.getEquipment().getId()));
+                dto.count -= item.getCount();
+                equipmentTrackingService.Update(dto);
                 userId = item.getCustomer().getId();
                 itemService.Process(item,true);
                 message += equipmentService.Get(item.getEquipment().getId()).getName()+ " - " + item.getCount() + " kom\n";
@@ -196,9 +195,6 @@ public class ItemController {
         List<Item> items = itemService.GetAllByAppointmentId(appointmentId);
         for (Item item : items) {
             try {
-                EquipmentTrackingDTO dto = new EquipmentTrackingDTO(equipmentTrackingService.FindByCompanyAndEquipment(item.getCompany().getId(),item.getEquipment().getId()));
-                dto.count += item.getCount();
-                equipmentTrackingService.Update(dto);
                 userId = item.getCustomer().getId();
                 itemService.Process(item,false);
             } catch (Exception e) {

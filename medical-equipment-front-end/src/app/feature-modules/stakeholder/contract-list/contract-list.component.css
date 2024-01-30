@@ -1,0 +1,54 @@
+.contracts-overview {
+    padding: 50px 200px;
+    justify-content: center;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.cancel-button {
+    background-color: transparent;
+    border-radius: 10px;
+    border: solid 0.5px red;
+    padding: 10px;
+    max-height: 2.3rem;
+    font-weight: bold;
+}
+
+.cancel-button:hover {
+    background-color: red;
+    color: white;
+}
+
+.cancel-button:disabled {
+    background-color: rgb(220, 220, 220);
+    border: none;
+    color: darkgray;
+}
+.cancel-button:hover:disabled {
+    background-color: rgb(220, 220, 220);
+    border: none;
+    color: darkgray;
+    cursor:not-allowed !important;
+}
+.contracts-table{
+    text-align: center; 
+    align-items: center;
+}
+
+.header-cell{
+    text-align: center; 
+    align-items: center;
+    font-size: 18px;
+    background-color: #f2f2f2 !important;
+}
+
+.table-cell{
+    text-align: center; 
+    align-items: center;
+}
