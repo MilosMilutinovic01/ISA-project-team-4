@@ -48,6 +48,17 @@
             New System Administrator
           </button>
         </div>
+        <div>
+          <button
+            class="navbar-button"
+            (click)="openContractList()"
+            *ngIf="
+              user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled
+            "
+          >
+            Contract List
+          </button>
+        </div>
         <!-- <div>
           <button
             class="navbar-button"
