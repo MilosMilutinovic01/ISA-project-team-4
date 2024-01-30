@@ -385,4 +385,9 @@ export class StakeholderService {
       environment.apiHost + 'contracts/'
     );
   }
+
+  updateCancellation(hospital: String, cancel: boolean): Observable<Contract> {
+    return this.http.post<Contract>(
+      environment.apiHost + 'contracts/update/' + hospital, cancel);
+  }
 }

@@ -189,17 +189,17 @@ VALUES (-8, 20, -4, -1, -1, -4, FALSE, FALSE);
 
 
 INSERT INTO stakeholders.contracts(
-    hospital, count, date_in_month, equipment_id)
-VALUES ('New hospital', 500, 5, -1);
+    hospital, count, date_in_month, equipment_id, cancelled_this_month)
+VALUES ('New hospital', 500, 5, -1,false);
 INSERT INTO stakeholders.contracts(
-    hospital, count, date_in_month, equipment_id)
-VALUES ('Eurolab', 1000, 5, -3);
+    hospital, count, date_in_month, equipment_id, cancelled_this_month)
+VALUES ('Eurolab', 1000, 5, -3,false);
 INSERT INTO stakeholders.contracts(
-    hospital, count, date_in_month, equipment_id)
-VALUES ('HealthMedic', 50, 10, -2);
+    hospital, count, date_in_month, equipment_id, cancelled_this_month)
+VALUES ('HealthMedic', 50, 10, -2,false);
 INSERT INTO stakeholders.contracts(
-    hospital, count, date_in_month, equipment_id)
-VALUES ('Poliklinika Galetic', 500, 31, -4);
+    hospital, count, date_in_month, equipment_id, cancelled_this_month)
+VALUES ('Poliklinika Galetic', 500, 31, -4,false);
 INSERT INTO stakeholders.contracts(
-    hospital, count, date_in_month, equipment_id)
-VALUES ('Poliklinika Pekic', 1000, 31, -2);
+    hospital, count, date_in_month, equipment_id, cancelled_this_month)
+VALUES ('Poliklinika Pekic', 1000, 31, -2,false);

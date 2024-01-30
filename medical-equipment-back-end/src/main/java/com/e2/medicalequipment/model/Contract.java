@@ -19,20 +19,24 @@ public class Contract {
     @Column(name = "date_in_month")
     private int dateInMonth;
 
+    @Column(name = "cancelled_this_month")
+    private Boolean canceledThisMonth;
     public Contract() {
 
     }
-    public Contract(String hospital, Equipment equipment, int count, int dateInMonth) {
+    public Contract(String hospital, Equipment equipment, int count, int dateInMonth, Boolean cancelledThisMonth) {
         this.hospital = hospital;
         this.equipment = equipment;
         this.count = count;
         this.dateInMonth = dateInMonth;
+        this.canceledThisMonth = cancelledThisMonth;
     }
 
     public Contract(ContractDTO dto) {
         this.hospital = dto.hospital;
         this.count = dto.count;
         this.dateInMonth = dto.dateInMonth;
+        this.canceledThisMonth = false;
     }
     public String getHospital() {
         return hospital;
@@ -66,4 +70,10 @@ public class Contract {
         this.dateInMonth = dateInMonth;
     }
 
+    public Boolean getCanceledThisMonth() {
+        return canceledThisMonth;
+    }
+    public void setCanceledThisMonth(Boolean canceledThisMonth) {
+        this.canceledThisMonth = canceledThisMonth;
+    }
 }

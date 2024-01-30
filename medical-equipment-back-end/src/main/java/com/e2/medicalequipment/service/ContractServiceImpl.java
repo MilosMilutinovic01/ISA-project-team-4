@@ -1,9 +1,6 @@
 package com.e2.medicalequipment.service;
 
-import com.e2.medicalequipment.dto.ContractDTO;
-import com.e2.medicalequipment.dto.EquipmentDTO;
-import com.e2.medicalequipment.dto.UpdateCustomerDTO;
-import com.e2.medicalequipment.dto.UpdateItemDTO;
+import com.e2.medicalequipment.dto.*;
 import com.e2.medicalequipment.model.*;
 import com.e2.medicalequipment.repository.ContractRepository;
 import com.e2.medicalequipment.repository.EquipmentRepository;
@@ -46,10 +43,17 @@ public class ContractServiceImpl implements ContractService{
         return savedContract;
     }
     @Override
-    public List<ContractDTO> GetAll() throws Exception {
-        List<ContractDTO> allContracts = new ArrayList<>();
+    public Contract UpdateCancellation(String hospital, boolean cancel) throws Exception{
+        Contract contract = contractRepository.findByHospital(hospital);
+        contract.setCanceledThisMonth(cancel);
+        Contract savedContract = contractRepository.save(contract);
+        return savedContract;
+    }
+    @Override
+    public List<Contract> GetAll() throws Exception {
+        List<Contract> allContracts = new ArrayList<>();
         for(Contract c : contractRepository.findAll()) {
-            allContracts.add(new ContractDTO(c));
+            allContracts.add(c);
         }
         return allContracts;
     }

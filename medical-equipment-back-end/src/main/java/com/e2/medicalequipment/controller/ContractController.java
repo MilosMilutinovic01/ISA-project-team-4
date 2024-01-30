@@ -3,6 +3,7 @@ package com.e2.medicalequipment.controller;
 import com.e2.medicalequipment.dto.*;
 import com.e2.medicalequipment.model.Company;
 import com.e2.medicalequipment.model.Contract;
+import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.model.Item;
 import com.e2.medicalequipment.service.CompanyAdministratorService;
 import com.e2.medicalequipment.service.CompanyService;
@@ -35,17 +36,30 @@ public class ContractController {
         }
     }
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('SYSTEM_ADMINISTRATOR')")
     @ResponseBody
-    public ResponseEntity<List<ContractDTO>> getAll(){
-        List<ContractDTO> contracts = null;
+    public ResponseEntity<List<Contract>> getAll(){
+        List<Contract> contracts = null;
         try {
             contracts = contractService.GetAll();
-            return new ResponseEntity<List<ContractDTO>>(contracts, HttpStatus.OK);
+            return new ResponseEntity<List<Contract>>(contracts, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<List<ContractDTO>>(contracts, HttpStatus.CONFLICT);
+            return new ResponseEntity<List<Contract>>(contracts, HttpStatus.CONFLICT);
         }
     }
 
+    @PostMapping(value = "/update/{hospital}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('SYSTEM_ADMINISTRATOR')")
+    public ResponseEntity<Contract>  updateCancellation (@RequestBody boolean cancel,@PathVariable String hospital) throws Exception {
+        Contract savedContract = null;
+        try {
+            savedContract = contractService.UpdateCancellation(hospital,cancel);
+            return new ResponseEntity<Contract>(savedContract, HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Contract>(savedContract, HttpStatus.CONFLICT);
+        }
+    }
 }
 

@@ -1,8 +1,10 @@
+import { Equipment } from './equipment.model';
 export interface Contract {
   hospital: string;
-  equipment: string;
+  equipment: Equipment;
   count: number;
   dateInMonth: number;
+  cancelledThisMonth: boolean;
 }
 
 export interface ShowContract {
