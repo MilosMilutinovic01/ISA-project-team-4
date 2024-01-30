@@ -15,6 +15,12 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query("SELECT c FROM Customer c WHERE c.verificationToken = :token")
     Customer findByVerificationToken(@Param("token") String token);
 
-    @Lock(LockModeType.PESSIMISTIC_READ)
+    /*@Lock(LockModeType.PESSIMISTIC_WRITE)
+    @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value ="0")})
     public Customer save(Customer customer);
+*/
+    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Query("select c from Customer c where c.username = :username")
+    @QueryHints({@QueryHint(name = "jakarta.persistence.lock.timeout", value ="0")})
+    Customer findByUsername(@Param("username")String username);
 }

@@ -49,11 +49,8 @@ public class RegistrationConcurentAccessTest {
             @Override
             public void run() {
                 System.out.println("Startovan Thread 1");
-                try {
-                    customerService.Create(customerDTO1);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+                    customerService.findByUsername("miki@gmail.com");
+                    //customerService.Create(customerDTO1);
             }
         });
         Future<?> future2 = executor.submit(new Runnable() {
@@ -61,13 +58,10 @@ public class RegistrationConcurentAccessTest {
             @Override
             public void run() {
                 System.out.println("Startovan Thread 2");
-                try { Thread.sleep(20); } catch (InterruptedException e) { }// otprilike 150 milisekundi posle prvog threada krece da se izvrsava drugi
+                try { Thread.sleep(50); } catch (InterruptedException e) { }// otprilike 150 milisekundi posle prvog threada krece da se izvrsava drugi
 
-                try {
-                    customerService.Create(customerDTO2);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+                    customerService.findByUsername("petar@gmail.com");
+                    //customerService.Create(customerDTO2);
             }
         });
         try {

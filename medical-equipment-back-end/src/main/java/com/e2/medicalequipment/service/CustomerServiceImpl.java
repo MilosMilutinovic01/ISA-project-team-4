@@ -10,9 +10,11 @@ import com.e2.medicalequipment.repository.AddressRepository;
 import com.e2.medicalequipment.repository.CustomerRepository;
 import com.e2.medicalequipment.security.AuthTokenFilter;
 import com.e2.medicalequipment.security.JwtUtils;
+import jakarta.persistence.PessimisticLockException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -50,8 +52,9 @@ public class CustomerServiceImpl implements CustomerService {
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     @Override
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(readOnly = false)
     public Customer Create(CreateCustomerDTO createCustomerDto)  {
+        try{
         addressRepository.save(createCustomerDto.address);
         Customer customer = new Customer(createCustomerDto);
         customer.setPassword(passwordEncoder.encode(createCustomerDto.password));
@@ -62,6 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setUsername(createCustomerDto.username);
         String verificationToken = UUID.randomUUID().toString().replaceAll("-", "");
         customer.setVerificationToken(verificationToken);
+
         if (customer.getId() != null) {
             throw new IllegalArgumentException("ID must be null for a new entity.");
         }
@@ -69,14 +73,26 @@ public class CustomerServiceImpl implements CustomerService {
         String verificationLink = "http://localhost:4200/api/auth/verify/id=" + savedCustomer.getVerificationToken();
         String verificationMail = generateVerificationEmail(savedCustomer.getName(), verificationLink);
 
-        try {
-            emailService.sendNotificaitionAsync(savedCustomer.getUsername(), "Mejl za potvrdu registracije ISA-team-34", verificationMail);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        emailService.sendNotificaitionAsync(savedCustomer.getUsername(), "Mejl za potvrdu registracije ISA-team-34", verificationMail);
         System.out.println("Email poslat valjda...");
 
         return savedCustomer;
+        }catch (PessimisticLockingFailureException e){
+            throw e;
+        }
+    }
+
+    @Transactional(readOnly = false)
+    public Customer findByUsername(String username) {
+        try {
+            logger.info("> findOneById id:{}", username);
+            Customer customer = customerRepository.findByUsername(username);
+            logger.info("< findOneById id:{}", username);
+            return customer;
+        } catch (PessimisticLockingFailureException e) {
+            logger.error("PessimisticLockingFailureException in findByUsername", e);
+            throw e; // Re-throw the exception
+        }
     }
 
     private String generateVerificationEmail(String name, String verificationLink) {
