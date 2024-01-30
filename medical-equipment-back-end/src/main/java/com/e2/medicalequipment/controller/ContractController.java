@@ -31,6 +31,7 @@ public class ContractController {
     @Autowired
     public ContractProducer contractProducer;
 
+
     @PostMapping(value = "/new", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Contract> newContract(@RequestBody ContractDTO contractDto) {
         Contract savedContract = null;
@@ -61,6 +62,9 @@ public class ContractController {
     public ResponseEntity<Contract>  updateCancellation (@RequestBody boolean cancel,@PathVariable String hospital) throws Exception {
         Contract savedContract = null;
         try {
+            if(cancel){
+                contractProducer.sendMessage("Dostava je otkazana za bolnicu: " + hospital);
+            }
             savedContract = contractService.UpdateCancellation(hospital,cancel);
             return new ResponseEntity<Contract>(savedContract, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -69,10 +73,5 @@ public class ContractController {
         }
     }
 
-    @PostMapping(value = "/send")
-    public String sendMessage(@RequestParam("message") String message) {
-        contractProducer.sendMessage(message);
-        return "Message sent: " + message;
-    }
 }
 
