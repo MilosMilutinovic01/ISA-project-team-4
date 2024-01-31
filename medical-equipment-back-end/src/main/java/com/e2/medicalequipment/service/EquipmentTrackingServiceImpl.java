@@ -8,7 +8,11 @@ import com.e2.medicalequipment.repository.CompanyRepository;
 import com.e2.medicalequipment.repository.EquipmentRepository;
 import com.e2.medicalequipment.repository.EquipmentTrackingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,6 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class EquipmentTrackingServiceImpl implements EquipmentTrackingService {
 
     @Autowired
@@ -52,18 +57,31 @@ public class EquipmentTrackingServiceImpl implements EquipmentTrackingService {
     public EquipmentTracking Get(String id) {
         return equipmentTrackingRepository.findById(Long.valueOf(id)).get();
     }
-    public EquipmentTracking Update(EquipmentTrackingDTO dto) throws Exception{
-        EquipmentTracking equipmentTracking = new EquipmentTracking(dto);
-        Equipment equipment = new Equipment(dto.equipment);
-        Company company = new Company(dto.company);
-        if ((equipmentTracking.getId() == null) || (equipment.getId() == null) || (company.getId() == null)){
-            throw new Exception("ID must not be null for updating entity.");
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    public EquipmentTracking Update(EquipmentTrackingDTO dto){
+        try {
+            EquipmentTracking equipmentTrackingToUpdate = equipmentTrackingRepository.findOneById(dto.id);
+            equipmentTrackingToUpdate.setEquipment(new Equipment(dto.equipment));
+            equipmentTrackingToUpdate.setCompany(new Company(dto.company));
+            equipmentTrackingToUpdate.setCount(dto.count);
+
+            if (equipmentTrackingToUpdate.getId() == null) {
+                throw new IllegalArgumentException("ID must not be null for updating entity.");
+            }
+
+            EquipmentTracking savedEquipmentTracking = equipmentTrackingRepository.save(equipmentTrackingToUpdate);
+            return savedEquipmentTracking;
+        }catch(PessimisticLockingFailureException e){
+            throw e;
+        }catch(Exception e){
+            throw e;
         }
-        equipmentTracking.setCompany(company);
-        equipmentTracking.setEquipment(equipment);
-        equipmentTracking.setCount(dto.count);
-        EquipmentTracking savedEquipmentTracking = equipmentTrackingRepository.save(equipmentTracking);
-        return savedEquipmentTracking;
+    }
+
+    @Transactional(readOnly = false)
+    public EquipmentTracking findOneById(long id) {
+        EquipmentTracking e = equipmentTrackingRepository.findOneById(id);
+        return e;
     }
     @Override
     public List<EquipmentTrackingDTO> GetByEquipmentId(String equipmentId) throws Exception {

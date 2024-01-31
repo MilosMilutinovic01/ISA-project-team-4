@@ -123,4 +123,8 @@ export class NavbarComponent implements OnInit {
   openQrCodes(): void {
     this.router.navigate(['/customerQrCodes/']);
   }
+
+  openContractList(): void {
+    this.router.navigate(['/contractList/']);
+  }
 }

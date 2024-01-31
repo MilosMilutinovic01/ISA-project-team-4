@@ -38,6 +38,7 @@ import { CustomerScheduledAppointmentsComponent } from './customer-scheduled-app
 import { EquipmentPickupQrComponent } from './equipment-pickup-qr/equipment-pickup-qr.component';
 import { CustomerPickupHistoryComponent } from './customer-pickup-history/customer-pickup-history.component';
 import { CustomerQrCodesComponent } from './customer-qr-codes/customer-qr-codes.component';
+import { ContractListComponent } from './contract-list/contract-list.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { CustomerQrCodesComponent } from './customer-qr-codes/customer-qr-codes.
     EquipmentPickupQrComponent,
     CustomerPickupHistoryComponent,
     CustomerQrCodesComponent,
+    ContractListComponent,
   ],
   imports: [
     CommonModule,
@@ -110,6 +112,7 @@ import { CustomerQrCodesComponent } from './customer-qr-codes/customer-qr-codes.
     CustomerScheduledAppointmentsComponent,
     CustomerPickupHistoryComponent,
     CustomerQrCodesComponent,
+    ContractListComponent
   ],
 })
 export class StakeholderModule {}

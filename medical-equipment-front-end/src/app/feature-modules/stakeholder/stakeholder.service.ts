@@ -16,6 +16,7 @@ import {
   ShowAppointment,
 } from 'src/app/shared/model/appointment.model';
 import { UpdateItem } from 'src/app/shared/model/update-item.model';
+import { Contract } from 'src/app/shared/model/contract.model';
 
 @Injectable({
   providedIn: 'root',
@@ -377,5 +378,16 @@ export class StakeholderService {
     return this.http.get<CompanyAdministrator[]>(
       environment.apiHost + 'companyAdministrators/company/' + id
     );
+  }
+
+  getAllContracts(): Observable<Contract[]> {
+    return this.http.get<Contract[]>(
+      environment.apiHost + 'contracts/'
+    );
+  }
+
+  updateCancellation(hospital: String, cancel: boolean): Observable<Contract> {
+    return this.http.post<Contract>(
+      environment.apiHost + 'contracts/update/' + hospital, cancel);
   }
 }
