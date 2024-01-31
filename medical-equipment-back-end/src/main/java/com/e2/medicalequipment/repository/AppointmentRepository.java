@@ -19,6 +19,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     @Query("SELECT a FROM Appointment a WHERE a.id = :id")
     Appointment findAppointmentById(long id);
 
+    @Query("SELECT a FROM Appointment a WHERE a.id = :id")
+    Appointment getAppointmentById(long id);
+
     @Query("SELECT a FROM Appointment a WHERE a.companyAdministrator.companyId = :company_id")
     List<Appointment> findAllByCompanyId(@Param("company_id") String companyId);
 

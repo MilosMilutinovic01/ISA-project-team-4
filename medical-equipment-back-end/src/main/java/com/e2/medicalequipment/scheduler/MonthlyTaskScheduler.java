@@ -21,12 +21,12 @@ public class MonthlyTaskScheduler {
     @Autowired
     ContractService contractService;
 
-    @Scheduled(cron = "0 36 13 28 * ?")
+    @Scheduled(cron = "0 39 16 31 * ?")
     public void deleteData() {
         userService.deleteAllPenaltyPoints(0);
     }
 
-    @Scheduled(cron = "0 0 12 * * ?")
+    @Scheduled(cron = "0 06 16 * * ?")
     public void sendMessageForDelivery() throws Exception {
         List<Contract> contracts = contractService.GetAll();
 

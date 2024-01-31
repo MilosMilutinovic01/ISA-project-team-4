@@ -120,12 +120,7 @@ public class ItemController {
                     updatedItem.Id = item.Id;
                     updatedItem.PickedUp = item.PickedUp;
                     message += equipmentService.Get(item.EquipmentId).getName()+ " - " + item.Count + " kom\n";
-                    //if(appointmentService.GetById(item.AppointmentId).getIsPredefined()){
                     itemService.Update(updatedItem);
-
-                    /*if(!appointmentService.GetById(item.AppointmentId).getIsPredefined()) {
-                        itemService.UpdateIrregular(updatedItem);
-                    }*/
                 } catch (Exception e) {
                     e.printStackTrace();
                     throw e;
@@ -133,9 +128,7 @@ public class ItemController {
             }
 
             message += "\nUkupna cena : " + price + " RSD\n";
-            //
-            //dto.id =
-            //equipmentTrackingService.Update()
+
             qrCodeService.sendQRCode("Your cart", userService.getUserById(userId).getUsername(), message, items.get(0).AppointmentId);
             return true;
         }
@@ -144,29 +137,23 @@ public class ItemController {
     @PostMapping(value = "/cancelReservation", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('CUSTOMER')")
     public boolean cancel(@RequestBody Map<String, Object> requestBody) throws Exception {
-        try{
-            String id = (String) requestBody.get("id");
-            Integer penalty = (Integer) requestBody.get("penalty");
-            Appointment a = appointmentService.FindById(Long.parseLong(id));
-            Long userId = 0L;
-            if(a.getIsPredefined() == false)
-                appointmentService.Delete(a.getId());
-            List<Item> items = new ArrayList<>();
-            items = itemService.GetAllByAppointmentId(id);
-            for(Item i: items){
-                userId = i.getCustomer().getId();
-                /*EquipmentTracking et = equipmentTrackingService.FindByCompanyAndEquipment(i.getCompany().getId(),i.getEquipment().getId());
-                EquipmentTrackingDTO etdto = new EquipmentTrackingDTO(et);
-                etdto.count += i.getCount();
-                equipmentTrackingService.Update(etdto);*/
-                itemService.Delete(i.getId());
-            }
-            userService.changePenaltyPoints(penalty,userId);
+        String id = (String) requestBody.get("id");
+        Integer penalty = (Integer) requestBody.get("penalty");
+        Appointment a = appointmentService.FindById(Long.parseLong(id));
+        Long userId = 0L;
+        if(a.getIsPredefined() == false)
+            appointmentService.Delete(a.getId());
+        List<Item> items = new ArrayList<>();
+        items = itemService.GetAllByAppointmentId(id);
+        for(Item i: items){
+            userId = i.getCustomer().getId();
+            /*EquipmentTracking et = equipmentTrackingService.FindByCompanyAndEquipment(i.getCompany().getId(),i.getEquipment().getId());
+            EquipmentTrackingDTO etdto = new EquipmentTrackingDTO(et);
+            etdto.count += i.getCount();
+            equipmentTrackingService.Update(etdto);*/
+            itemService.Delete(i.getId());
         }
-        catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
+        userService.changePenaltyPoints(penalty,userId);
         return true;
     }
 

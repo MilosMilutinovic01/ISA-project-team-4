@@ -20,7 +20,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
-@Transactional(readOnly = true)
 public class AppointmentServiceImpl implements AppointmentService {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzzz)", Locale.ENGLISH);
 
@@ -215,7 +214,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public Appointment FindById(Long id) throws Exception {
-        return appointmentRepository.findAppointmentById(id);
+        return appointmentRepository.getAppointmentById(id);
     }
 
 

@@ -23,7 +23,7 @@ public class FreeAdminsConcurrentAccessTest {
     public void testPessimisticLockingScenario() throws Throwable {
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
-        String startTime = "Mon Feb 05 2024 12:30:00 GMT+0100 (Central European Standard Time)";
+        String startTime = "Mon Feb 05 2024 10:30:00 GMT+0100 (Central European Standard Time)";
         executor.submit(new Runnable() {
 
             @Override

@@ -22,6 +22,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("SELECT i FROM Item i WHERE i.company.id = :company_id")
     List<Item> findAllByCompanyId(@Param("company_id") String companyId);
 
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Item i WHERE i.id = :id")
@@ -33,6 +34,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_READ)
     @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value ="0")})
-    public Item save(Item item);
+    Item save(Item item);
 
 }
