@@ -5,6 +5,7 @@ import com.e2.medicalequipment.dto.UpdateCustomerDTO;
 import com.e2.medicalequipment.model.Address;
 import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.model.CustomerCategory;
+import com.e2.medicalequipment.model.EquipmentTracking;
 import com.e2.medicalequipment.model.Role;
 import com.e2.medicalequipment.repository.AddressRepository;
 import com.e2.medicalequipment.repository.CustomerRepository;
@@ -25,6 +26,8 @@ import jakarta.persistence.PersistenceContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 @Service
@@ -53,45 +56,32 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional(readOnly = false)
-    public Customer Create(CreateCustomerDTO createCustomerDto)  {
+    public Customer Create(CreateCustomerDTO createCustomerDto) {
         try{
-        addressRepository.save(createCustomerDto.address);
-        Customer customer = new Customer(createCustomerDto);
-        customer.setPassword(passwordEncoder.encode(createCustomerDto.password));
-        customer.setRole(Role.CUSTOMER);
-        customer.setPenaltyPoints(0L);
-        customer.setCategory(CustomerCategory.REGULAR);
-        customer.setEnabled(false);
-        customer.setUsername(createCustomerDto.username);
-        String verificationToken = UUID.randomUUID().toString().replaceAll("-", "");
-        customer.setVerificationToken(verificationToken);
+            Customer customer = customerRepository.findByUsername(createCustomerDto.username);
+            if(customer != null){
+                throw new IllegalArgumentException("Username already exists.");
+            }
+            customer = new Customer(createCustomerDto);
+            customer.setPassword(passwordEncoder.encode(createCustomerDto.password));
+            customer.setRole(Role.CUSTOMER);
+            customer.setPenaltyPoints(0L);
+            customer.setCategory(CustomerCategory.REGULAR);
+            customer.setEnabled(false);
+            customer.setUsername(createCustomerDto.username);
+            String verificationToken = UUID.randomUUID().toString().replaceAll("-", "");
+            customer.setVerificationToken(verificationToken);
 
-        if (customer.getId() != null) {
-            throw new IllegalArgumentException("ID must be null for a new entity.");
-        }
-        Customer savedCustomer = customerRepository.save(customer);
-        String verificationLink = "http://localhost:4200/api/auth/verify/id=" + savedCustomer.getVerificationToken();
-        String verificationMail = generateVerificationEmail(savedCustomer.getName(), verificationLink);
+            /*if (customer.getId() != null) {
+                throw new Exception("ID must be null for a new entity.");
+            }*/
 
-        emailService.sendNotificaitionAsync(savedCustomer.getUsername(), "Mejl za potvrdu registracije ISA-team-34", verificationMail);
-        System.out.println("Email poslat valjda...");
+            // Save the Test entity using JpaRepository
+            Customer savedCustomer = customerRepository.save(customer);
 
-        return savedCustomer;
+            return savedCustomer;
         }catch (PessimisticLockingFailureException e){
             throw e;
-        }
-    }
-
-    @Transactional(readOnly = false)
-    public Customer findByUsername(String username) {
-        try {
-            logger.info("> findOneById id:{}", username);
-            Customer customer = customerRepository.findByUsername(username);
-            logger.info("< findOneById id:{}", username);
-            return customer;
-        } catch (PessimisticLockingFailureException e) {
-            logger.error("PessimisticLockingFailureException in findByUsername", e);
-            throw e; // Re-throw the exception
         }
     }
 
@@ -105,6 +95,13 @@ public class CustomerServiceImpl implements CustomerService {
                 , name, verificationLink);
     }
 
+    @Transactional(readOnly = false)
+    public Customer findByUsername(String username) {
+        Customer c = customerRepository.findByUsername(username);
+        return c;
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     @Override
     public Customer Update(UpdateCustomerDTO customerDTO) throws Exception {
         Customer customer = new Customer(customerDTO);

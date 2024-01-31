@@ -30,27 +30,22 @@ public class RegistrationConcurentAccessTest {
         Address address1 = new Address(-1L, "Kraljevo", "Srbija", "Ibarska 2", 19.849171,45.242092);
         customerDTO1.lastname = "prezime1";
         customerDTO1.password = "jaka";
-        customerDTO1.username = "test@gmail.com";
+        customerDTO1.username = "miki@gmail.com";
         customerDTO1.phoneNumber = "0603908001";
         customerDTO1.profession = "student1";
         customerDTO1.address = address1;
-
-        CreateCustomerDTO customerDTO2 = new CreateCustomerDTO();
-        customerDTO2.name = "ime2";
-        Address address2 = new Address(-2L, "Vlasenica", "BIH", "Karadjordjeva 17b", 19.849171,45.242092);
-        customerDTO2.address = address2;
-        customerDTO2.lastname = "prezime2";
-        customerDTO2.password = "jaka";
-        customerDTO2.username = "test@gmail.com";
-        customerDTO2.phoneNumber = "0603808001";
-        customerDTO2.profession = "student2";
 
         executor.submit(new Runnable() {
             @Override
             public void run() {
                 System.out.println("Startovan Thread 1");
-                    customerService.findByUsername("miki@gmail.com");
-                    //customerService.Create(customerDTO1);
+                try {
+                    customerService.Create(customerDTO1);
+                } catch (PessimisticLockingFailureException e){
+                    throw e;
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         Future<?> future2 = executor.submit(new Runnable() {
@@ -58,10 +53,15 @@ public class RegistrationConcurentAccessTest {
             @Override
             public void run() {
                 System.out.println("Startovan Thread 2");
-                try { Thread.sleep(50); } catch (InterruptedException e) { }// otprilike 150 milisekundi posle prvog threada krece da se izvrsava drugi
+                try { Thread.sleep(20); } catch (InterruptedException e) { }// otprilike 150 milisekundi posle prvog threada krece da se izvrsava drugi
 
-                    customerService.findByUsername("petar@gmail.com");
-                    //customerService.Create(customerDTO2);
+                try {
+                    customerService.Create(customerDTO1);
+                } catch (PessimisticLockingFailureException e){
+                    throw e;
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         try {
