@@ -28,5 +28,9 @@ This project is designed for managing medical equipment, utilizing IntelliJ IDE 
    log.dirs=C:/kafka/kafka-logs
 7. Run Kafka with start_kafka.bat.
 8. In PowerShell, create three topics: simulator, contract, contractNotif.
-9. After setting up Kafka, you can run the backend. The insert script will automatically run for you.
+9. To run the simulator.py script, you need to install confluent_kafka for Python. Run the following command in your terminal:
+    ```bash
+    pip install confluent_kafka
+    ```
+10. After setting up Kafka and installing the necessary Python package, you can run the backend. The insert script will automatically run for you.
 Enjoy your journey with this medical equipment management project! Feel free to contribute or use it for your specific medical purposes.
