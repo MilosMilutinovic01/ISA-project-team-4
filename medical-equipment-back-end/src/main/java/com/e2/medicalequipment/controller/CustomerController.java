@@ -27,11 +27,6 @@ public class CustomerController {
     @Autowired
     private EmailService emailService;
 
-    @GetMapping("/welcome")
-    public String welcome(){
-        return "welcome";
-    }
-
     @GetMapping(value = "/profile/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('CUSTOMER')")
     @ResponseBody
