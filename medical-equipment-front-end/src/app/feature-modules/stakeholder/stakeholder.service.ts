@@ -237,10 +237,11 @@ export class StakeholderService {
   }
 
   registerIrregularAppointment(
-    appointment: Appointment
+    appointment: Appointment,
+    customerId: string
   ): Observable<Appointment> {
     return this.http.post<Appointment>(
-      environment.apiHost + 'appointments/registerIrregular',
+      environment.apiHost + 'appointments/registerIrregular/' + customerId,
       appointment
     );
   }
@@ -381,13 +382,13 @@ export class StakeholderService {
   }
 
   getAllContracts(): Observable<Contract[]> {
-    return this.http.get<Contract[]>(
-      environment.apiHost + 'contracts/'
-    );
+    return this.http.get<Contract[]>(environment.apiHost + 'contracts/');
   }
 
   updateCancellation(hospital: String, cancel: boolean): Observable<Contract> {
     return this.http.post<Contract>(
-      environment.apiHost + 'contracts/update/' + hospital, cancel);
+      environment.apiHost + 'contracts/update/' + hospital,
+      cancel
+    );
   }
 }

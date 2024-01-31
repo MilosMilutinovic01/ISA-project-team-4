@@ -120,12 +120,12 @@ public class ItemController {
                     updatedItem.Id = item.Id;
                     updatedItem.PickedUp = item.PickedUp;
                     message += equipmentService.Get(item.EquipmentId).getName()+ " - " + item.Count + " kom\n";
-                    if(appointmentService.GetById(item.AppointmentId).getIsPredefined()){
-                        itemService.Update(updatedItem);
-                    }
-                    if(!appointmentService.GetById(item.AppointmentId).getIsPredefined()) {
+                    //if(appointmentService.GetById(item.AppointmentId).getIsPredefined()){
+                    itemService.Update(updatedItem);
+
+                    /*if(!appointmentService.GetById(item.AppointmentId).getIsPredefined()) {
                         itemService.UpdateIrregular(updatedItem);
-                    }
+                    }*/
                 } catch (Exception e) {
                     e.printStackTrace();
                     throw e;

@@ -5,6 +5,8 @@ INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitud
 INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-5, 'Beograd', 'Srbija', 'ulica3', 19.849171,45.242092);
 INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-6, 'Beograd', 'Srbija', 'ulica4', 19.849171,45.242092);
 INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-7, 'Beograd', 'Srbija', 'ulica5', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-11, 'Beograd', 'Srbija', 'ulica6', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-12, 'Beograd', 'Srbija', 'ulica6', 19.849171,45.242092);
 
 
 INSERT INTO stakeholders.users(
@@ -35,10 +37,26 @@ INSERT INTO stakeholders.users(
     id, enabled, lastname, name, password, phone_number, role, username, address_id)
 VALUES (-7, true, 'System', 'Marija', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504909001, 0, 'marija@gmail.com', -7);
 
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-8, true, 'Customer', 'Tester1', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 2, 'tester1@gmail.com', -11);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-9, true, 'Customer', 'Tester2', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 2, 'tester2@gmail.com', -12);
+
 
 INSERT INTO stakeholders.customers(
     category, penalty_points, profession, customer_id)
 VALUES (0, 0, 'student', -1);
+
+INSERT INTO stakeholders.customers(
+    category, penalty_points, profession, customer_id)
+VALUES (0, 0, 'tester', -8);
+
+INSERT INTO stakeholders.customers(
+    category, penalty_points, profession, customer_id)
+VALUES (0, 0, 'tester', -9);
 
 INSERT INTO stakeholders.company_administrators(
     company_id, company_administrator_id)
@@ -186,6 +204,14 @@ VALUES (-7, 2, -1, -1, -1, -4, FALSE, FALSE);
 INSERT INTO stakeholders.items(
     id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
 VALUES (-8, 20, -4, -1, -1, -4, FALSE, FALSE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-9, 2, null, -1, -8, -4, FALSE, FALSE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-10, 2, null, -1, -9, -4, FALSE, FALSE);
 
 
 INSERT INTO stakeholders.contracts(

@@ -64,10 +64,9 @@ public class CompanyAdministratorServiceImpl implements CompanyAdministratorServ
     }
 
     @Override
-    //@Transactional(readOnly = true)
     public List<CompanyAdministrator> GetAllByCompanyId(String companyId) throws Exception {
         List<CompanyAdministrator> admins = new ArrayList<>();
-        for(CompanyAdministrator a : companyAdministratorRepository.findAllByCompanyId(companyId)) {
+        for(CompanyAdministrator a : companyAdministratorRepository.findAllAdminsByCompanyId(companyId)) {
             admins.add(a);
         }
         return admins;

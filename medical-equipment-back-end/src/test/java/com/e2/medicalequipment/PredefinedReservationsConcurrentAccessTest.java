@@ -19,7 +19,7 @@ import java.util.concurrent.Future;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ReservationsConcurrentAccessTest {
+public class PredefinedReservationsConcurrentAccessTest {
     @Autowired
     ItemService itemService;
 
@@ -30,20 +30,29 @@ public class ReservationsConcurrentAccessTest {
     public void testPessimisticLockingScenario() throws Throwable {
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
-        CreateAppointmentDTO appointmentDTO = new CreateAppointmentDTO();
-        appointmentDTO.startTime = "Fri Feb 02 2024 14:30:00 GMT+0100 (Central European Standard Time)";
-        appointmentDTO.endTime = "Fri Feb 02 2024 15:00:00 GMT+0100 (Central European Standard Time)";
-        appointmentDTO.isPredefined = false;
-        appointmentDTO.companyAdministrator = null;
-        String customerId1 = "-8";
-        String customerId2 = "-9";
+        UpdateItemDTO updatedItem1 = new UpdateItemDTO();
+        updatedItem1.CompanyId = -1L;
+        updatedItem1.EquipmentId = -4L;
+        updatedItem1.Count = 2;
+        updatedItem1.CustomerId = -8L;
+        updatedItem1.AppointmentId = -1L;
+        updatedItem1.Id = -9L;
+        updatedItem1.PickedUp = false;
 
+        UpdateItemDTO updatedItem2 = new UpdateItemDTO();
+        updatedItem2.CompanyId = -1L;
+        updatedItem2.EquipmentId = -4L;
+        updatedItem2.Count = 2;
+        updatedItem2.CustomerId = -9L;
+        updatedItem2.AppointmentId = -1L;
+        updatedItem2.Id = -10L;
+        updatedItem2.PickedUp = false;
         executor.submit(new Runnable() {
 
             @Override
             public void run() {
                 System.out.println("Startovan Thread 1");
-                Appointment savedAppointment = appointmentService.CreateIrregular(appointmentDTO, customerId1);
+                itemService.Update(updatedItem1);
             }
         });
         Future<?> future2 = executor.submit(new Runnable() {
@@ -52,7 +61,7 @@ public class ReservationsConcurrentAccessTest {
             public void run() {
                 System.out.println("Startovan Thread 2");
                 try { Thread.sleep(50); } catch (InterruptedException e) { }
-                Appointment savedAppointment = appointmentService.CreateIrregular(appointmentDTO, customerId2);
+                itemService.Update(updatedItem2);
             }
         });
         try {

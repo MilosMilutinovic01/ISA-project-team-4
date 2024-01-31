@@ -33,6 +33,7 @@ public class ItemServiceImpl implements ItemService{
     private AppointmentRepository appointmentRepository;
     @Autowired
     private CompanyAdministratorRepository companyAdministratorRepository;
+
     @Override
     public Item Create(CreateItemDTO itemDto) throws Exception {
         Item item = new Item(itemDto);
@@ -84,38 +85,41 @@ public class ItemServiceImpl implements ItemService{
         return this.itemRepository.findAllByAppointmentId(id);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
     public Item UpdateIrregular(UpdateItemDTO newItem){
         try{
-        Item item = itemRepository.findById(newItem.Id);
-        Appointment appointment = appointmentRepository.findAppointmentById(newItem.AppointmentId);
+            Item item = itemRepository.findById(newItem.Id);
+            Appointment appointment = appointmentRepository.findAppointmentById(newItem.AppointmentId);
 
 
-        // postavljanje admina
-        List<CompanyAdministrator> allAdmins = companyAdministratorRepository.findAllByCompanyId(String.valueOf(newItem.CompanyId));
+            // postavljanje admina
+            List<CompanyAdministrator> allAdmins = companyAdministratorRepository.findAllByCompanyId(String.valueOf(newItem.CompanyId));
 
-        List<CompanyAdministrator> unavailableAdmins = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAllByStartTime(appointment.getStartTime())){
-            if(a.getCompanyAdministrator() != null) {
-                unavailableAdmins.add(a.getCompanyAdministrator());
+            List<CompanyAdministrator> unavailableAdmins = new ArrayList<>();
+            for(Appointment a : appointmentRepository.findAllByStartTime(appointment.getStartTime())){
+                if(a.getCompanyAdministrator() != null) {
+                    unavailableAdmins.add(a.getCompanyAdministrator());
+                }
             }
-        }
-        List<CompanyAdministrator> freeAdmins = allAdmins.stream()
-                .filter(ca -> unavailableAdmins.stream()
-                .noneMatch(unavailable -> Objects.equals(ca.getId(), unavailable.getId())))
-                .collect(Collectors.toList());
+            List<CompanyAdministrator> freeAdmins = allAdmins.stream()
+                    .filter(ca -> unavailableAdmins.stream()
+                    .noneMatch(unavailable -> Objects.equals(ca.getId(), unavailable.getId())))
+                    .collect(Collectors.toList());
 
 
-        Random rand = new Random();
-        CompanyAdministrator randomAdmin = freeAdmins.get(rand.nextInt(freeAdmins.size()));
-        appointment.setCompanyAdministrator(randomAdmin);
+            Random rand = new Random();
+            CompanyAdministrator randomAdmin = freeAdmins.get(rand.nextInt(freeAdmins.size()));
+            appointment.setCompanyAdministrator(randomAdmin);
 
-        item.setAppointment(appointment);
-        if ((item.getId() == null)){
-            throw new Exception("ID must not be null for updating entity.");
-        }
-        Item savedItem = itemRepository.save(item);
-        return savedItem;
+            item.setAppointment(appointment);
+
+            if ((item.getId() == null)){
+                throw new Exception("ID must not be null for updating entity.");
+            }
+
+            Item savedItem = itemRepository.save(item);
+
+            return savedItem;
         }catch (PessimisticLockingFailureException e){
             throw e;
         } catch (Exception e) {

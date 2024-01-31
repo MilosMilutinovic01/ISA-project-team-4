@@ -324,39 +324,24 @@ export class CartComponent {
   createIrregular(): void {
     this.selectedAppointment.isPredefined = false;
     this.service
-      .registerIrregularAppointment(this.selectedAppointment)
+      .registerIrregularAppointment(
+        this.selectedAppointment,
+        this.authService.getCurrentUserId().toString()
+      )
       .subscribe(
         (response) => {
           this.selectedAppointment = response;
-          console.log('Registration successful:', this.selectedAppointment);
-          this.updateItemsInCart(this.selectedAppointment);
+          if (this.selectedAppointment !== null) {
+            alert('Succesfully finished reservation!');
+            this.router.navigate(['/companyProfile/', this.companyId]);
+          } else {
+            alert('Failed to finish reservationc!');
+          }
         },
         (error) => {
           console.error('Registration failed:', error);
         }
       );
-  }
-
-  updateItemsInCart(appointment: Appointment) {
-    const updateItems: UpdateItem[] = [];
-    console.log('APPOINTMENT TO UPDATE: ', appointment);
-
-    for (let i = 0; i < this.items.length; i++) {
-      this.items[i].appointment = appointment;
-
-      const updateItem: UpdateItem = {
-        Id: this.items[i].id || 0,
-        Count: this.items[i].count,
-        AppointmentId: this.items[i].appointment?.id || 0,
-        CompanyId: this.items[i].company.id || 0,
-        CustomerId: this.items[i].customer.id || 0,
-        EquipmentId: this.items[i].equipment?.id || 0,
-      };
-
-      updateItems.push(updateItem);
-    }
-
-    this.updateItems(updateItems);
   }
 
   chooseIrregular(): void {
@@ -428,7 +413,7 @@ export class CartComponent {
           alert('Succesfully finished reservation!');
           this.router.navigate(['/companyProfile/', this.companyId]);
         } else {
-          alert('Failed to finish reservationc!');
+          alert('Failed to finish reservation!');
         }
       },
       error: (error) => {

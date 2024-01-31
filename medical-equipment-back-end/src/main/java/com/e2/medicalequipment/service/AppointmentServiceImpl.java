@@ -1,9 +1,11 @@
 package com.e2.medicalequipment.service;
 
 import com.e2.medicalequipment.dto.CreateAppointmentDTO;
+import com.e2.medicalequipment.dto.UpdateItemDTO;
 import com.e2.medicalequipment.model.*;
 import com.e2.medicalequipment.repository.AppointmentRepository;
 import com.e2.medicalequipment.repository.CompanyAdministratorRepository;
+import com.e2.medicalequipment.repository.EquipmentRepository;
 import com.e2.medicalequipment.repository.ItemRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PessimisticLockException;
@@ -28,6 +30,14 @@ public class AppointmentServiceImpl implements AppointmentService {
     private CompanyAdministratorRepository companyAdministratorRepository;
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private ItemService itemService;
+    @Autowired
+    private QRCodeService qrCodeService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private EquipmentRepository equipmentRepository;
 
     @Override
     public Appointment Create(CreateAppointmentDTO createAppointmentDto) throws Exception {
@@ -62,26 +72,67 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Appointment CreateIrregular(CreateAppointmentDTO createAppointmentDto) {
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    public Appointment CreateIrregular(CreateAppointmentDTO createAppointmentDto, String customerId) {
         try{
-        Appointment appointment = new Appointment();
-        LocalDateTime startTime = LocalDateTime.parse(createAppointmentDto.startTime, formatter);
-        appointment.setStartTime(startTime);
-        LocalDateTime endTime = LocalDateTime.parse(createAppointmentDto.endTime, formatter);
-        appointment.setEndTime(endTime);
+            Appointment appointment = new Appointment();
+            LocalDateTime startTime = LocalDateTime.parse(createAppointmentDto.startTime, formatter);
+            appointment.setStartTime(startTime);
+            LocalDateTime endTime = LocalDateTime.parse(createAppointmentDto.endTime, formatter);
+            appointment.setEndTime(endTime);
 
-        if (appointment.getId() != null) {
-            throw new Exception("ID must be null for a new entity.");
-        }
-        Appointment savedAppointment = appointmentRepository.save(appointment);
-        return savedAppointment;
+            if (appointment.getId() != null) {
+                throw new Exception("ID must be null for a new entity.");
+            }
+            Appointment savedAppointment = appointmentRepository.save(appointment);
+
+            List<Item> updatedItems = UpdateItems(savedAppointment, customerId);
+            for (Item i : updatedItems){
+                System.out.println(i.getId());
+                System.out.println(i.getAppointment());
+                System.out.println(i.getCustomer());
+            }
+
+            return savedAppointment;
         }catch (PessimisticLockingFailureException e){
             throw e;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    private List<Item> UpdateItems(Appointment savedAppointment, String customerId){
+        List<Item> customerItems = itemRepository.findAllByCustomerId(customerId);
+        List<Item> currentItems = new ArrayList<>();
+        for(Item i : customerItems){
+            if(i.getAppointment() == null){
+                i.setAppointment(savedAppointment);
+                currentItems.add(i);
+            }
+        }
+
+        int price = 0;
+        String message = "Broj rezervacije : " + savedAppointment.getId() + "\n\nRezervisana oprema :\n";
+
+        for(Item item : currentItems){
+            price += equipmentRepository.getById(item.getEquipment().getId()).getPrice() * item.getCount();
+            message += equipmentRepository.getById(item.getEquipment().getId()).getName()+ " - " + item.getCount() + " kom\n";
+
+            UpdateItemDTO updatedItem = new UpdateItemDTO();
+            updatedItem.CompanyId = item.getCompany().getId();
+            updatedItem.EquipmentId = item.getEquipment().getId();
+            updatedItem.Count = item.getCount();
+            updatedItem.CustomerId = item.getCustomer().getId();
+            updatedItem.AppointmentId = item.getAppointment().getId();
+            updatedItem.Id = item.getId();
+            updatedItem.PickedUp = item.isPickedUp();
+
+            itemService.UpdateIrregular(updatedItem);
+        }
+
+        qrCodeService.sendQRCode("Your cart", userService.getUserById(Long.parseLong(customerId)).getUsername(), message, savedAppointment.getId());
+        return currentItems;
     }
 
     @Override
