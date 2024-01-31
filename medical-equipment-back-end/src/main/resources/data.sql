@@ -203,3 +203,15 @@ VALUES ('Poliklinika Galetic', 500, 31, -4,false);
 INSERT INTO stakeholders.contracts(
     hospital, count, date_in_month, equipment_id, cancelled_this_month)
 VALUES ('Poliklinika Pekic', 1000, 30, -2,false);
+
+INSERT INTO stakeholders.addresses(
+    id, city, country, latitude, longitude, street)
+VALUES (-11, 'Novi Sad', 'Srbija', 45.242092, 19.849171, 'Ilije Bircanina 17');
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-8, true, 'Ranic', 'Ana', '$2a$10$MV0rMLQti72ukEK25abmzuBd1N55Jj4cR7r7c4SvQYHptWjnWaef2', '0666666666', 2, 'anaranic01@gmail.com', -11);
+
+INSERT INTO stakeholders.customers(
+    category, penalty_points, profession, verification_token, customer_id)
+VALUES (0, 0, 'student', '8ece0a34377047839d598e9afadc308c', -8);
