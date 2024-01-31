@@ -53,7 +53,7 @@ public class RegistrationConcurentAccessTest {
             @Override
             public void run() {
                 System.out.println("Startovan Thread 2");
-                try { Thread.sleep(20); } catch (InterruptedException e) { }// otprilike 150 milisekundi posle prvog threada krece da se izvrsava drugi
+                try { Thread.sleep(20); } catch (InterruptedException e) { }
 
                 try {
                     customerService.Create(customerDTO1);
