@@ -1,35 +1,117 @@
-INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-1, 'Kraljevo', 'Srbija', 'Ibarska 2');
-INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-2, 'Vlasenica', 'BIH', 'Karadjordjeva 17b');
-INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-3, 'Bijeljina', 'BIH', 'ulica1');
-INSERT INTO stakeholders.addresses(id, city, country, street) VALUES (-4, 'Novi Sad', 'Srbija', 'ulica2');
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-1, 'Kraljevo', 'Srbija', 'Ibarska 2', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-2, 'Vlasenica', 'BIH', 'Karadjordjeva 17b', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-3, 'Bijeljina', 'BIH', 'ulica1', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-4, 'Novi Sad', 'Srbija', 'ulica2', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-5, 'Beograd', 'Srbija', 'ulica3', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-6, 'Beograd', 'Srbija', 'ulica4', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-7, 'Beograd', 'Srbija', 'ulica5', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-11, 'Beograd', 'Srbija', 'ulica6', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(id, city, country, street, longitude, latitude) VALUES (-12, 'Beograd', 'Srbija', 'ulica6', 19.849171,45.242092);
+INSERT INTO stakeholders.addresses(
+    id, city, country, latitude, longitude, street)
+VALUES (-13, 'Novi Sad', 'Srbija', 45.242092, 19.849171, 'Ilije Bircanina 17');
+
+
+
+INSERT INTO stakeholders.users(
+	id, enabled, lastname, name, password, phone_number, role, username, address_id)
+	VALUES (-1, true, 'Customer', 'Miki', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 2, 'miki@gmail.com', -1);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-2, true, 'Company', 'Petar', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 1, 'petar@gmail.com', -2);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-3, true, 'Company', 'Vlado', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 1, 'vlado@gmail.com', -3);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-4, true, 'Company', 'Verica', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 1, 'verica@gmail.com', -4);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-5, true, 'Company', 'Minja', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504909001, 1, 'minja@gmail.com', -5);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-6, true, 'Company', 'Milica', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 1, 'milica@gmail.com', -6);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-7, true, 'System', 'Marija', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504909001, 0, 'marija@gmail.com', -7);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-8, true, 'Customer', 'Tester1', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 2, 'tester1@gmail.com', -11);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-9, true, 'Customer', 'Tester2', '$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6', 0504901001, 2, 'tester2@gmail.com', -12);
+
+INSERT INTO stakeholders.users(
+    id, enabled, lastname, name, password, phone_number, role, username, address_id)
+VALUES (-10, true, 'Ranic', 'Ana', '$2a$10$MV0rMLQti72ukEK25abmzuBd1N55Jj4cR7r7c4SvQYHptWjnWaef2', '0666666666', 2, 'anaranic01@gmail.com', -11);
+
 
 INSERT INTO stakeholders.customers(
-    category, user_type, address_id, id, penalty_points, email, lastname, name, password, phone_number, profession)
-VALUES (0, 2, -1, -1, 10, 'milosmilutinovicg@gmail.com', 'milutinovic', 'milos', 'sifra1', '0603908001', 'student');
+    category, penalty_points, profession, customer_id)
+VALUES (0, 0, 'student', -1);
+
 INSERT INTO stakeholders.customers(
-    category, user_type, address_id, id, penalty_points, email, lastname, name, password, phone_number, profession)
-VALUES (0, 2, -2, -2, 10, 'jblanusa13@gmail.com', 'blanusa', 'jelena', 'sifra2', '0603908001', 'student');
+    category, penalty_points, profession, customer_id)
+VALUES (0, 0, 'tester', -8);
+
+INSERT INTO stakeholders.customers(
+    category, penalty_points, profession, customer_id)
+VALUES (0, 0, 'tester', -9);
+
+INSERT INTO stakeholders.customers(
+    category, penalty_points, profession, verification_token, customer_id)
+VALUES (0, 0, 'ANA', '8ece0a34377047839d598e9afadc308c', -10);
+
+INSERT INTO stakeholders.company_administrators(
+    company_id, company_administrator_id)
+VALUES (-1, -2);
+INSERT INTO stakeholders.company_administrators(
+    company_id, company_administrator_id)
+VALUES (-2, -3);
+INSERT INTO stakeholders.company_administrators(
+    company_id, company_administrator_id)
+VALUES (-3, -4);
+
+INSERT INTO stakeholders.company_administrators(
+    company_id, company_administrator_id)
+VALUES (-1, -5);
+INSERT INTO stakeholders.company_administrators(
+    company_id, company_administrator_id)
+VALUES (-1, -6);
+
+INSERT INTO stakeholders.system_administrators(
+    has_logged_before, system_administrator_id)
+VALUES (true, -7);
 
 INSERT INTO stakeholders.addresses(
-    id, city, country, street)
-VALUES (-5, 'Novi Sad', 'Srbija', 'Cara Dusana 12');
+
+    id, city, country, street, longitude, latitude)
+VALUES (-8, 'Novi Sad', 'Srbija', 'Cara Dusana 12', 19.849171,45.242092);
 INSERT INTO stakeholders.companies(
     average_rating, end_time, start_time, address_id, id, description, name)
-VALUES (4,'14:30','08:30', -5, -1, 'Neki opiss', 'MEDLAB');
+VALUES (4,'14:30','08:30', -8, -1, 'Neki opiss', 'MEDLAB');
 
 INSERT INTO stakeholders.addresses(
-    id, city, country, street)
-VALUES (-6, 'Novi Sad', 'Srbija', 'Fruskogorska 12');
+    id, city, country, street, longitude, latitude)
+VALUES (-9, 'Novi Sad', 'Srbija', 'Fruskogorska 12', 19.849171,45.242092);
 INSERT INTO stakeholders.companies(
     average_rating, end_time, start_time, address_id, id, description, name)
-VALUES (3,'17:30','07:30', -6, -2, 'Neki opiss', 'MEDICINSKA OPREMA NS');
+VALUES (3,'17:30','07:30', -9, -2, 'Neki opiss', 'MEDICINSKA OPREMA NS');
 
 INSERT INTO stakeholders.addresses(
-    id, city, country, street)
-VALUES (-7, 'Novi Sad', 'Srbija', 'Cara Dusana 12');
+    id, city, country, street, longitude, latitude)
+VALUES (-10, 'Novi Sad', 'Srbija', 'Cara Dusana 12', 19.849171,45.242092);
 INSERT INTO stakeholders.companies(
     average_rating, end_time, start_time, address_id, id, description, name)
-VALUES (5,'14:30','08:30', -7, -3, 'Neki opiss', 'OPREMA021');
+VALUES (5,'14:30','08:30', -10, -3, 'Neki opiss', 'OPREMA021');
 
 INSERT INTO stakeholders.equipment(
     id, description, name, price, type)
@@ -46,34 +128,158 @@ VALUES (-4, 'za intramuskularne injekcije', 'igla', 500, 0);
 
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
-VALUES (-1, 300, -1, -1);
+VALUES (-1, 3000, -1, -1);
 
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
-VALUES (-2, 250, -2, -2);
+VALUES (-2, 2500, -2, -2);
 
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
-VALUES (-3, 1000, -2, -3);
+VALUES (-3, 10000, -2, -3);
 
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
-VALUES (-4, 250, -1, -4);
+VALUES (-4, 2500, -1, -4);
 
 INSERT INTO stakeholders.equipment_tracking(
     id, count, company_id, equipment_id)
-VALUES (-5, 240, -3, -4);
+VALUES (-5, 2400, -3, -4);
 
-INSERT INTO stakeholders.equipment_tracking(
-    id, count, company_id, equipment_id)
-VALUES (-6, 100, -2, -3);
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-1, '2024-02-01T10:00:00.000Z', '2024-02-01T09:30:00.000Z', true, -2);
 
-INSERT INTO stakeholders.company_administrators(
-    user_type, address_id, company_id, id, email, lastname, name, password, phone_number)
-VALUES (1, -1, -1, -1, 'pajic@gmail.com', 'Pajic', 'Petar', '123', '+381649699696');
-INSERT INTO stakeholders.company_administrators(
-    user_type, address_id, company_id, id, email, lastname, name, password, phone_number)
-VALUES (1, -2, -1, -2, 'gajic@gmail.com', 'Gajic', 'Goran', '123456', '+381649699696');
-INSERT INTO stakeholders.company_administrators(
-    user_type, address_id, company_id, id, email, lastname, name, password, phone_number)
-VALUES (1, -3, -1, -3, 'djajic@gmail.com', 'Djajic', 'Zoran', '321', '+381633699696');
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-2, '2024-02-05T11:00:00.000Z', '2024-02-05T10:30:00.000Z', true, -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-3, '2024-02-03T10:00:00.000Z', '2024-02-03T09:30:00.000Z', true, -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-4, '2024-02-06T11:00:00.000Z', '2024-02-06T10:30:00.000Z', true, -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-5, '2024-02-07T12:00:00.000Z', '2024-02-07T11:30:00.000Z', true, -2);
+
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-6, '2024-01-27T12:00:00.000Z', '2024-01-27T11:30:00.000Z', true, -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-7, '2024-01-25T14:00:00.000Z', '2024-01-25T13:30:00.000Z', true, -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-8, '2024-01-24T11:00:00.000Z', '2024-01-24T10:30:00.000Z', true, -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-9, '2024-01-23T11:00:00.000Z', '2024-01-23T10:30:00.000Z', true, -2);
+
+
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-10, '2024-02-09T11:00:00.000Z', '2024-02-09T10:30:00.000Z', true, -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-11, '2024-02-08T11:00:00.000Z', '2024-02-08T10:30:00.000Z', true, -2);
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-12, '2024-02-09T13:00:00.000Z', '2024-02-09T12:30:00.000Z', true, -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-13, '2024-02-08T14:00:00.000Z', '2024-02-08T13:30:00.000Z', true, -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-14, '2024-02-07T10:00:00.000Z', '2024-02-07T09:30:00.000Z', true, -2);
+
+INSERT INTO stakeholders.appointments(
+    id, end_time, start_time, is_predefined, company_administrator_id)
+VALUES (-15, '2024-02-06T10:00:00.000Z', '2024-02-06T09:30:00.000Z', true, -2);
+
+
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-1, 100, -1, -1, -10, -1, FALSE, FALSE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-2, 10, -2, -1, -10, -1, FALSE, FALSE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-3, 20, -2, -1, -10, -4, FALSE, FALSE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-4, 150, -3, -1, -1, -1, FALSE, FALSE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-5, 50, -4, -1, -1, -4, FALSE, FALSE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-6, 40, -5, -1, -1, -1, FALSE, FALSE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-7, 40, -5, -1, -1, -4, FALSE, FALSE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-8, 1, -6, -1, -1, -1, TRUE, TRUE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-9, 1, -6, -1, -1, -4, TRUE, TRUE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-10, 15, -7, -1, -1, -1, TRUE, TRUE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-11, 10, -8, -1, -1, -4, FALSE, TRUE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-12, 30, -9, -1, -1, -4, TRUE, TRUE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-13, 2, null, -1, -8, -4, FALSE, FALSE);
+
+INSERT INTO stakeholders.items(
+    id, count, appointment_id, company_id, customer_id, equipment_id, picked_up, qr_code_processed)
+VALUES (-14, 2, null, -1, -9, -4, FALSE, FALSE);
+
+
+INSERT INTO stakeholders.contracts(
+    hospital, count, date_in_month, equipment_id, cancelled_this_month)
+VALUES ('New hospital', 500, 5, -1,false);
+INSERT INTO stakeholders.contracts(
+    hospital, count, date_in_month, equipment_id, cancelled_this_month)
+VALUES ('Eurolab', 1000, 5, -3,false);
+INSERT INTO stakeholders.contracts(
+    hospital, count, date_in_month, equipment_id, cancelled_this_month)
+VALUES ('HealthMedic', 50, 10, -2,false);
+INSERT INTO stakeholders.contracts(
+    hospital, count, date_in_month, equipment_id, cancelled_this_month)
+VALUES ('Poliklinika Galetic', 500, 31, -4,false);
+INSERT INTO stakeholders.contracts(
+    hospital, count, date_in_month, equipment_id, cancelled_this_month)
+VALUES ('Poliklinika Pekic', 1000, 30, -2,false);
+

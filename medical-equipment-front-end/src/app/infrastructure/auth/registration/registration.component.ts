@@ -37,7 +37,7 @@ export class RegistrationComponent {
   registrationForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     lastname: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    username: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
     rePassword: new FormControl('', [Validators.required]),
     street: new FormControl('', [Validators.required]),
@@ -55,12 +55,14 @@ export class RegistrationComponent {
       street: this.registrationForm.value.street || '',
       city: this.registrationForm.value.city || '',
       country: this.registrationForm.value.country || '',
+      lat: NaN,
+      lng: NaN,
     };
 
     const registration: Registration = {
       name: this.registrationForm.value.name || '',
       lastname: this.registrationForm.value.lastname || '',
-      email: this.registrationForm.value.email || '',
+      username: this.registrationForm.value.username || '',
       password: this.registrationForm.value.password || '',
       address: address,
       phoneNumber: this.registrationForm.value.phoneNumber || '',
@@ -74,7 +76,7 @@ export class RegistrationComponent {
     ) {
       this.authService.register(registration).subscribe({
         next: () => {
-          alert('Succesfully created!');
+          alert('We sent you verification mail!');
           this.stakeholderService.setIsRegister(true);
           this.router.navigate(['']);
         },
@@ -90,8 +92,6 @@ export class RegistrationComponent {
     ) {
       alert('Must enter same passwords!');
     } else {
-      console.log(registration);
-      console.log(this.registrationForm.value);
       alert('Must enter valid fields!');
     }
   }

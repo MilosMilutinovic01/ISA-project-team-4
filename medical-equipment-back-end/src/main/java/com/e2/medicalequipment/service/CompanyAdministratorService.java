@@ -12,4 +12,6 @@ public interface CompanyAdministratorService {
     CompanyAdministrator Get(String id) throws Exception;
     CompanyAdministrator Update(UpdateCompanyAdministratorDTO companyAdministratorDTO) throws Exception;
     List<CompanyAdministrator> GetAll() throws Exception;
+
+    List<CompanyAdministrator> GetAllByCompanyId(String companyId) throws Exception;
 }

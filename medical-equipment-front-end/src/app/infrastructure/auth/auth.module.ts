@@ -5,9 +5,10 @@ import { RegistrationComponent } from './registration/registration.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../material/material.module';
+import { VerificationComponent } from './verification/verification.component';
 
 @NgModule({
-  declarations: [RegistrationComponent],
+  declarations: [RegistrationComponent, VerificationComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -2,11 +2,16 @@ package com.e2.medicalequipment.model;
 
 import com.e2.medicalequipment.dto.CompanyAdministratorDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyAdministratorDTO;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 
 @Entity
 @Table(schema = "stakeholders", name = "companyAdministrators")
-public class CompanyAdministrator extends User{
+@PrimaryKeyJoinColumn(name = "company_administrator_id")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
+public class CompanyAdministrator extends User implements Serializable {
 
     @Column(name = "company_id")
     private Long companyId;
@@ -19,7 +24,7 @@ public class CompanyAdministrator extends User{
 
     }
 
-    public CompanyAdministrator(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType, Long companyId) {
+    public CompanyAdministrator(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, Role role, Long companyId, Boolean enabled) {
         super(id,
                 name,
                 lastname,
@@ -27,7 +32,8 @@ public class CompanyAdministrator extends User{
                 address,
                 phoneNumber,
                 password,
-                userType);
+                role,
+                true);
         this.companyId = companyId;
     }
 
@@ -35,10 +41,12 @@ public class CompanyAdministrator extends User{
         super(null,
                 companyAdministratorDTO.name,
                 companyAdministratorDTO.lastname,
-                companyAdministratorDTO.email,
+                companyAdministratorDTO.username,
                 companyAdministratorDTO.address,
                 companyAdministratorDTO.phoneNumber,
-                companyAdministratorDTO.password);
+                companyAdministratorDTO.password,
+                Role.COMPANY_ADMINISTRATOR,
+                true);
         this.companyId = companyAdministratorDTO.companyId;
     }
 
@@ -46,12 +54,18 @@ public class CompanyAdministrator extends User{
         super(companyAdministratorDTO.id,
                 companyAdministratorDTO.name,
                 companyAdministratorDTO.lastname,
-                companyAdministratorDTO.email,
+                companyAdministratorDTO.username,
                 companyAdministratorDTO.address,
                 companyAdministratorDTO.phoneNumber,
-                companyAdministratorDTO.password);
+                companyAdministratorDTO.password,
+                Role.COMPANY_ADMINISTRATOR,
+                true);
         this.companyId = companyAdministratorDTO.companyId;
 
+    }
+
+    public CompanyAdministrator(CompanyAdministrator companyAdministrator) {
+        this.companyId = companyAdministrator.companyId;
     }
 
     public Long getCompanyId() {

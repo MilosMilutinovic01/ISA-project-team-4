@@ -1,12 +1,23 @@
 package com.e2.medicalequipment.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import static jakarta.persistence.InheritanceType.JOINED;
 
 @Entity
-@Inheritance(strategy=TABLE_PER_CLASS)
-public class User {
+@Inheritance(strategy=JOINED)
+@Table(schema = "stakeholders", name = "users")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
+public class User implements UserDetails, Serializable {
     @Id
     @SequenceGenerator(name = "userSeq", sequenceName = "userSeq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSeq")
@@ -17,10 +28,10 @@ public class User {
     @Column(name = "lastname")
     private String lastname;
 
-    @Column(name = "email", unique = true)
-    private String email;
+    @Column(name = "username", unique = true)
+    private String username;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
@@ -30,28 +41,42 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "userType")
-    private UserType userType;
+    @Column(name = "role")
+    private Role role;
 
+    public User(Customer customer) {
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Column(name = "enabled")
+    private Boolean enabled;
     public User() {
     }
 
-    public User(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType) {
+    public User(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, Role role, Boolean enabled) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
-        this.email = email;
+        this.username = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.password = password;
-        this.userType = userType;
+        this.role = role;
+        this.enabled = enabled;
     }
 
     public User(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
-        this.email = email;
+        this.username = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.password = password;
@@ -81,12 +106,9 @@ public class User {
         this.lastname = lastname;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Address getAddress() {
@@ -105,19 +127,52 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        grantedAuthorities.add(new SimpleGrantedAuthority(role.name()));
+        return grantedAuthorities;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public Role getRole() {
+        return role;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

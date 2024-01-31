@@ -1,0 +1,38 @@
+<div>
+    <form class="edit-profile-form" [formGroup]="editEquipmentTrackingForm">
+        <div class="form-field">
+            <mat-form-field appearance="outline">
+                <mat-label>Name:</mat-label>
+                <input matInput placeholder="Name" formControlName="name">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Count:</mat-label>
+              <input matInput placeholder="Count" formControlName="count">
+          </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Description:</mat-label>
+              <input matInput placeholder="Description" formControlName="description">
+          </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Type:</mat-label>
+              <input matInput placeholder="Type" formControlName="type">
+          </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Price:</mat-label>
+              <input matInput placeholder="Price" formControlName="price">
+          </mat-form-field>
+        </div>
+       
+        <button class="bottom-right-button" mat-icon-button (click)="saveChanges()">
+          <mat-icon>save</mat-icon>
+        </button>
+      </form>
+    </div>

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(schema = "stakeholders", name = "customers")
+@PrimaryKeyJoinColumn(name = "customer_id")
 public class Customer extends User{
     @Column(name = "profession")
     private String profession;
@@ -16,19 +17,23 @@ public class Customer extends User{
     @Column(name = "category")
     private CustomerCategory category;
 
+    @Column(name = "verificationToken")
+    private String verificationToken;
+
     public Customer() {
 
     }
 
-    public Customer(Long id, String name, String lastname, String email, Address address, String phoneNumber, String password, UserType userType, String profession, Long penaltyPoints, CustomerCategory category) {
+    public Customer(Long id, String name, String lastname, String username, Address address, String phoneNumber, String password, Role role, String profession, Long penaltyPoints, CustomerCategory category, Boolean enabled) {
         super(id,
                 name,
                 lastname,
-                email,
+                username,
                 address,
                 phoneNumber,
                 password,
-                userType);
+                role,
+                enabled);
         this.profession = profession;
         this.penaltyPoints = penaltyPoints;
         this.category = category;
@@ -38,7 +43,7 @@ public class Customer extends User{
         super(null,
                 createCustomerDTO.name,
                 createCustomerDTO.lastname,
-                createCustomerDTO.email,
+                createCustomerDTO.username,
                 createCustomerDTO.address,
                 createCustomerDTO.phoneNumber,
                 createCustomerDTO.password);
@@ -48,13 +53,21 @@ public class Customer extends User{
         super(updateCustomerDTO.id,
                 updateCustomerDTO.name,
                 updateCustomerDTO.lastname,
-                updateCustomerDTO.email,
+                updateCustomerDTO.username,
                 updateCustomerDTO.address,
                 updateCustomerDTO.phoneNumber,
                 updateCustomerDTO.password);
         this.profession = updateCustomerDTO.profession;
         this.penaltyPoints = updateCustomerDTO.penaltyPoints;
         this.category = updateCustomerDTO.category;
+    }
+
+    public Customer(Customer customer) {
+        super(customer);
+        this.profession = customer.profession;
+        this.penaltyPoints = customer.penaltyPoints;
+        this.category = customer.category;
+        this.verificationToken = customer.verificationToken;
     }
 
     public String getProfession() {
@@ -80,4 +93,8 @@ public class Customer extends User{
     public void setCategory(CustomerCategory category) {
         this.category = category;
     }
+
+    public String getVerificationToken() { return verificationToken; }
+
+    public void setVerificationToken(String verificationToken) { this.verificationToken = verificationToken; }
 }

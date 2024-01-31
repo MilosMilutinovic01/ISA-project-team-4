@@ -13,10 +13,9 @@ import { MatSelectionListChange } from '@angular/material/list';
   styleUrls: ['./equipment-view.component.css'],
 })
 export class EquipmentViewComponent implements OnInit {
-  equipment: Equipment[] = [];
-  equipmentTracking: EquipmentTracking[] = [];
-  selectedOption: string = "empty";
-
+  equipment: any[] = [];
+  equipmentTracking: { [key: number]: any[] } = {};
+  selectedOption: string = 'empty';
 
   searchForm = new FormGroup({
     name: new FormControl(''),
@@ -30,8 +29,9 @@ export class EquipmentViewComponent implements OnInit {
 
   getEquipment(): void {
     this.service.getEquipment().subscribe({
-      next: (result: Equipment[]) => {
+      next: (result: any[]) => {
         this.equipment = result;
+        this.getEquipmentTracking();
       },
       error: () => {
         console.log(console.error());
@@ -39,16 +39,27 @@ export class EquipmentViewComponent implements OnInit {
     });
   }
 
+  getEquipmentTracking(): void {
+    this.equipment.forEach((e) => {
+      this.service.getEquipmentTrackingByEquipment(e.id).subscribe({
+        next: (result: any) => {
+          this.equipmentTracking[e.id] = result;
+        },
+        error: () => {
+          console.log(console.error());
+        },
+      });
+    });
+  }
+
   selectChip(type: string): void {
     this.selectedOption = type;
-    const name = this.searchForm.value.name || "empty";
-
-
+    const name = this.searchForm.value.name || 'empty';
     this.service.searchEquipment(name, this.selectedOption).subscribe({
-      next: (result: EquipmentTracking[]) => {
-        this.equipmentTracking = result;
-        this.equipment = [];
-        console.log(result);
+      next: (result: any[]) => {
+        this.equipment = result;
+        this.equipmentTracking = {};
+        this.getEquipmentTracking();
       },
       error: () => {
         console.log(console.error());
@@ -57,14 +68,12 @@ export class EquipmentViewComponent implements OnInit {
   }
 
   search(): void {
-    const name = this.searchForm.value.name || "empty";
-
-
+    const name = this.searchForm.value.name || 'empty';
     this.service.searchEquipment(name, this.selectedOption).subscribe({
-      next: (result: EquipmentTracking[]) => {
-        this.equipmentTracking = result;
-        this.equipment = [];
-        console.log(result);
+      next: (result: any[]) => {
+        this.equipment = result;
+        this.equipmentTracking = {};
+        this.getEquipmentTracking();
       },
       error: () => {
         console.log(console.error());
@@ -72,10 +81,9 @@ export class EquipmentViewComponent implements OnInit {
     });
   }
 
-   refresh():void {
+  refresh(): void {
     this.getEquipment();
-    this.equipmentTracking = [];
-     this.searchForm.setValue({name: ''})
-     this.selectedOption = "empty"
-   }
+    this.searchForm.setValue({ name: '' });
+    this.selectedOption = 'empty';
+  }
 }

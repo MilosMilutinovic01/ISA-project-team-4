@@ -1,5 +1,6 @@
 package com.e2.medicalequipment.model;
 
+import com.e2.medicalequipment.dto.EquipmentDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -30,6 +31,22 @@ public class Equipment {
         this.description = description;
         this.type = type;
         this.price = price;
+    }
+
+    public Equipment(EquipmentDTO equipmentDTO) {
+        this.id = equipmentDTO.id;
+        this.name = equipmentDTO.name;
+        this.description = equipmentDTO.description;
+        this.type = equipmentDTO.type;
+        this.price = equipmentDTO.price;
+    }
+
+    public Equipment(Equipment equipment) {
+        this.id = equipment.id;
+        this.name = equipment.name;
+        this.description = equipment.description;
+        this.type = equipment.type;
+        this.price = equipment.price;
     }
 
     public Long getId() {

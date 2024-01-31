@@ -1,0 +1,32 @@
+.dialog {
+  flex: auto;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20rem;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.dialog-title {
+  padding: 3%;
+  font-weight: 700;
+}
+
+.dialog-content {
+  margin: auto;
+  width: max-content;
+  max-height: 25rem;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+
+.dialog-actions {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+}
+
+.form-field {
+  width: 80%;
+}

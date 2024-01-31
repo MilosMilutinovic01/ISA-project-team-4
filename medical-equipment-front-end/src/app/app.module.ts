@@ -5,15 +5,18 @@ import { AuthModule } from './infrastructure/auth/auth.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './infrastructure/auth/login/login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoutingModule } from './infrastructure/routing/routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MaterialModule } from './infrastructure/material/material.module';
 import { StakeholderModule } from './feature-modules/stakeholder/stakeholder.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
+import { MapComponent } from './shared/map/map.component';
+import { AuthService } from '@auth0/auth0-angular';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, LoginComponent, MapComponent],
   imports: [
     BrowserModule,
     LayoutModule,
@@ -24,9 +27,17 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AuthModule,
     MaterialModule,
     StakeholderModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
+    AuthService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -18,7 +18,6 @@ public interface CompanyService {
 
     List<Company> Filter(String rate,
                          List<Company> companies) throws Exception;
-
     Company Get(String id) throws Exception;
     Company Update(UpdateCompanyDTO companyDTO) throws Exception;
 

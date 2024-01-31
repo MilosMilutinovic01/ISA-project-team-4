@@ -1,49 +1,58 @@
 <div class="equipment-view">
   <form class="search-form" [formGroup]="searchForm">
     <div class="search-container">
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Seach by equipment name:</mat-label>
-      <input matInput placeholder="Name" formControlName="name" />
-    </mat-form-field>
-      <button mat-fab class="form-button" (click)="search()">
-        <mat-icon>search</mat-icon>
-      </button>
-      <button mat-fab class="form-button" (click)="refresh()">
-        <mat-icon>refresh</mat-icon>
-      </button>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Search by equipment name:</mat-label>
+        <input matInput placeholder="Name" formControlName="name" />
+      </mat-form-field>
+      <div class="button-container">
+        <button mat-fab class="form-button" (click)="search()">
+          <mat-icon>search</mat-icon>
+        </button>
+        <button mat-fab class="form-button" (click)="refresh()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
     </div>
-    <div class="search-container">
-      <mat-chip-listbox>
-        <mat-chip-option (click)="selectChip('LABORATORY')" class="option-view">Laboratory</mat-chip-option>
-        <mat-chip-option (click)="selectChip('DIAGNOSTICS')" class="option-view">Diagnostics</mat-chip-option>
-        <mat-chip-option (click)="selectChip('DENTAL')" class="option-view">Dental</mat-chip-option>
-        <mat-chip-option  (click)="selectChip('SURGICAL')" class="option-view">Surgical</mat-chip-option>
-      </mat-chip-listbox>
-    </div>
+    <mat-chip-listbox class="filter-container">
+      <mat-chip-option
+        (click)="selectChip('LABORATORY')"
+        class="option-view"
+        [selected]="selectedOption == 'LABORATORY'"
+        >Laboratory</mat-chip-option
+      >
+      <mat-chip-option
+        (click)="selectChip('DIAGNOSTICS')"
+        class="option-view"
+        [selected]="selectedOption == 'DIAGNOSTICS'"
+        >Diagnostics</mat-chip-option
+      >
+      <mat-chip-option
+        (click)="selectChip('DENTAL')"
+        class="option-view"
+        [selected]="selectedOption == 'DENTAL'"
+        >Dental</mat-chip-option
+      >
+      <mat-chip-option
+        (click)="selectChip('SURGICAL')"
+        class="option-view"
+        [selected]="selectedOption == 'SURGICAL'"
+        >Surgical</mat-chip-option
+      >
+    </mat-chip-listbox>
   </form>
   <div class="card-container" *ngFor="let e of equipment">
     <mat-card class="card">
       <div class="type-title">{{ e.type }}</div>
       <mat-card-title class="title-container">
-        <p>{{ e.name }}</p>
+        <p class="card-title">{{ e.name }}</p>
+        <p class="card-title">{{ e.price }} RSD</p>
       </mat-card-title>
       <mat-card-content class="card-content">
-        <div class="card-number">{{ e.description }}</div>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  <div class="card-container" *ngFor="let e of equipmentTracking">
-    <mat-card class="card">
-      <div class="title-container">
-      <div class="type-title">{{ e.equipment.type }}</div>
-      <div class="type-title">{{ e.count }} available in {{ e.company.name }}</div>
-    </div>
-      <mat-card-title class="title-container">
-        <p>{{ e.equipment.name }}</p>
-        <p>{{ e.equipment.price }} RSD</p>
-      </mat-card-title>
-      <mat-card-content class="card-content">
-        <div class="card-number">{{ e.equipment.description }}</div>
+        <div class="card-description">{{ e.description }}</div>
+        <div class="companies" *ngFor="let et of equipmentTracking[e.id]">
+          {{ et.count }} available in {{ et.company.name }}
+        </div>
       </mat-card-content>
     </mat-card>
   </div>

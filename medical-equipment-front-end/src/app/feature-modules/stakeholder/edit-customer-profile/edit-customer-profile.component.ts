@@ -6,6 +6,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
 import { StakeholderService } from '../stakeholder.service';
 import { Address } from 'src/app/shared/model/address.model';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'app-edit-customer-profile',
@@ -14,12 +16,20 @@ import { Address } from 'src/app/shared/model/address.model';
 })
 export class EditCustomerProfileComponent implements OnInit {
   isPasswordVisible: boolean = false;
+  user: User | undefined;
   profile: CustomerProfile = {
     id: NaN,
     name: '',
     lastname: '',
-    email: '',
-    address: { id: NaN, street: '', city: '', country: '' },
+    username: '',
+    address: {
+      id: NaN,
+      street: '',
+      city: '',
+      country: '',
+      lat: NaN,
+      lng: NaN,
+    },
     phoneNumber: '',
     profession: '',
     penaltyPoints: NaN,
@@ -44,32 +54,38 @@ export class EditCustomerProfileComponent implements OnInit {
   constructor(
     private router: Router,
     private snackBar: MatSnackBar,
-    private service: StakeholderService
+    private service: StakeholderService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.getCustomerProfile();
+    this.authService.user$.subscribe((user) => {
+      this.user = user;
+    });
   }
 
   getCustomerProfile(): void {
-    this.service.getCustomerProfile('1').subscribe({
-      next: (result: CustomerProfile) => {
-        this.profile = result;
-        this.editProfileForm.patchValue({
-          name: result.name,
-          lastname: result.name,
-          street: result.address.street,
-          city: result.address.city,
-          country: result.address.country,
-          phoneNumber: result.phoneNumber,
-          profession: result.profession,
-          password: result.password,
-        });
-      },
-      error: () => {
-        console.log(console.error());
-      },
-    });
+    this.service
+      .getCustomerProfile(this.authService.getCurrentUserId().toString())
+      .subscribe({
+        next: (result: CustomerProfile) => {
+          this.profile = result;
+          this.editProfileForm.patchValue({
+            name: result.name,
+            lastname: result.lastname,
+            street: result.address.street,
+            city: result.address.city,
+            country: result.address.country,
+            phoneNumber: result.phoneNumber,
+            profession: result.profession,
+            password: result.password,
+          });
+        },
+        error: () => {
+          console.log(console.error());
+        },
+      });
   }
 
   saveChanges(): void {
@@ -78,12 +94,14 @@ export class EditCustomerProfileComponent implements OnInit {
       street: this.editProfileForm.value.street || '',
       city: this.editProfileForm.value.city || '',
       country: this.editProfileForm.value.country || '',
+      lat: NaN,
+      lng: NaN,
     };
     const editProfile: CustomerProfile = {
       id: this.profile.id,
       name: this.editProfileForm.value.name || '',
       lastname: this.editProfileForm.value.lastname || '',
-      email: this.profile.email,
+      username: this.profile.username,
       address: userAddress,
       phoneNumber: this.editProfileForm.value.phoneNumber || '',
       profession: this.editProfileForm.value.profession || '',

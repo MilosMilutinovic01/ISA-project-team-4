@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
+
 
 @Entity
 @Table(schema = "stakeholders", name = "companies")
@@ -55,13 +55,24 @@ public class Company {
     public Company(UpdateCompanyDTO updateCompanyDTO) {
         this.id = updateCompanyDTO.id;
         this.name = updateCompanyDTO.name;
-       // this.address = updateCompanyDTO.address;
+        this.address = new Address(updateCompanyDTO.address);
 
-       // this.startTime = LocalTime.parse(updateCompanyDTO.startTime);
-       // this.endTime = LocalTime.parse(updateCompanyDTO.endTime);
+       this.startTime = LocalTime.parse(updateCompanyDTO.startTime);
+       this.endTime = LocalTime.parse(updateCompanyDTO.endTime);
         this.description = updateCompanyDTO.description;
         this.averageRating = updateCompanyDTO.averageRating;
     }
+
+    public Company(Company company) {
+        this.id = company.id;
+        this.name = company.name;
+        this.address = company.address;
+        this.startTime = company.startTime;
+        this.endTime = company.endTime;
+        this.description = company.description;
+        this.averageRating = company.averageRating;
+    }
+
     public Long getId() {
         return id;
     }

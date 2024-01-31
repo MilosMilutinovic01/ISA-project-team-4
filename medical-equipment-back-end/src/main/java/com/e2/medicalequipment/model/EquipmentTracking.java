@@ -1,9 +1,13 @@
 package com.e2.medicalequipment.model;
+import com.e2.medicalequipment.dto.EquipmentTrackingDTO;
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 
 @Entity
 @Table(schema = "stakeholders", name = "equipmentTracking")
-public class EquipmentTracking {
+public class EquipmentTracking{
+
     @Id
     @SequenceGenerator(name = "equipmentTrackingSeq", sequenceName = "equipmentTrackingSeq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "equipmentTrackingSeq")
@@ -29,6 +33,13 @@ public class EquipmentTracking {
         this.count = count;
         this.company = company;
         this.equipment = equipment;
+    }
+
+    public EquipmentTracking(EquipmentTrackingDTO dto) {
+        this.id = dto.id;
+        this.count = dto.count;
+        //this.company = dto.company;
+        //this.equipment = equipment;
     }
 
     public Long getId() {

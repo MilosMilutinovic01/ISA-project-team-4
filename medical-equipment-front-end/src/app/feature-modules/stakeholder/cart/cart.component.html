@@ -1,0 +1,114 @@
+<mat-stepper
+  [linear]="false"
+  #stepper
+  (selectionChange)="onStepperSelectionChange($event)"
+>
+  <mat-step [stepControl]="firstFormGroup" label="Your shopping cart">
+    <div>
+      <div class="card-container" *ngFor="let i of this.items">
+        <mat-card class="card-equipment">
+          <div class="title-container">
+            <div class="type-title">{{ i.equipment?.type }}</div>
+            <div class="type-title">{{ i.count }} selected</div>
+          </div>
+          <mat-card-title class="title-container">
+            <p>{{ i.equipment?.name }}</p>
+            <p>{{ this.calculatePrice(i) }} RSD</p>
+          </mat-card-title>
+          <mat-card-content class="title-container">
+            <p>{{ i.equipment?.description }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="total-price" *ngIf="this.items.length !== 0">
+        <p>Total price: {{ this.totalPrice }} RSD</p>
+      </div>
+      <div class="total-price" *ngIf="this.items.length === 0">
+        <p>Your cart is empty</p>
+      </div>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" label="Select reservation date">
+    <div *ngIf="!isIrregular" (click)="choosePredefined()">
+      <h1 class="header">Predefined appointments</h1>
+      <div class="appointment-info">
+        <p class="info-message">
+          Dates highlighted in green have available appointments.
+        </p>
+      </div>
+      <div class="calendar">
+        <dx-calendar
+          class="calendar"
+          timeZone="Europe/London"
+          id="calendar-container"
+          currentView="month"
+          [firstDayOfWeek]="1"
+          [height]="700"
+          [width]="1000"
+          [value]="calendar_value"
+          (onValueChanged)="calendar_valueChanged($event)"
+        >
+          <div *dxTemplate="let data of 'cell'">
+            <span [ngClass]="getCellCssClass(data)">{{ data.text }}</span>
+          </div>
+        </dx-calendar>
+      </div>
+      <button
+        mat-button
+        matStepperNext
+        (click)="finish()"
+        *ngIf="isSelected"
+        class="finish-button"
+      >
+        Finish reservation
+      </button>
+      <button
+        class="bottom-right-button"
+        mat-button
+        (click)="chooseIrregular()"
+      >
+        Choose irregular appointment
+      </button>
+    </div>
+    <div *ngIf="isIrregular">
+      <h1 class="header">Irregular appointments</h1>
+      <div class="appointment-info">
+        <p class="info-message">
+          Dates highlighted in green have available appointments.
+        </p>
+      </div>
+      <div class="calendar">
+        <dx-calendar
+          class="calendar"
+          timeZone="Europe/London"
+          id="calendar-container2"
+          currentView="month"
+          [firstDayOfWeek]="1"
+          [height]="700"
+          [width]="1000"
+          [value]="calendar_value_irregular"
+          (onValueChanged)="calendar_value_irregularChanged($event)"
+        >
+          <div *dxTemplate="let data of 'cell'">
+            <span [ngClass]="getCellCssClass(data)">{{ data.text }}</span>
+          </div>
+        </dx-calendar>
+      </div>
+      <button
+        mat-button
+        (click)="finishIrregularReservation()"
+        *ngIf="isSelectedIrregular"
+        class="finish-button"
+      >
+        Finish reservation
+      </button>
+      <button
+        class="bottom-right-button"
+        mat-button
+        (click)="choosePredefined()"
+      >
+        Back to predefined appointments
+      </button>
+    </div>
+  </mat-step>
+</mat-stepper>

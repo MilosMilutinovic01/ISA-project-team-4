@@ -1,16 +1,15 @@
 package com.e2.medicalequipment.controller;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
+import com.e2.medicalequipment.dto.LatLngDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyDTO;
-import com.e2.medicalequipment.dto.UpdateCustomerDTO;
 import com.e2.medicalequipment.model.Company;
-import com.e2.medicalequipment.model.CompanyAdministrator;
-import com.e2.medicalequipment.model.Customer;
+import com.e2.medicalequipment.service.CompanyAdministratorService;
 import com.e2.medicalequipment.service.CompanyService;
 import com.e2.medicalequipment.dto.CreateCompanyDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,17 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/companies", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin
+
 public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
+    @Autowired
+    private CompanyAdministratorService companyAdministratorService;
+
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('SYSTEM_ADMINISTRATOR')")
     public ResponseEntity<Company> registerCompany(@RequestBody CreateCompanyDTO companyDto) {
         Company savedCompany = null;
         try {
@@ -41,9 +44,24 @@ public class CompanyController {
         }
     }
 
+    @GetMapping(value = "/coordinates/{companyId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
+    public LatLngDTO getCoordinates(@PathVariable String companyId) {
+        LatLngDTO coords;
+        try {
+            Company company = this.companyService.Get(companyId);
+            coords = new LatLngDTO(company.getAddress().getLatitude(),company.getAddress().getLongitude());
+            return coords;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+
     public ResponseEntity<List<Company>> getAll(){
         List<Company> companies = null;
         try {
@@ -85,6 +103,7 @@ public class CompanyController {
         }
     }
 
+
     @GetMapping(value = "/profile/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<UpdateCompanyDTO> getCompany (@PathVariable String id) throws Exception {
@@ -97,6 +116,7 @@ public class CompanyController {
 
     @PutMapping(value = "/profile/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
     public ResponseEntity<Company> updateCompany(@RequestBody UpdateCompanyDTO companyDTO) {
         Company company = null;
         try {

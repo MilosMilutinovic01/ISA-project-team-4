@@ -1,0 +1,53 @@
+<div>
+  <div class="page-title-container">
+    <h1 class="header">Your pick up history</h1>
+    <button
+      class="tooltip"
+      mat-icon-button
+      matTooltip="This page shows all reservations of items you succesfully picked up!"
+    >
+      <mat-icon>help</mat-icon>
+    </button>
+  </div>
+  <div class="sort-container">
+    <mat-form-field appearance="outline" class="sort">
+      <mat-label>Sort by:</mat-label>
+      <mat-select [(value)]="selected" (selectionChange)="onSelected()">
+        <mat-option [value]="dateAsc">Date ascending</mat-option>
+        <mat-option [value]="dateDesc">Date descending</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-fab class="search-button" (click)="refresh()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+  <div class="card-container">
+    <mat-card class="card-content" *ngFor="let a of this.appointments">
+      <div class="title-container">
+        <div *ngIf="this.appointmentItemsMap[a.id].length !== 0">
+          {{ appointmentItemsMap[a.id][0].company.name }}
+        </div>
+      </div>
+      <mat-card-title class="title-container">
+        <p>{{ a.startTime[2] }}.{{ a.startTime[1] }}.{{ a.startTime[0] }}</p>
+        <p>
+          {{ a.startTime[3] }}:{{ a.startTime[4] }} - {{ a.endTime[3] }}:{{
+            a.endTime[4]
+          }}
+        </p>
+      </mat-card-title>
+      <mat-card-content>
+        <div class="items">
+          <div>
+            <div *ngFor="let i of appointmentItemsMap[a.id]">
+              <p>- {{ i.equipment?.name }} : {{ i.count }} komada</p>
+            </div>
+            <div class="total-price">
+              <p>Total price: {{ totalPriceMap[a.id] }} RSD</p>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

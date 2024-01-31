@@ -10,6 +10,7 @@ import jakarta.ws.rs.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,12 +27,8 @@ public class CustomerController {
     @Autowired
     private EmailService emailService;
 
-    @GetMapping("/welcome")
-    public String welcome(){
-        return "welcome";
-    }
-
     @GetMapping(value = "/profile/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     @ResponseBody
     public ResponseEntity<Customer> getCustomer(@PathVariable String id){
         System.out.println("ID: "+ id);
@@ -46,6 +43,7 @@ public class CustomerController {
     }
 
     @PutMapping(value = "/profile/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     @ResponseBody
     public ResponseEntity<Customer> updateCustomer(@RequestBody UpdateCustomerDTO customerDTO){
         Customer customer = null;
@@ -57,19 +55,4 @@ public class CustomerController {
             return new ResponseEntity<Customer>(customer, HttpStatus.CONFLICT);
         }
     }
-
-    @PostMapping(value = "/register",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> createTest(@RequestBody CreateCustomerDTO customerDto)  {
-        Customer savedCustomer = null;
-        try {System.out.println("Thread id: " + Thread.currentThread().getId());
-            emailService.sendNotificaitionAsync(customerDto);
-            savedCustomer = customerService.Create(customerDto);
-            return new ResponseEntity<Customer>(savedCustomer, HttpStatus.CREATED);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<Customer>(savedCustomer, HttpStatus.CONFLICT);
-        }
-    }
-
-
 }

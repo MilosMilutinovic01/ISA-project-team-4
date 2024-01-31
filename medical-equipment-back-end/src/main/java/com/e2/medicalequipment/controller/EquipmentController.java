@@ -1,11 +1,15 @@
 package com.e2.medicalequipment.controller;
 
+import com.e2.medicalequipment.dto.CreateCompanyDTO;
+import com.e2.medicalequipment.dto.EquipmentTrackingDTO;
+import com.e2.medicalequipment.model.Company;
 import com.e2.medicalequipment.model.Equipment;
 import com.e2.medicalequipment.service.EquipmentService;
 import com.e2.medicalequipment.dto.EquipmentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +38,30 @@ public class EquipmentController {
             e.printStackTrace();
             return new ResponseEntity<List<EquipmentDTO>>(equipment, HttpStatus.CONFLICT);
         }
+    }
+
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('COMPANY_ADMINISTRATOR')")
+    public ResponseEntity<Equipment> registerEquipment(@RequestBody EquipmentDTO equipmentDto) {
+        Equipment savedEquipment = null;
+        try {
+            System.out.println("Thread id: " + Thread.currentThread().getId());
+            savedEquipment = equipmentService.Create(equipmentDto);
+            return new ResponseEntity<Equipment>(savedEquipment, HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Equipment>(savedEquipment, HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(value = "/search/{name}/{type}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<EquipmentDTO>> filterAndSearch(@PathVariable String name,
+                                                                      @PathVariable String type
+    ) throws Exception {
+
+        List<EquipmentDTO> equipment = equipmentService.GetWanted(name,type);
+        return new ResponseEntity<List<EquipmentDTO>>(equipment, HttpStatus.OK);
     }
 }
 

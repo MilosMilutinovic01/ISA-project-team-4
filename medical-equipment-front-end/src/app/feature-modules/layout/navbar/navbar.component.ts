@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { RegistrationComponent } from 'src/app/infrastructure/auth/registration/registration.component';
 import { Router } from '@angular/router';
-import { environment } from 'src/env/environment';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { StakeholderService } from '../../stakeholder/stakeholder.service';
 import { CustomerProfile } from 'src/app/shared/model/customer-profile.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { Address } from 'src/app/shared/model/address.model';
+import { SystemAdministrator } from 'src/app/shared/model/system-administrator.model';
 
 @Component({
   selector: 'xp-navbar',
@@ -14,34 +13,43 @@ import { Address } from 'src/app/shared/model/address.model';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  displayProfile: boolean = false;
-  user: CustomerProfile = {
+  isDropdownOpen = false;
+  systemAdminEnabled = false;
+  user: User | undefined;
+  customer: CustomerProfile = {
     name: '',
     lastname: '',
-    email: '',
+    username: '',
     address: {} as Address,
     phoneNumber: '',
     profession: '',
     password: '',
   };
-  constructor(public router: Router, public service: StakeholderService) {
-    this.service.getIsRegister.subscribe((msg) => (this.displayProfile = msg));
-  }
+  constructor(
+    public router: Router,
+    public service: StakeholderService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.service.getCustomerProfile('1').subscribe({
-      next: (result: CustomerProfile) => {
-        this.user = result;
-        this.displayProfile = true;
-      },
-      error: () => {
-        this.displayProfile = false;
-      },
+    this.authService.user$.subscribe((user) => {
+      this.user = user;
+      if (this.user.role === 'SYSTEM_ADMINISTRATOR') {
+        this.isFirstLogin();
+      }
     });
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 
   login(): void {
     this.router.navigate(['/login']);
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
   register(): void {
@@ -55,17 +63,68 @@ export class NavbarComponent implements OnInit {
   companyRegistration(): void {
     this.router.navigate(['/companyRegistration']);
   }
+
   companyAdministratorRegistration(): void {
-    this.router.navigate(['/companyAdministratorRegistration']);
+    this.router.navigate(['/administratorRegistration/ca']);
   }
+
+  systemAdministratorRegistration(): void {
+    this.router.navigate(['/administratorRegistration/sa']);
+  }
+
   companyProfile(): void {
-    this.router.navigate(['/companyProfile']);
+    this.router.navigate(['/companyProfile/' + this.user?.id]);
   }
+
   navigateToMedicalEquipment(): void {
     this.router.navigate(['/']);
   }
-  
+
   companyAdministratorProfile(): void {
     this.router.navigate(['/companyAdministratorProfile']);
+  }
+
+  isFirstLogin() {
+    if (this.user) {
+      this.service.getSystemAdministrator(this.user.id).subscribe({
+        next: (result: SystemAdministrator) => {
+          if (!result.hasLoggedBefore) {
+            this.router.navigate(['/changePassword']);
+            this.systemAdminEnabled = false;
+          } else {
+            this.systemAdminEnabled = true;
+          }
+        },
+        error: (error) => {
+          console.error('Error getting system administrator:', error);
+        },
+      });
+    } else {
+      console.warn('User is undefined. Cannot check first login status.');
+    }
+  }
+
+  map(): void {
+    this.router.navigate(['/map']);
+  }
+
+  openScheduledAppointments(): void {
+    this.router.navigate(['/scheduledAppointments']);
+  }
+
+  deliverEquipmentWithQR(): void {
+    this.router.navigate(['/equipmentDeliverQR/']);
+  }
+
+  openPickUpHistory(): void {
+    this.router.navigate(['/customerPickUp/']);
+  }
+
+  openQrCodes(): void {
+    this.router.navigate(['/customerQrCodes/']);
+  }
+
+  openContractList(): void {
+    this.router.navigate(['/contractList/']);
   }
 }

@@ -1,0 +1,9 @@
+<div class="map-frame">
+  <div (click)="registerOnClick()" id="map"></div>
+</div>
+<button (click)="startSimulator()">Start</button>
+<input
+  type="number"
+  placeholder="Select refresh rate"
+  [(ngModel)]="refreshRate"
+/>

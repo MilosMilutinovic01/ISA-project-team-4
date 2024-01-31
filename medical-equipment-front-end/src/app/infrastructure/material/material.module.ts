@@ -19,6 +19,9 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatOptionModule } from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 @NgModule({
@@ -36,7 +39,10 @@ import { MatRadioModule } from '@angular/material/radio';
     MatFormFieldModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatRadioModule
+    MatRadioModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatStepperModule
   ],
   exports: [
     MatToolbar,
@@ -53,7 +59,12 @@ import { MatRadioModule } from '@angular/material/radio';
     MatButtonModule,
     MatGridListModule,
     MatDialogModule,
-    MatRadioModule
+    MatRadioModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatStepperModule,
+    MatOptionModule,
+    MatSelectModule,
   ],
 })
 export class MaterialModule {}

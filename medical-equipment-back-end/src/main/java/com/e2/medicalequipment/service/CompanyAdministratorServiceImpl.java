@@ -1,20 +1,18 @@
 package com.e2.medicalequipment.service;
 
 import com.e2.medicalequipment.dto.CompanyAdministratorDTO;
-import com.e2.medicalequipment.dto.EquipmentDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyAdministratorDTO;
-import com.e2.medicalequipment.dto.UpdateCompanyDTO;
 import com.e2.medicalequipment.model.*;
 import com.e2.medicalequipment.repository.CompanyAdministratorRepository;
 import com.e2.medicalequipment.repository.CompanyRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyAdministratorServiceImpl implements CompanyAdministratorService {
@@ -22,12 +20,14 @@ public class CompanyAdministratorServiceImpl implements CompanyAdministratorServ
     private CompanyAdministratorRepository companyAdministratorRepository;
     @Autowired
     private CompanyRepository companyRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public CompanyAdministrator Create(CompanyAdministratorDTO createCompanyAdministratorDto) throws Exception {
         CompanyAdministrator companyAdministrator = new CompanyAdministrator(createCompanyAdministratorDto);
-        companyAdministrator.setUserType(UserType.COMPANY_ADMINISTRATOR);
-        companyAdministrator.setPassword("copmanyAdmin");
+        companyAdministrator.setRole(Role.COMPANY_ADMINISTRATOR);
+        companyAdministrator.setPassword(passwordEncoder.encode("ca"));
         if (companyAdministrator.getId() != null) {
             throw new Exception("ID must be null for a new entity.");
         }
@@ -48,7 +48,7 @@ public class CompanyAdministratorServiceImpl implements CompanyAdministratorServ
         if ((companyAdministrator.getId() == null)){
             throw new Exception("ID must not be null for updating entity.");
         }
-        companyAdministrator.setUserType(UserType.COMPANY_ADMINISTRATOR);
+        companyAdministrator.setRole(Role.COMPANY_ADMINISTRATOR);
         //companyAdministrator.setAddress(address);
         CompanyAdministrator savedCompanyAdministrator = companyAdministratorRepository.save(companyAdministrator);
         return savedCompanyAdministrator;
@@ -62,4 +62,16 @@ public class CompanyAdministratorServiceImpl implements CompanyAdministratorServ
         }
         return allAdmins;
     }
+
+    @Override
+    public List<CompanyAdministrator> GetAllByCompanyId(String companyId) throws Exception {
+        List<CompanyAdministrator> admins = new ArrayList<>();
+        for(CompanyAdministrator a : companyAdministratorRepository.findAllAdminsByCompanyId(companyId)) {
+            admins.add(a);
+        }
+        return admins;
+    }
+
+
+
 }

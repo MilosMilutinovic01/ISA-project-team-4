@@ -1,0 +1,48 @@
+<div>
+  <div class="page-title-container">
+    <h1 class="header">Your scheduled appointments</h1>
+    <button
+      class="tooltip"
+      mat-icon-button
+      matTooltip="If you cancel reservation after 24h you will get 2 penalty points. If you cancel before 24h you will get 1 penalty point."
+    >
+      <mat-icon>help</mat-icon>
+    </button>
+  </div>
+  <div class="card-container">
+    <mat-card class="card-content" *ngFor="let a of this.appointments">
+      <div class="title-container">
+        <div *ngIf="this.appointmentItemsMap[a.id].length !== 0">
+          {{ appointmentItemsMap[a.id][0].company.name }}
+        </div>
+      </div>
+      <mat-card-title class="title-container">
+        <p>{{ a.startTime[2] }}.{{ a.startTime[1] }}.{{ a.startTime[0] }}</p>
+        <p>
+          {{ a.startTime[3] }}:{{ a.startTime[4] }} - {{ a.endTime[3] }}:{{
+            a.endTime[4]
+          }}
+        </p>
+      </mat-card-title>
+      <mat-card-content>
+        <div class="items">
+          <div>
+            <div *ngFor="let i of appointmentItemsMap[a.id]">
+              <p>- {{ i.equipment?.name }} : {{ i.count }} komada</p>
+            </div>
+            <div class="total-price">
+              <p>Total price: {{ totalPriceMap[a.id] }} RSD</p>
+            </div>
+          </div>
+          <button
+            class="add-button"
+            [ngClass]="{ shorter: this.isDisabledMap[a.id] }"
+            (click)="cancelReservation(a.id)"
+          >
+            Cancel
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

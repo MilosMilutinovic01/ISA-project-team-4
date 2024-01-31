@@ -5,31 +5,142 @@
   <div class="navbar-right">
     <div class="navbar-menu">
       <div class="navbar-button-panel">
-        <div>
-          <button class="navbar-button" (click)="login()">Login</button>
-        </div>
-        <div>
-          <button class="navbar-button" (click)="register()">Register</button>
-        </div>
-        <div *ngIf="displayProfile">
-          <button class="navbar-button" (click)="customerProfile()">
-            Profile
-          </button>
-        </div>
-        <div>
+        <div *ngIf="user && user.role === 'COMPANY_ADMINISTRATOR'">
           <button class="navbar-button" (click)="companyProfile()">
             Company Profile
           </button>
         </div>
+        <div *ngIf="user && user.role === 'COMPANY_ADMINISTRATOR'">
+          <button class="navbar-button" (click)="deliverEquipmentWithQR()">
+            Deliver equipment with QR code
+          </button>
+        </div>
         <div>
-          <button class="navbar-button" (click)="companyRegistration()">
+          <button
+            class="navbar-button"
+            (click)="companyRegistration()"
+            *ngIf="
+              user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled
+            "
+          >
             New Company
           </button>
         </div>
         <div>
-          <button class="navbar-button" (click)="companyAdministratorProfile()">
+          <button
+            class="navbar-button"
+            (click)="companyAdministratorRegistration()"
+            *ngIf="
+              user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled
+            "
+          >
+            New Company Administrator
+          </button>
+        </div>
+        <div>
+          <button
+            class="navbar-button"
+            (click)="systemAdministratorRegistration()"
+            *ngIf="
+              user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled
+            "
+          >
+            New System Administrator
+          </button>
+        </div>
+        <div>
+          <button
+            class="navbar-button"
+            (click)="openContractList()"
+            *ngIf="
+              user && user.role === 'SYSTEM_ADMINISTRATOR' && systemAdminEnabled
+            "
+          >
+            Contract List
+          </button>
+        </div>
+        <!-- <div>
+          <button
+            class="navbar-button"
+            (click)="companyAdministratorProfile()"
+            *ngIf="user && user.role === 'COMPANY_ADMINISTRATOR'"
+          >
             Company Administrator Profile
           </button>
+        </div> -->
+        <div>
+          <button
+            *ngIf="user && user.role === 'CUSTOMER'"
+            class="navbar-button"
+            (click)="openScheduledAppointments()"
+          >
+            Scheduled appointments
+          </button>
+        </div>
+        <div>
+          <button
+            *ngIf="user && user.role === 'COMPANY_ADMINISTRATOR'"
+            class="navbar-button"
+            (click)="map()"
+          >
+            Map
+          </button>
+        </div>
+        <div>
+          <button
+            *ngIf="user && user.role === 'CUSTOMER'"
+            class="navbar-button"
+            (click)="openPickUpHistory()"
+          >
+            Pick up history
+          </button>
+        </div>
+        <div>
+          <button
+            *ngIf="user && user.role === 'CUSTOMER'"
+            class="navbar-button"
+            (click)="openQrCodes()"
+          >
+            QR codes
+          </button>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn">{{ user?.username }}</button>
+
+          <div
+            class="dropdown-content"
+            *ngIf="user?.id != 0; else loginRegisterButtons"
+          >
+            <button
+              *ngIf="user && user.role !== 'SYSTEM_ADMINISTRATOR'"
+              class="navbar-button"
+              (click)="
+                user && user.role === 'COMPANY_ADMINISTRATOR'
+                  ? companyAdministratorProfile()
+                  : customerProfile()
+              "
+            >
+              Profile
+            </button>
+            <button class="navbar-button" (click)="logout()">Logout</button>
+          </div>
+
+          <ng-template #loginRegisterButtons class="template">
+            <button
+              #loginRegisterButtons
+              class="navbar-button"
+              (click)="login()"
+            >
+              Login
+            </button>
+            <button
+              #loginRegisterButtons
+              class="navbar-button"
+              (click)="register()"
+            >
+              Register
+            </button>
+          </ng-template>
         </div>
       </div>
     </div>
