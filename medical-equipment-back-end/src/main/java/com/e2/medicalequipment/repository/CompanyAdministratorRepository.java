@@ -23,4 +23,9 @@ public interface CompanyAdministratorRepository extends JpaRepository<CompanyAdm
     @Query("SELECT a FROM CompanyAdministrator a WHERE a.companyId = :company_id")
     List<CompanyAdministrator> findAllAdminsByCompanyId(@Param("company_id") String companyId);
 
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("select ca from CompanyAdministrator ca where ca.id = :id")
+    @QueryHints({@QueryHint(name = "jakarta.persistence.lock.timeout", value ="0")})
+    CompanyAdministrator findOneById(@Param("id")Long id);
 }

@@ -31,7 +31,7 @@ public class User implements UserDetails, Serializable {
     @Column(name = "username", unique = true)
     private String username;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 

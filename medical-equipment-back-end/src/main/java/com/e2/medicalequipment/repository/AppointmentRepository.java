@@ -1,6 +1,7 @@
 package com.e2.medicalequipment.repository;
 
 import com.e2.medicalequipment.model.Appointment;
+import com.e2.medicalequipment.model.Customer;
 import com.e2.medicalequipment.model.Item;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.QueryHint;
@@ -27,7 +28,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     List<Appointment> findAllByStartTime(@Param("start_time") LocalDateTime startTime);
 
     @Lock(LockModeType.PESSIMISTIC_READ)
-    @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value ="0")})
-    public Appointment save(Appointment appointment);
-
+    @QueryHints({@QueryHint(name = "jakarta.persistence.lock.timeout", value ="0")})
+    Appointment save(Appointment appointment);
 }

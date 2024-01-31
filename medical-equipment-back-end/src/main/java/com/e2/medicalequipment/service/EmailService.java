@@ -23,9 +23,9 @@ public class EmailService {
     private Environment env;
 
     @Async
-    public void sendNotificaitionAsync(String email, String title, String message) throws MailException, InterruptedException {
-        //Simulacija duze aktivnosti da bi se uocila razlika
-        Thread.sleep(5000);
+    public void sendNotificaitionAsync(String email, String title, String message) {
+
+        //Thread.sleep(5000);
         System.out.println("Slanje emaila...");
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();

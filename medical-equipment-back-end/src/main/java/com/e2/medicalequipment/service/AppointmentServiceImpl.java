@@ -20,9 +20,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
+@Transactional(readOnly = true)
 public class AppointmentServiceImpl implements AppointmentService {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzzz)", Locale.ENGLISH);
-
 
     @Autowired
     private AppointmentRepository appointmentRepository;
@@ -40,23 +40,42 @@ public class AppointmentServiceImpl implements AppointmentService {
     private EquipmentRepository equipmentRepository;
 
     @Override
-    public Appointment Create(CreateAppointmentDTO createAppointmentDto) throws Exception {
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    public Appointment Create(CreateAppointmentDTO createAppointmentDto){
+        try {
+            LocalDateTime startTime = LocalDateTime.parse(createAppointmentDto.startTime, formatter);
+            LocalDateTime endTime = LocalDateTime.parse(createAppointmentDto.endTime, formatter);
 
-        Appointment appointment = new Appointment();
-        LocalDateTime startTime = LocalDateTime.parse(createAppointmentDto.startTime, formatter);
-        appointment.setStartTime(startTime);
-        LocalDateTime endTime = LocalDateTime.parse(createAppointmentDto.endTime, formatter);
-        appointment.setEndTime(endTime);
-        appointment.setIsPredefined(createAppointmentDto.isPredefined);
-        CompanyAdministrator ca = companyAdministratorRepository.findById(createAppointmentDto.companyAdministrator.id).orElseThrow(() -> new EntityNotFoundException("Company admin not found"));
-        appointment.setCompanyAdministrator(ca);
+            Appointment appointment = new Appointment();
+            appointment.setStartTime(startTime);
+            appointment.setEndTime(endTime);
+            appointment.setIsPredefined(createAppointmentDto.isPredefined);
+            CompanyAdministrator ca = companyAdministratorRepository.findOneById(createAppointmentDto.companyAdministrator.id);
+            appointment.setCompanyAdministrator(ca);
 
+            if (appointment.getId() != null) {
+                throw new IllegalArgumentException("ID must be null for a new entity.");
+            }
+            Appointment savedAppointment = appointmentRepository.save(appointment);
 
-        if (appointment.getId() != null) {
-            throw new Exception("ID must be null for a new entity.");
+            return savedAppointment;
+        } catch (PessimisticLockingFailureException e) {
+            throw e;
+        }catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Appointment savedAppointment = appointmentRepository.save(appointment);
-        return savedAppointment;
+    }
+
+    @Transactional(readOnly = false)
+    public CompanyAdministrator findOneById(Long id){
+        try{
+            CompanyAdministrator a = companyAdministratorRepository.findOneById(id);
+            return a;
+        }catch (PessimisticLockingFailureException e) {
+            throw e;
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

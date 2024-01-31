@@ -17,7 +17,6 @@ public class Customer extends User{
     @Column(name = "category")
     private CustomerCategory category;
 
-
     @Column(name = "verificationToken")
     private String verificationToken;
 

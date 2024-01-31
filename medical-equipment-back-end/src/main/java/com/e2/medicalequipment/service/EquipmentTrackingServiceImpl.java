@@ -8,6 +8,7 @@ import com.e2.medicalequipment.repository.CompanyRepository;
 import com.e2.medicalequipment.repository.EquipmentRepository;
 import com.e2.medicalequipment.repository.EquipmentTrackingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,6 +59,7 @@ public class EquipmentTrackingServiceImpl implements EquipmentTrackingService {
     }
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public EquipmentTracking Update(EquipmentTrackingDTO dto){
+        try {
             EquipmentTracking equipmentTrackingToUpdate = equipmentTrackingRepository.findOneById(dto.id);
             equipmentTrackingToUpdate.setEquipment(new Equipment(dto.equipment));
             equipmentTrackingToUpdate.setCompany(new Company(dto.company));
@@ -69,6 +71,11 @@ public class EquipmentTrackingServiceImpl implements EquipmentTrackingService {
 
             EquipmentTracking savedEquipmentTracking = equipmentTrackingRepository.save(equipmentTrackingToUpdate);
             return savedEquipmentTracking;
+        }catch(PessimisticLockingFailureException e){
+            throw e;
+        }catch(Exception e){
+            throw e;
+        }
     }
 
     @Transactional(readOnly = false)
