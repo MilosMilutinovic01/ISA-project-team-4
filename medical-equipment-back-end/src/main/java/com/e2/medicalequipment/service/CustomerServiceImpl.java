@@ -1,5 +1,6 @@
 package com.e2.medicalequipment.service;
 
+import com.e2.medicalequipment.dto.CreateAddressDTO;
 import com.e2.medicalequipment.dto.CreateCustomerDTO;
 import com.e2.medicalequipment.dto.UpdateCustomerDTO;
 import com.e2.medicalequipment.model.Address;
@@ -58,6 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional(readOnly = false)
     public Customer Create(CreateCustomerDTO createCustomerDto) {
         try{
+            addressRepository.save(createCustomerDto.address);
             Customer customer = customerRepository.findByUsername(createCustomerDto.username);
             if(customer != null){
                 throw new IllegalArgumentException("Username already exists.");
@@ -74,6 +76,11 @@ public class CustomerServiceImpl implements CustomerService {
 
             Customer savedCustomer = customerRepository.save(customer);
 
+            String verificationLink = "http://localhost:4200/api/auth/verify/id=" + savedCustomer.getVerificationToken();
+            String verificationMail = generateVerificationEmail(savedCustomer.getName(), verificationLink);
+
+            emailService.sendNotificaitionAsync(savedCustomer.getUsername(), "Mejl za potvrdu registracije ISA-team-34", verificationMail);
+            System.out.println("Email poslat valjda...");
             return savedCustomer;
         }catch (PessimisticLockingFailureException e){
             throw e;
