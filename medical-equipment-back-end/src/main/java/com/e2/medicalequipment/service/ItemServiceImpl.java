@@ -6,8 +6,10 @@ import com.e2.medicalequipment.dto.UpdateItemDTO;
 import com.e2.medicalequipment.model.*;
 import com.e2.medicalequipment.repository.*;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -82,8 +84,9 @@ public class ItemServiceImpl implements ItemService{
         return this.itemRepository.findAllByAppointmentId(id);
     }
 
-    @Transactional
-    public Item Update(UpdateItemDTO newItem) throws Exception{
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Item UpdateIrregular(UpdateItemDTO newItem){
+        try{
         Item item = itemRepository.findById(newItem.Id);
         Appointment appointment = appointmentRepository.findAppointmentById(newItem.AppointmentId);
 
@@ -113,7 +116,32 @@ public class ItemServiceImpl implements ItemService{
         }
         Item savedItem = itemRepository.save(item);
         return savedItem;
+        }catch (PessimisticLockingFailureException e){
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
+
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Item Update(UpdateItemDTO newItem){
+        try{
+            Item item = itemRepository.findById(newItem.Id);
+            Appointment appointment = appointmentRepository.findAppointmentById(newItem.AppointmentId);
+            item.setAppointment(appointment);
+            if ((item.getId() == null)){
+                throw new Exception("ID must not be null for updating entity.");
+            }
+            Item savedItem = itemRepository.save(item);
+            return savedItem;
+        }catch (PessimisticLockingFailureException e){
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Item Process(Item item,Boolean pickedUp) throws Exception{
         item.setPickedUp(pickedUp);
         item.setQrCodeProcessed(true);

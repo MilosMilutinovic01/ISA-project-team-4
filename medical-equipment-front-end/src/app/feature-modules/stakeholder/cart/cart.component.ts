@@ -239,6 +239,7 @@ export class CartComponent {
     this.service.getAdminsForCompany(this.companyId).subscribe({
       next: (result) => {
         this.companyAdmins = result;
+        console.log('GOT ADMINS: ', this.companyAdmins);
       },
       error: () => {
         console.log(console.error);
@@ -295,6 +296,8 @@ export class CartComponent {
                 this.isSelectedIrregular = true;
               }
               if (result.length === this.companyAdmins.length) {
+                console.log('RES: ', result);
+                console.log('ADM: ', this.companyAdmins);
                 alert(
                   'There are no available company administrators for this appointment!'
                 );
@@ -400,7 +403,6 @@ export class CartComponent {
   finish() {
     // Create an array of UpdateItem objects
     const updateItems: UpdateItem[] = [];
-    console.log('APPOINTMENT TO UPDATE: ', this.selectedAppointment);
 
     for (let i = 0; i < this.items.length; i++) {
       this.items[i].appointment = this.selected_appointment;

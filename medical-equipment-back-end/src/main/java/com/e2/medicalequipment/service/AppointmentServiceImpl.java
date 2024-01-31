@@ -6,8 +6,11 @@ import com.e2.medicalequipment.repository.AppointmentRepository;
 import com.e2.medicalequipment.repository.CompanyAdministratorRepository;
 import com.e2.medicalequipment.repository.ItemRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PessimisticLockException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -59,9 +62,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    @Transactional
-    public Appointment CreateIrregular(CreateAppointmentDTO createAppointmentDto) throws Exception {
-
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Appointment CreateIrregular(CreateAppointmentDTO createAppointmentDto) {
+        try{
         Appointment appointment = new Appointment();
         LocalDateTime startTime = LocalDateTime.parse(createAppointmentDto.startTime, formatter);
         appointment.setStartTime(startTime);
@@ -73,6 +76,12 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
         Appointment savedAppointment = appointmentRepository.save(appointment);
         return savedAppointment;
+        }catch (PessimisticLockingFailureException e){
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -155,19 +164,24 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 
     @Override
-    @Transactional
-    public List<CompanyAdministrator> getFreeAdminsForAppointment(String startTime) throws Exception {
-        List<CompanyAdministrator> admins = new ArrayList<>();
-        LocalDateTime start = LocalDateTime.parse(startTime, formatter);
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    public List<CompanyAdministrator> getFreeAdminsForAppointment(String startTime){
+        try {
+            List<CompanyAdministrator> admins = new ArrayList<>();
+            LocalDateTime start = LocalDateTime.parse(startTime, formatter);
 
-        if (appointmentRepository.findAllByStartTime(start) != null) {
-            for (Appointment a : appointmentRepository.findAllByStartTime(start)) {
-                admins.add(a.getCompanyAdministrator());
+            if (appointmentRepository.findAllByStartTime(start) != null) {
+                for (Appointment a : appointmentRepository.findAllByStartTime(start)) {
+                    admins.add(a.getCompanyAdministrator());
+                }
+                return admins;
+            } else {
+                return null;
             }
-            return admins;
-        }
-        else{
-            return null;
+        }catch (PessimisticLockingFailureException e){
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

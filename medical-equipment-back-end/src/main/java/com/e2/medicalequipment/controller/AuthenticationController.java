@@ -53,6 +53,7 @@ public class AuthenticationController {
         }
 
         Customer savedCustomer  = this.customerService.Create(customer);
+        System.out.println("CUSTOMER: "+ customer);
 
         String verificationLink = "http://localhost:4200/api/auth/verify/id=" + savedCustomer.getVerificationToken();
         String verificationMail = generateVerificationEmail(customer.name, verificationLink);

@@ -8,6 +8,7 @@ import com.e2.medicalequipment.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,7 @@ public class CompanyAdministratorServiceImpl implements CompanyAdministratorServ
     }
 
     @Override
+    //@Transactional(readOnly = true)
     public List<CompanyAdministrator> GetAllByCompanyId(String companyId) throws Exception {
         List<CompanyAdministrator> admins = new ArrayList<>();
         for(CompanyAdministrator a : companyAdministratorRepository.findAllByCompanyId(companyId)) {

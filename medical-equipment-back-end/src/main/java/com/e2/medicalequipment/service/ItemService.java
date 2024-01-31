@@ -17,8 +17,8 @@ public interface ItemService {
     Customer GetCustomerByAppointmentId(String appointmentId) throws Exception;
     Item Get(Long id) throws Exception;
     List<Item> GetAllByAppointmentId(String id) throws Exception;
-    Item Update(UpdateItemDTO item) throws Exception;
-
+    Item Update(UpdateItemDTO item);
+    Item UpdateIrregular(UpdateItemDTO newItem);
     Item Process(Item item,Boolean pickedUp) throws Exception;
 
 }

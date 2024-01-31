@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface AppointmentService {
     Appointment Create(CreateAppointmentDTO appointmentDTO) throws Exception;
     boolean Delete(Long id) throws Exception;
-    Appointment CreateIrregular(CreateAppointmentDTO appointmentDTO) throws Exception;
+    Appointment CreateIrregular(CreateAppointmentDTO appointmentDTO);
     List<Appointment> GetAll() throws Exception;
 /*
     List<Appointment> GetByCompanyId(Long companyId) throws Exception;
@@ -27,5 +27,5 @@ public interface AppointmentService {
     Appointment FindById(Long id) throws Exception;
 
     List<Appointment> GetPickedUpByCustomerId(Long customerId) throws Exception;
-    List<CompanyAdministrator> getFreeAdminsForAppointment(String startTime) throws Exception;
+    List<CompanyAdministrator> getFreeAdminsForAppointment(String startTime);
 }

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Customer Create(CreateCustomerDTO createCustomerDto) throws Exception {
         Customer customer = new Customer(createCustomerDto);
         customer.setPassword(passwordEncoder.encode(createCustomerDto.password));

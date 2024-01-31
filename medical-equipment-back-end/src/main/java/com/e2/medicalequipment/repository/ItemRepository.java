@@ -1,10 +1,11 @@
 package com.e2.medicalequipment.repository;
 
+import com.e2.medicalequipment.model.Appointment;
 import com.e2.medicalequipment.model.Company;
 import com.e2.medicalequipment.model.Item;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.QueryHint;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,5 +27,12 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("DELETE FROM Item i WHERE i.id = :id")
     void deleteItemById(Long id);
 
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value ="0")})
     Item findById(long id);
+
+    @Lock(LockModeType.PESSIMISTIC_READ)
+    @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value ="0")})
+    public Item save(Item item);
+
 }
