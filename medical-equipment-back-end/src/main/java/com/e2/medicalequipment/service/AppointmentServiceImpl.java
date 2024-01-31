@@ -30,7 +30,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-    public Appointment Create(CreateAppointmentDTO createAppointmentDto) {
+    public Appointment Create(CreateAppointmentDTO createAppointmentDto){
         try {
             LocalDateTime startTime = LocalDateTime.parse(createAppointmentDto.startTime, formatter);
             LocalDateTime endTime = LocalDateTime.parse(createAppointmentDto.endTime, formatter);
@@ -55,6 +55,17 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
     }
 
+    @Transactional(readOnly = false)
+    public CompanyAdministrator findOneById(Long id){
+        try{
+            CompanyAdministrator a = companyAdministratorRepository.findOneById(id);
+            return a;
+        }catch (PessimisticLockingFailureException e) {
+            throw e;
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public boolean Delete(Long id) throws Exception {

@@ -54,7 +54,7 @@ public class CreatingMultipleAppointmentsConcurentAccessTest {
             public void run() {
                 System.out.println("Startovan Thread 1");
 
-                //companyAdministratorRepository.findOneById(-1L);
+                //appointmentService.findOneById(-2L);
                 appointmentService.Create(appointmentDTO);
             }
         });
@@ -63,9 +63,9 @@ public class CreatingMultipleAppointmentsConcurentAccessTest {
             @Override
             public void run() {
                 System.out.println("Startovan Thread 2");
-                try { Thread.sleep(50); } catch (InterruptedException e) { }
+                try { Thread.sleep(20); } catch (InterruptedException e) { }
 
-                //companyAdministratorRepository.findOneById(-1L);
+                //appointmentService.findOneById(-2L);
                 appointmentService.Create(appointmentDTO);
             }
         });

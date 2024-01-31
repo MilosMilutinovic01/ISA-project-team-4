@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface AppointmentService {
     Appointment Create(CreateAppointmentDTO appointmentDTO);
+    CompanyAdministrator findOneById(Long id);
     boolean Delete(Long id) throws Exception;
     Appointment CreateIrregular(CreateAppointmentDTO appointmentDTO) throws Exception;
     List<Appointment> GetAll() throws Exception;
