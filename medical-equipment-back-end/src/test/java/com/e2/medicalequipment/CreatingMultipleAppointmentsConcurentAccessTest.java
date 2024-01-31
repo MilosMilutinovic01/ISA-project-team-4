@@ -1,5 +1,6 @@
 package com.e2.medicalequipment;
 
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -8,6 +9,8 @@ import java.util.concurrent.Future;
 import com.e2.medicalequipment.dto.CreateAppointmentDTO;
 import com.e2.medicalequipment.dto.UpdateCompanyAdministratorDTO;
 import com.e2.medicalequipment.model.Address;
+import com.e2.medicalequipment.model.CompanyAdministrator;
+import com.e2.medicalequipment.repository.CompanyAdministratorRepository;
 import com.e2.medicalequipment.service.AppointmentService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,34 +26,36 @@ public class CreatingMultipleAppointmentsConcurentAccessTest {
     @Autowired
     private AppointmentService appointmentService;
 
+    @Autowired
+    private CompanyAdministratorRepository companyAdministratorRepository;
+
     @Test(expected = PessimisticLockingFailureException.class)
     public void testPessimisticLockingScenario() throws Throwable {
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
         CreateAppointmentDTO appointmentDTO = new CreateAppointmentDTO();
         appointmentDTO.isPredefined = true;
-        appointmentDTO.startTime = "Mon Feb 05 2024 12:30:00 GMT+0100 (Central European Standard Time";
-        appointmentDTO.endTime = "Mon Feb 05 2024 13:00:00 GMT+0100 (Central European Standard Time";
+        appointmentDTO.startTime = "Fri Feb 09 2024 14:30:00 GMT+0100 (Central European Standard Time)";
+        appointmentDTO.endTime = "Fri Feb 09 2024 15:00:00 GMT+0100 (Central European Standard Time)";
         UpdateCompanyAdministratorDTO administratorDTO = new UpdateCompanyAdministratorDTO();
-        administratorDTO.id = -20L;
-        administratorDTO.name = "ime";
-        administratorDTO.lastname = "prezime";
-        administratorDTO.password = "lozinka";
+        administratorDTO.id = -2L;
+        administratorDTO.name = "Petar";
+        administratorDTO.lastname = "Company";
+        administratorDTO.password = "$2a$10$lnAdFe/m6/0IuJtGoO11IuYPp.rgG0gchAud/480F84lwnI5Ejau6";
         administratorDTO.companyId = -1L;
-        administratorDTO.phoneNumber = "0603908001";
-        administratorDTO.username = "korisnik";
-        administratorDTO.address = new Address(1L,"ulica","grad","zemlja",45.45,45.45);
+        administratorDTO.phoneNumber = "0504901001";
+        administratorDTO.username = "petar@gmail.com";
+        administratorDTO.address = new Address(-2L, "Karadjordjeva 17b", "Vlasenica", "BIH", 19.849171,45.242092);
         appointmentDTO.companyAdministrator = administratorDTO;
+
 
         executor.submit(new Runnable() {
             @Override
             public void run() {
                 System.out.println("Startovan Thread 1");
-                try {
-                    appointmentService.Create(appointmentDTO);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+
+                //companyAdministratorRepository.findOneById(-1L);
+                appointmentService.Create(appointmentDTO);
             }
         });
         Future<?> future2 = executor.submit(new Runnable() {
@@ -58,19 +63,16 @@ public class CreatingMultipleAppointmentsConcurentAccessTest {
             @Override
             public void run() {
                 System.out.println("Startovan Thread 2");
-                try { Thread.sleep(50); } catch (InterruptedException e) { }// otprilike 150 milisekundi posle prvog threada krece da se izvrsava drugi
+                try { Thread.sleep(50); } catch (InterruptedException e) { }
 
-                try {
-                    appointmentService.Create(appointmentDTO);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+                //companyAdministratorRepository.findOneById(-1L);
+                appointmentService.Create(appointmentDTO);
             }
         });
         try {
             future2.get();
         } catch (ExecutionException e) {
-            System.out.println("Exception from thread " + e.getCause().getClass()); // u pitanju je bas PessimisticLockingFailureException
+            System.out.println("Exception from thread " + e.getCause().getClass());
             throw e.getCause();
         } catch (InterruptedException e) {
             e.printStackTrace();

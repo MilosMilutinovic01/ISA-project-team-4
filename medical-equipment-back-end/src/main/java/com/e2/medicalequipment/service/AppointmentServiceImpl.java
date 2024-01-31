@@ -7,6 +7,7 @@ import com.e2.medicalequipment.repository.CompanyAdministratorRepository;
 import com.e2.medicalequipment.repository.ItemRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,28 +30,31 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-    public Appointment Create(CreateAppointmentDTO createAppointmentDto)  {
-        Appointment appointment = new Appointment();
-        LocalDateTime startTime = null;
+    public Appointment Create(CreateAppointmentDTO createAppointmentDto) {
         try {
-            startTime = LocalDateTime.parse(createAppointmentDto.startTime, formatter);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        appointment.setStartTime(startTime);
-        LocalDateTime endTime = LocalDateTime.parse(createAppointmentDto.endTime, formatter);
-        appointment.setEndTime(endTime);
-        appointment.setIsPredefined(createAppointmentDto.isPredefined);
-        CompanyAdministrator ca = companyAdministratorRepository.findById(createAppointmentDto.companyAdministrator.id).orElseThrow(() -> new EntityNotFoundException("Company admin not found"));
-        appointment.setCompanyAdministrator(ca);
+            LocalDateTime startTime = LocalDateTime.parse(createAppointmentDto.startTime, formatter);
+            LocalDateTime endTime = LocalDateTime.parse(createAppointmentDto.endTime, formatter);
 
-        if (appointment.getId() != null) {
-            throw new IllegalArgumentException("ID must be null for a new entity.");
+            Appointment appointment = new Appointment();
+            appointment.setStartTime(startTime);
+            appointment.setEndTime(endTime);
+            appointment.setIsPredefined(createAppointmentDto.isPredefined);
+            CompanyAdministrator ca = companyAdministratorRepository.findOneById(createAppointmentDto.companyAdministrator.id);
+            appointment.setCompanyAdministrator(ca);
+
+            if (appointment.getId() != null) {
+                throw new IllegalArgumentException("ID must be null for a new entity.");
+            }
+            Appointment savedAppointment = appointmentRepository.save(appointment);
+
+            return savedAppointment;
+        } catch (PessimisticLockingFailureException e) {
+            throw e;
+        }catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Appointment savedAppointment = appointmentRepository.save(appointment);
-        return savedAppointment;
     }
+
 
     @Override
     public boolean Delete(Long id) throws Exception {

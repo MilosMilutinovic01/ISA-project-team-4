@@ -72,11 +72,6 @@ public class CustomerServiceImpl implements CustomerService {
             String verificationToken = UUID.randomUUID().toString().replaceAll("-", "");
             customer.setVerificationToken(verificationToken);
 
-            /*if (customer.getId() != null) {
-                throw new Exception("ID must be null for a new entity.");
-            }*/
-
-            // Save the Test entity using JpaRepository
             Customer savedCustomer = customerRepository.save(customer);
 
             return savedCustomer;
